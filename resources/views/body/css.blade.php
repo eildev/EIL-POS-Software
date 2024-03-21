@@ -20,6 +20,14 @@
 
 <!-- Plugin css for this page -->
 <link rel="stylesheet" href="{{ asset('assets') }}/vendors/flatpickr/flatpickr.min.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/vendors/prismjs/themes/prism.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/vendors/select2/select2.min.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/vendors/jquery-tags-input/jquery.tagsinput.min.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/vendors/dropzone/dropzone.min.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/vendors/dropify/dist/dropify.min.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/vendors/pickr/themes/classic.min.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/vendors/font-awesome/css/font-awesome.min.css">
 <!-- End plugin css for this page -->
 
 <!-- inject:css -->
@@ -32,3 +40,17 @@
 <!-- End layout styles -->
 
 <link rel="shortcut icon" href="{{ asset('assets') }}/images/favicon.png" />
+<style>
+    .btn-rounded-primary {
+        padding: 0.3rem;
+        font-size: 8px;
+        border-radius: 50%;
+        color: #fff;
+        background: #6571ff;
+    }
+
+    .btn-rounded-primary:hover {
+        background: #5660d9;
+        color: #fff;
+    }
+</style>

@@ -254,7 +254,7 @@
                              </a>
                          </li>
                          <li class="dropdown-item py-2">
-                             <a href="javascript:;" class="text-body ms-0">
+                             <a href="{{ route('profile.edit') }}" class="text-body ms-0">
                                  <i class="me-2 icon-md" data-feather="edit"></i>
                                  <span>Edit Profile</span>
                              </a>
@@ -265,12 +265,15 @@
                                  <span>Switch User</span>
                              </a>
                          </li>
-                         <li class="dropdown-item py-2">
-                             <a href="javascript:;" class="text-body ms-0">
-                                 <i class="me-2 icon-md" data-feather="log-out"></i>
-                                 <span>Log Out</span>
-                             </a>
-                         </li>
+                         <form method="POST" action="{{ route('logout') }}">
+                             @csrf
+                             <li class="dropdown-item py-2">
+                                 <button class="text-body ms-0 btn">
+                                     <i class="me-2 icon-md" data-feather="log-out"></i>
+                                     <span class="">Log Out</span>
+                                 </button>
+                             </li>
+                         </form>
                      </ul>
                  </div>
              </li>

@@ -1,6 +1,6 @@
 <nav class="sidebar">
     <div class="sidebar-header">
-        <a href="#" class="sidebar-brand">
+        <a href="{{ route('dashboard') }}" class="sidebar-brand">
             EIL<span>POS</span>
         </a>
         <div class="sidebar-toggler not-active">
@@ -13,17 +13,17 @@
         <ul class="nav">
             <li class="nav-item nav-category">Main</li>
             <li class="nav-item">
-                <a href="dashboard.html" class="nav-link">
+                <a href="{{ route('dashboard') }}" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
             <li class="nav-item nav-category">Products</li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
                     aria-controls="emails">
                     <i class="link-icon" data-feather="mail"></i>
-                    <span class="link-title">Email</span>
+                    <span class="link-title">Category</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
                 <div class="collapse" id="emails">
@@ -39,6 +39,12 @@
                         </li>
                     </ul>
                 </div>
+            </li> --}}
+            <li class="nav-item">
+                <a href="{{ route('category') }}" class="nav-link">
+                    <i class="link-icon" data-feather="book"></i>
+                    <span class="link-title">Category</span>
+                </a>
             </li>
             <li class="nav-item nav-category">Suuplier</li>
             <li class="nav-item">

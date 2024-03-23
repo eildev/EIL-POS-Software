@@ -58,13 +58,13 @@
                                                 <input type="text" class="form-control" name="name"
                                                     id="exampleInputUsername1" autocomplete="Username"
                                                     placeholder="Username">
-                                                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                                                <x-input-error :messages="$errors->get('name')" class="mt-2 text-danger" />
                                             </div>
                                             <div class="mb-3">
                                                 <label for="userEmail" class="form-label">Email address</label>
                                                 <input type="email" class="form-control" id="userEmail"
                                                     placeholder="Email" name="email">
-                                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                                <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
@@ -72,7 +72,7 @@
                                                     <input type="password" class="form-control" id="userPassword"
                                                         autocomplete="current-password" name="password"
                                                         placeholder="Password">
-                                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                                    <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="userPassword" class="form-label">Confirm
@@ -80,7 +80,7 @@
                                                     <input type="password" class="form-control" id="userPassword"
                                                         autocomplete="current-password" name="password_confirmation"
                                                         placeholder="Password">
-                                                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                                                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-danger" />
                                                 </div>
                                             </div>
                                             {{-- <div class="mb-3">

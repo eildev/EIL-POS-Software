@@ -28,6 +28,7 @@
 <link rel="stylesheet" href="{{ asset('assets') }}/vendors/dropify/dist/dropify.min.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/vendors/pickr/themes/classic.min.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/vendors/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/vendors/sweetalert2/sweetalert2.min.css">
 <!-- End plugin css for this page -->
 
 <!-- inject:css -->

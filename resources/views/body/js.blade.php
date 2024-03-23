@@ -19,6 +19,7 @@
 <script src="{{ asset('assets') }}/vendors/dropify/dist/dropify.min.js"></script>
 <script src="{{ asset('assets') }}/vendors/pickr/pickr.min.js"></script>
 <script src="{{ asset('assets') }}/vendors/moment/moment.min.js"></script>
+<script src="{{ asset('assets') }}/vendors/sweetalert2/sweetalert2.min.js"></script>
 <!-- End plugin js for this page -->
 
 <!-- inject:js -->
@@ -42,4 +43,5 @@
 <script src="{{ asset('assets') }}/js/dropify.js"></script>
 <script src="{{ asset('assets') }}/js/pickr.js"></script>
 <script src="{{ asset('assets') }}/js/flatpickr.js"></script>
+<script src="{{ asset('assets') }}/js/sweet-alert.js"></script>
 <!-- End custom js for this page -->

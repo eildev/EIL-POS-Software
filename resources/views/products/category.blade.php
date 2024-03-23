@@ -73,7 +73,7 @@
                                             add
                                             a category image
                                             please add a 400 X 400 size image.</span></p>
-                                    <input type="file" name="image" id="myDropify" />
+                                    <input type="file" class="categoryImage" name="image" id="myDropify" />
                                 </div>
                             </div>
                         </div>
@@ -93,6 +93,14 @@
         saveCategory.addEventListener('click', function(e) {
             e.preventDefault();
 
+            let categoryName = document.querySelector('.category_name').value;
+            let image = document.querySelector('.categoryImage').value;
+
+            if (categoryName != null) {
+
+            } else {
+
+            }
 
         })
     </script>

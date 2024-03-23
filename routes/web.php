@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/category/edit/{id}', 'edit')->name('category.edit');
         Route::post('/category/update/{id}', 'update')->name('category.update');
         Route::get('/category/destroy/{id}', 'destroy')->name('category.destroy');
+    });
+    Route::controller(SubCategoryController::class)->group(function () {
+        Route::get('/subcategory', 'index')->name('subcategory');
+        Route::get('/subcategory/store', 'store')->name('subcategory.store');
+        Route::get('/subcategory/view', 'view')->name('subcategory.view');
+        Route::get('/subcategory/edit/{id}', 'edit')->name('subcategory.edit');
+        Route::post('/subcategory/update/{id}', 'update')->name('subcategory.update');
+        Route::get('/subcategory/destroy/{id}', 'destroy')->name('subcategory.destroy');
     });
 });
 

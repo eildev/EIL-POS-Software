@@ -46,9 +46,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/category/status/{id}', 'status')->name('category.status');
         Route::get('/category/destroy/{id}', 'destroy')->name('category.destroy');
     });
+        // subcategory related route(n)
     Route::controller(SubCategoryController::class)->group(function () {
         Route::get('/subcategory', 'index')->name('subcategory');
-        Route::get('/subcategory/store', 'store')->name('subcategory.store');
+        Route::post('/subcategory/store', 'store')->name('subcategory.store');
         Route::get('/subcategory/view', 'view')->name('subcategory.view');
         Route::get('/subcategory/edit/{id}', 'edit')->name('subcategory.edit');
         Route::post('/subcategory/update/{id}', 'update')->name('subcategory.update');

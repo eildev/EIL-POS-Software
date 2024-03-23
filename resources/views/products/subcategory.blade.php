@@ -78,19 +78,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="signupForm">
+                    <form id="signupForm" method="post">
                         <div class="mb-3">
                             <label for="name" class="form-label">Select Category</label>
-                            <select class="form-select mb-3" name ="category_id">
+                               <select class="form-select mb-3" name ="category_id" >
 										<option selected="" value="" >Open this select menu</option>
                                         @foreach($categories as $category)
-										<option value="{{$category->id}}">{{$category->name}}</option>
+										<option value="{{$category->id}}" class="category_id">{{$category->name}}</option>
 										@endforeach
 									</select>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Sub Category Name</label>
-                            <input id="defaultconfig" class="form-control category_name" maxlength="250" name="name"
+                            <input id="defaultconfig" class="form-control subcategory_name" maxlength="250" name="name"
                                 type="text">
                         </div>
                         <div class="mb-3">
@@ -102,7 +102,7 @@
                                             add
                                             a category image
                                             please add a 400 X 400 size image.</span></p>
-                                    <input type="file" class="categoryImage" name="image" id="myDropify" />
+                                    <input type="file" class="subcategoryImage" name="image" id="myDropify" />
                                 </div>
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary save_category">Save</button>
+                    <button type="button" class="btn btn-primary save_subcategory">Save</button>
                 </div>
             </div>
         </div>
@@ -118,18 +118,71 @@
 
 
     <script>
-        const saveCategory = document.querySelector('.save_category');
-        saveCategory.addEventListener('click', function(e) {
-            e.preventDefault();
+           $(document).ready(function() {
+            // save subcategory 
+            const savesubCategory = document.querySelector('.save_subcategory');
+            savesubCategory.addEventListener('click', function(e) {
+                e.preventDefault();
 
-            let categoryName = document.querySelector('.category_name').value;
-            let image = document.querySelector('.categoryImage').value;
+                let category_id = document.querySelector('.category_id').value;
+                let subcategory_name = document.querySelector('.subcategory_name').value;
+                // let subcategoryImage = document.querySelector('.subcategoryImage').value;
+                
+                //  console.log(category_id);
+                //  console.log(subcategory_name);
+                //  console.log(subcategoryImage);
 
-            if (categoryName != null) {
+                if (subcategory_name != "") {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: '/subcategory/store',
+                        type: 'POST',
+                        data: {
+                            'name': subcategory_name,
+                            'category_id': category_id,
+                            // 'subcategoryImage': image,
+                        },
+                        success: function(res) {
+                            if (res.status == 200) {
+                                $('.category_id').val('');
+                                $('.subcategory_name').val('');
+                                // $('.subcategoryImage').val('');
+                                $('#exampleModalLongScollable').modal('hide');
+                                Swal.fire({
+                                    position: "top-end",
+                                    icon: "success",
+                                    title: res.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                // console.log(res.data)
+                             
+                            } else {
+                                Swal.fire({
+                                    position: "top-end",
+                                    icon: "warning",
+                                    title: res.error.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "warning",
+                        title: 'Please enter Category Name',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }
+            })
 
-            } else {
-
-            }
 
         })
     </script>

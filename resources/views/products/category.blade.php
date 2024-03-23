@@ -15,7 +15,7 @@
                         <button class="btn btn-rounded-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#exampleModalLongScollable"><i data-feather="plus"></i></button>
                     </div>
-                    <div class="table-responsive">
+                    <div id="" class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -192,12 +192,14 @@
                             <tr>
                                 <td>${key+1}</td>
                                 <td>${category.name ?? ""}</td>
-                                <td>${category.status}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" id="${category.status}">Active</button>    
+                                </td>
                                 <td> 
-                                    <a href="#" class="btn btn-primary btn-icon">
+                                    <a href="#" class="btn btn-primary btn-icon category_edit" id="${category.id}">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-                                    <a href="#" class="btn btn-danger btn-icon">
+                                    <a href="#" class="btn btn-danger btn-icon category_delete" id="${category.id}">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </a>
                                 </td>
@@ -207,5 +209,12 @@
                 })
             }
         });
+
+
+
+        $('.category_edit').click(function(e) {
+            e.preventDefault();
+            alert('OK');
+        })
     </script>
 @endsection

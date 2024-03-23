@@ -10,35 +10,52 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center ">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="card-title">Category Table</h6>
                         <button class="btn btn-rounded-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#exampleModalLongScollable"><i data-feather="plus"></i></button>
                     </div>
                     <div class="table-responsive">
-                        <table id="dataTableExample" class="table">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>SN</th>
                                     <th>Category Name</th>
-                                    <th>Slug</th>
-                                    <th>Image</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($categories->count() > 0)
+                                {{-- @if ($categories->count() > 0)
+                                    @foreach ($categories as $key => $category)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $category->name ?? '' }}</td>
+                                            <td>
+                                                <button class="btn btn-success">Status</button>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="btn btn-primary btn-icon">
+                                                    <i data-feather="edit"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-danger btn-icon">
+                                                    <i data-feather="trash-2"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 @else
-                                    <td colspan="6">
-                                        <div class="text-center text-warning mb-2">Data Not Found</div>
-                                        <div class="text-center">
-                                            <button class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModalLongScollable">Add Category<i
-                                                    data-feather="plus"></i></button>
-                                        </div>
-                                    </td>
-                                @endif
+                                    <tr>
+                                        <td colspan="6">
+                                            <div class="text-center text-warning mb-2">Data Not Found</div>
+                                            <div class="text-center">
+                                                <button class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModalLongScollable">Add Category<i
+                                                        data-feather="plus"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endif --}}
                             </tbody>
                         </table>
                     </div>
@@ -64,7 +81,7 @@
                             <input id="defaultconfig" class="form-control category_name" maxlength="250" name="name"
                                 type="text">
                         </div>
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">Category Image</h6>
@@ -76,7 +93,7 @@
                                     <input type="file" class="categoryImage" name="image" id="myDropify" />
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -89,19 +106,106 @@
 
 
     <script>
-        const saveCategory = document.querySelector('.save_category');
-        saveCategory.addEventListener('click', function(e) {
-            e.preventDefault();
+        $(document).ready(function() {
+            // save category 
+            const saveCategory = document.querySelector('.save_category');
+            saveCategory.addEventListener('click', function(e) {
+                e.preventDefault();
 
-            let categoryName = document.querySelector('.category_name').value;
-            let image = document.querySelector('.categoryImage').value;
+                let categoryName = document.querySelector('.category_name').value;
+                // console.log(categoryName);
 
-            if (categoryName != null) {
+                if (categoryName != "") {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: '/category/store',
+                        type: 'POST',
+                        data: {
+                            'name': categoryName,
+                        },
+                        success: function(res) {
+                            if (res.status == 200) {
+                                $('.category_name').val('');
+                                $('#exampleModalLongScollable').modal('hide');
+                                Swal.fire({
+                                    position: "top-end",
+                                    icon: "success",
+                                    title: res.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                // console.log(res.data)
+                                categoryView();
+                            } else {
+                                Swal.fire({
+                                    position: "top-end",
+                                    icon: "warning",
+                                    title: res.error.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "warning",
+                        title: 'Please enter Category Name',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }
+            })
 
-            } else {
 
+            // show category 
+            const categoryView = () => {
+                $.ajax({
+                    url: '/category/view',
+                    type: 'GET',
+                    success: function(data) {
+                        if (data.status == 200) {
+                            showCategory(data.categories);
+                        } else {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "warning",
+                                title: 'data.error.message',
+                                showConfirmButton: false,
+                                timer: 3000
+                            });
+                        }
+                    }
+                })
             }
 
-        })
+            categoryView();
+
+            function showCategory(data) {
+                data.map((category, key) => {
+                    let newRow = `
+                            <tr>
+                                <td>${key+1}</td>
+                                <td>${category.name ?? ""}</td>
+                                <td>${category.status}</td>
+                                <td> 
+                                    <a href="#" class="btn btn-primary btn-icon">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-danger btn-icon">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                                `;
+                    $('table tbody').append(newRow);
+                })
+            }
+        });
     </script>
 @endsection

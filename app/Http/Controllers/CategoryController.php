@@ -65,4 +65,64 @@ class CategoryController extends Controller
             ]);
         }
     }
+    public function edit($id)
+    {
+        $category = Category::findOrFail($id);
+        if ($category) {
+            return response()->json([
+                'status' => 200,
+                'category' => $category
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'message' => "Data Not Found"
+            ]);
+        }
+    }
+    public function update(Request $request, $id)
+    {
+        $category = Category::findOrFail($id);
+        if ($category) {
+            return response()->json([
+                'status' => 200,
+                'category' => $category
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'message' => "Data Not Found"
+            ]);
+        }
+    }
+    public function status($id)
+    {
+        $category = Category::findOrFail($id);
+        if ($category) {
+            return response()->json([
+                'status' => 200,
+                'category' => $category
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'message' => "Data Not Found"
+            ]);
+        }
+    }
+    public function destroy($id)
+    {
+        $category = Category::findOrFail($id);
+        if ($category) {
+            return response()->json([
+                'status' => 200,
+                'category' => $category
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'message' => "Data Not Found"
+            ]);
+        }
+    }
 }

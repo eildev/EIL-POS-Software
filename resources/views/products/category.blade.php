@@ -191,7 +191,7 @@
                     let newRow = `
                             <tr>
                                 <td>${key+1}</td>
-                                <td>${category.name}</td>
+                                <td>${category.name ?? ""}</td>
                                 <td>${category.status}</td>
                                 <td> 
                                     <a href="#" class="btn btn-primary btn-icon">

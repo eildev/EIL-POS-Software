@@ -5,6 +5,7 @@
 <meta name="author" content="NobleUI">
 <meta name="keywords"
     content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <title>EIL - POS || Eclipse Intellitech LTD POS Software</title>
 
@@ -27,8 +28,11 @@
 <link rel="stylesheet" href="{{ asset('assets') }}/vendors/dropzone/dropzone.min.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/vendors/dropify/dist/dropify.min.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/vendors/pickr/themes/classic.min.css">
-<link rel="stylesheet" href="{{ asset('assets') }}/vendors/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/vendors/sweetalert2/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css"
+    integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- End plugin css for this page -->
 
 <!-- inject:css -->
@@ -55,3 +59,5 @@
         color: #fff;
     }
 </style>
+{{-- jquery plugin  --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

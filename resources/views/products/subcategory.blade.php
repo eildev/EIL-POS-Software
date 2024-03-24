@@ -142,7 +142,7 @@
                         url: '/subcategory/store',
                         type: 'POST',
                         data: {
-                            'name': subcategory_name,
+                            'subcategory_name': subcategory_name,
                             'category_id': category_id,
                             // 'subcategoryImage': image,
                         },

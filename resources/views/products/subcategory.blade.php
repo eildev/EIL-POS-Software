@@ -28,7 +28,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
+                                <!-- @php
                                     $serialNumber = 1;
                                 @endphp
                                 @if ($subCategories->count() > 0)
@@ -37,7 +37,7 @@
                                 <td>{{$serialNumber++}}</td>
                                 <td>{{$subcategory->name}}</td>
                                 <td>{{$subcategory->slug}}</td>
-                                <td><img src="" alt=""></td>
+                                <td><img src="{{asset('uploads/subcategory/'.$subcategory->image)}}" alt="Sub category Image"></td>
                                 <td>@if($subcategory->status == 0)
                                     <a href="" class="btn btn-sm bg-success">Active</a>
                                     @else
@@ -58,7 +58,7 @@
                                                     data-feather="plus"></i></button>
                                         </div>
                                     </td>
-                                @endif
+                                @endif -->
                             </tbody>
                         </table>
                     </div>
@@ -93,7 +93,7 @@
                             <input id="defaultconfig" class="form-control subcategory_name" maxlength="250" name="name"
                                 type="text">
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">Sub Category Image</h6>
@@ -102,10 +102,10 @@
                                             add
                                             a category image
                                             please add a 400 X 400 size image.</span></p>
-                                    <input type="file" class="subcategoryImage" name="image" id="myDropify" />
+                                    <input type="file" class="subcategoryImage" name="subcategoryImage" id="myDropify" />
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -130,7 +130,7 @@
                 
                 //  console.log(category_id);
                 //  console.log(subcategory_name);
-                //  console.log(subcategoryImage);
+                  //console.log(subcategoryImage);
 
                 if (subcategory_name != "") {
                     $.ajaxSetup({
@@ -144,13 +144,14 @@
                         data: {
                             'subcategory_name': subcategory_name,
                             'category_id': category_id,
-                            // 'subcategoryImage': image,
+                            // 'subcategoryImage': subcategoryImage,
                         },
                         success: function(res) {
+                            subCategoryView()
                             if (res.status == 200) {
                                 $('.category_id').val('');
                                 $('.subcategory_name').val('');
-                                // $('.subcategoryImage').val('');
+                                //  $('.subcategoryImage').val('');
                                 $('#exampleModalLongScollable').modal('hide');
                                 Swal.fire({
                                     position: "top-end",
@@ -159,6 +160,7 @@
                                     showConfirmButton: false,
                                     timer: 1500
                                 });
+                               
                                 // console.log(res.data)
                              
                             } else {
@@ -176,14 +178,57 @@
                     Swal.fire({
                         position: "top-end",
                         icon: "warning",
-                        title: 'Please enter Category Name',
+                        title: 'Please enter SubCategory Name',
                         showConfirmButton: false,
                         timer: 3000
                     });
                 }
             })
-
-
-        })
+        ///////////////Show Subcategory ////////////
+            // show category 
+            const subCategoryView = () => {
+                $.ajax({
+                    url: '/subcategory/view',
+                    type: 'GET',
+                    success: function(data) {
+                        if (data.status == 200) {
+                            showSubCategory(data.subcategories);
+                        } else {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "warning",
+                                title: 'data.error.message',
+                                showConfirmButton: false,
+                                timer: 3000
+                            });
+                        }
+                    }
+                })
+            }
+        subCategoryView();
+         ///////////Data Show Subcategory //////////
+function showSubCategory(data) {
+    data.map((subcategories, key) => {
+        let newRow = `
+                <tr>
+                    <td>${key+1}</td>
+                    <td>${subcategories.name ?? ""}</td>
+                    <td>${subcategories.slug ?? ""}</td>
+                    <td>${subcategories.image ?? ""}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" id="${subcategories.status}">Active</button>    
+                    </td>
+                    <td> 
+                        <a href="#" class="btn btn-primary btn-icon category_edit" id="${subcategories.id}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <a href="#" class="btn btn-danger btn-icon category_delete" id="${subcategories.id}">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
+                    </td>
+                </tr>`;
+        $('table tbody').append(newRow);
+    })
+}  });
     </script>
 @endsection

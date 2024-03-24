@@ -209,9 +209,6 @@
                 })
             }
         });
-
-
-
         $('.category_edit').click(function(e) {
             e.preventDefault();
             alert('OK');

@@ -16,19 +16,20 @@ class SubCategoryController extends Controller
     }//End Method
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
-            'category_id' => 'required|max:255',
-            'name' => 'required|max:255',
+            'category_id' => 'required',
+            'subcategory_name' => 'required|max:255',
             // 'image' => 'required|max:255',
         ]);
-    //   dd($request->all());
-        if ($validator->passes()) {
-            $subcategory = SubCategory::all();
+          //dd($request->subcategory_name);
+          if ($validator->passes()) {
+             $subcategory = SubCategory::all();
+            // dd($request->name);
             $subcategories = new SubCategory;
             $subcategories->name =  $request->subcategory_name;
             $subcategories->slug = Str::slug($request->subcategory_name);
             $subcategories->category_id =  $request->category_id;
             // $subcategories->image =  $request->subcategoryImage;
-      //      $subcategories->image =  $request->image;
+           //  $subcategories->image =  $request->image;
             $subcategories->save();
             return response()->json([
                 'status' => 200,

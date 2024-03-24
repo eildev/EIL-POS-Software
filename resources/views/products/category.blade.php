@@ -25,37 +25,8 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                {{-- @if ($categories->count() > 0)
-                                    @foreach ($categories as $key => $category)
-                                        <tr>
-                                            <td>{{ $key + 1 }}</td>
-                                            <td>{{ $category->name ?? '' }}</td>
-                                            <td>
-                                                <button class="btn btn-success">Status</button>
-                                            </td>
-                                            <td>
-                                                <a href="#" class="btn btn-primary btn-icon">
-                                                    <i data-feather="edit"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-danger btn-icon">
-                                                    <i data-feather="trash-2"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="6">
-                                            <div class="text-center text-warning mb-2">Data Not Found</div>
-                                            <div class="text-center">
-                                                <button class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModalLongScollable">Add Category<i
-                                                        data-feather="plus"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endif --}}
+                            <tbody class="showData">
+                                @include('products.category-show-table');
                             </tbody>
                         </table>
                     </div>
@@ -81,7 +52,7 @@
                             <input id="defaultconfig" class="form-control category_name" maxlength="250" name="name"
                                 type="text">
                         </div>
-                        {{-- <div class="mb-3">
+                        <div class="mb-3">
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">Category Image</h6>
@@ -93,13 +64,13 @@
                                     <input type="file" class="categoryImage" name="image" id="myDropify" />
                                 </div>
                             </div>
-                        </div> --}}
-                    </form>
+                        </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary save_category">Save</button>
-                </div>
+                </div></form>
             </div>
         </div>
     </div>
@@ -107,7 +78,7 @@
 
     <script>
         $(document).ready(function() {
-            // save category 
+            // save category
             const saveCategory = document.querySelector('.save_category');
             saveCategory.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -163,49 +134,14 @@
             })
 
 
-            // show category 
-            const categoryView = () => {
+            // show category
+            function categoryView(){
                 $.ajax({
                     url: '/category/view',
-                    type: 'GET',
+                    method: 'GET',
                     success: function(data) {
-                        if (data.status == 200) {
-                            showCategory(data.categories);
-                        } else {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "warning",
-                                title: 'data.error.message',
-                                showConfirmButton: false,
-                                timer: 3000
-                            });
-                        }
+                        $('.showData').html(data);
                     }
-                })
-            }
-
-            categoryView();
-
-            function showCategory(data) {
-                data.map((category, key) => {
-                    let newRow = `
-                            <tr>
-                                <td>${key+1}</td>
-                                <td>${category.name ?? ""}</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary" id="${category.status}">Active</button>    
-                                </td>
-                                <td> 
-                                    <a href="#" class="btn btn-primary btn-icon category_edit" id="${category.id}">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-danger btn-icon category_delete" id="${category.id}">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                                `;
-                    $('table tbody').append(newRow);
                 })
             }
         });

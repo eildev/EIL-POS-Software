@@ -49,18 +49,8 @@ class SubCategoryController extends Controller
      ///Category view 
      public function view()
      {
-         $subcategories = SubCategory::latest()->get();
-         if ($subcategories->count() > 0) {
-             return response()->json([
-                 'status' => 200,
-                 'subcategories' => $subcategories
-             ]);
-         } else {
-             return response()->json([
-                 'status' => 500,
-                 'message' => "Data Not Found"
-             ]);
-         }
+         $subcategories = SubCategory::get();
+         return view('products.subcategory-show-table',compact('subcategories'))->render();
      }
 
 }

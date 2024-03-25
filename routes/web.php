@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BranchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,6 +55,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/subcategory/edit/{id}', 'edit')->name('subcategory.edit');
         Route::post('/subcategory/update/{id}', 'update')->name('subcategory.update');
         Route::get('/subcategory/destroy/{id}', 'destroy')->name('subcategory.destroy');
+    });
+        // Branch related route(n)
+    Route::controller(BranchController::class)->group(function () {
+        Route::get('/branch', 'index')->name('branch');
+        Route::post('/branch/store', 'store')->name('branch.store');
+        Route::get('/branch/view', 'BranchView')->name('branch.view');
+        Route::get('/branch/edit/{id}', 'BranchEdit')->name('branch.edit');
+        Route::post('/branch/update/{id}', 'BranchUpdate')->name('branch.update');
+        Route::get('/branch/delete/{id}', 'BranchDelete')->name('branch.delete');
     });
 });
 

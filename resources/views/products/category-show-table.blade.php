@@ -7,7 +7,7 @@
                 <button class="btn btn-success">Status</button>
             </td>
             <td>
-                <a href="#" class="btn btn-primary btn-icon">
+                <a href="" class="btn btn-primary btn-icon">
                     <i data-feather="edit"></i>
                 </a>
                 <a href="#" class="btn btn-danger btn-icon">

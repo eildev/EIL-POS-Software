@@ -33,11 +33,9 @@
             </li>
             <li class="nav-item nav-category">Suuplier</li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#general-pages" role="button" aria-expanded="false"
-                    aria-controls="general-pages">
+                <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
                     <i class="link-icon" data-feather="book"></i>
                     <span class="link-title">Branches</span>
-                    <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
                 <div class="collapse" id="general-pages">
                     <ul class="nav sub-menu">

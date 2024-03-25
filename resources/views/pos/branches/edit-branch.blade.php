@@ -60,13 +60,23 @@
                             <div class="card">
                                 <div class="card-body">
 
-                                    <input type="file"  class="categoryImage  @error('logo') is-invalid  @enderror" name="logo" id="myDropify" />
-                                    @error('logo')
-                                    <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                    <input type="file"  class="categoryImage  @error('logo') is-invalid  @enderror" name="logo" id ="image" />
+                                   
                                 </div>
                             </div>
                  </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="exampleInputPassword2" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+            <label for="example-search-input" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                   <img class="rounded avatar-lg" id ="showImage" src="{{asset('uploads/branch/'. $branch->logo)}}" alt="logo" height="60px" width="60px">
+                   @error('logo')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
         </div>
         <div class="row mb-3">
@@ -83,5 +93,16 @@
 </div>
 </div>
 </div>
+<script type = "text/javascript">
 
+$(document).ready(function(){
+$('#image').change(function(e){
+var reader = new FileReader();
+reader.onload = function(e){
+    $('#showImage').attr('src',e.target.result);
+}
+reader.readAsDataURL(e.target.files['0']);
+});
+});
+</script>
 @endsection

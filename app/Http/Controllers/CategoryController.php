@@ -12,7 +12,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::get();
-        return view('products.category',compact('categories'));
+        return view('products.category', compact('categories'));
     }
     public function store(Request $request)
     {
@@ -22,6 +22,10 @@ class CategoryController extends Controller
         ]);
 
         if ($validator->passes()) {
+            if ($request->image) {
+                $imageName = rand() . '.' . $request->logo->extension();
+                $request->logo->move(public_path('uploads/branch/'), $imageName);
+            }
             $category = new Category;
             $category->name =  $request->name;
             $category->slug = Str::slug($request->name);
@@ -39,7 +43,7 @@ class CategoryController extends Controller
     public function view()
     {
         $categories = Category::get();
-        return view('products.category-show-table',compact('categories'))->render();
+        return view('products.category-show-table', compact('categories'))->render();
     }
     public function edit($id)
     {

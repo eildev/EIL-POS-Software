@@ -47,7 +47,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="signupForm">
+                    <form id="signupForm" class="categoryForm" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="name" class="form-label">Category Name</label>
                             <input id="defaultconfig" class="form-control category_name" maxlength="250" name="name"
@@ -84,55 +84,43 @@
             const saveCategory = document.querySelector('.save_category');
             saveCategory.addEventListener('click', function(e) {
                 e.preventDefault();
-
-                let categoryName = document.querySelector('.category_name').value;
-                // console.log(categoryName);
-
-                if (categoryName != "") {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                let formData = new FormData($('.categoryForm')[0]);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '/category/store',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status == 200) {
+                            $('.category_name').val('');
+                            $('#exampleModalLongScollable').modal('hide');
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: res.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            formData.delete(entry[0]);
+                            categoryView();
+                        } else {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "warning",
+                                title: res.error.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                         }
-                    });
-                    $.ajax({
-                        url: '/category/store',
-                        type: 'POST',
-                        data: {
-                            'name': categoryName,
-                        },
-                        success: function(res) {
-                            if (res.status == 200) {
-                                $('.category_name').val('');
-                                $('#exampleModalLongScollable').modal('hide');
-                                Swal.fire({
-                                    position: "top-end",
-                                    icon: "success",
-                                    title: res.message,
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-                                // console.log(res.data)
-                                categoryView();
-                            } else {
-                                Swal.fire({
-                                    position: "top-end",
-                                    icon: "warning",
-                                    title: res.error.message,
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-                            }
-                        }
-                    });
-                } else {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "warning",
-                        title: 'Please enter Category Name',
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
-                }
+                    }
+                });
+
             })
 
 

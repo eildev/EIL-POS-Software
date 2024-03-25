@@ -87,7 +87,55 @@
         </div>
     </div>
 
-
+<!-- ////////////Edit Modal//////////////// -->
+<div class="modal fade" id="exampleModalLongScollableEdit" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add SubCategory</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                </div>
+                <div class="modal-body ">
+                    <form id="signupForm" method="post">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Select Category</label>
+                               <select class="form-select mb-3" name ="category_id" >
+										<option selected="" value="" >Open this select menu</option>
+                                        @foreach($categories as $category)
+										<option value="{{$category->id}}" class="category_id">{{$category->name}}</option>
+										@endforeach
+									</select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Sub Category Name</label>
+                            <input id="defaultconfig" value="" class="form-control subcategory_name" maxlength="250" name="name"
+                                type="text">
+                        </div>
+                        <!-- <div class="mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Sub Category Image</h6>
+                                    <p class="mb-3 text-warning">Note: <span class="fst-italic">Image not
+                                            required. If you
+                                            add
+                                            a category image
+                                            please add a 400 X 400 size image.</span></p>
+                                    <input type="file" class="subcategoryImage" name="subcategoryImage" id="myDropify" />
+                                </div>
+                            </div>
+                        </div> -->
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary save_subcategory">Save</button>
+                </div> 
+            </form>
+            </div>
+        </div>
+    </div>
+<!-- ////////////Edit Modal End//////////////// -->
     <script>
            $(document).ready(function() {
             // save subcategory 
@@ -99,9 +147,9 @@
                 let subcategory_name = document.querySelector('.subcategory_name').value;
                 // let subcategoryImage = document.querySelector('.subcategoryImage').value;
                 
-                //  console.log(category_id);
-                //  console.log(subcategory_name);
-                  //console.log(subcategoryImage);
+                //console.log(category_id);
+                // console.log(subcategory_name);
+                //console.log(subcategoryImage);
 
                 if (subcategory_name != "") {
                     $.ajaxSetup({
@@ -161,13 +209,24 @@
                     url: '/subcategory/view',
                     method: 'GET',
                     success: function(data) {
-                    //    console.log(data);
+                    //  console.log(data);
                         $('.showData').html(data);
                     }
-                })
+                });
+            }
+              ///////////Data Edit Subcategory //////////
+              function EditsubCategory() {
+                $.ajax({
+                    url: '/subcategory/edit',
+                    method: 'GET',
+                    success: function(data) {
+                    //  console.log(data);
+                       
+                    }
+                });
             }
         });
-         ///////////Data Show Subcategory //////////
+       
 
     </script>
 @endsection

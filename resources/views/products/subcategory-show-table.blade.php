@@ -14,7 +14,8 @@
     <a href="" class="btn btn-sm bg-warning">Inactive</a>
     @endif
 </td>
-<td><a href="" class="btn btn-sm btn-xs bg-info"><i class="edit-icon " data-feather="edit"></i></a>
+<td><a href="{{route('subcategory.edit',$subcategory->id)}}" class="btn btn-sm btn-xs bg-info" data-bs-toggle="modal"
+                    data-bs-target="#exampleModalLongScollableEdit" ><i class="edit-icon "  data-feather="edit"></i></a>
     <a href=""class="btn btn-sm btn-xs bg-danger"><i class="delete-icon" data-feather="trash-2"></i> </a>
 </td>
 </tr>
@@ -29,3 +30,4 @@
         </div>
     </td>
 @endif
+

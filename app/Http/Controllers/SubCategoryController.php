@@ -52,5 +52,14 @@ class SubCategoryController extends Controller
          $subcategories = SubCategory::all();
          return view('products.subcategory-show-table',compact('subcategories'))->render();
      }
+     public function edit($id){
+        $subcategoryData = SubCategory::findOrFail($id);
+        return response()->json([
+            'status' => 200,
+            'message' => 'SubCategory Save Successfully',
+           'data' => $subcategoryData
+        ]);
+        // return view('products.subcategory')->compact('subcategoryData');
+     }
 
 }

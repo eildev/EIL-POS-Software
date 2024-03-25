@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,6 +65,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/branch/edit/{id}', 'BranchEdit')->name('branch.edit');
         Route::post('/branch/update/{id}', 'BranchUpdate')->name('branch.update');
         Route::get('/branch/delete/{id}', 'BranchDelete')->name('branch.delete');
+    });
+        // Customer related route(n)
+    Route::controller(CustomerController::class)->group(function () {
+        Route::get('/customer/add', 'AddCustomer')->name('customer.add');
+        Route::post('/customer/store', 'CustomerStore')->name('customer.store');
+        Route::get('/customer/view', 'CustomerView')->name('customer.view');
+        Route::get('/customer/edit/{id}', 'CustomerEdit')->name('customer.edit');
+        Route::post('/customer/update/{id}', 'CustomerUpdate')->name('customer.update');
+        Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
     });
 });
 

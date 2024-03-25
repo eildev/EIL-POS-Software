@@ -37,18 +37,14 @@
                     <i class="link-icon" data-feather="book"></i>
                     <span class="link-title">Branches</span>
                 </a>
-                <div class="collapse" id="general-pages">
-                    <ul class="nav sub-menu">
-                        <li class="nav-item">
-                            <a href="{{ route('branch') }}" class="nav-link">Add Branch </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('branch.view') }}" class="nav-link">Manage Branch</a>
-                        </li>
-
-
-                    </ul>
-                </div>
+                
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('customer.add') }}" role="button" aria-controls="general-pages">
+                    <i class="link-icon" data-feather="book"></i>
+                    <span class="link-title">Customer</span>
+                </a>
+                
             </li>
             <li class="nav-item nav-category">Inventory</li>
             <li class="nav-item">

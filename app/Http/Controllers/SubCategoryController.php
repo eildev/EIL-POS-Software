@@ -61,5 +61,13 @@ class SubCategoryController extends Controller
         ]);
         // return view('products.subcategory')->compact('subcategoryData');
      }
-
+     //delete
+     public function destroy($id){
+        $subcategory = Subcategory::findOrFail($id);
+        $subcategory->delete();
+    
+        return response()->json(['status' => 200, 'message' => 'Subcategory deleted successfully']);
+     }
 }
+
+

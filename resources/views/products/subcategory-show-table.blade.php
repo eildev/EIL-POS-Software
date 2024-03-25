@@ -16,7 +16,7 @@
 </td>
 <td><a href="{{route('subcategory.edit',$subcategory->id)}}" class="btn btn-sm btn-xs bg-info" data-bs-toggle="modal"
                     data-bs-target="#exampleModalLongScollableEdit" ><i class="edit-icon "  data-feather="edit"></i></a>
-    <a href=""class="btn btn-sm btn-xs bg-danger"><i class="delete-icon" data-feather="trash-2"></i> </a>
+    <a href=""class="btn btn-sm btn-xs bg-danger delete-subcategory" data-subcategory-id="{{$subcategory->id}}"><i class="delete-icon" data-feather="trash-2"></i> </a>
 </td>
 </tr>
 @endforeach

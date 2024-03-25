@@ -227,6 +227,28 @@
             }
         });
        
-
+/////////////////////////Delete Subcategory //////////////////
+    //  $('.delete-subcategory').on('click', function(e) {
+    //     e.preventDefault();
+    //     var subcategoryId = $(this).data('subcategory-id');
+    //     $.ajax({
+    //         url: '/subcategory/delete/' + subcategoryId,
+    //         type: 'DELETE',
+    //         data: {
+    //             _token: '{{ csrf_token() }}'
+    //         },
+    //         success: function(response) {
+    //             if (response.status == 200) {
+    //                 // Optionally, update the UI to reflect the deletion
+    //                 alert('Subcategory deleted successfully');
+    //             } else {
+    //                 alert('Failed to delete subcategory');
+    //             }
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error(xhr.responseText);
+    //         }
+    //     });
+    // });
     </script>
 @endsection

@@ -21,6 +21,7 @@
                                 <tr>
                                     <th>SN</th>
                                     <th>Category Name</th>
+                                    <th>Image</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -70,7 +71,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary save_category">Save</button>
-                </div></form>
+                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -135,7 +137,7 @@
 
 
             // show category
-            function categoryView(){
+            function categoryView() {
                 $.ajax({
                     url: '/category/view',
                     method: 'GET',

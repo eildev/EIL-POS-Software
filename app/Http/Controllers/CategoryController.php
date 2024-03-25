@@ -22,6 +22,10 @@ class CategoryController extends Controller
         ]);
 
         if ($validator->passes()) {
+            if ($request->image) {
+                $imageName = rand() . '.' . $request->logo->extension();
+                $request->logo->move(public_path('uploads/branch/'), $imageName);
+            }
             $category = new Category;
             $category->name =  $request->name;
             $category->slug = Str::slug($request->name);

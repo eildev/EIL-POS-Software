@@ -52,24 +52,12 @@
             </li>
             <li class="nav-item nav-category">Suuplier</li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#general-pages" role="button" aria-expanded="false"
+                <a class="nav-link"  href="{{route('branch.view')}}" role="button"
                     aria-controls="general-pages">
                     <i class="link-icon" data-feather="book"></i>
                     <span class="link-title">Branches</span>
-                    <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
-                <div class="collapse" id="general-pages">
-                    <ul class="nav sub-menu">
-                        <li class="nav-item">
-                            <a href="{{route('branch')}}" class="nav-link">Add Branch </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('branch.view')}}" class="nav-link">Manage Branch</a>
-                        </li>
-                       
-                     
-                    </ul>
-                </div>
+               
             </li>
             <li class="nav-item nav-category">Inventory</li>
             <li class="nav-item">

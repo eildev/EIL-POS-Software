@@ -74,8 +74,8 @@
                 <div class="col-sm-10">
                    <img class="rounded avatar-lg" id ="showImage" src="{{asset('uploads/branch/'. $branch->logo)}}" alt="logo" height="60px" width="60px">
                    @error('logo')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                 </div>
             </div>
         </div>

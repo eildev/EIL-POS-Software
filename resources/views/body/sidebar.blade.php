@@ -45,6 +45,8 @@
                     <i class="link-icon" data-feather="book"></i>
                     <span class="link-title">Category</span>
                 </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('subcategory') }}" class="nav-link">
                     <i class="link-icon" data-feather="book"></i>
                     <span class="link-title">Sub Category</span>

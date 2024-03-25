@@ -1,8 +1,8 @@
-@php 
+@php
     $serialNumber = 1;
 @endphp
-@if ($subCategories->count() > 0)
-@foreach($subCategories as $key => $subcategory)
+@if ($subcategories->count() > 0)
+@foreach($subcategories as $key => $subcategory)
 <tr>
 <td>{{$serialNumber++}}</td>
 <td>{{$subcategory->name?? ''}}</td>
@@ -14,7 +14,7 @@
     <a href="" class="btn btn-sm bg-warning">Inactive</a>
     @endif
 </td>
-<td><a href="" class="btn btn-sm btn-xs bg-info"><i class="edit-icon " data-feather="edit"></i></a> 
+<td><a href="" class="btn btn-sm btn-xs bg-info"><i class="edit-icon " data-feather="edit"></i></a>
     <a href=""class="btn btn-sm btn-xs bg-danger"><i class="delete-icon" data-feather="trash-2"></i> </a>
 </td>
 </tr>
@@ -28,4 +28,4 @@
                     data-feather="plus"></i></button>
         </div>
     </td>
-@endif 
+@endif

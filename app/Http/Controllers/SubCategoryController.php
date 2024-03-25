@@ -11,8 +11,8 @@ class SubCategoryController extends Controller
     //subcategory page view
     public function index(){
         $categories =Category::latest()->get();
-        $subCategories =SubCategory::get();
-        return view('products.subcategory',compact('categories','subCategories'));
+        $subcategories =SubCategory::get();
+        return view('products.subcategory',compact('categories','subcategories'));
     }//End Method
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
@@ -37,7 +37,7 @@ class SubCategoryController extends Controller
             return response()->json([
                 'status' => 200,
                 'message' => 'SubCategory Save Successfully',
-             //   'data' => $subcategory 
+             //   'data' => $subcategory
             ]);
         }
         return response()->json([
@@ -46,10 +46,10 @@ class SubCategoryController extends Controller
              ]);
             }
 
-     ///Category view 
+     ///Category view
      public function view()
      {
-         $subcategories = SubCategory::get();
+         $subcategories = SubCategory::all();
          return view('products.subcategory-show-table',compact('subcategories'))->render();
      }
 

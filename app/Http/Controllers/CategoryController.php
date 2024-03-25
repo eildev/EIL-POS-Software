@@ -22,7 +22,6 @@ class CategoryController extends Controller
         ]);
 
         if ($validator->passes()) {
-            $categories = Category::all();
             $category = new Category;
             $category->name =  $request->name;
             $category->slug = Str::slug($request->name);
@@ -30,7 +29,6 @@ class CategoryController extends Controller
             return response()->json([
                 'status' => 200,
                 'message' => 'Category Save Successfully',
-                'data' => $categories
             ]);
         }
         return response()->json([

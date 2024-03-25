@@ -11,20 +11,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        // $categories = Category::get();
-        // if ($categories) {
-        //     return response()->json([
-        //         'status' => 200,
-        //         'categories' => $categories
-        //     ]);
-        // } else {
-        //     return response()->json([
-        //         'status' => 500,
-        //         'categories' => "Data Not Found"
-        //     ]);
-        // }
-
-        return view('products.category');
+        $categories = Category::get();
+        return view('products.category',compact('categories'));
     }
     public function store(Request $request)
     {
@@ -34,7 +22,6 @@ class CategoryController extends Controller
         ]);
 
         if ($validator->passes()) {
-            $categories = Category::all();
             $category = new Category;
             $category->name =  $request->name;
             $category->slug = Str::slug($request->name);
@@ -42,7 +29,6 @@ class CategoryController extends Controller
             return response()->json([
                 'status' => 200,
                 'message' => 'Category Save Successfully',
-                'data' => $categories
             ]);
         }
         return response()->json([
@@ -53,17 +39,7 @@ class CategoryController extends Controller
     public function view()
     {
         $categories = Category::get();
-        if ($categories->count() > 0) {
-            return response()->json([
-                'status' => 200,
-                'categories' => $categories
-            ]);
-        } else {
-            return response()->json([
-                'status' => 500,
-                'message' => "Data Not Found"
-            ]);
-        }
+        return view('products.category-show-table',compact('categories'))->render();
     }
     public function edit($id)
     {

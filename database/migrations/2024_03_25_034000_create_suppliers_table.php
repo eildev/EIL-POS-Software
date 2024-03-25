@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('branch_id')->unsigned();
             $table->string('name');
@@ -20,10 +20,11 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->decimal('opening_receivable', 12, 2)->nullable();
             $table->decimal('opening_payable', 12, 2)->nullable();
-            // // calculated data
+            // calculated
             $table->decimal('wallet_balance',14,2)->default(0);
             $table->decimal('total_receivable',20,2)->default(0);
             $table->decimal('total_payable',20,2)->default(0);
+
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
             $table->timestamps();
         });
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('suppliers');
     }
 };

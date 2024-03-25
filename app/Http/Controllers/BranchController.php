@@ -8,7 +8,7 @@ class BranchController extends Controller
 {
    public function  index(){
 
-    return view('branches.index');
+    return view('pos.branches.index');
    }//
 
    public function store(Request $request){
@@ -34,16 +34,16 @@ class BranchController extends Controller
             'message' =>'branch Created Successfully',
             'alert-type'=> 'info'
          );
-        return redirect()->route('branch.view')->with($notification);
+        return redirect()->route('pos.branch.view')->with($notification);
     }
    }//End Method
    public function BranchView(){
     $branches = Branch::latest()->get();
-    return view('branches.all-branches',compact('branches'));
+    return view('pos.branches.all-branches',compact('branches'));
    }//End Method
    public function BranchEdit($id){
     $branch = Branch::find($id);
-    return view('branches.edit-branch',compact('branch'));
+    return view('pos.branches.edit-branch',compact('branch'));
    }//End Method
    public function BranchUpdate(Request $request,$id){
    
@@ -74,7 +74,7 @@ class BranchController extends Controller
             'message' =>'branch Updated Successfully',
             'alert-type'=> 'info'
          );
-        return redirect()->route('branch.view')->with($notification);
+        return redirect()->route('pos.branch.view')->with($notification);
     
         }else{
             $request->validate([

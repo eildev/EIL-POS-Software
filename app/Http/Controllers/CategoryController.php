@@ -12,7 +12,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::get();
-        return view('products.category',compact('categories'));
+        return view('pos.products.category',compact('categories'));
     }
     public function store(Request $request)
     {
@@ -39,7 +39,7 @@ class CategoryController extends Controller
     public function view()
     {
         $categories = Category::get();
-        return view('products.category-show-table',compact('categories'))->render();
+        return view('pos.products.category-show-table',compact('categories'))->render();
     }
     public function edit($id)
     {

@@ -26,7 +26,7 @@
                                 </tr>
                             </thead>
                             <tbody class="showData">
-                                @include('products.category-show-table');
+                                @include('pos.products.category-show-table');
                             </tbody>
                         </table>
                     </div>

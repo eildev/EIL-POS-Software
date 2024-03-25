@@ -12,7 +12,7 @@ class SubCategoryController extends Controller
     public function index(){
         $categories =Category::latest()->get();
         $subcategories =SubCategory::get();
-        return view('products.subcategory',compact('categories','subcategories'));
+        return view('pos.products.subcategory',compact('categories','subcategories'));
     }//End Method
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
@@ -50,7 +50,7 @@ class SubCategoryController extends Controller
      public function view()
      {
          $subcategories = SubCategory::all();
-         return view('products.subcategory-show-table',compact('subcategories'))->render();
+         return view('pos.products.subcategory-show-table',compact('subcategories'))->render();
      }
      public function edit($id){
         $subcategoryData = SubCategory::findOrFail($id);

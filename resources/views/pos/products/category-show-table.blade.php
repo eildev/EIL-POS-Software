@@ -15,7 +15,7 @@
                     data-bs-toggle="modal" data-bs-target="#edit">
                     <i data-feather="edit"></i>
                 </a>
-                <a href="#" class="btn btn-danger btn-icon" data-id={{ $category->id }}>
+                <a href="#" class="btn btn-danger btn-icon category_delete" data-id={{ $category->id }}>
                     <i data-feather="trash-2"></i>
                 </a>
             </td>

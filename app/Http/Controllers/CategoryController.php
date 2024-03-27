@@ -63,47 +63,68 @@ class CategoryController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $category = Category::findOrFail($id);
-        if ($category) {
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+        ]);
+        if ($validator->passes()) {
+            $category = Category::findOrFail($id);
+            $category->name =  $request->name;
+            $category->slug = Str::slug($request->name);
+            if ($request->image) {
+                $imageName = rand() . '.' . $request->image->extension();
+                $request->image->move(public_path('uploads/category/'), $imageName);
+                if ($category->image) {
+                    $previousImagePath = public_path('uploads/category/') . $category->image;
+                    if (file_exists($previousImagePath)) {
+                        unlink($previousImagePath);
+                    }
+                }
+                $category->image = $imageName;
+            }
+
+            $category->save();
             return response()->json([
                 'status' => 200,
-                'category' => $category
+                'message' => 'Category Update Successfully',
             ]);
         } else {
             return response()->json([
-                'status' => 500,
-                'message' => "Data Not Found"
+                'status' => '500',
+                'error' => $validator->messages()
             ]);
         }
     }
     public function status($id)
     {
         $category = Category::findOrFail($id);
-        if ($category) {
-            return response()->json([
-                'status' => 200,
-                'category' => $category
-            ]);
+        if ($category->status == 0) {
+            $newStatus = 1;
         } else {
-            return response()->json([
-                'status' => 500,
-                'message' => "Data Not Found"
-            ]);
+            $newStatus = 0;
         }
+
+        $category->update([
+            'status' => $newStatus
+        ]);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Status Changed Successfully',
+        ]);
     }
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
-        if ($category) {
-            return response()->json([
-                'status' => 200,
-                'category' => $category
-            ]);
-        } else {
-            return response()->json([
-                'status' => 500,
-                'message' => "Data Not Found"
-            ]);
+        if ($category->image) {
+            $previousImagePath = public_path('uploads/category/') . $category->image;
+            if (file_exists($previousImagePath)) {
+                unlink($previousImagePath);
+            }
         }
+        $category->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Category Deleted Successfully',
+        ]);
     }
 }

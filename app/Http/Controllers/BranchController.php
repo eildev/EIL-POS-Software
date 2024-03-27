@@ -34,12 +34,12 @@ class BranchController extends Controller
             'message' =>'branch Created Successfully',
             'alert-type'=> 'info'
          );
-        return redirect()->route('pos.branches.all-branches')->with($notification);
+        return redirect()->route('branch.view')->with($notification);
     }
    }//End Method
    public function BranchView(){
     $branches = Branch::latest()->get();
-    return view('pos.branches.all-branches',compact('branches'));
+    return view('pos.branches.all_branches',compact('branches'));
    }//End Method
    public function BranchEdit($id){
     $branch = Branch::find($id);
@@ -74,7 +74,7 @@ class BranchController extends Controller
             'message' =>'branch Updated Successfully',
             'alert-type'=> 'info'
          );
-        return redirect()->route('pos.branches.all-branches')->with($notification);
+        return redirect()->back()->with($notification);
     
         }else{
             $request->validate([
@@ -93,7 +93,7 @@ class BranchController extends Controller
                 'message' =>'branch Updated  Successfully without logo ',
                 'alert-type'=> 'info'
              );
-            return redirect()->route('pos.branches.all-branches')->with($notification);
+            return redirect()->route('branch.view')->with($notification);
         }
    }//End Method
    public function BranchDelete($id){

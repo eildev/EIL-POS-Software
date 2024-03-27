@@ -1,17 +1,17 @@
 @extends('master')
 @section('admin')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <div class="row">
 <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
     <div class="">
-        <h4 class="text-right"><a href="{{route('branch.view')}}" class="btn btn-info">View All Customer</a></h4>
+		
+        <h4 class="text-right"><a href="{{route('customer.view')}}" class="btn btn-info">View All Customer</a></h4>
     </div>
 </div>
 <div class="col-md-12 stretch-card">
 <div class="card">
 	<div class="card-body">
 		<h6 class="card-title text-info">Add Customer</h6>
-			<form id="myValidForm" action="{{route(customer.store)}}" method="post" >
+			<form id="myValidForm" action="{{route('customer.store')}}" method="post"  >
 				@csrf
 				<div class="row">
 					<!-- Col -->
@@ -75,8 +75,10 @@
 					</div><!-- Col -->
 					<!-- Col -->
 				</div><!-- Row -->
+				<div >
+				<input type="submit" class="btn btn-primary submit" value="Save">
+				</div>
 			</form>
-			<button type="submit" class="btn btn-primary submit">Save</button>
 	</div>
 </div>
 </div>

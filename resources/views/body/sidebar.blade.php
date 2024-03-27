@@ -40,7 +40,7 @@
                 
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('customer.add') }}" role="button" aria-controls="general-pages">
+                <a class="nav-link" href="{{ route('customer.view') }}" role="button" aria-controls="general-pages">
                     <i class="link-icon" data-feather="book"></i>
                     <span class="link-title">Customer</span>
                 </a>

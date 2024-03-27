@@ -78,8 +78,52 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signupForm" class="categoryForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Category Name</label>
+                            <input id="defaultconfig category_name" class="form-control" maxlength="250" name="name"
+                                type="text">
+                        </div>
+                        <div class="mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Category Image</h6>
+                                    <div style="height:150px;position:relative">
+                                        <button class="btn btn-info edit_upload_img" style="position: absolute;top:50%;left:50%;transform:translate(-50%,-50%)">Browse</button>
+                                        <img class="img-fluid" src="{{ asset('uploads/category/387707397.webp') }}" style="height:100%; object-fit:cover">
+                                    </div>
+                                    <input hidden type="file" class="categoryImage edit_image" name="image" id="myDropify" />
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary update_category d-none">Update</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script>
+        const edit_upload_img = document.querySelector('.edit_upload_img');
+        const edit_image = document.querySelector('.edit_image');
+        edit_upload_img.addEventListener('click', function(e) {
+            e.preventDefault();
+            edit_image.click();
+        });
         $(document).ready(function() {
             // save category
             const saveCategory = document.querySelector('.save_category');

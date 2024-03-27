@@ -12,7 +12,7 @@
             </td>
             <td>
                 <a href="#" class="btn btn-primary btn-icon category_edit" data-id={{ $category->id }}
-                    data-bs-toggle="modal" data-bs-target="#exampleModalLongScollable">
+                    data-bs-toggle="modal" data-bs-target="#edit">
                     <i data-feather="edit"></i>
                 </a>
                 <a href="#" class="btn btn-danger btn-icon" data-id={{ $category->id }}>

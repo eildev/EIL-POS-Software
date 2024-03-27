@@ -34,7 +34,7 @@ class BranchController extends Controller
             'message' =>'branch Created Successfully',
             'alert-type'=> 'info'
          );
-        return redirect()->route('pos.branch.view')->with($notification);
+        return redirect()->route('pos.branches.all-branches')->with($notification);
     }
    }//End Method
    public function BranchView(){
@@ -74,7 +74,7 @@ class BranchController extends Controller
             'message' =>'branch Updated Successfully',
             'alert-type'=> 'info'
          );
-        return redirect()->route('pos.branch.view')->with($notification);
+        return redirect()->route('pos.branches.all-branches')->with($notification);
     
         }else{
             $request->validate([
@@ -93,7 +93,7 @@ class BranchController extends Controller
                 'message' =>'branch Updated  Successfully without logo ',
                 'alert-type'=> 'info'
              );
-            return redirect()->route('branch.view')->with($notification);
+            return redirect()->route('pos.branches.all-branches')->with($notification);
         }
    }//End Method
    public function BranchDelete($id){
@@ -107,6 +107,6 @@ class BranchController extends Controller
         'message' =>'Branch Deleted Successfully',
         'alert-type'=> 'info'
      );
-    return redirect()->route('branch.view')->with($notification);
+    return redirect()->back()->with($notification);
    }//End Method
 }

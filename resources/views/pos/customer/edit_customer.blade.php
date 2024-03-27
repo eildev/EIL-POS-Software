@@ -9,7 +9,7 @@
 <div class="col-md-12 stretch-card">
 <div class="card">
 	<div class="card-body">
-		<h6 class="card-title text-info">Add Customer</h6>
+		<h6 class="card-title text-info">Edit Customer</h6>
 			<form id="myValidForm" action="{{route('customer.update',$customer->id)}}" method="post" >
 				@csrf
 				<div class="row">

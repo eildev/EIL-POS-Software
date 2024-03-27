@@ -4,16 +4,18 @@
             <td>{{ $key + 1 }}</td>
             <td>{{ $category->name ?? '' }}</td>
             <td>
-
+                <img src="{{ $category->image ? asset('uploads/category/' . $category->image) : asset('dummy/image.jpg') }}"
+                    alt="cat-image">
             </td>
             <td>
                 <button class="btn btn-success">Status</button>
             </td>
             <td>
-                <a href="" class="btn btn-primary btn-icon">
+                <a href="#" class="btn btn-primary btn-icon category_edit" data-id={{ $category->id }}
+                    data-bs-toggle="modal" data-bs-target="#exampleModalLongScollable">
                     <i data-feather="edit"></i>
                 </a>
-                <a href="#" class="btn btn-danger btn-icon">
+                <a href="#" class="btn btn-danger btn-icon" data-id={{ $category->id }}>
                     <i data-feather="trash-2"></i>
                 </a>
             </td>

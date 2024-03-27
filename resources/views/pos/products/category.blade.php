@@ -71,6 +71,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary save_category">Save</button>
+                    <button type="button" class="btn btn-primary update_category d-none">Update</button>
                 </div>
                 </form>
             </div>
@@ -136,7 +137,28 @@
         });
         $('.category_edit').click(function(e) {
             e.preventDefault();
-            alert('OK');
+            // alert(this.getAttribute('data-id'));
+            let id = this.getAttribute('data-id');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: `/category/edit/${id}`,
+                type: 'GET',
+                success: function(data) {
+                    // console.log(data.category)
+                    $('.modal-title').text('Edit Category');
+                    $('.save_category').hide();
+                    $('.update_category').removeClass('d-none');
+                    $('.category_name').val(data.category.name);
+                    $('.dropify-render').html(
+                        `<img src="http://127.0.0.1:8000/uploads/category/${data.category?.image ?? ''}" alt="cat-image">`
+                        );
+
+                }
+            });
         })
     </script>
 @endsection

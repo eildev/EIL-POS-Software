@@ -5,6 +5,7 @@ use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProductsSizeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -74,6 +75,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/customer/edit/{id}', 'CustomerEdit')->name('customer.edit');
         Route::post('/customer/update/{id}', 'CustomerUpdate')->name('customer.update');
         Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
+    });
+        // Product Size related route(n)
+    Route::controller(ProductsSizeController::class)->group(function () {
+        Route::get('/product/size/add', 'ProductSizeAdd')->name('product.size.add');
+        Route::post('/product/size/store', 'ProductSizeStore')->name('product.size.store');
+        Route::get('/product/size/view', 'ProductSizeView')->name('product.size.view');
+        Route::get('/product/size/edit/{id}', 'ProductSizeEdit')->name('product.size.edit');
+        Route::post('/product/size/update/{id}', 'ProductSizeUpdate')->name('product.size.update');
+        Route::get('/product/size/delete/{id}', 'ProductSizeDelete')->name('product.size.delete');
     });
 });
 

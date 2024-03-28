@@ -52,6 +52,7 @@
                             <label for="name" class="form-label">Category Name</label>
                             <input id="defaultconfig" class="form-control category_name" maxlength="250" name="name"
                                 type="text">
+                            <span class="text-danger category_name_error"></span>
                         </div>
                         <div class="mb-3">
                             <div class="card">
@@ -135,6 +136,10 @@
             });
         });
 
+        $('.category_name').keyup(function() {
+            $('.category_name_error').hide();
+            $('.category_name').css('border-color', 'green');
+        });
 
 
         $(document).ready(function() {
@@ -156,6 +161,7 @@
                     contentType: false,
                     success: function(res) {
                         if (res.status == 200) {
+
                             $('.category_name').val('');
                             $('#exampleModalLongScollable').modal('hide');
                             Swal.fire({
@@ -167,31 +173,34 @@
                             });
                             formData.delete(entry[0]);
                             categoryView();
+                            // categoryViewAll();
                         } else {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "warning",
-                                title: res.error.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            console.log(res)
+                            $('.category_name').css('border-color', 'red');
+                            $('.category_name').focus();
+                            $('.category_name_error').show();
+                            $('.category_name_error').text(res.error.name);
+
                         }
                     }
                 });
             })
 
 
-            // show category
-            function categoryView() {
-                $.ajax({
-                    url: '/category/view',
-                    method: 'GET',
-                    success: function(data) {
-                        $('.showData').html(data);
-                    }
-                })
-            }
+
         });
+
+
+        // show category
+        function categoryView() {
+            $.ajax({
+                url: '/category/view',
+                method: 'GET',
+                success: function(data) {
+                    $('.showData').html(data);
+                }
+            })
+        }
 
 
         // edit category 
@@ -300,5 +309,31 @@
                 }
             });
         })
+
+        // category Status 
+        $(document).ready(function() {
+            $('.categoryButton').click(function() {
+                var categoryId = $(this).data('id');
+                $.ajax({
+                    url: '/category/status/' + categoryId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.status == 200) {
+                            var button = $('#categoryButton_' + categoryId);
+                            if (response.newStatus == 1) {
+                                button.removeClass('btn-danger').addClass('btn-success').text(
+                                    'Active');
+                            } else {
+                                button.removeClass('btn-success').addClass('btn-danger').text(
+                                    'Inactive');
+                            }
+                        }
+                    }
+                });
+            });
+        });
     </script>
 @endsection

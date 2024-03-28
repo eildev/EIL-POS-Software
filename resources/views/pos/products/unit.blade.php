@@ -1,0 +1,344 @@
+@extends('master')
+@section('admin')
+    <nav class="page-breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Unit</li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="card-title">Unit Table</h6>
+                        <button class="btn btn-rounded-primary btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#exampleModalLongScollable"><i data-feather="plus"></i></button>
+                    </div>
+                    <div id="" class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>Unit Name</th>
+                                    <th>Related To Unit</th>
+                                    <th>Operator</th>
+                                    <th>Related By Value</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="showData">
+                                @include('pos.products.unit-show');
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLongScollable" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add Unit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signupForm" class="unitForm row">
+                        <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Unit Name</label>
+                            <input id="defaultconfig" class="form-control unit_name" maxlength="39" name="name"
+                                type="text" onkeyup="errorRemove(this);">
+                            <span class="text-danger unit_name_error"></span>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Related To Unit</label>
+                            <input id="defaultconfig" class="form-control related_to_unit" maxlength="39"
+                                name="related_to_unit" type="text">
+                            <span class="text-danger related_to_unit_error"></span>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="ageSelect" class="form-label">Operator</label>
+                            <select class="form-select related_sign" name="related_sign">
+                                <option selected disabled>Select Operator Sign</option>
+                                <option value="+">(+)addition operator</option>
+                                <option value="-">(-)subtraction operator</option>
+                                <option value="*">(*)multiplication operator</option>
+                                <option value="/">(/)Division operator</option>
+                            </select>
+                            <span class="text-danger related_sign_error"></span>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Related By Value</label>
+                            <input id="defaultconfig" class="form-control related_by" maxlength="10" name="related_by"
+                                type="number">
+                            <span class="text-danger related_by_error"></span>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary save_unit">Save</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Unit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signupForm" class="editUnitForm">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Unit Name</label>
+                            <input id="defaultconfig" class="form-control edit_unit_name" maxlength="39" name="name"
+                                type="text">
+                            <span class="text-danger edit_unit_name_error"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Related To Unit</label>
+                            <input id="defaultconfig" class="form-control edit_related_to_unit" maxlength="39"
+                                name="related_to_unit" type="text" onkeyup="errorRemove(this());">
+                            <span class="text-danger edit_related_to_unit_error"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ageSelect" class="form-label">Operator</label>
+                            <select class="form-select edit_related_sign" name="related_sign"
+                                onclick="errorRemove(this());">
+                                <option selected disabled>Select Operator Sign</option>
+                                <option value="+">(+)addition operator</option>
+                                <option value="-">(-)subtraction operator</option>
+                                <option value="*">(*)multiplication operator</option>
+                                <option value="/">(/)Division operator</option>
+                            </select>
+                            <span class="text-danger edit_related_sign_error"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Related By Value</label>
+                            <input id="defaultconfig" class="form-control edit_related_by" maxlength="10"
+                                name="related_by" type="number" onkeyup="errorRemove(this());">
+                            <span class="text-danger edit_related_by_error"></span>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary update_unit">Update</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+
+
+            function testFunc(e) {
+                alert('ok');
+            }
+
+            function errorRemove(element) {
+                alert('ok')
+                $(element).siblings('span').hide();
+                $(element).css('border-color', 'green');
+            }
+
+            // show error 
+            function showError(name, message) {
+                $(name).css('border-color', 'red'); // Highlight input with red border
+                $(name).focus(); // Set focus to the input field
+                $(`${name}_error`).show().text(message); // Show error message
+            }
+            // save unit
+            const saveUnit = document.querySelector('.save_unit');
+            saveUnit.addEventListener('click', function(e) {
+                e.preventDefault();
+                let formData = new FormData($('.unitForm')[0]);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '/unit/store',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status == 200) {
+                            $('#exampleModalLongScollable').modal('hide');
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: res.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            $('.unitForm')[0].reset();
+                            // Refresh unit view
+                            unitView();
+                        } else {
+                            showError('.unit_name', res.error.name);
+                            showError('.related_to_unit', res.error.related_to_unit);
+                            showError('.related_sign', res.error.related_sign);
+                            showError('.related_by', res.error.related_by);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // // Error handling for AJAX request
+                        // console.error(xhr.responseText);
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "warning",
+                            title: xhr.responseText,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            })
+
+
+            // show Unit
+            function unitView() {
+                $.ajax({
+                    url: '/unit/view',
+                    method: 'GET',
+                    success: function(data) {
+                        $('.showData').html(data);
+                    }
+                })
+            }
+
+            // edit Unit 
+            $(document).on('click', '.unit_edit', function(e) {
+                e.preventDefault();
+                // console.log('0k');
+                let id = this.getAttribute('data-id');
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: `/unit/edit/${id}`,
+                    type: 'GET',
+                    success: function(res) {
+                        if (res.status == 200) {
+                            $('.edit_unit_name').val(res.unit.name);
+                            $('.edit_related_to_unit').val(res.unit.related_to_unit);
+                            $('.edit_related_sign').val(res.unit.related_sign);
+                            $('.edit_related_by').val(res.unit.related_by);
+                            $('.update_unit').val(res.unit.id);
+                        } else {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "warning",
+                                title: "No Data Found",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    }
+                });
+            })
+
+            // update unit 
+            $('.update_unit').click(function(e) {
+                e.preventDefault();
+                // alert('ok');
+                let id = $(this).val();
+                // console.log(id);
+                let formData = new FormData($('.editUnitForm')[0]);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: `/unit/update/${id}`,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status == 200) {
+                            $('#edit').modal('hide');
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: res.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            formData.delete(entry[0]);
+                            unitView();
+                        } else {
+                            showError('.edit_unit_name', res.error.name);
+                            showError('.edit_related_to_unit', res.error.related_to_unit);
+                            showError('.edit_related_sign', res.error.related_sign);
+                            showError('.edit_related_by', res.error.related_by);
+                        }
+                    }
+                });
+            })
+            // unit Delete 
+            $('.unit_delete').click(function(e) {
+                e.preventDefault();
+                let id = this.getAttribute('data-id');
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to Delete this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: `/unit/destroy/${id}`,
+                            type: 'GET',
+                            success: function(data) {
+                                if (data.status == 200) {
+                                    Swal.fire({
+                                        title: "Deleted!",
+                                        text: "Your file has been deleted.",
+                                        icon: "success"
+                                    });
+                                    unitView();
+                                } else {
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "warning",
+                                        title: "Deleted Unsuccessful!",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                }
+
+
+                            }
+                        });
+                    }
+                });
+            })
+        });
+    </script>
+@endsection

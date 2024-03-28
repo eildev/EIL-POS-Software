@@ -35,11 +35,12 @@ class CategoryController extends Controller
                 'status' => 200,
                 'message' => 'Category Save Successfully',
             ]);
+        } else {
+            return response()->json([
+                'status' => '500',
+                'error' => $validator->messages()
+            ]);
         }
-        return response()->json([
-            'status' => '500',
-            'error' => $validator->messages()
-        ]);
     }
     public function view()
     {
@@ -98,17 +99,13 @@ class CategoryController extends Controller
     public function status($id)
     {
         $category = Category::findOrFail($id);
-        if ($category->status == 0) {
-            $newStatus = 1;
-        } else {
-            $newStatus = 0;
-        }
-
+        $newStatus = $category->status == 0 ? 1 : 0;
         $category->update([
             'status' => $newStatus
         ]);
         return response()->json([
             'status' => 200,
+            'newStatus' => $newStatus,
             'message' => 'Status Changed Successfully',
         ]);
     }
@@ -127,4 +124,14 @@ class CategoryController extends Controller
             'message' => 'Category Deleted Successfully',
         ]);
     }
+
+
+    // public function categoryAll()
+    // {
+    //     $categories = Category::all();
+    //     return  response()->json([
+    //         'status' => 200,
+    //         'categories' =>  $categories,
+    //     ]);
+    // }
 }

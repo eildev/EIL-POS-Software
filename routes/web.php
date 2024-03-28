@@ -5,6 +5,7 @@ use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,8 +48,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/category/update/{id}', 'update')->name('category.update');
         Route::post('/category/status/{id}', 'status')->name('category.status');
         Route::get('/category/destroy/{id}', 'destroy')->name('category.destroy');
+        // Route::get('/categories/all', 'categoryAll')->name('categories.all');
     });
-        // subcategory related route(n)
+    // subcategory related route(n)
     Route::controller(SubCategoryController::class)->group(function () {
         Route::get('/subcategory', 'index')->name('subcategory');
         Route::post('/subcategory/store', 'store')->name('subcategory.store');
@@ -57,7 +59,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/subcategory/update/{id}', 'update')->name('subcategory.update');
         Route::get('/subcategory/destroy/{id}', 'destroy')->name('subcategory.destroy');
     });
-        // Branch related route(n)
+    // Branch related route(n)
     Route::controller(BranchController::class)->group(function () {
         Route::get('/branch', 'index')->name('branch');
         Route::post('/branch/store', 'store')->name('branch.store');
@@ -66,7 +68,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/branch/update/{id}', 'BranchUpdate')->name('branch.update');
         Route::get('/branch/delete/{id}', 'BranchDelete')->name('branch.delete');
     });
-        // Customer related route(n)
+    // Customer related route(n)
     Route::controller(CustomerController::class)->group(function () {
         Route::get('/customer/add', 'AddCustomer')->name('customer.add');
         Route::post('/customer/store', 'CustomerStore')->name('customer.store');
@@ -74,6 +76,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/customer/edit/{id}', 'CustomerEdit')->name('customer.edit');
         Route::post('/customer/update/{id}', 'CustomerUpdate')->name('customer.update');
         Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
+    });
+    // Unit related route 
+    Route::controller(UnitController::class)->group(function () {
+        Route::get('/unit', 'index')->name('unit');
+        Route::post('/unit/store', 'store')->name('unit.store');
+        Route::get('/unit/view', 'view')->name('unit.view');
+        Route::get('/unit/edit/{id}', 'edit')->name('unit.edit');
+        Route::post('/unit/update/{id}', 'update')->name('unit.update');
+        Route::get('/unit/destroy/{id}', 'destroy')->name('unit.destroy');
+        // Route::get('/categories/all', 'categoryAll')->name('categories.all');
     });
 });
 

@@ -44,7 +44,7 @@ class CategoryController extends Controller
     }
     public function view()
     {
-        $categories = Category::get();
+        $categories = Category::all();
         return view('pos.products.category-show-table', compact('categories'))->render();
     }
     public function edit($id)

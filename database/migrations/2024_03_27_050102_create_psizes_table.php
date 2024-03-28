@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('psizes', function (Blueprint $table) {
             $table->id();
-            $table->integer('size');
+            $table->unsignedBigInteger('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->string('size');
             $table->timestamps();
         });
     }

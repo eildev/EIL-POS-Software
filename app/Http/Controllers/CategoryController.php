@@ -11,8 +11,9 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::get();
-        return view('pos.products.category', compact('categories'));
+        // $categories = Category::get();
+        // return view('pos.products.category', compact('categories'));
+        return view('pos.products.category');
     }
     public function store(Request $request)
     {
@@ -45,7 +46,11 @@ class CategoryController extends Controller
     public function view()
     {
         $categories = Category::all();
-        return view('pos.products.category-show-table', compact('categories'))->render();
+        // return view('pos.products.category-show-table', compact('categories'))->render();
+        return response()->json([
+            "status" => 200,
+            "data" => $categories
+        ]);
     }
     public function edit($id)
     {

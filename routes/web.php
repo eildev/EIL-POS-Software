@@ -9,11 +9,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ProductsSizeController;
 use App\Http\Controllers\ProductsController;
-<<<<<<< HEAD
 use App\Http\Controllers\EmployeeController;
-=======
 use App\Http\Controllers\SupplierController;
->>>>>>> 67e897ad1a13d27fa7f05496304d3c91d38ba646
 use Illuminate\Support\Facades\Route;
 
 /*

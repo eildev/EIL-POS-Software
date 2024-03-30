@@ -10,25 +10,25 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center ">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="card-title">Sub Category Table</h6>
                         <button class="btn btn-rounded-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#exampleModalLongScollable"><i data-feather="plus"></i></button>
                     </div>
-                    <div class="table-responsive">
-                        <table id="dataTableExample" class="table">
+                    <div id="" class="table-responsive">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>SN</th>
-                                    <th>SubCategory Name</th>
-                                    <th>Slug</th>
+                                    <th>Category Name</th>
+                                    <th>Sub Category Name</th>
                                     <th>Image</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody class="showData">
-                                @include('pos.products.subcategory-show-table')
+                                {{-- @include('pos.products.category-show-table'); --}}
                             </tbody>
                         </table>
                     </div>
@@ -44,211 +44,375 @@
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add SubCategory</h5>
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add Sub Category</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="signupForm" method="post">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Select Category</label>
-                               <select class="form-select mb-3" name ="category_id" >
-										<option selected="" value="" >Open this select menu</option>
-                                        @foreach($categories as $category)
-										<option value="{{$category->id}}" class="category_id">{{$category->name}}</option>
-										@endforeach
-									</select>
+                    <form id="signupForm" class="subcategoryForm" enctype="multipart/form-data">
+                    <div class="mb-3 ">
+                            <label for="ageSelect" class="form-label">Select Category</label>
+                            <select class="form-select category_name" name="category_id">
+                                <option selected disabled>Select Category </option>
+                                @foreach ($categories as $category)
+                                <option value="{{ $category->id}}">{{$category->name}}</option>
+                              @endforeach
+                              <span class="text-danger category_name_error"></span>
+                            </select>
+                            <span class="text-danger related_sign_error"></span>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Sub Category Name</label>
                             <input id="defaultconfig" class="form-control subcategory_name" maxlength="250" name="name"
                                 type="text">
+                            <span class="text-danger subcategory_name_error"></span>
                         </div>
-                        <!-- <div class="mb-3">
+                        <div class="mb-3">
                             <div class="card">
                                 <div class="card-body">
-                                    <h6 class="card-title">Sub Category Image</h6>
+                                    <h6 class="card-title">Category Image</h6>
                                     <p class="mb-3 text-warning">Note: <span class="fst-italic">Image not
                                             required. If you
                                             add
                                             a category image
                                             please add a 400 X 400 size image.</span></p>
-                                    <input type="file" class="subcategoryImage" name="subcategoryImage" id="myDropify" />
+                                    <input type="file" class="subcategoryImage" name="image" id="myDropify" />
                                 </div>
                             </div>
-                        </div> -->
-                   
+                        </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary save_subcategory">Save</button>
-                </div> 
-            </form>
+                </div>
+                </form>
             </div>
         </div>
     </div>
 
-<!-- ////////////Edit Modal//////////////// -->
-<div class="modal fade" id="exampleModalLongScollableEdit" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
-        aria-hidden="true">
+    <!--Edit Modal -->
+    <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add SubCategory</h5>
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Sub Category</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                 </div>
-                <div class="modal-body ">
-                    <form id="signupForm" method="post">
+                <div class="modal-body">
+                    <form id="signupForm" class="categoryFormEdit" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Select Category</label>
-                               <select class="form-select mb-3" name ="category_id" >
-										<option selected="" value="" >Open this select menu</option>
-                                        @foreach($categories as $category)
-										<option value="{{$category->id}}" class="category_id">{{$category->name}}</option>
-										@endforeach
-									</select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Sub Category Name</label>
-                            <input id="defaultconfig" value="" class="form-control subcategory_name" maxlength="250" name="name"
+                            <label for="name" class="form-label">Category Name</label>
+                            <input id="defaultconfig" class="form-control edit_category_name" maxlength="250" name="name"
                                 type="text">
+                            <span class="text-danger edit_category_name_error"></span>
                         </div>
-                        <!-- <div class="mb-3">
+                        <div class="mb-3">
                             <div class="card">
                                 <div class="card-body">
-                                    <h6 class="card-title">Sub Category Image</h6>
-                                    <p class="mb-3 text-warning">Note: <span class="fst-italic">Image not
-                                            required. If you
-                                            add
-                                            a category image
-                                            please add a 400 X 400 size image.</span></p>
-                                    <input type="file" class="subcategoryImage" name="subcategoryImage" id="myDropify" />
+                                    <h6 class="card-title">Category Image</h6>
+                                    <div style="height:150px;position:relative">
+                                        <button class="btn btn-info edit_upload_img"
+                                            style="position: absolute;top:50%;left:50%;transform:translate(-50%,-50%)">Browse</button>
+                                        <img class="img-fluid showEditImage" {{-- src="{{ asset('uploads/category/387707397.webp') }}" --}} src=""
+                                            style="height:100%; object-fit:cover">
+                                    </div>
+                                    <input hidden type="file" class="categoryImage edit_image" name="image" />
                                 </div>
                             </div>
-                        </div> -->
-                   
+                        </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary save_subcategory">Save</button>
-                </div> 
-            </form>
+                    <button type="button" class="btn btn-primary update_category">Update</button>
+                </div>
+                </form>
             </div>
         </div>
     </div>
-<!-- ////////////Edit Modal End//////////////// -->
     <script>
-           $(document).ready(function() {
-            // save subcategory 
-            const savesubCategory = document.querySelector('.save_subcategory');
-            savesubCategory.addEventListener('click', function(e) {
+        $(document).ready(function() {
+            // image onload when category edit
+            // const edit_upload_img = document.querySelector('.edit_upload_img');
+            // const edit_image = document.querySelector('.edit_image');
+            // edit_upload_img.addEventListener('click', function(e) {
+            //     e.preventDefault();
+            //     edit_image.click();
+
+            //     edit_image.addEventListener('change', function(e) {
+            //         var reader = new FileReader();
+            //         reader.onload = function(e) {
+            //             document.querySelector('.showEditImage').src = e.target.result;
+            //         }
+            //         reader.readAsDataURL(this.files[0]);
+            //     });
+            // });
+
+            // error remove 
+            // $('.category_name').keyup(function() {
+            //     $('.category_name_error').hide();
+            //     $('.category_name').css('border-color', 'green');
+            // });
+
+            function errorRemove(element) {
+                alert('ok')
+                $(element).siblings('span').hide();
+                $(element).css('border-color', 'green');
+            }
+            // show error 
+            function showError(name, message) {
+                $(name).css('border-color', 'red'); // Highlight input with red border
+                $(name).focus(); // Set focus to the input field
+                $(`${name}_error`).show().text(message); // Show error message
+            }
+
+            // save category
+            const saveSubCategory = document.querySelector('.save_subcategory');
+            saveSubCategory.addEventListener('click', function(e) {
                 e.preventDefault();
+                let formData = new FormData($('.subcategoryForm')[0]);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '/subcategory/store',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status == 200) {
+                            $('#exampleModalLongScollable').modal('hide');
+                            // formData.delete(entry[0]);
+                            // alert('added successfully');
+                            $('.subcategoryForm')[0].reset();
+                           categoryView();
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: res.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        } else {
+                            // console.log(res)
+                            $('.category_name').css('border-color', 'red');
+                            $('.category_name').focus();
+                            $('.subcategory_name').css('border-color', 'red');
+                            $('.subcategory_name').focus();
+                            $('.subcategory_name_error').show();
+                            $('.subcategory_name_error').text(res.error.name);
+                            $('.category_name_error').show();
+                            $('.category_name_error').text(res.error.name);
 
-                let category_id = document.querySelector('.category_id').value;
-                let subcategory_name = document.querySelector('.subcategory_name').value;
-                // let subcategoryImage = document.querySelector('.subcategoryImage').value;
-                
-                //console.log(category_id);
-                // console.log(subcategory_name);
-                //console.log(subcategoryImage);
+                        }
+                    }
+                });
+            })
 
-                if (subcategory_name != "") {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        url: '/subcategory/store',
-                        type: 'POST',
-                        data: {
-                            'subcategory_name': subcategory_name,
-                            'category_id': category_id,
-                            // 'subcategoryImage': subcategoryImage,
-                        },
-                        success: function(res) {
-                            if (res.status == 200) {
-                                $('.category_id').val('');
-                                $('.subcategory_name').val('');
-                                //  $('.subcategoryImage').val('');
-                                $('#exampleModalLongScollable').modal('hide');
-                                Swal.fire({
-                                    position: "top-end",
-                                    icon: "success",
-                                    title: res.message,
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-                               
-                                // console.log(res.data)
-                                subCategoryView();
-                            } else {
-                                Swal.fire({
-                                    position: "top-end",
-                                    icon: "warning",
-                                    title: res.error.message,
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-                            }
-                        }
-                    });
-                } else {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "warning",
-                        title: 'Please enter SubCategory Name',
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
-                }
-            });
-        ///////////////Show Subcategory ////////////
-            // show category 
-             function subCategoryView() {
+
+            // show category
+            function categoryView() {
                 $.ajax({
                     url: '/subcategory/view',
                     method: 'GET',
-                    success: function(data) {
-                    //  console.log(data);
-                        $('.showData').html(data);
+                    success: function(res) {
+                        // console.log(res.data);
+                        const subcategories = res.data;
+                        $('.showData').empty();
+                        $.each(subcategories, function(index, subcategory) {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `
+                            <td>
+                                ${index+1}
+                            </td>
+                            <td>
+                                ${$subcategory.category.name } ?? ""}
+                            </td>
+                            <td>
+                                ${subcategory.name ?? ""}
+                            </td>
+                            <td>
+                                <img src="${subcategory.image ? 'http://127.0.0.1:8000/uploads/subcategory/' + subcategory.image : 'http://127.0.0.1:8000/dummy/image.jpg'}" alt="cat Image">
+                            </td>
+                            <td>
+                                <button id="categoryButton_${subcategory.id}" class="btn btn-success categoryButton"
+                        data-id="${subcategory.id}">Active</button>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-primary btn-icon subcategory_edit" data-id=${subcategory.id} data-bs-toggle="modal" data-bs-target="#edit">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a href="#" class="btn btn-danger btn-icon subcategory_delete" data-id=${subcategory.id}>
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </a>
+                            </td>
+                            `;
+                            $('.showData').append(tr);
+                        })
+
                     }
-                });
+                })
             }
-              ///////////Data Edit Subcategory //////////
-              function EditsubCategory() {
-                $.ajax({
-                    url: '/subcategory/edit',
-                    method: 'GET',
-                    success: function(data) {
-                    //  console.log(data);
-                       
-                    }
-                });
-            }
+            categoryView();
+
+            // edit category 
+            // $(document).on('click', '.subcategory_edit', function(e) {
+            //     e.preventDefault();
+            //     // alert('ok');
+            //     let id = this.getAttribute('data-id');
+            //     // alert(id);
+            //     $.ajaxSetup({
+            //         headers: {
+            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         }
+            //     });
+            //     $.ajax({
+            //         url: `/category/edit/${id}`,
+            //         type: 'GET',
+            //         success: function(data) {
+            //             // console.log(data.category.name);
+            //             $('.edit_category_name').val(data.category.name);
+            //             $('.update_category').val(data.category.id);
+            //             if (data.category.image) {
+            //                 $('.showEditImage').attr('src',
+            //                     'http://127.0.0.1:8000/uploads/category/' + data.category
+            //                     .image);
+            //             } else {
+            //                 $('.showEditImage').attr('src',
+            //                     'http://127.0.0.1:8000/dummy/image.jpg');
+            //             }
+            //         }
+            //     });
+            // })
+
+            // update category 
+            // $('.update_category').click(function(e) {
+            //     e.preventDefault();
+            //     // alert('ok');
+            //     let id = $('.update_category').val();
+            //     // console.log(id);
+            //     let formData = new FormData($('.categoryFormEdit')[0]);
+            //     $.ajaxSetup({
+            //         headers: {
+            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         }
+            //     });
+            //     $.ajax({
+            //         url: `/category/update/${id}`,
+            //         type: 'POST',
+            //         data: formData,
+            //         processData: false,
+            //         contentType: false,
+            //         success: function(res) {
+            //             if (res.status == 200) {
+            //                 $('#edit').modal('hide');
+            //                 $('.categoryFormEdit')[0].reset();
+            //                 categoryView();
+            //                 Swal.fire({
+            //                     position: "top-end",
+            //                     icon: "success",
+            //                     title: res.message,
+            //                     showConfirmButton: false,
+            //                     timer: 1500
+            //                 });
+            //             } else {
+            //                 $('.edit_category_name').css('border-color', 'red');
+            //                 $('.edit_category_name').focus();
+            //                 $('.edit_category_name_error').show();
+            //                 $('.edit_category_name_error').text(res.error.name);
+            //             }
+            //         }
+            //     });
+            // })
+
+
+            // category Delete 
+            // $(document).on('click', '.category_delete', function(e) {
+            //     e.preventDefault();
+            //     // alert("ok")
+            //     let id = this.getAttribute('data-id');
+
+            //     Swal.fire({
+            //         title: "Are you sure?",
+            //         text: "You won't be able to Delete this!",
+            //         icon: "warning",
+            //         showCancelButton: true,
+            //         confirmButtonColor: "#3085d6",
+            //         cancelButtonColor: "#d33",
+            //         confirmButtonText: "Yes, delete it!"
+            //     }).then((result) => {
+            //         if (result.isConfirmed) {
+            //             $.ajaxSetup({
+            //                 headers: {
+            //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //                 }
+            //             });
+            //             $.ajax({
+            //                 url: `/category/destroy/${id}`,
+            //                 type: 'GET',
+            //                 success: function(res) {
+            //                     if (res.status == 200) {
+            //                         Swal.fire({
+            //                             title: "Deleted!",
+            //                             text: "Your file has been deleted.",
+            //                             icon: "success"
+            //                         });
+            //                         categoryView();
+            //                     } else {
+            //                         Swal.fire({
+            //                             position: "top-end",
+            //                             icon: "warning",
+            //                             title: "File Delete Unsuccessful",
+            //                             showConfirmButton: false,
+            //                             timer: 1500
+            //                         });
+            //                     }
+
+            //                 }
+            //             });
+            //         }
+            //     });
+            // })
+
+
+            // category Status 
+            // $(document).ready(function() {
+            //     $('.showData').on('click', '.categoryButton', function() {
+            //         var categoryId = $(this).data('id');
+            //         // alert(categoryId);
+            //         $.ajax({
+            //             url: '/category/status/' + categoryId,
+            //             type: 'POST',
+            //             data: {
+            //                 _token: '{{ csrf_token() }}'
+            //             },
+            //             success: function(response) {
+            //                 if (response.status == 200) {
+            //                     // var button = $('#categoryButton_' + categoryId);
+            //                     if (response.status == 200) {
+            //                         var button = $('#categoryButton_' + categoryId);
+            //                         if (response.newStatus == 1) {
+            //                             button.removeClass('btn-danger').addClass(
+            //                                 'btn-success').text('Active');
+            //                         } else {
+            //                             button.removeClass('btn-success').addClass(
+            //                                 'btn-danger').text('Inactive');
+            //                         }
+            //                     } else {
+            //                         button.removeClass('btn-success').addClass(
+            //                             'btn-danger').text(
+            //                             'Inactive');
+            //                     }
+            //                 }
+            //             }
+            //         });
+            //     });
+            // });
+
+
         });
-       
-/////////////////////////Delete Subcategory //////////////////
-    //  $('.delete-subcategory').on('click', function(e) {
-    //     e.preventDefault();
-    //     var subcategoryId = $(this).data('subcategory-id');
-    //     $.ajax({
-    //         url: '/subcategory/delete/' + subcategoryId,
-    //         type: 'DELETE',
-    //         data: {
-    //             _token: '{{ csrf_token() }}'
-    //         },
-    //         success: function(response) {
-    //             if (response.status == 200) {
-    //                 // Optionally, update the UI to reflect the deletion
-    //                 alert('Subcategory deleted successfully');
-    //             } else {
-    //                 alert('Failed to delete subcategory');
-    //             }
-    //         },
-    //         error: function(xhr, status, error) {
-    //             console.error(xhr.responseText);
-    //         }
-    //     });
-    // });
     </script>
 @endsection

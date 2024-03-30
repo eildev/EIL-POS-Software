@@ -8,14 +8,20 @@
                     alt="cat-image">
             </td>
             <td>
-                <button class="btn btn-success">Status</button>
+                @if ($category->status != 0)
+                    <button id="categoryButton_{{ $category->id }}" class="btn btn-success categoryButton"
+                        data-id="{{ $category->id }}">Active</button>
+                @else
+                    <button id="categoryButton_{{ $category->id }}" class="btn btn-danger categoryButton"
+                        data-id="{{ $category->id }}">Inactive</button>
+                @endif
             </td>
             <td>
                 <a href="#" class="btn btn-primary btn-icon category_edit" data-id={{ $category->id }}
                     data-bs-toggle="modal" data-bs-target="#edit">
                     <i data-feather="edit"></i>
                 </a>
-                <a href="#" class="btn btn-danger btn-icon" data-id={{ $category->id }}>
+                <a href="#" class="btn btn-danger btn-icon category_delete" data-id={{ $category->id }}>
                     <i data-feather="trash-2"></i>
                 </a>
             </td>

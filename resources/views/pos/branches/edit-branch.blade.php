@@ -12,7 +12,7 @@
 <div class="card">
 <div class="card-body">
 
-    <h6 class="card-title">Add Bracnch</h6>
+<h6 class="card-title text-info">Edit Branch</h6>
 
     <form class="forms-sample" action="{{route('branch.update',$branch->id)}}" method="POST" enctype="multipart/form-data">
         @csrf

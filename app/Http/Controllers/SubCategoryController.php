@@ -1,73 +1,55 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Validator;
+
 class SubCategoryController extends Controller
 {
-    //subcategory page view
-    public function index(){
-        $categories =Category::latest()->get();
-        $subcategories =SubCategory::get();
-        return view('pos.products.subcategory',compact('categories','subcategories'));
-    }//End Method
+    public function index()
+    {
+        $categories = Category::get();
+        // return view('pos.products.category', compact('categories'));
+        return view('pos.products.subcategory',compact('categories'));
+    }
     public function store(Request $request){
-        $validator = Validator::make($request->all(), [
-            'category_id' => 'required',
-            'subcategory_name' => 'required|max:255',
-            //  'subcategoryImage' => 'required',
+     $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
         ]);
-        //   dd($request->subcategoryImage);
-          if ($validator->passes()) {
-            // if($request->subcategoryImage){
-            // $imageName = rand() . '.' . $request->subcategoryImage->extension();
-            // $request->subcategoryImage->move(public_path('uploads/subcategory'), $imageName);
-           // $subcategory = SubCategory::all();
-           // dd($imageName);
-            $subcategories = new SubCategory;
-            $subcategories->name =  $request->subcategory_name;
-            $subcategories->slug = Str::slug($request->subcategory_name);
-            $subcategories->category_id =  $request->category_id;
-            //  $subcategories->image =  $imageName;
-           //  $subcategories->image =  $request->image;
-            $subcategories->save();
+
+        if ($validator->passes()) {
+            $subcategory = new SubCategory;
+            if ($request->image) {
+                $imageName = rand() . '.' . $request->image->extension();
+                $request->image->move(public_path('uploads/subcategory'), $imageName);
+                $subcategory->image = $imageName;
+            }
+            $subcategory->name =  $request->name;
+            $subcategory->slug = Str::slug($request->name);
+            $subcategory->category_id =  $request->category_id;
+            $subcategory->save();
             return response()->json([
                 'status' => 200,
-                'message' => 'SubCategory Save Successfully',
-             //   'data' => $subcategory
+                'message' => 'Sub Category Save Successfully',
+            ]);
+        } else {
+            return response()->json([
+                'status' => '500',
+                'error' => $validator->messages()
             ]);
         }
+    }//
+    public function view()
+    {
+        $subcategories = SubCategory::all();
+        // return view('pos.products.category-show-table', compact('categories'))->render();
         return response()->json([
-            'status' => '500',
-            'error' => $validator->messages()
-             ]);
-            }
-
-     ///Category view
-     public function view()
-     {
-         $subcategories = SubCategory::all();
-         return view('pos.products.subcategory-show-table',compact('subcategories'))->render();
-     }
-     public function edit($id){
-        $subcategoryData = SubCategory::findOrFail($id);
-        return response()->json([
-            'status' => 200,
-            'message' => 'SubCategory Save Successfully',
-           'data' => $subcategoryData
+            "status" => 200,
+            "data" => $subcategories
         ]);
-        // return view('products.subcategory')->compact('subcategoryData');
-     }
-     //delete
-     public function destroy($id){
-        $subcategory = Subcategory::findOrFail($id);
-        $subcategory->delete();
-    
-        return response()->json(['status' => 200, 'message' => 'Subcategory deleted successfully']);
-     }
+    }
 }
-
-

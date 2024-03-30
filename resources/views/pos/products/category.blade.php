@@ -210,8 +210,8 @@
                                 <img src="${category.image ? 'http://127.0.0.1:8000/uploads/category/' + category.image : 'http://127.0.0.1:8000/dummy/image.jpg'}" alt="cat Image">
                             </td>
                             <td>
-                                <button id="categoryButton_${category.id}" class="btn btn-success categoryButton"
-                        data-id="${category.id}">Active</button>
+                                <button id="categoryButton_${category.id}" class="btn ${category.status != 0 ? 'btn-success' : 'btn-danger' } categoryButton"
+                        data-id="${category.id}">${category.status != 0 ? 'Active' : 'Inactive'}</button>
                             </td>
                             <td>
                                 <a href="#" class="btn btn-primary btn-icon category_edit" data-id=${category.id} data-bs-toggle="modal" data-bs-target="#edit">

@@ -28,7 +28,6 @@
                                 </tr>
                             </thead>
                             <tbody class="showData">
-                                @include('pos.products.unit-show');
                             </tbody>
                         </table>
                     </div>
@@ -58,12 +57,12 @@
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Related To Unit</label>
                             <input id="defaultconfig" class="form-control related_to_unit" maxlength="39"
-                                name="related_to_unit" type="text">
+                                name="related_to_unit" type="text" onkeyup="errorRemove(this);">
                             <span class="text-danger related_to_unit_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="ageSelect" class="form-label">Operator</label>
-                            <select class="form-select related_sign" name="related_sign">
+                            <select class="form-select related_sign" name="related_sign" onclick="errorRemove(this);">
                                 <option selected disabled>Select Operator Sign</option>
                                 <option value="+">(+)addition operator</option>
                                 <option value="-">(-)subtraction operator</option>
@@ -75,7 +74,7 @@
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Related By Value</label>
                             <input id="defaultconfig" class="form-control related_by" maxlength="10" name="related_by"
-                                type="number">
+                                type="number" onkeyup="errorRemove(this);">
                             <span class="text-danger related_by_error"></span>
                         </div>
                 </div>
@@ -101,19 +100,19 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Unit Name</label>
                             <input id="defaultconfig" class="form-control edit_unit_name" maxlength="39" name="name"
-                                type="text">
+                                type="text" onkeyup="errorRemove(this);">
                             <span class="text-danger edit_unit_name_error"></span>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Related To Unit</label>
                             <input id="defaultconfig" class="form-control edit_related_to_unit" maxlength="39"
-                                name="related_to_unit" type="text" onkeyup="errorRemove(this());">
+                                name="related_to_unit" type="text" onkeyup="errorRemove(this);">
                             <span class="text-danger edit_related_to_unit_error"></span>
                         </div>
                         <div class="mb-3">
                             <label for="ageSelect" class="form-label">Operator</label>
                             <select class="form-select edit_related_sign" name="related_sign"
-                                onclick="errorRemove(this());">
+                                onclick="errorRemove(this);">
                                 <option selected disabled>Select Operator Sign</option>
                                 <option value="+">(+)addition operator</option>
                                 <option value="-">(-)subtraction operator</option>
@@ -125,7 +124,7 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Related By Value</label>
                             <input id="defaultconfig" class="form-control edit_related_by" maxlength="10"
-                                name="related_by" type="number" onkeyup="errorRemove(this());">
+                                name="related_by" type="number" onkeyup="errorRemove(this);">
                             <span class="text-danger edit_related_by_error"></span>
                         </div>
                 </div>
@@ -139,14 +138,12 @@
     </div>
 
     <script>
+        // error remove 
+        function errorRemove(element) {
+            $(element).siblings('span').hide();
+            $(element).css('border-color', 'green');
+        }
         $(document).ready(function() {
-
-            function errorRemove(element) {
-                alert('ok')
-                $(element).siblings('span').hide();
-                $(element).css('border-color', 'green');
-            }
-
             // show error 
             function showError(name, message) {
                 $(name).css('border-color', 'red'); // Highlight input with red border
@@ -172,6 +169,8 @@
                     success: function(res) {
                         if (res.status == 200) {
                             $('#exampleModalLongScollable').modal('hide');
+                            $('.unitForm')[0].reset();
+                            unitView();
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
@@ -179,26 +178,20 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             });
-                            $('.unitForm')[0].reset();
-                            // Refresh unit view
-                            unitView();
                         } else {
-                            showError('.unit_name', res.error.name);
-                            showError('.related_to_unit', res.error.related_to_unit);
-                            showError('.related_sign', res.error.related_sign);
-                            showError('.related_by', res.error.related_by);
+                            if (res.error.name) {
+                                showError('.unit_name', res.error.name);
+                            }
+                            if (res.error.related_to_unit) {
+                                showError('.related_to_unit', res.error.related_to_unit);
+                            }
+                            if (res.error.related_sign) {
+                                showError('.related_sign', res.error.related_sign);
+                            }
+                            if (res.error.related_by) {
+                                showError('.related_by', res.error.related_by);
+                            }
                         }
-                    },
-                    error: function(xhr, status, error) {
-                        // // Error handling for AJAX request
-                        // console.error(xhr.responseText);
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "warning",
-                            title: xhr.responseText,
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
                     }
                 });
             })
@@ -209,11 +202,42 @@
                 $.ajax({
                     url: '/unit/view',
                     method: 'GET',
-                    success: function(data) {
-                        $('.showData').html(data);
+                    success: function(res) {
+                        const units = res.data;
+                        $('.showData').empty();
+                        $.each(units, function(index, unit) {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `
+                            <td>
+                                ${index+1}
+                            </td>
+                            <td>
+                                ${unit.name ?? ""}
+                            </td>
+                            <td>
+                                ${unit.related_to_unit ?? ""}
+                            </td>
+                            <td>
+                                ${unit.related_sign ?? ""}
+                            </td>
+                            <td>
+                                ${unit.related_by ?? 0 }
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-primary btn-icon unit_edit" data-id=${unit.id} data-bs-toggle="modal" data-bs-target="#edit">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a href="#" class="btn btn-danger btn-icon unit_delete" data-id=${unit.id}>
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </a>
+                            </td>
+                            `;
+                            $('.showData').append(tr);
+                        })
                     }
                 })
             }
+            unitView();
 
             // edit Unit 
             $(document).on('click', '.unit_edit', function(e) {
@@ -269,6 +293,8 @@
                     success: function(res) {
                         if (res.status == 200) {
                             $('#edit').modal('hide');
+                            $('.editUnitForm')[0].reset();
+                            unitView();
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
@@ -276,19 +302,27 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             });
-                            formData.delete(entry[0]);
-                            unitView();
                         } else {
-                            showError('.edit_unit_name', res.error.name);
-                            showError('.edit_related_to_unit', res.error.related_to_unit);
-                            showError('.edit_related_sign', res.error.related_sign);
-                            showError('.edit_related_by', res.error.related_by);
+                            if (res.error.name) {
+                                showError('.edit_unit_name', res.error.name);
+                            }
+                            if (res.error.related_to_unit) {
+                                showError('.edit_related_to_unit', res.error.related_to_unit);
+                            }
+                            if (res.error.related_sign) {
+                                showError('.edit_related_sign', res.error.related_sign);
+                            }
+                            if (res.error.related_by) {
+                                showError('.edit_related_by', res.error.related_by);
+                            }
                         }
                     }
                 });
             })
+
             // unit Delete 
-            $('.unit_delete').click(function(e) {
+            $(document).on('click', '.unit_delete', function(e) {
+                // $('.unit_delete').click(function(e) {
                 e.preventDefault();
                 let id = this.getAttribute('data-id');
 

@@ -27,7 +27,7 @@
                                 </tr>
                             </thead>
                             <tbody class="showData">
-                                @include('pos.products.category-show-table');
+                                {{-- @include('pos.products.category-show-table'); --}}
                             </tbody>
                         </table>
                     </div>
@@ -92,6 +92,7 @@
                             <label for="name" class="form-label">Category Name</label>
                             <input id="defaultconfig" class="form-control edit_category_name" maxlength="250" name="name"
                                 type="text">
+                            <span class="text-danger edit_category_name_error"></span>
                         </div>
                         <div class="mb-3">
                             <div class="card">
@@ -103,8 +104,7 @@
                                         <img class="img-fluid showEditImage" {{-- src="{{ asset('uploads/category/387707397.webp') }}" --}} src=""
                                             style="height:100%; object-fit:cover">
                                     </div>
-                                    <input hidden type="file" class="categoryImage edit_image" name="image"
-                                        id="myDropify" />
+                                    <input hidden type="file" class="categoryImage edit_image" name="image" />
                                 </div>
                             </div>
                         </div>
@@ -120,29 +120,41 @@
     </div>
 
     <script>
-        // image onload when category edit
-        const edit_upload_img = document.querySelector('.edit_upload_img');
-        const edit_image = document.querySelector('.edit_image');
-        edit_upload_img.addEventListener('click', function(e) {
-            e.preventDefault();
-            edit_image.click();
-
-            edit_image.addEventListener('change', function(e) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.querySelector('.showEditImage').src = e.target.result;
-                }
-                reader.readAsDataURL(this.files[0]);
-            });
-        });
-
-        $('.category_name').keyup(function() {
-            $('.category_name_error').hide();
-            $('.category_name').css('border-color', 'green');
-        });
-
-
         $(document).ready(function() {
+            // image onload when category edit
+            const edit_upload_img = document.querySelector('.edit_upload_img');
+            const edit_image = document.querySelector('.edit_image');
+            edit_upload_img.addEventListener('click', function(e) {
+                e.preventDefault();
+                edit_image.click();
+
+                edit_image.addEventListener('change', function(e) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelector('.showEditImage').src = e.target.result;
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                });
+            });
+
+            // error remove 
+            // $('.category_name').keyup(function() {
+            //     $('.category_name_error').hide();
+            //     $('.category_name').css('border-color', 'green');
+            // });
+
+            function errorRemove(element) {
+                alert('ok')
+                $(element).siblings('span').hide();
+                $(element).css('border-color', 'green');
+            }
+            // show error 
+            function showError(name, message) {
+                $(name).css('border-color', 'red'); // Highlight input with red border
+                $(name).focus(); // Set focus to the input field
+                $(`${name}_error`).show().text(message); // Show error message
+            }
+
             // save category
             const saveCategory = document.querySelector('.save_category');
             saveCategory.addEventListener('click', function(e) {
@@ -161,9 +173,11 @@
                     contentType: false,
                     success: function(res) {
                         if (res.status == 200) {
-
-                            $('.category_name').val('');
                             $('#exampleModalLongScollable').modal('hide');
+                            // formData.delete(entry[0]);
+                            // alert('added successfully');
+                            $('.categoryForm')[0].reset();
+                            categoryView();
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
@@ -171,11 +185,8 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             });
-                            formData.delete(entry[0]);
-                            categoryView();
-                            // categoryViewAll();
                         } else {
-                            console.log(res)
+                            // console.log(res)
                             $('.category_name').css('border-color', 'red');
                             $('.category_name').focus();
                             $('.category_name_error').show();
@@ -187,153 +198,203 @@
             })
 
 
-
-        });
-
-
-        // show category
-        function categoryView() {
-            $.ajax({
-                url: '/category/view',
-                method: 'GET',
-                success: function(data) {
-                    $('.showData').html(data);
-                }
-            })
-        }
-
-
-        // edit category 
-        $(document).on('click', '.category_edit', function(e) {
-            e.preventDefault();
-            // console.log('0k');
-            let id = this.getAttribute('data-id');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: `/category/edit/${id}`,
-                type: 'GET',
-                success: function(data) {
-                    // console.log(data.category.name);
-                    $('.edit_category_name').val(data.category.name);
-                    $('.update_category').val(data.category.id);
-                    if (data.category.image) {
-                        $('.showEditImage').attr('src',
-                            'http://127.0.0.1:8000/uploads/category/' + data.category.image);
-                    } else {
-                        $('.showEditImage').attr('src',
-                            'http://127.0.0.1:8000/dummy/image.jpg');
-                    }
-                }
-            });
-        })
-
-        // update category 
-        $('.update_category').click(function(e) {
-            e.preventDefault();
-            // alert('ok');
-            let id = $('.update_category').val();
-            // console.log(id);
-            let formData = new FormData($('.categoryFormEdit')[0]);
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: `/category/update/${id}`,
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(res) {
-                    if (res.status == 200) {
-                        $('#edit').modal('hide');
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: res.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                        formData.delete(entry[0]);
-                        categoryView();
-                    } else {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "warning",
-                            title: res.error.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    }
-                }
-            });
-        })
-
-        // category Delete 
-        $('.category_delete').click(function(e) {
-            e.preventDefault();
-            let id = this.getAttribute('data-id');
-
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        url: `/category/destroy/${id}`,
-                        type: 'GET',
-                        success: function(data) {
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
-                                icon: "success"
-                            });
-                            categoryView();
-                        }
-                    });
-                }
-            });
-        })
-
-        // category Status 
-        $(document).ready(function() {
-            $('.categoryButton').click(function() {
-                var categoryId = $(this).data('id');
+            // show category
+            function categoryView() {
                 $.ajax({
-                    url: '/category/status/' + categoryId,
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        if (response.status == 200) {
-                            var button = $('#categoryButton_' + categoryId);
-                            if (response.newStatus == 1) {
-                                button.removeClass('btn-danger').addClass('btn-success').text(
-                                    'Active');
-                            } else {
-                                button.removeClass('btn-success').addClass('btn-danger').text(
-                                    'Inactive');
-                            }
+                    url: '/category/view',
+                    method: 'GET',
+                    success: function(res) {
+                        // console.log(res.data);
+                        const categories = res.data;
+                        $('.showData').empty();
+                        $.each(categories, function(index, category) {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `
+                            <td>
+                                ${index+1}
+                            </td>
+                            <td>
+                                ${category.name ?? ""}
+                            </td>
+                            <td>
+                                <img src="${category.image ? 'http://127.0.0.1:8000/uploads/category/' + category.image : 'http://127.0.0.1:8000/dummy/image.jpg'}" alt="cat Image">
+                            </td>
+                            <td>
+                                <button id="categoryButton_${category.id}" class="btn btn-success categoryButton"
+                        data-id="${category.id}">Active</button>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-primary btn-icon category_edit" data-id=${category.id} data-bs-toggle="modal" data-bs-target="#edit">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a href="#" class="btn btn-danger btn-icon category_delete" data-id=${category.id}>
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </a>
+                            </td>
+                            `;
+                            $('.showData').append(tr);
+                        })
+
+                    }
+                })
+            }
+            categoryView();
+
+            // edit category 
+            $(document).on('click', '.category_edit', function(e) {
+                e.preventDefault();
+                // alert('ok');
+                let id = this.getAttribute('data-id');
+                // alert(id);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: `/category/edit/${id}`,
+                    type: 'GET',
+                    success: function(data) {
+                        // console.log(data.category.name);
+                        $('.edit_category_name').val(data.category.name);
+                        $('.update_category').val(data.category.id);
+                        if (data.category.image) {
+                            $('.showEditImage').attr('src',
+                                'http://127.0.0.1:8000/uploads/category/' + data.category
+                                .image);
+                        } else {
+                            $('.showEditImage').attr('src',
+                                'http://127.0.0.1:8000/dummy/image.jpg');
                         }
                     }
                 });
+            })
+
+            // update category 
+            $('.update_category').click(function(e) {
+                e.preventDefault();
+                // alert('ok');
+                let id = $('.update_category').val();
+                // console.log(id);
+                let formData = new FormData($('.categoryFormEdit')[0]);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: `/category/update/${id}`,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status == 200) {
+                            $('#edit').modal('hide');
+                            $('.categoryFormEdit')[0].reset();
+                            categoryView();
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: res.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        } else {
+                            $('.edit_category_name').css('border-color', 'red');
+                            $('.edit_category_name').focus();
+                            $('.edit_category_name_error').show();
+                            $('.edit_category_name_error').text(res.error.name);
+                        }
+                    }
+                });
+            })
+
+
+            // category Delete 
+            $(document).on('click', '.category_delete', function(e) {
+                e.preventDefault();
+                // alert("ok")
+                let id = this.getAttribute('data-id');
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to Delete this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: `/category/destroy/${id}`,
+                            type: 'GET',
+                            success: function(res) {
+                                if (res.status == 200) {
+                                    Swal.fire({
+                                        title: "Deleted!",
+                                        text: "Your file has been deleted.",
+                                        icon: "success"
+                                    });
+                                    categoryView();
+                                } else {
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "warning",
+                                        title: "File Delete Unsuccessful",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                }
+
+                            }
+                        });
+                    }
+                });
+            })
+
+
+            // category Status 
+            $(document).ready(function() {
+                $('.showData').on('click', '.categoryButton', function() {
+                    var categoryId = $(this).data('id');
+                    // alert(categoryId);
+                    $.ajax({
+                        url: '/category/status/' + categoryId,
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            if (response.status == 200) {
+                                // var button = $('#categoryButton_' + categoryId);
+                                if (response.status == 200) {
+                                    var button = $('#categoryButton_' + categoryId);
+                                    if (response.newStatus == 1) {
+                                        button.removeClass('btn-danger').addClass(
+                                            'btn-success').text('Active');
+                                    } else {
+                                        button.removeClass('btn-success').addClass(
+                                            'btn-danger').text('Inactive');
+                                    }
+                                } else {
+                                    button.removeClass('btn-success').addClass(
+                                        'btn-danger').text(
+                                        'Inactive');
+                                }
+                            }
+                        }
+                    });
+                });
             });
+
+
         });
     </script>
 @endsection

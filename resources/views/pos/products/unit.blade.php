@@ -141,11 +141,6 @@
     <script>
         $(document).ready(function() {
 
-
-            function testFunc(e) {
-                alert('ok');
-            }
-
             function errorRemove(element) {
                 alert('ok')
                 $(element).siblings('span').hide();

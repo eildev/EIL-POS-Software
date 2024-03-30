@@ -7,6 +7,7 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ProductsSizeController;
+use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -95,6 +96,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/product/size/edit/{id}', 'ProductSizeEdit')->name('product.size.edit');
         Route::post('/product/size/update/{id}', 'ProductSizeUpdate')->name('product.size.update');
         Route::get('/product/size/delete/{id}', 'ProductSizeDelete')->name('product.size.delete');
+    });
+    // Product  related route(n)
+    Route::controller(ProductsController::class)->group(function () {
+        Route::get('/product/add', 'ProducAdd')->name('product.add');
+        Route::post('/product/store', 'ProducStore')->name('product.store');
+        Route::get('/product/view', 'ProducView')->name('product.view');
+        Route::get('/product/edit/{id}', 'ProducEdit')->name('product.edit');
+        Route::post('/product/update/{id}', 'ProducUpdate')->name('product.update');
+        Route::get('/product/delete/{id}', 'ProducDelete')->name('product.size.delete');
     });
 });
 

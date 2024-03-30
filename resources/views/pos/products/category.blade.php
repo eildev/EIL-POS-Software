@@ -27,7 +27,7 @@
                                 </tr>
                             </thead>
                             <tbody class="showData">
-                                {{-- @include('pos.products.category-show-table'); --}}
+
                             </tbody>
                         </table>
                     </div>
@@ -51,7 +51,7 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Category Name</label>
                             <input id="defaultconfig" class="form-control category_name" maxlength="250" name="name"
-                                type="text">
+                                type="text" onkeyup="errorRemove(this);">
                             <span class="text-danger category_name_error"></span>
                         </div>
                         <div class="mb-3">
@@ -101,7 +101,7 @@
                                     <div style="height:150px;position:relative">
                                         <button class="btn btn-info edit_upload_img"
                                             style="position: absolute;top:50%;left:50%;transform:translate(-50%,-50%)">Browse</button>
-                                        <img class="img-fluid showEditImage" {{-- src="{{ asset('uploads/category/387707397.webp') }}" --}} src=""
+                                        <img class="img-fluid showEditImage" src=""
                                             style="height:100%; object-fit:cover">
                                     </div>
                                     <input hidden type="file" class="categoryImage edit_image" name="image" />
@@ -120,6 +120,12 @@
     </div>
 
     <script>
+        function errorRemove(element) {
+            // alert('ok')
+            $(element).siblings('span').hide();
+            $(element).css('border-color', 'green');
+        }
+
         $(document).ready(function() {
             // image onload when category edit
             const edit_upload_img = document.querySelector('.edit_upload_img');
@@ -137,17 +143,6 @@
                 });
             });
 
-            // error remove 
-            // $('.category_name').keyup(function() {
-            //     $('.category_name_error').hide();
-            //     $('.category_name').css('border-color', 'green');
-            // });
-
-            function errorRemove(element) {
-                alert('ok')
-                $(element).siblings('span').hide();
-                $(element).css('border-color', 'green');
-            }
             // show error 
             function showError(name, message) {
                 $(name).css('border-color', 'red'); // Highlight input with red border
@@ -186,12 +181,7 @@
                                 timer: 1500
                             });
                         } else {
-                            // console.log(res)
-                            $('.category_name').css('border-color', 'red');
-                            $('.category_name').focus();
-                            $('.category_name_error').show();
-                            $('.category_name_error').text(res.error.name);
-
+                            showError('.category_name', res.error.name);
                         }
                     }
                 });
@@ -301,10 +291,11 @@
                                 timer: 1500
                             });
                         } else {
-                            $('.edit_category_name').css('border-color', 'red');
-                            $('.edit_category_name').focus();
-                            $('.edit_category_name_error').show();
-                            $('.edit_category_name_error').text(res.error.name);
+                            showError('.edit_category_name', res.error.name)
+                            // $('.edit_category_name').css('border-color', 'red');
+                            // $('.edit_category_name').focus();
+                            // $('.edit_category_name_error').show();
+                            // $('.edit_category_name_error').text(res.error.name);
                         }
                     }
                 });

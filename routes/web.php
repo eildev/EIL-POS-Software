@@ -8,6 +8,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ProductsSizeController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -105,6 +106,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/product/view', 'ProducView')->name('product.view');
         Route::get('/product/edit/{id}', 'ProducEdit')->name('product.edit');
         Route::post('/product/update/{id}', 'ProducUpdate')->name('product.update');
+    });
+    // Product  related route(n)
+    Route::controller(EmployeeController::class)->group(function () {
+        Route::get('/employee/add', 'EmployeeAdd')->name('employee.add');
+        Route::post('/employee/store', 'EmployeeStore')->name('employee.store');
+        Route::get('/employee/view', 'EmployeeView')->name('employee.view');
+        Route::get('/employee/edit/{id}', 'EmployeeEdit')->name('employee.edit');
+        Route::post('/employee/update/{id}', 'EmployeeUpdate')->name('employee.update');
+        Route::get('/employee/delete/{id}', 'EmployeeDelete')->name('employee.delete');
+
     });
 });
 

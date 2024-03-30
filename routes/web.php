@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/profile', 'destroy')->name('profile.destroy');
     });
 
-    // category related route 
+    // category related route
     Route::controller(CategoryController::class)->group(function () {
         Route::get('/category', 'index')->name('category');
         Route::post('/category/store', 'store')->name('category.store');
@@ -79,7 +79,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/customer/update/{id}', 'CustomerUpdate')->name('customer.update');
         Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
     });
-    // Unit related route 
+    // Unit related route
     Route::controller(UnitController::class)->group(function () {
         Route::get('/unit', 'index')->name('unit');
         Route::post('/unit/store', 'store')->name('unit.store');
@@ -104,7 +104,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/product/view', 'ProducView')->name('product.view');
         Route::get('/product/edit/{id}', 'ProducEdit')->name('product.edit');
         Route::post('/product/update/{id}', 'ProducUpdate')->name('product.update');
-        Route::get('/product/delete/{id}', 'ProducDelete')->name('product.size.delete');
     });
 });
 

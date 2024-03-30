@@ -112,7 +112,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/product/edit/{id}', 'ProducEdit')->name('product.edit');
         Route::post('/product/update/{id}', 'ProducUpdate')->name('product.update');
     });
-<<<<<<< HEAD
     // Product  related route(n)
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employee/add', 'EmployeeAdd')->name('employee.add');
@@ -121,8 +120,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/employee/edit/{id}', 'EmployeeEdit')->name('employee.edit');
         Route::post('/employee/update/{id}', 'EmployeeUpdate')->name('employee.update');
         Route::get('/employee/delete/{id}', 'EmployeeDelete')->name('employee.delete');
+    });
 
-=======
 
     // Banks related route 
     Route::controller(BankController::class)->group(function () {
@@ -142,7 +141,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/supplier/edit/{id}', 'edit')->name('supplier.edit');
         Route::post('/supplier/update/{id}', 'update')->name('supplier.update');
         Route::get('/supplier/destroy/{id}', 'destroy')->name('supplier.destroy');
->>>>>>> 67e897ad1a13d27fa7f05496304d3c91d38ba646
     });
 });
 

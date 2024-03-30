@@ -3,7 +3,7 @@
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Bank</li>
+            <li class="breadcrumb-item active" aria-current="page">Supplier</li>
         </ol>
     </nav>
     <div class="row">
@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h6 class="card-title">Bank Table</h6>
+                        <h6 class="card-title">Supplier Table</h6>
                         <button class="btn btn-rounded-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#exampleModalLongScollable"><i data-feather="plus"></i></button>
                     </div>
@@ -21,11 +21,11 @@
                                 <tr>
                                     <th>SN</th>
                                     <th>Name</th>
-                                    <th>Branch Name</th>
-                                    <th>Manager Name</th>
-                                    <th>Phone Number</th>
                                     <th>Email</th>
-                                    <th>Opening Balance</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Opening Receivable</th>
+                                    <th>Opening Payable</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -45,34 +45,16 @@
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add Bank Info</h5>
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add Supplier Info</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="signupForm" class="bankForm row">
+                    <form id="signupForm" class="supplierForm row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Bank Name</label>
-                            <input id="defaultconfig" class="form-control bank_name" maxlength="100" name="name"
+                            <label for="name" class="form-label">Supplier Name</label>
+                            <input id="defaultconfig" class="form-control supplier_name" maxlength="255" name="name"
                                 type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
-                            <span class="text-danger bank_name_error"></span>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Branch Name</label>
-                            <input id="defaultconfig" class="form-control branch_name" maxlength="39" name="branch_name"
-                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
-                            <span class="text-danger branch_name_error"></span>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Manager Name</label>
-                            <input id="defaultconfig" class="form-control manager_name" maxlength="39" name="manager_name"
-                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
-                            <span class="text-danger manager_name_error"></span>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Phone Nnumber</label>
-                            <input id="defaultconfig" class="form-control phone_number" maxlength="39" name="phone_number"
-                                type="tel" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
-                            <span class="text-danger phone_number_error"></span>
+                            <span class="text-danger supplier_name_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Email</label>
@@ -80,16 +62,30 @@
                                 type="email">
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Opening Balance</label>
-                            <input id="defaultconfig" class="form-control opening_balance" maxlength="39"
-                                name="opening_balance" type="number" onkeyup="errorRemove(this);"
-                                onblur="errorRemove(this);">
-                            <span class="text-danger opening_balance_error"></span>
+                            <label for="name" class="form-label">Phone Nnumber</label>
+                            <input id="defaultconfig" class="form-control phone" maxlength="39" name="phone"
+                                type="tel" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
+                            <span class="text-danger phone_error"></span>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Address</label>
+                            <input id="defaultconfig" class="form-control address" maxlength="39" name="address"
+                                type="text">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Opening Receivable</label>
+                            <input id="defaultconfig" class="form-control opening_receivable" maxlength="39"
+                                name="opening_receivable" type="number">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Opening Payable</label>
+                            <input id="defaultconfig" class="form-control opening_payable" maxlength="39"
+                                name="opening_payable" type="number">
                         </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary save_bank">Save</button>
+                    <button type="button" class="btn btn-primary save_supplier">Save</button>
                 </div>
                 </form>
             </div>
@@ -102,37 +98,16 @@
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Unit</h5>
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Supplier</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="signupForm" class="editBankForm row">
+                    <form id="signupForm" class="editSupplierForm row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Bank Name</label>
-                            <input id="defaultconfig" class="form-control edit_bank_name" maxlength="100" name="name"
-                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
-                            <span class="text-danger bank_name_error"></span>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Branch Name</label>
-                            <input id="defaultconfig" class="form-control edit_branch_name" maxlength="39"
-                                name="branch_name" type="text" onkeyup="errorRemove(this);"
-                                onblur="errorRemove(this);">
-                            <span class="text-danger edit_branch_name_error"></span>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Manager Name</label>
-                            <input id="defaultconfig" class="form-control edit_manager_name" maxlength="39"
-                                name="manager_name" type="text" onkeyup="errorRemove(this);"
-                                onblur="errorRemove(this);">
-                            <span class="text-danger edit_manager_name_error"></span>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Phone Nnumber</label>
-                            <input id="defaultconfig" class="form-control edit_phone_number" maxlength="39"
-                                name="phone_number" type="tel" onkeyup="errorRemove(this);"
-                                onblur="errorRemove(this);">
-                            <span class="text-danger edit_phone_number_error"></span>
+                            <label for="name" class="form-label">Supplier Name</label>
+                            <input id="defaultconfig" class="form-control edit_supplier_name" maxlength="255"
+                                name="name" type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
+                            <span class="text-danger edit_name_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Email</label>
@@ -140,16 +115,30 @@
                                 type="email">
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Opening Balance</label>
-                            <input id="defaultconfig" class="form-control edit_opening_balance" maxlength="39"
-                                name="opening_balance" type="number" onkeyup="errorRemove(this);"
-                                onblur="errorRemove(this);">
-                            <span class="text-danger edit_opening_balance_error"></span>
+                            <label for="name" class="form-label">Phone Nnumber</label>
+                            <input id="defaultconfig" class="form-control edit_phone" maxlength="39" name="phone"
+                                type="tel" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
+                            <span class="text-danger edit_phone_error"></span>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Address</label>
+                            <input id="defaultconfig" class="form-control edit_address" maxlength="39" name="address"
+                                type="text">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Opening Receivable</label>
+                            <input id="defaultconfig" class="form-control edit_opening_receivable" maxlength="39"
+                                name="opening_receivable" type="number">
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Opening Payable</label>
+                            <input id="defaultconfig" class="form-control edit_opening_payable" maxlength="39"
+                                name="opening_payable" type="number">
                         </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary update_bank">Update</button>
+                    <button type="button" class="btn btn-primary update_supplier">Update</button>
                 </div>
                 </form>
             </div>
@@ -171,18 +160,18 @@
                 $(name).focus(); // Set focus to the input field
                 $(`${name}_error`).show().text(message); // Show error message
             }
-            // save bank
-            const saveBank = document.querySelector('.save_bank');
-            saveBank.addEventListener('click', function(e) {
+            // save supplier
+            const saveSupplier = document.querySelector('.save_supplier');
+            saveSupplier.addEventListener('click', function(e) {
                 e.preventDefault();
-                let formData = new FormData($('.bankForm')[0]);
+                let formData = new FormData($('.supplierForm')[0]);
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
                 $.ajax({
-                    url: '/bank/store',
+                    url: '/supplier/store',
                     type: 'POST',
                     data: formData,
                     processData: false,
@@ -190,8 +179,8 @@
                     success: function(res) {
                         if (res.status == 200) {
                             $('#exampleModalLongScollable').modal('hide');
-                            $('.bankForm')[0].reset();
-                            bankView();
+                            $('.supplierForm')[0].reset();
+                            supplierView();
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
@@ -201,19 +190,10 @@
                             });
                         } else {
                             if (res.error.name) {
-                                showError('.bank_name', res.error.name);
+                                showError('.supplier_name', res.error.name);
                             }
-                            if (res.error.branch_name) {
-                                showError('.branch_name', res.error.branch_name);
-                            }
-                            if (res.error.manager_name) {
-                                showError('.manager_name', res.error.manager_name);
-                            }
-                            if (res.error.phone_number) {
-                                showError('.phone_number', res.error.phone_number);
-                            }
-                            if (res.error.opening_balance) {
-                                showError('.opening_balance', res.error.opening_balance);
+                            if (res.error.phone) {
+                                showError('.phone', res.error.phone);
                             }
                         }
                     }
@@ -222,42 +202,42 @@
 
 
             // show Unit
-            function bankView() {
+            function supplierView() {
                 $.ajax({
-                    url: '/bank/view',
+                    url: '/supplier/view',
                     method: 'GET',
                     success: function(res) {
-                        const banks = res.data;
+                        const suppliers = res.data;
                         $('.showData').empty();
-                        $.each(banks, function(index, bank) {
+                        $.each(suppliers, function(index, supplier) {
                             const tr = document.createElement('tr');
                             tr.innerHTML = `
                             <td>
                                 ${index+1}
                             </td>
                             <td>
-                                ${bank.name ?? ""}
+                                ${supplier.name ?? ""}
                             </td>
                             <td>
-                                ${bank.branch_name ?? ""}
+                                ${supplier.email ?? ""}
                             </td>
                             <td>
-                                ${bank.manager_name ?? ""}
+                                ${supplier.phone ?? ""}
                             </td>
                             <td>
-                                ${bank.phone_number ?? 0 }
+                                ${supplier.address.slice(0,15) ?? ""}
                             </td>
                             <td>
-                                ${bank.email ?? "" }
+                                ${supplier.opening_receivable ?? 0 }
                             </td>
                             <td>
-                                ${bank.opening_balance ?? 0 }
+                                ${supplier.opening_payable ?? 0 }
                             </td>
                             <td>
-                                <a href="#" class="btn btn-primary btn-icon bank_edit" data-id=${bank.id} data-bs-toggle="modal" data-bs-target="#edit">
+                                <a href="#" class="btn btn-primary btn-icon supplier_edit" data-id=${supplier.id} data-bs-toggle="modal" data-bs-target="#edit">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a href="#" class="btn btn-danger btn-icon bank_delete" data-id=${bank.id}>
+                                <a href="#" class="btn btn-danger btn-icon supplier_delete" data-id=${supplier.id}>
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
                             </td>
@@ -267,10 +247,10 @@
                     }
                 })
             }
-            bankView();
+            supplierView();
 
             // edit Unit 
-            $(document).on('click', '.bank_edit', function(e) {
+            $(document).on('click', '.supplier_edit', function(e) {
                 e.preventDefault();
                 // console.log('0k');
                 let id = this.getAttribute('data-id');
@@ -280,17 +260,18 @@
                     }
                 });
                 $.ajax({
-                    url: `/bank/edit/${id}`,
+                    url: `/supplier/edit/${id}`,
                     type: 'GET',
                     success: function(res) {
                         if (res.status == 200) {
-                            $('.edit_bank_name').val(res.bank.name);
-                            $('.edit_branch_name').val(res.bank.branch_name);
-                            $('.edit_manager_name').val(res.bank.manager_name);
-                            $('.edit_phone_number').val(res.bank.phone_number);
-                            $('.edit_email').val(res.bank.email);
-                            $('.edit_opening_balance').val(res.bank.opening_balance);
-                            $('.update_bank').val(res.bank.id);
+                            $('.edit_supplier_name').val(res.supplier.name);
+                            $('.edit_email').val(res.supplier.email);
+                            $('.edit_phone').val(res.supplier.phone);
+                            $('.edit_address').val(res.supplier.address);
+                            $('.edit_email').val(res.supplier.email);
+                            $('.edit_opening_receivable').val(res.supplier.opening_receivable);
+                            $('.edit_opening_payable').val(res.supplier.opening_payable);
+                            $('.update_supplier').val(res.supplier.id);
                         } else {
                             Swal.fire({
                                 position: "top-end",
@@ -304,20 +285,20 @@
                 });
             })
 
-            // update bank 
-            $('.update_bank').click(function(e) {
+            // update supplier 
+            $('.update_supplier').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
                 let id = $(this).val();
                 // console.log(id);
-                let formData = new FormData($('.editBankForm')[0]);
+                let formData = new FormData($('.editSupplierForm')[0]);
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
                 $.ajax({
-                    url: `/bank/update/${id}`,
+                    url: `/supplier/update/${id}`,
                     type: 'POST',
                     data: formData,
                     processData: false,
@@ -325,8 +306,8 @@
                     success: function(res) {
                         if (res.status == 200) {
                             $('#edit').modal('hide');
-                            $('.editBankForm')[0].reset();
-                            bankView();
+                            $('.editSupplierForm')[0].reset();
+                            supplierView();
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
@@ -336,28 +317,19 @@
                             });
                         } else {
                             if (res.error.name) {
-                                showError('.edit_bank_name', res.error.name);
+                                showError('.edit_supplier_name', res.error.name);
                             }
-                            if (res.error.branch_name) {
-                                showError('.edit_branch_name', res.error.branch_name);
-                            }
-                            if (res.error.manager_name) {
-                                showError('.edit_manager_name', res.error.manager_name);
-                            }
-                            if (res.error.phone_number) {
-                                showError('.edit_phone_number', res.error.phone_number);
-                            }
-                            if (res.error.opening_balance) {
-                                showError('.edit_opening_balance', res.error.opening_balance);
+                            if (res.error.phone) {
+                                showError('.edit_phone', res.error.phone);
                             }
                         }
                     }
                 });
             })
 
-            // bank Delete 
-            $(document).on('click', '.bank_delete', function(e) {
-                // $('.bank_delete').click(function(e) {
+            // supplier Delete 
+            $(document).on('click', '.supplier_delete', function(e) {
+                // $('.supplier_delete').click(function(e) {
                 e.preventDefault();
                 let id = this.getAttribute('data-id');
 
@@ -377,7 +349,7 @@
                             }
                         });
                         $.ajax({
-                            url: `/bank/destroy/${id}`,
+                            url: `/supplier/destroy/${id}`,
                             type: 'GET',
                             success: function(data) {
                                 if (data.status == 200) {
@@ -386,7 +358,7 @@
                                         text: "Your file has been deleted.",
                                         icon: "success"
                                     });
-                                    bankView();
+                                    supplierView();
                                 } else {
                                     Swal.fire({
                                         position: "top-end",

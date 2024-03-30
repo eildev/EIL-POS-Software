@@ -21,7 +21,7 @@
             <li class="nav-item nav-category">Products</li>
             <li class="nav-item">
                 <a href="{{ route('category') }}" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
+                    <i class="link-icon" data-feather="calendar"></i>
                     <span class="link-title">Category</span>
                 </a>
             </li>
@@ -31,6 +31,7 @@
                     <span class="link-title">Sub Category</span>
                 </a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('unit') }}" role="button" aria-controls="general-pages">
                     <i class="link-icon" data-feather="book"></i>
@@ -57,12 +58,123 @@
                     <span class="link-title">Customer</span>
                 </a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('employee.view') }}" role="button" aria-controls="general-pages">
                     <i class="link-icon" data-feather="book"></i>
                     <span class="link-title">Employee</span>
                 </a>
             </li>
+            <li class="nav-item nav-category">Inventory</li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('supplier') }}" role="button" aria-controls="general-pages">
+                    <i class="link-icon" data-feather="book"></i>
+                    <span class="link-title">Supplier</span>
+                </a>
+            </li>
+
+            <li class="nav-item nav-category">Bank</li>
+            <li class="nav-item">
+                <a href="{{ route('bank') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Bank</span>
+                </a>
+            </li>
+            <li class="nav-item nav-category">Customer</li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#general-pages" role="button" aria-expanded="false"
+                    aria-controls="general-pages">
+                    <i class="link-icon" data-feather="book"></i>
+                    <span class="link-title">Special pages</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="general-pages">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="pages/general/blank-page.html" class="nav-link">Blank page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/faq.html" class="nav-link">Faq</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/invoice.html" class="nav-link">Invoice</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/profile.html" class="nav-link">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/pricing.html" class="nav-link">Pricing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/timeline.html" class="nav-link">Timeline</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item nav-category">Report</li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#general-pages" role="button"
+                    aria-expanded="false" aria-controls="general-pages">
+                    <i class="link-icon" data-feather="book"></i>
+                    <span class="link-title">Special pages</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="general-pages">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="pages/general/blank-page.html" class="nav-link">Blank page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/faq.html" class="nav-link">Faq</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/invoice.html" class="nav-link">Invoice</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/profile.html" class="nav-link">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/pricing.html" class="nav-link">Pricing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/timeline.html" class="nav-link">Timeline</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item nav-category">Settings</li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#general-pages" role="button"
+                    aria-expanded="false" aria-controls="general-pages">
+                    <i class="link-icon" data-feather="book"></i>
+                    <span class="link-title">Special pages</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="general-pages">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="pages/general/blank-page.html" class="nav-link">Blank page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/faq.html" class="nav-link">Faq</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/invoice.html" class="nav-link">Invoice</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/profile.html" class="nav-link">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/pricing.html" class="nav-link">Pricing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/general/timeline.html" class="nav-link">Timeline</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+>>>>>>> 67e897ad1a13d27fa7f05496304d3c91d38ba646
         </ul>
     </div>
 </nav>

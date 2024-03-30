@@ -1,33 +1,40 @@
-@php
-    $serialNumber = 1;
-@endphp
-@if ($subcategories->count() > 0)
-@foreach($subcategories as $key => $subcategory)
-<tr>
-<td>{{$serialNumber++}}</td>
-<td>{{$subcategory->name?? ''}}</td>
-<td>{{$subcategory->slug?? ''}}</td>
-<!-- <td><img src="{{asset('uploads/subcategory/'.$subcategory->image)}}" alt="Sub category Image"></td> -->
-<td>@if($subcategory->status == 0)
-    <a href="" class="btn btn-sm bg-success">Active</a>
-    @else
-    <a href="" class="btn btn-sm bg-warning">Inactive</a>
-    @endif
-</td>
-<td><a href="{{route('subcategory.edit',$subcategory->id)}}" class="btn btn-sm btn-xs bg-info" data-bs-toggle="modal"
-                    data-bs-target="#exampleModalLongScollableEdit" ><i class="edit-icon "  data-feather="edit"></i></a>
-    <a href=""class="btn btn-sm btn-xs bg-danger delete-subcategory" data-subcategory-id="{{$subcategory->id}}"><i class="delete-icon" data-feather="trash-2"></i> </a>
-</td>
-</tr>
-@endforeach
+@if ($categories->count() > 0)
+    @foreach ($categories as $key => $category)
+        <tr>
+            <td>{{ $key + 1 }}</td>
+            <td>{{ $category->name ?? '' }}</td>
+            <td>
+                <img src="{{ $category->image ? asset('uploads/category/' . $category->image) : asset('dummy/image.jpg') }}"
+                    alt="cat-image">
+            </td>
+            <td>
+                @if ($category->status != 0)
+                    <button id="categoryButton_{{ $category->id }}" class="btn btn-success categoryButton"
+                        data-id="{{ $category->id }}">Active</button>
+                @else
+                    <button id="categoryButton_{{ $category->id }}" class="btn btn-danger categoryButton"
+                        data-id="{{ $category->id }}">Inactive</button>
+                @endif
+            </td>
+            <td>
+                <a href="#" class="btn btn-primary btn-icon category_edit" data-id={{ $category->id }}
+                    data-bs-toggle="modal" data-bs-target="#edit">
+                    <i data-feather="edit"></i>
+                </a>
+                <a href="#" class="btn btn-danger btn-icon category_delete" data-id={{ $category->id }}>
+                    <i data-feather="trash-2"></i>
+                </a>
+            </td>
+        </tr>
+    @endforeach
 @else
-    <td colspan="6">
-        <div class="text-center text-warning mb-2">Data Not Found</div>
-        <div class="text-center">
-            <button class="btn btn-primary" data-bs-toggle="modal"
-                data-bs-target="#exampleModalLongScollable">Add SubCategory<i
-                    data-feather="plus"></i></button>
-        </div>
-    </td>
+    <tr>
+        <td colspan="6">
+            <div class="text-center text-warning mb-2">Data Not Found</div>
+            <div class="text-center">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLongScollable">Add
+                    Category<i data-feather="plus"></i></button>
+            </div>
+        </td>
+    </tr>
 @endif
-

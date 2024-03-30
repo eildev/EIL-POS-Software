@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BankController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProfileController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ProductsSizeController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -105,6 +107,26 @@ Route::middleware('auth')->group(function () {
         Route::get('/product/edit/{id}', 'ProducEdit')->name('product.edit');
         Route::post('/product/update/{id}', 'ProducUpdate')->name('product.update');
         Route::get('/product/delete/{id}', 'ProducDelete')->name('product.size.delete');
+    });
+
+    // Banks related route 
+    Route::controller(BankController::class)->group(function () {
+        Route::get('/bank', 'index')->name('bank');
+        Route::post('/bank/store', 'store')->name('bank.store');
+        Route::get('/bank/view', 'view')->name('bank.view');
+        Route::get('/bank/edit/{id}', 'edit')->name('bank.edit');
+        Route::post('/bank/update/{id}', 'update')->name('bank.update');
+        Route::get('/bank/destroy/{id}', 'destroy')->name('bank.destroy');
+    });
+
+    // Supplier related route 
+    Route::controller(SupplierController::class)->group(function () {
+        Route::get('/supplier', 'index')->name('supplier');
+        Route::post('/supplier/store', 'store')->name('supplier.store');
+        Route::get('/supplier/view', 'view')->name('supplier.view');
+        Route::get('/supplier/edit/{id}', 'edit')->name('supplier.edit');
+        Route::post('/supplier/update/{id}', 'update')->name('supplier.update');
+        Route::get('/supplier/destroy/{id}', 'destroy')->name('supplier.destroy');
     });
 });
 

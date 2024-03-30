@@ -10,8 +10,7 @@ class UnitController extends Controller
 {
     public function index()
     {
-        $units = Unit::get();
-        return view('pos.products.unit', compact('units'));
+        return view('pos.products.unit');
     }
     public function store(Request $request)
     {
@@ -44,7 +43,10 @@ class UnitController extends Controller
     public function view()
     {
         $units = Unit::get();
-        return view('pos.products.unit-show', compact('units'))->render();
+        return response()->json([
+            "status" => 200,
+            "data" => $units
+        ]);
     }
     public function edit($id)
     {

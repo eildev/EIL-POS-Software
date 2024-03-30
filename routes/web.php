@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/subcategory/edit/{id}', 'edit')->name('subcategory.edit');
         Route::post('/subcategory/update/{id}', 'update')->name('subcategory.update');
         Route::get('/subcategory/destroy/{id}', 'destroy')->name('subcategory.destroy');
+        Route::post('/subcategory/status/{id}', 'status')->name('subcategory.status');
     });
     // Branch related route(n)
     Route::controller(BranchController::class)->group(function () {

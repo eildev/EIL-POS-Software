@@ -10,7 +10,6 @@
 
         <!-- partial:partials/_sidebar.html -->
         @include('body.sidebar')
-        @include('body.setting')
         <!-- partial -->
 
         <div class="page-wrapper">

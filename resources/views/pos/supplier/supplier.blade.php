@@ -209,9 +209,11 @@
                     success: function(res) {
                         const suppliers = res.data;
                         $('.showData').empty();
-                        $.each(suppliers, function(index, supplier) {
-                            const tr = document.createElement('tr');
-                            tr.innerHTML = `
+
+                        if (suppliers.length > 0) {
+                            $.each(suppliers, function(index, supplier) {
+                                const tr = document.createElement('tr');
+                                tr.innerHTML = `
                             <td>
                                 ${index+1}
                             </td>
@@ -225,7 +227,7 @@
                                 ${supplier.phone ?? ""}
                             </td>
                             <td>
-                                ${supplier.address.slice(0,15) ?? ""}
+                                ${supplier.address ? supplier.address.slice(0,15) : ""}
                             </td>
                             <td>
                                 ${supplier.opening_receivable ?? 0 }
@@ -242,8 +244,21 @@
                                 </a>
                             </td>
                             `;
-                            $('.showData').append(tr);
-                        })
+                                $('.showData').append(tr);
+                            })
+                        } else {
+                            $('.showData').html(`
+                            <tr>
+                                <td colspan='8'>
+                                    <div class="text-center text-warning mb-2">Data Not Found</div>
+                                    <div class="text-center">
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLongScollable">Add
+                                            Supplier<i data-feather="plus"></i></button>
+                                    </div>
+                                </td>
+                            </tr>`)
+                        }
+
                     }
                 })
             }

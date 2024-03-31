@@ -3,7 +3,7 @@
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Supplier</li>
+            <li class="breadcrumb-item active" aria-current="page">Purchase</li>
         </ol>
     </nav>
 
@@ -12,92 +12,52 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Form Validation</h4>
-                    <p class="text-muted mb-3">Read the <a href="https://jqueryvalidation.org/" target="_blank"> Official
-                            jQuery Validation Documentation </a>for a full list of instructions and other options.</p>
-                    <form id="signupForm">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input id="name" class="form-control" name="name" type="text">
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input id="email" class="form-control" name="email" type="email">
-                        </div>
-                        <div class="mb-3">
-                            <label for="ageSelect" class="form-label">Age</label>
-                            <select class="form-select" name="age_select" id="ageSelect">
-                                <option selected disabled>Select your age</option>
-                                <option>12-18</option>
-                                <option>18-22</option>
-                                <option>22-30</option>
-                                <option>30-60</option>
-                                <option>Above 60</option>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="card-title">Create Purchase</h6>
+                        <button class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModalLongScollable"><i class="fa-solid fa-plus"></i> Add
+                            Supplier</button>
+                    </div>
+                    <form id="signupForm" class="row">
+                        <div class="mb-3 col-md-6">
+                            @php
+                                $suppliers = App\Models\Supplier::get();
+                            @endphp
+                            <label for="ageSelect" class="form-label">Supplier</label>
+                            <select class="js-example-basic-single form-select" data-width="100%">
+
+                                @if ($suppliers->count() > 0)
+                                    <option selected disabled>Select Supplier</option>
+                                    @foreach ($suppliers as $supplier)
+                                        <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                    @endforeach
+                                @else
+                                    <option selected disabled>Please Add Supplier</option>
+                                @endif
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Gender</label>
-                            <div>
-                                <div class="form-check form-check-inline">
-                                    <input type="radio" class="form-check-input" name="gender_radio" id="gender1">
-                                    <label class="form-check-label" for="gender1">
-                                        Male
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input type="radio" class="form-check-input" name="gender_radio" id="gender2">
-                                    <label class="form-check-label" for="gender2">
-                                        Female
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input type="radio" class="form-check-input" name="gender_radio" id="gender3">
-                                    <label class="form-check-label" for="gender3">
-                                        Other
-                                    </label>
-                                </div>
+
+                        <div class="mb-3 col-md-6">
+                            <label for="password" class="form-label">Purchase Date</label>
+                            <div class="input-group flatpickr" id="flatpickr-date">
+                                <input type="text" class="form-control" placeholder="Select date" data-input>
+                                <span class="input-group-text input-group-addon" data-toggle><i
+                                        data-feather="calendar"></i></span>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Skills</label>
-                            <div>
-                                <div class="form-check form-check-inline">
-                                    <input type="checkbox" name="skill_check" class="form-check-input" id="checkInline1">
-                                    <label class="form-check-label" for="checkInline1">
-                                        Angular
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input type="checkbox" name="skill_check" class="form-check-input" id="checkInline2">
-                                    <label class="form-check-label" for="checkInline2">
-                                        ReactJs
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input type="checkbox" name="skill_check" class="form-check-input" id="checkInline3">
-                                    <label class="form-check-label" for="checkInline3">
-                                        VueJs
-                                    </label>
-                                </div>
-                            </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="ageSelect" class="form-label">Product</label>
+                            <select class="select-tag-2 form-select" data-width="100%">
+                                <option value="TX">Texas</option>
+                                <option value="NY">New York</option>
+                                <option value="FL">Florida</option>
+                                <option value="KN">Kansas</option>
+                                <option value="HW">Hawaii</option>
+                            </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input id="password" class="form-control" name="password" type="password">
-                        </div>
-                        <div class="mb-3">
-                            <label for="confirm_password" class="form-label">Confirm password</label>
-                            <input id="confirm_password" class="form-control" name="confirm_password" type="password">
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check">
-                                <label class="form-check-label" for="termsCheck">
-                                    Agree to <a href="#"> terms and conditions </a>
-                                </label>
-                                <input type="checkbox" class="form-check-input" name="terms_agree" id="termsCheck">
-                            </div>
-                        </div>
-                        <input class="btn btn-primary" type="submit" value="Submit">
+                        {{-- <div class="col-md-12">
+                            <input class="btn btn-primary" type="submit" value="Submit">
+                        </div> --}}
                     </form>
                 </div>
             </div>
@@ -109,28 +69,41 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h6 class="card-title">Supplier Table</h6>
-                        <button class="btn btn-rounded-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalLongScollable"><i data-feather="plus"></i></button>
+                    <div class="mb-3">
+                        <h6 class="card-title">Purchase Table</h6>
                     </div>
                     <div id="" class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>SN</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Address</th>
-                                    <th>Opening Receivable</th>
-                                    <th>Opening Payable</th>
-                                    <th>Actions</th>
+                                    <th>#SL</th>
+                                    <th>Product</th>
+                                    <th>Rate</th>
+                                    <th>Qty</th>
+                                    <th>Sub Total</th>
+                                    <th>
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="showData">
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        Grand Total : 0.00
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
                         </table>
+                    </div>
+                    <div class="my-3">
+                        <button class="btn btn-primary "><i class="fa-solid fa-money-check-dollar"></i> Payment</button>
                     </div>
                 </div>
             </div>
@@ -317,27 +290,18 @@
                                 ${index+1}
                             </td>
                             <td>
-                                ${supplier.name ?? ""}
-                            </td>
-                            <td>
-                                ${supplier.email ?? ""}
-                            </td>
-                            <td>
                                 ${supplier.phone ?? ""}
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" name="" value="${supplier.name ?? ''}" />
+                            </td>
+                            <td>
+                                <input type="text" name="" class="form-control" value="${supplier.email ?? ''}" />
                             </td>
                             <td>
                                 ${supplier.address ? supplier.address.slice(0,15) : ""}
                             </td>
                             <td>
-                                ${supplier.opening_receivable ?? 0 }
-                            </td>
-                            <td>
-                                ${supplier.opening_payable ?? 0 }
-                            </td>
-                            <td>
-                                <a href="#" class="btn btn-primary btn-icon supplier_edit" data-id=${supplier.id} data-bs-toggle="modal" data-bs-target="#edit">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
                                 <a href="#" class="btn btn-danger btn-icon supplier_delete" data-id=${supplier.id}>
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>

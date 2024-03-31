@@ -10,6 +10,7 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ProductsSizeController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ExpenseController;
 use Illuminate\Support\Facades\Route;
@@ -56,6 +57,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/category/destroy/{id}', 'destroy')->name('category.destroy');
         // Route::get('/categories/all', 'categoryAll')->name('categories.all');
     });
+
     // subcategory related route(n)
     Route::controller(SubCategoryController::class)->group(function () {
         Route::get('/subcategory', 'index')->name('subcategory');
@@ -66,6 +68,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/subcategory/destroy/{id}', 'destroy')->name('subcategory.destroy');
         Route::post('/subcategory/status/{id}', 'status')->name('subcategory.status');
     });
+
     // Branch related route(n)
     Route::controller(BranchController::class)->group(function () {
         Route::get('/branch', 'index')->name('branch');
@@ -75,6 +78,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/branch/update/{id}', 'BranchUpdate')->name('branch.update');
         Route::get('/branch/delete/{id}', 'BranchDelete')->name('branch.delete');
     });
+
     // Customer related route(n)
     Route::controller(CustomerController::class)->group(function () {
         Route::get('/customer/add', 'AddCustomer')->name('customer.add');
@@ -84,6 +88,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/customer/update/{id}', 'CustomerUpdate')->name('customer.update');
         Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
     });
+
     // Unit related route
     Route::controller(UnitController::class)->group(function () {
         Route::get('/unit', 'index')->name('unit');
@@ -93,6 +98,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/unit/update/{id}', 'update')->name('unit.update');
         Route::get('/unit/destroy/{id}', 'destroy')->name('unit.destroy');
     });
+
     // Product Size related route(n)
     Route::controller(ProductsSizeController::class)->group(function () {
         Route::get('/product/size/add', 'ProductSizeAdd')->name('product.size.add');
@@ -102,6 +108,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/product/size/update/{id}', 'ProductSizeUpdate')->name('product.size.update');
         Route::get('/product/size/delete/{id}', 'ProductSizeDelete')->name('product.size.delete');
     });
+
     // Product  related route(n)
     Route::controller(ProductsController::class)->group(function () {
         Route::get('/product/add', 'ProducAdd')->name('product.add');
@@ -110,7 +117,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/product/edit/{id}', 'ProducEdit')->name('product.edit');
         Route::post('/product/update/{id}', 'ProducUpdate')->name('product.update');
     });
-    // Employee  related route(n)
+
+    // Product  related route(n)
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employee/add', 'EmployeeAdd')->name('employee.add');
         Route::post('/employee/store', 'EmployeeStore')->name('employee.store');
@@ -119,7 +127,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/employee/update/{id}', 'EmployeeUpdate')->name('employee.update');
         Route::get('/employee/delete/{id}', 'EmployeeDelete')->name('employee.delete');
     });
-
 
     // Banks related route
     Route::controller(BankController::class)->group(function () {

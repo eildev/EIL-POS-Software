@@ -144,7 +144,7 @@
                 });
             });
 
-            // show error 
+            // show error
             function showError(name, message) {
                 $(name).css('border-color', 'red'); // Highlight input with red border
                 $(name).focus(); // Set focus to the input field
@@ -245,7 +245,7 @@
             }
             categoryView();
 
-            // edit category 
+            // edit category
             $(document).on('click', '.category_edit', function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -275,7 +275,7 @@
                 });
             })
 
-            // update category 
+            // update category
             $('.update_category').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -317,7 +317,7 @@
             })
 
 
-            // category Delete 
+            // category Delete
             $(document).on('click', '.category_delete', function(e) {
                 e.preventDefault();
                 // alert("ok")
@@ -366,7 +366,7 @@
             })
 
 
-            // category Status 
+            // category Status
             $(document).ready(function() {
                 $('.showData').on('click', '.categoryButton', function() {
                     var categoryId = $(this).data('id');

@@ -10,57 +10,51 @@
 <div class="col-md-12 stretch-card">
 <div class="card">
 	<div class="card-body">
-		<h6 class="card-title text-info">Add Expanse</h6>
-			<form id="myValidForm" action="{{route('expense.store')}}" method="post" enctype="multipart/form-data" >
+		<h6 class="card-title text-info">Edit Expanse</h6>
+			<form id="myValidForm" action="{{route('expense.update',$expense->id)}}" method="post" enctype="multipart/form-data" >
 				@csrf
 				<div class="row">
 					<!-- Col -->
 					<div class="col-sm-6">
 						<div class="mb-3 form-valid-groups">
 							<label class="form-label">Purpose<span class="text-danger">*</span></label>
-							<input type="text" name="purpose" class="form-control field_required" placeholder="Enter purpose">
+							<input type="text" name="purpose" value="{{$expense->purpose}}" class="form-control field_required" placeholder="Enter purpose">
 						</div>
 					</div><!-- Col -->
 					<div class="col-sm-6">
 						<div class="mb-3 form-valid-groups">
 							<label class="form-label">Amount<span class="text-danger">*</span></label>
-							<input type="number" name="amount" class="form-control" placeholder="Enter Amount">
+							<input type="number" name="amount" value="{{$expense->amount}}" class="form-control" placeholder="Enter Amount">
 						</div>
 					</div>
 					<div class="col-sm-6 form-valid-group">
-                        <div class="row">
-                            <div class="col-sm-6">
+
+
                                 <div class="mb-3" bis_skin_checked="1">
                                     <label for="ageSelect" class="form-label">Select Expense Category <span class="text-danger">*</span></label>
                                     <select class="form-select expense_category_name is-valid"     name="expense_category_id" aria-invalid="false">
                                         <option selected="" disabled="">Select Expense Category </option>
-                                        @foreach ($expenseCategory as $expanse )
-                                         <option value="{{$expanse->id}}">{{$expanse->name}}</option>
+                                        @foreach ($expenseCategory as $expanses )
+                                         <option value="{{$expanses->id}}" {{$expanses->id  == $expense->expense_category_id ? 'selected':''}}>{{$expanses->name}}</option>
                                         @endforeach
                                     </select>
                                     <span class="text-danger related_sign_error"></span>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 float-end">
-                                <div>
-                                    <label for="ageSelect" class="form-label">Add Expense Category <span class="text-danger">*</span></label>
-                                    <a href="" class="btn btn-sm bg-info text-dark" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModalLongScollable"><i data-feather="plus"></i> Expense Category</a>
-                                </div>
-                            </div>
-                        </div>
+
+
+
 					</div><!-- Col -->
 					<div class="col-sm-6">
                         <div class="mb-3 form-valid-groups">
                             <label class="form-label">Splender<span class="text-danger">*</span></label>
-                            <input type="number" name="spender" class="form-control" placeholder="Enter Amount">
+                            <input type="number" name="spender" value="{{$expense->spender}}" class="form-control" placeholder="Enter Amount">
                         </div>
 					</div><!-- Col -->
 
                     <div class="col-sm-6">
                         <div class="mb-3 form-valid-groups">
                             <label class="form-label">Date<span class="text-danger">*</span></label>
-                            <input type="date" name="expense_date" class="form-control" placeholder="Enter Date">
+                            <input type="date" name="expense_date" value="{{$expense->expense_date}}" class="form-control" placeholder="Enter Date">
                         </div>
 					</div>
                     <div class="col-sm-6">
@@ -69,7 +63,7 @@
                             <select class="form-select bank_id is-valid" name="bank_account_id" aria-invalid="false">
                                 <option selected="" disabled="" value="">Select Bank</option>
                                 @foreach ($bank as $banks )
-                                <option value="{{$banks->id}}">{{$banks->name}}</option>
+                                <option value="{{$banks->id}}" {{$banks->id == $expense->bank_account_id ? 'selected' : ''}}>{{$banks->name}}</option>
                                 @endforeach
                             </select>
                             <span class="text-danger related_sign_error"></span>
@@ -78,46 +72,18 @@
                     <div class="col-sm-6">
                         <div class="mb-3 form-valid-groups">
                             <label class="form-label">Note<span class="text-danger">*</span></label>
-                            <textarea name="note" class="form-control" id="" cols="10" rows="5"></textarea>
+                            <textarea name="note" class="form-control" id="" cols="10" rows="5">{{$expense->note}}</textarea>
                         </div>
 					</div>
 				</div><!-- Row -->
 				<div>
-				<input type="submit" class="btn btn-primary submit" value="Save">
+				<input type="submit" class="btn btn-primary submit" value="Update">
 				</div>
 			</form>
 	</div>
 </div>
 </div>
 </div>
-
-{{-- /////////////////Modal//////////////// --}}
-<div class="modal fade" id="exampleModalLongScollable" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add Expense Category</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="signupForm" class="categoryForm">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Expense Category Name</label>
-                            <input id="defaultconfig" class="form-control category_name" maxlength="250" name="name"
-                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
-                            <span class="text-danger category_name_error"></span>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary save_category">Save</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
-{{-- /////////////////End Modal//////////////// --}}
 
 <script type="text/javascript">
     $(document).ready(function (){

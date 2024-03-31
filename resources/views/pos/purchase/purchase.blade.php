@@ -293,10 +293,10 @@
                                 ${supplier.phone ?? ""}
                             </td>
                             <td>
-                                <input type="text" class="form-control" name="" value="${supplier.name ?? ''}" />
+                                ${supplier.email ?? ''}
                             </td>
                             <td>
-                                ${supplier.email ?? ''}
+                                <input type="text" class="form-control" name="" value="${supplier.name ?? ''}" />
                             </td>
                             <td>
                                 ${supplier.address ? supplier.address.slice(0,15) : ""}

@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ProductsSizeController;
@@ -69,6 +70,17 @@ Route::middleware('auth')->group(function () {
         Route::post('/subcategory/status/{id}', 'status')->name('subcategory.status');
     });
 
+    // Brand related route
+    Route::controller(BrandController::class)->group(function () {
+        Route::get('/brand', 'index')->name('brand');
+        Route::post('/brand/store', 'store')->name('brand.store');
+        Route::get('/brand/view', 'view')->name('brand.view');
+        Route::get('/brand/edit/{id}', 'edit')->name('brand.edit');
+        Route::post('/brand/update/{id}', 'update')->name('brand.update');
+        Route::post('/brand/status/{id}', 'status')->name('brand.status');
+        Route::get('/brand/destroy/{id}', 'destroy')->name('brand.destroy');
+    });
+
     // Branch related route(n)
     Route::controller(BranchController::class)->group(function () {
         Route::get('/branch', 'index')->name('branch');
@@ -111,11 +123,13 @@ Route::middleware('auth')->group(function () {
 
     // Product  related route(n)
     Route::controller(ProductsController::class)->group(function () {
-        Route::get('/product/add', 'ProducAdd')->name('product.add');
-        Route::post('/product/store', 'ProducStore')->name('product.store');
-        Route::get('/product/view', 'ProducView')->name('product.view');
-        Route::get('/product/edit/{id}', 'ProducEdit')->name('product.edit');
-        Route::post('/product/update/{id}', 'ProducUpdate')->name('product.update');
+        Route::get('/product', 'index')->name('product');
+        Route::post('/product/store', 'store')->name('product.store');
+        Route::get('/product/view', 'view')->name('product.view');
+        Route::get('/product/edit/{id}', 'edit')->name('product.edit');
+        Route::post('/product/update/{id}', 'update')->name('product.update');
+        Route::post('/category/status/{id}', 'status')->name('category.status');
+        Route::get('/product/destroy/{id}', 'destroy')->name('product.destroy');
     });
 
     // Product  related route(n)
@@ -156,6 +170,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/expense/edit/{id}', 'ExpenseEdit')->name('expense.edit');
         Route::post('/expense/update/{id}', 'ExpenseUpdate')->name('expense.update');
         Route::get('/expense/delete/{id}', 'ExpenseDelete')->name('expense.delete');
+    });
+
+    // Purchase related route
+    Route::controller(PurchaseController::class)->group(function () {
+        Route::get('/purchase', 'index')->name('purchase');
+        Route::post('/purchase/store', 'store')->name('purchase.store');
+        Route::get('/purchase/view', 'view')->name('purchase.view');
+        Route::get('/purchase/edit/{id}', 'edit')->name('purchase.edit');
+        Route::post('/purchase/update/{id}', 'update')->name('purchase.update');
+        Route::get('/purchase/destroy/{id}', 'destroy')->name('purchase.destroy');
     });
 });
 

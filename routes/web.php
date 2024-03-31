@@ -147,7 +147,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/supplier/update/{id}', 'update')->name('supplier.update');
         Route::get('/supplier/destroy/{id}', 'destroy')->name('supplier.destroy');
     });
-    // Expense  related route(n)
+    // Expense related route(n)
     Route::controller(ExpenseController::class)->group(function () {
         Route::post('/expense/category/store', 'ExpenseCategoryStore')->name('expense.category.store');
         Route::get('/expense/add', 'ExpenseAdd')->name('expense.add');

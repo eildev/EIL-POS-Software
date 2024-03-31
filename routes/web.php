@@ -149,9 +149,7 @@ Route::middleware('auth')->group(function () {
     });
     // Expense  related route(n)
     Route::controller(ExpenseController::class)->group(function () {
-        ////Expense Category
         Route::post('/expense/category/store', 'ExpenseCategoryStore')->name('expense.category.store');
-        ////End Expense Category
         Route::get('/expense/add', 'ExpenseAdd')->name('expense.add');
         Route::post('/expense/store', 'ExpenseStore')->name('expense.store');
         Route::get('/expense/view', 'ExpenseView')->name('expense.view');

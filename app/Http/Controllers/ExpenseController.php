@@ -85,6 +85,43 @@ class ExpenseController extends Controller
             'alert-type' => 'info'
         ];
         return redirect()->route('expense.view')->with($notification);
+    }//
+    public function ExpenseCategoryDelete($id){
+        $expenseCategory = ExpenseCategory::find($id);
+        $expenseCategory->delete();
+        $notification = [
+           'message' => 'Expense Category Deleted Successfully',
+            'alert-type' => 'info'
+        ];
+        return redirect()->route('expense.view')->with($notification);
+    }//
+    public function ExpenseCategoryEdit($id)
+    {
+        $category = ExpenseCategory::findOrFail($id);
+        if ($category) {
+            return response()->json([
+                'status' => 200,
+                'category' => $category
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'message' => "Data Not Found"
+            ]);
+        }
+    }//
+    public function ExpenseCategoryUpdate(Request $request, $id){
+
+        $category = ExpenseCategory::findOrFail($id)->update([
+            'name' => $request->name
+        ]);
+        dd($category);
+        // Return success response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Expense Category updated successfully',
+        ]);
+
     }
 
 }

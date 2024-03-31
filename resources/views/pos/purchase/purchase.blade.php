@@ -228,9 +228,9 @@
         $(document).ready(function() {
             // show error 
             function showError(name, message) {
-                $(name).css('border-color', 'red'); // Highlight input with red border
-                $(name).focus(); // Set focus to the input field
-                $(`${name}_error`).show().text(message); // Show error message
+                $(name).css('border-color', 'red');
+                $(name).focus();
+                $(`${name}_error`).show().text(message);
             }
             // save supplier
             const saveSupplier = document.querySelector('.save_supplier');
@@ -296,7 +296,7 @@
                                 <input type="text" class="form-control" name="" value="${supplier.name ?? ''}" />
                             </td>
                             <td>
-                                <input type="text" name="" class="form-control" value="${supplier.email ?? ''}" />
+                                ${supplier.email ?? ''}
                             </td>
                             <td>
                                 ${supplier.address ? supplier.address.slice(0,15) : ""}

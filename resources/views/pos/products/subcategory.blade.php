@@ -159,7 +159,7 @@
                 });
             });
 
-            // error remove 
+            // error remove
             // $('.category_name').keyup(function() {
             //     $('.category_name_error').hide();
             //     $('.category_name').css('border-color', 'green');
@@ -170,7 +170,7 @@
                 $(element).siblings('span').hide();
                 $(element).css('border-color', 'green');
             }
-            // show error 
+            // show error
             function showError(name, message) {
                 $(name).css('border-color', 'red'); // Highlight input with red border
                 $(name).focus(); // Set focus to the input field
@@ -268,7 +268,7 @@
                 })
             }
             categoryView();
-         //   edit category 
+         //   edit category
             $(document).on('click', '.subcategory_edit', function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -299,7 +299,7 @@
                 });
             })
 
-            // update category 
+            // update category
             $('.update_subcategory').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -345,7 +345,7 @@
             })
 
 
-            // category Delete 
+            // category Delete
             $(document).on('click', '.subcategory_delete', function(e) {
                 e.preventDefault();
                 // alert("ok")
@@ -394,7 +394,7 @@
             })
 
 
-            // category Status 
+            // category Status
             $(document).ready(function() {
                 $('.showData').on('click', '.subcategoryButton', function() {
                     var subcategoryId = $(this).data('id');

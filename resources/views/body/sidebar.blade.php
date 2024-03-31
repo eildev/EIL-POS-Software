@@ -73,12 +73,11 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('purchase') }}" role="button" aria-controls="general-pages">
+                <a class="nav-link" href="" role="button" aria-controls="general-pages">
                     <i class="link-icon" data-feather="book"></i>
                     <span class="link-title">Purchase</span>
                 </a>
             </li>
-
             <li class="nav-item nav-category">Bank</li>
             <li class="nav-item">
                 <a href="{{ route('bank') }}" class="nav-link">
@@ -87,7 +86,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('expense.add') }}" class="nav-link">
+                <a href="{{ route('expense.view') }}" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">Expense</span>
                 </a>

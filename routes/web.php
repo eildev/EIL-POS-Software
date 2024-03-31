@@ -159,6 +159,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/expense/update/{id}', 'ExpenseUpdate')->name('expense.update');
         Route::get('/expense/delete/{id}', 'ExpenseDelete')->name('expense.delete');
     });
+
 });
 
 require __DIR__ . '/auth.php';

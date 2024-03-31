@@ -24,10 +24,67 @@ class ExpenseController extends Controller
             ]);
         }
 
-    }
+    }//End Method
     public function ExpenseAdd(){
         $bank = Bank::latest()->get();
         $expenseCategory = ExpenseCategory::latest()->get();
         return view('pos.expense.add_expanse',compact('expenseCategory','bank'));
+    }//
+    public function ExpenseStore(Request $request){
+            $expense = new Expense;
+            $expense->branch_id =  Auth::user()->branch_id;
+            $expense->expense_date =  $request->expense_date;
+            $expense->expense_category_id =  $request->expense_category_id;
+            $expense->amount =  $request->amount;
+            $expense->purpose =  $request->purpose;
+            $expense->spender =  $request->spender;
+            $expense->bank_account_id =  $request->bank_account_id;
+            $expense->note =  $request->note;
+            $expense->save();
+            $notification = [
+                'message' => 'Expense Added Successfully',
+                'alert-type' => 'info'
+            ];
+            return redirect()->route('expense.view')->with($notification);
+
+    }//
+    public function ExpenseView(){
+    $expenseCat = ExpenseCategory::latest()->get();
+        $expense = Expense::latest()->get();
+        return view('pos.expense.view_expense',compact('expense','expenseCat'));
+    }//
+    public function ExpenseEdit($id){
+        $expense = Expense::find($id);
+        $bank = Bank::latest()->get();
+        $expenseCategory = ExpenseCategory::latest()->get();
+        return view('pos.expense.edit_expense',compact('expense','expenseCategory','bank'));
+    }//
+    public function ExpenseUpdate(Request $request,$id){
+        $expense = Expense::findOrFail($id);
+        $expense->branch_id =  Auth::user()->branch_id;
+        $expense->expense_date =  $request->expense_date;
+        $expense->expense_category_id =  $request->expense_category_id;
+        $expense->amount =  $request->amount;
+        $expense->purpose =  $request->purpose;
+        $expense->spender =  $request->spender;
+        $expense->bank_account_id =  $request->bank_account_id;
+        $expense->note =  $request->note;
+        $expense->save();
+        $notification = [
+            'message' => 'Expense Updated Successfully',
+            'alert-type' => 'info'
+        ];
+        return redirect()->route('expense.view')->with($notification);
+    }//
+    public function ExpenseDelete($id){
+
+        $expense = Expense::findOrFail($id);
+        $expense->delete();
+        $notification = [
+           'message' => 'Expense Deleted Successfully',
+            'alert-type' => 'info'
+        ];
+        return redirect()->route('expense.view')->with($notification);
     }
+
 }

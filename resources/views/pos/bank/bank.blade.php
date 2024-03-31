@@ -229,9 +229,10 @@
                     success: function(res) {
                         const banks = res.data;
                         $('.showData').empty();
-                        $.each(banks, function(index, bank) {
-                            const tr = document.createElement('tr');
-                            tr.innerHTML = `
+                        if (banks.length > 0) {
+                            $.each(banks, function(index, bank) {
+                                const tr = document.createElement('tr');
+                                tr.innerHTML = `
                             <td>
                                 ${index+1}
                             </td>
@@ -262,8 +263,21 @@
                                 </a>
                             </td>
                             `;
-                            $('.showData').append(tr);
-                        })
+                                $('.showData').append(tr);
+                            })
+                        } else {
+                            $('.showData').html(`
+                            <tr>
+                                <td colspan='8'>
+                                    <div class="text-center text-warning mb-2">Data Not Found</div>
+                                    <div class="text-center">
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLongScollable">Add
+                                            Bank Info<i data-feather="plus"></i></button>
+                                    </div>
+                                </td>
+                            </tr>`)
+                        }
+
                     }
                 })
             }

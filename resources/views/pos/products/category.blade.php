@@ -51,7 +51,7 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Category Name</label>
                             <input id="defaultconfig" class="form-control category_name" maxlength="250" name="name"
-                                type="text" onkeyup="errorRemove(this);">
+                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger category_name_error"></span>
                         </div>
                         <div class="mb-3">
@@ -91,7 +91,7 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Category Name</label>
                             <input id="defaultconfig" class="form-control edit_category_name" maxlength="250" name="name"
-                                type="text">
+                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger edit_category_name_error"></span>
                         </div>
                         <div class="mb-3">
@@ -121,9 +121,10 @@
 
     <script>
         function errorRemove(element) {
-            // alert('ok')
-            $(element).siblings('span').hide();
-            $(element).css('border-color', 'green');
+            if (element.value != '') {
+                $(element).siblings('span').hide();
+                $(element).css('border-color', 'green');
+            }
         }
 
         $(document).ready(function() {
@@ -197,9 +198,10 @@
                         // console.log(res.data);
                         const categories = res.data;
                         $('.showData').empty();
-                        $.each(categories, function(index, category) {
-                            const tr = document.createElement('tr');
-                            tr.innerHTML = `
+                        if (categories.length > 0) {
+                            $.each(categories, function(index, category) {
+                                const tr = document.createElement('tr');
+                                tr.innerHTML = `
                             <td>
                                 ${index+1}
                             </td>
@@ -211,7 +213,7 @@
                             </td>
                             <td>
                                 <button id="categoryButton_${category.id}" class="btn ${category.status != 0 ? 'btn-success' : 'btn-danger' } categoryButton"
-                        data-id="${category.id}">${category.status != 0 ? 'Active' : 'Inactive'}</button>
+                                data-id="${category.id}">${category.status != 0 ? 'Active' : 'Inactive'}</button>
                             </td>
                             <td>
                                 <a href="#" class="btn btn-primary btn-icon category_edit" data-id=${category.id} data-bs-toggle="modal" data-bs-target="#edit">
@@ -222,8 +224,21 @@
                                 </a>
                             </td>
                             `;
-                            $('.showData').append(tr);
-                        })
+                                $('.showData').append(tr);
+                            })
+                        } else {
+                            $('.showData').html(`
+                            <tr>
+                                <td colspan='8'>
+                                    <div class="text-center text-warning mb-2">Data Not Found</div>
+                                    <div class="text-center">
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLongScollable">Add
+                                            Category<i data-feather="plus"></i></button>
+                                    </div>
+                                </td>
+                            </tr>`)
+                        }
+
 
                     }
                 })

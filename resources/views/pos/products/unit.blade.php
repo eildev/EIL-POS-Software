@@ -51,18 +51,20 @@
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Unit Name</label>
                             <input id="defaultconfig" class="form-control unit_name" maxlength="39" name="name"
-                                type="text" onkeyup="errorRemove(this);">
+                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger unit_name_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Related To Unit</label>
                             <input id="defaultconfig" class="form-control related_to_unit" maxlength="39"
-                                name="related_to_unit" type="text" onkeyup="errorRemove(this);">
+                                name="related_to_unit" type="text" onkeyup="errorRemove(this);"
+                                onblur="errorRemove(this);">
                             <span class="text-danger related_to_unit_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="ageSelect" class="form-label">Operator</label>
-                            <select class="form-select related_sign" name="related_sign" onclick="errorRemove(this);">
+                            <select class="form-select related_sign" name="related_sign" onclick="errorRemove(this);"
+                                onblur="errorRemove(this);">
                                 <option selected disabled>Select Operator Sign</option>
                                 <option value="+">(+)addition operator</option>
                                 <option value="-">(-)subtraction operator</option>
@@ -74,7 +76,7 @@
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Related By Value</label>
                             <input id="defaultconfig" class="form-control related_by" maxlength="10" name="related_by"
-                                type="number" onkeyup="errorRemove(this);">
+                                type="number" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger related_by_error"></span>
                         </div>
                 </div>
@@ -100,19 +102,20 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Unit Name</label>
                             <input id="defaultconfig" class="form-control edit_unit_name" maxlength="39" name="name"
-                                type="text" onkeyup="errorRemove(this);">
+                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger edit_unit_name_error"></span>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Related To Unit</label>
                             <input id="defaultconfig" class="form-control edit_related_to_unit" maxlength="39"
-                                name="related_to_unit" type="text" onkeyup="errorRemove(this);">
+                                name="related_to_unit" type="text" onkeyup="errorRemove(this);"
+                                onblur="errorRemove(this);">
                             <span class="text-danger edit_related_to_unit_error"></span>
                         </div>
                         <div class="mb-3">
                             <label for="ageSelect" class="form-label">Operator</label>
                             <select class="form-select edit_related_sign" name="related_sign"
-                                onclick="errorRemove(this);">
+                                onclick="errorRemove(this);" onblur="errorRemove(this);">
                                 <option selected disabled>Select Operator Sign</option>
                                 <option value="+">(+)addition operator</option>
                                 <option value="-">(-)subtraction operator</option>
@@ -124,7 +127,8 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Related By Value</label>
                             <input id="defaultconfig" class="form-control edit_related_by" maxlength="10"
-                                name="related_by" type="number" onkeyup="errorRemove(this);">
+                                name="related_by" type="number" onkeyup="errorRemove(this);"
+                                onblur="errorRemove(this);">
                             <span class="text-danger edit_related_by_error"></span>
                         </div>
                 </div>
@@ -140,8 +144,10 @@
     <script>
         // error remove 
         function errorRemove(element) {
-            $(element).siblings('span').hide();
-            $(element).css('border-color', 'green');
+            if (element.value != '') {
+                $(element).siblings('span').hide();
+                $(element).css('border-color', 'green');
+            }
         }
         $(document).ready(function() {
             // show error 
@@ -205,9 +211,11 @@
                     success: function(res) {
                         const units = res.data;
                         $('.showData').empty();
-                        $.each(units, function(index, unit) {
-                            const tr = document.createElement('tr');
-                            tr.innerHTML = `
+
+                        if (units.length > 0) {
+                            $.each(units, function(index, unit) {
+                                const tr = document.createElement('tr');
+                                tr.innerHTML = `
                             <td>
                                 ${index+1}
                             </td>
@@ -232,8 +240,21 @@
                                 </a>
                             </td>
                             `;
-                            $('.showData').append(tr);
-                        })
+                                $('.showData').append(tr);
+                            })
+                        } else {
+                            $('.showData').html(`
+                            <tr>
+                                <td colspan='8'>
+                                    <div class="text-center text-warning mb-2">Data Not Found</div>
+                                    <div class="text-center">
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLongScollable">Add
+                                            Unit<i data-feather="plus"></i></button>
+                                    </div>
+                                </td>
+                            </tr>`)
+                        }
+
                     }
                 })
             }

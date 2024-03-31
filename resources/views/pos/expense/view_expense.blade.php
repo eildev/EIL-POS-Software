@@ -96,6 +96,8 @@
                                     <a href="{{route('expense.category.delete',$expenseCategory->id)}}" id="delete" class="btn btn-sm btn-danger btn-icon ">
                                         <i data-feather="trash-2"></i>
                                     </a>
+                                    <a href="" class="btn btn-sm bg-info text-dark" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModalLongScollable"><i data-feather="plus"></i> Expense Category</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -107,7 +109,33 @@
             </div>
         </div>
 </div>
-
+{{-- /////////////////Modal//////////////// --}}
+<div class="modal fade" id="exampleModalLongScollable" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add Expense Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signupForm" class="categoryForm">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Expense Category Name</label>
+                            <input id="defaultconfig" class="form-control category_name" maxlength="250" name="name"
+                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
+                            <span class="text-danger category_name_error"></span>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary save_category">Save</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{-- /////////////////End Modal//////////////// --}}
 
 {{-- //////////////Edit////////// --}}
 <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
@@ -184,9 +212,47 @@
                         showConfirmButton: false,
                         timer: 1500
                     });
+                    window.location.reload();
                 }
             });
         });
+
+
+         const saveCategory = document.querySelector('.save_category');
+        saveCategory.addEventListener('click', function(e) {
+                e.preventDefault();
+                let formData = new FormData($('.categoryForm')[0]);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '/expense/category/store',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status == 200) {
+                            $('#exampleModalLongScollable').modal('hide');
+                            // formData.delete(entry[0]);
+                            // alert('added successfully');
+                            $('.categoryForm')[0].reset();
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: res.message,
+                                showConfirmButton: false,
+                                timer: 1500,
+                            });
+                            window.location.reload();
+                        } else {
+                            showError('.category_name', res.error.name);
+                        }
+                    }
+                });
+            })
             });
 </script>
 @endsection

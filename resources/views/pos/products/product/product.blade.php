@@ -106,6 +106,23 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                            <div class="mb-3 col-12">
+                                <label for="" class="form-label">Description</label>
+                                <textarea class="form-control" name="tinymce" id="tinymceExample" rows="5"></textarea>
+                            </div>
+                            <div class="mb-3 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Product Image</h6>
+                                        <p class="mb-3 text-warning">Note: <span class="fst-italic">Image not
+                                                required. If you
+                                                add
+                                                a category image
+                                                please add a 400 X 400 size image.</span></p>
+                                        <input type="file" class="categoryImage" name="image" id="myDropify" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -80,6 +80,12 @@
                     <span class="link-title">Bank</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('expense.add') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Expense</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

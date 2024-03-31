@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductsSizeController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ExpenseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -109,7 +110,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/product/edit/{id}', 'ProducEdit')->name('product.edit');
         Route::post('/product/update/{id}', 'ProducUpdate')->name('product.update');
     });
-    // Product  related route(n)
+    // Employee  related route(n)
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employee/add', 'EmployeeAdd')->name('employee.add');
         Route::post('/employee/store', 'EmployeeStore')->name('employee.store');
@@ -120,7 +121,7 @@ Route::middleware('auth')->group(function () {
     });
 
 
-    // Banks related route 
+    // Banks related route
     Route::controller(BankController::class)->group(function () {
         Route::get('/bank', 'index')->name('bank');
         Route::post('/bank/store', 'store')->name('bank.store');
@@ -130,7 +131,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/bank/destroy/{id}', 'destroy')->name('bank.destroy');
     });
 
-    // Supplier related route 
+    // Supplier related route
     Route::controller(SupplierController::class)->group(function () {
         Route::get('/supplier', 'index')->name('supplier');
         Route::post('/supplier/store', 'store')->name('supplier.store');
@@ -138,6 +139,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/supplier/edit/{id}', 'edit')->name('supplier.edit');
         Route::post('/supplier/update/{id}', 'update')->name('supplier.update');
         Route::get('/supplier/destroy/{id}', 'destroy')->name('supplier.destroy');
+    });
+    // Expense  related route(n)
+    Route::controller(ExpenseController::class)->group(function () {
+        ////Expense Category
+        Route::post('/expense/category/store', 'ExpenseCategoryStore')->name('expense.category.store');
+        ////End Expense Category
+        Route::get('/expense/add', 'ExpenseAdd')->name('expense.add');
+        Route::post('/expense/store', 'ExpenseStore')->name('expense.store');
+        Route::get('/expense/view', 'ExpenseView')->name('expense.view');
+        Route::get('/expense/edit/{id}', 'ExpenseEdit')->name('expense.edit');
+        Route::post('/expense/update/{id}', 'ExpenseUpdate')->name('expense.update');
+        Route::get('/expense/delete/{id}', 'ExpenseDelete')->name('expense.delete');
     });
 });
 

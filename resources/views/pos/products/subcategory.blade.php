@@ -73,7 +73,7 @@
                                     <p class="mb-3 text-warning">Note: <span class="fst-italic">Image not
                                             required. If you
                                             add
-                                            a category image
+                                            a subcategory image
                                             please add a 400 X 400 size image.</span></p>
                                     <input type="file" class="subcategoryImage" name="image" id="myDropify" />
                                 </div>

@@ -58,6 +58,13 @@
                     <span class="link-title">Customer</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('employee.view') }}" role="button" aria-controls="general-pages">
+                    <i class="link-icon" data-feather="book"></i>
+                    <span class="link-title">Employee</span>
+                </a>
+            </li>
             <li class="nav-item nav-category">Inventory</li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('supplier') }}" role="button" aria-controls="general-pages">
@@ -167,6 +174,7 @@
                 </div>
             </li>
 
+>>>>>>> 67e897ad1a13d27fa7f05496304d3c91d38ba646
         </ul>
     </div>
 </nav>

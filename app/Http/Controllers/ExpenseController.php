@@ -34,6 +34,9 @@ class ExpenseController extends Controller
     } //
     public function ExpenseStore(Request $request)
     {
+        $request->validate([
+            'expense_category_id' => 'required',
+        ]);
         $expense = new Expense;
         $expense->branch_id =  Auth::user()->branch_id;
         $expense->expense_date =  $request->expense_date;
@@ -53,9 +56,11 @@ class ExpenseController extends Controller
     public function ExpenseView()
     {
         $expenseCat = ExpenseCategory::latest()->get();
+        // $expenseCategory  = ExpenseCategory::latest()->get();
         $expense = Expense::latest()->get();
         return view('pos.expense.view_expense', compact('expense', 'expenseCat'));
     } //
+
     public function ExpenseEdit($id)
     {
         $expense = Expense::find($id);
@@ -129,5 +134,19 @@ class ExpenseController extends Controller
             'status' => 200,
             'message' => 'Expense Category updated successfully',
         ]);
+    }//
+    ///Expense Filter view
+    public function ExpenseFilterView(Request $request){
+        $expenseCat = ExpenseCategory::latest()->get();
+        // $expenseCategory  = ExpenseCategory::latest()->get();
+        $expense = Expense::when($request->filterCtegory, function ($query) use ($request) {
+            return $query->where('expense_category_id', $request->filterCtegory);
+        })
+        ->when($request->fromDate && $request->toDate, function ($query) use ($request) {
+            return $query->whereBetween('expense_date', [$request->fromDate, $request->toDate]);
+        })
+        ->get();
+
+        return view('pos.expense.expense-filter-rander-table', compact('expense', 'expenseCat'))->render();
     }
 }

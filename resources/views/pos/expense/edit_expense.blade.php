@@ -32,7 +32,7 @@
 
                                 <div class="mb-3" bis_skin_checked="1">
                                     <label for="ageSelect" class="form-label">Select Expense Category <span class="text-danger">*</span></label>
-                                    <select class="form-select expense_category_name is-valid"     name="expense_category_id" aria-invalid="false">
+                                    <select class="form-select expense_category_name is-valid js-example-basic-single form-select"     name="expense_category_id" aria-invalid="false">
                                         <option selected="" disabled="">Select Expense Category </option>
                                         @foreach ($expenseCategory as $expanses )
                                          <option value="{{$expanses->id}}" {{$expanses->id  == $expense->expense_category_id ? 'selected':''}}>{{$expanses->name}}</option>
@@ -60,8 +60,8 @@
                     <div class="col-sm-6">
                         <div class="mb-3" bis_skin_checked="1">
                             <label for="ageSelect" class="form-label">Select Bank Acoount</label>
-                            <select class="form-select bank_id is-valid" name="bank_account_id" aria-invalid="false">
-                                <option selected="" disabled="" value="">Select Bank</option>
+                            <select class="form-select bank_id is-valid js-example-basic-single form-select" name="bank_account_id" aria-invalid="false">
+                                <option selected="" disabled=""  value="">Select Bank</option>
                                 @foreach ($bank as $banks )
                                 <option value="{{$banks->id}}" {{$banks->id == $expense->bank_account_id ? 'selected' : ''}}>{{$banks->name}}</option>
                                 @endforeach
@@ -101,12 +101,12 @@
                 spender:{
                     required : true,
                 },
-                bank_account_id:{
-                    required : true,
-                },
-                note:{
-                    required : true,
-                },
+                // bank_account_id:{
+                //     required : true,
+                // },
+                // note:{
+                //     required : true,
+                // },
                 expense_date:{
                     required : true,
                 },
@@ -124,12 +124,12 @@
                 spender: {
                     required : 'Please Enter  spender',
                 },
-                bank_account_id: {
-                    required : 'Please Select Bank Name',
-                },
-                note: {
-                    required : 'Please Enter Note',
-                },
+                // bank_account_id: {
+                //     required : 'Please Select Bank Name',
+                // },
+                // note: {
+                //     required : 'Please Enter Note',
+                // },
                 expense_date: {
                     required : 'Please Select Date',
                 },

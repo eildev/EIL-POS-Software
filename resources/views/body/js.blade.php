@@ -20,6 +20,7 @@
 <script src="{{ asset('assets') }}/vendors/pickr/pickr.min.js"></script>
 <script src="{{ asset('assets') }}/vendors/moment/moment.min.js"></script>
 <script src="{{ asset('assets') }}/vendors/sweetalert2/sweetalert2.min.js"></script>
+<script src="{{ asset('assets') }}/vendors/tinymce/tinymce.min.js"></script>
 <!-- End plugin js for this page -->
 
 <!-- inject:js -->
@@ -44,6 +45,7 @@
 <script src="{{ asset('assets') }}/js/pickr.js"></script>
 <script src="{{ asset('assets') }}/js/flatpickr.js"></script>
 <script src="{{ asset('assets') }}/js/sweet-alert.js"></script>
+<script src="{{ asset('assets') }}/js/tinymce.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
     @if (Session::has('message'))

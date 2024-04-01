@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Psize;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -14,10 +15,11 @@ class SubCategoryController extends Controller
     {
         $categories = Category::get();
         // return view('pos.products.category', compact('categories'));
-        return view('pos.products.subcategory',compact('categories'));
+        return view('pos.products.subcategory', compact('categories'));
     }
-    public function store(Request $request){
-     $validator = Validator::make($request->all(), [
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'category_id' => 'required|max:255',
         ]);
@@ -43,7 +45,7 @@ class SubCategoryController extends Controller
                 'error' => $validator->messages()
             ]);
         }
-    }//
+    } //
     public function view()
     {
         $subcategories = SubCategory::all();
@@ -52,7 +54,7 @@ class SubCategoryController extends Controller
             "status" => 200,
             "data" => $subcategories
         ]);
-    }//
+    } //
     public function edit($id)
     {
         $subcategory = SubCategory::findOrFail($id);
@@ -68,7 +70,7 @@ class SubCategoryController extends Controller
                 'message' => "Data Not Found"
             ]);
         }
-    }//
+    } //
     public function update(Request $request, $id)
     {
         // dd($request->all());
@@ -104,7 +106,7 @@ class SubCategoryController extends Controller
                 'error' => $validator->messages()
             ]);
         }
-    }//
+    } //
     public function destroy($id)
     {
         $subcategory = SubCategory::findOrFail($id);
@@ -119,7 +121,7 @@ class SubCategoryController extends Controller
             'status' => 200,
             'message' => 'Sub Category Deleted Successfully',
         ]);
-    }//
+    } //
     public function status($id)
     {
         $subcategory = SubCategory::findOrFail($id);
@@ -131,6 +133,16 @@ class SubCategoryController extends Controller
             'status' => 200,
             'newStatus' => $newStatus,
             'message' => 'Status Changed Successfully',
+        ]);
+    }
+    public function find($id)
+    {
+        $subcategory = SubCategory::where('category_id', $id)->get();
+        $size = Psize::where('category_id', $id)->get();
+        return response()->json([
+            'status' => 200,
+            'data' => $subcategory,
+            'size' => $size,
         ]);
     }
 }

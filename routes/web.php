@@ -68,6 +68,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/subcategory/update/{id}', 'update')->name('subcategory.update');
         Route::get('/subcategory/destroy/{id}', 'destroy')->name('subcategory.destroy');
         Route::post('/subcategory/status/{id}', 'status')->name('subcategory.status');
+        Route::get('/subcategory/find/{id}', 'find')->name('subcategory.find');
     });
 
     // Brand related route
@@ -128,7 +129,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/product/view', 'view')->name('product.view');
         Route::get('/product/edit/{id}', 'edit')->name('product.edit');
         Route::post('/product/update/{id}', 'update')->name('product.update');
-        Route::post('/category/status/{id}', 'status')->name('category.status');
         Route::get('/product/destroy/{id}', 'destroy')->name('product.destroy');
     });
 

@@ -32,7 +32,7 @@
                             <a href="{{ route('product') }}" class="nav-link">Add Product</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Manage Products</a>
+                            <a href="{{ route('product.view') }}" class="nav-link">Manage Products</a>
                         </li>
                     </ul>
                 </div>
@@ -97,7 +97,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="" role="button" aria-controls="general-pages">
+                <a class="nav-link" href="{{ route('purchase') }}" role="button" aria-controls="general-pages">
                     <i class="link-icon" data-feather="book"></i>
                     <span class="link-title">Purchase</span>
                 </a>

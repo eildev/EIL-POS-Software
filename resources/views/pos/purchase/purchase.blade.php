@@ -436,7 +436,18 @@
                         dataType: 'JSON',
                         success: function(res) {
                             const promotion = res.data;
-                            // console.log(product);  
+                            // console.log(promotion.percentage);
+                            if (promotion.discount_type != 'fixed_amount') {
+                                let total = parseFloat($('.total').val());
+
+                                let grandTotalAmount = (total * promotion.discount_value) / 100;
+                                console.log(grandTotalAmount);
+
+                                $('.grand_total').val(grandTotalAmount);
+                            } else {
+
+                            }
+
                         }
                     })
                 }

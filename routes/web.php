@@ -14,6 +14,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\PromotionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -188,6 +189,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/purchase/edit/{id}', 'edit')->name('purchase.edit');
         Route::post('/purchase/update/{id}', 'update')->name('purchase.update');
         Route::get('/purchase/destroy/{id}', 'destroy')->name('purchase.destroy');
+    });
+     // Promotion  related route(n)
+     Route::controller(PromotionController::class)->group(function () {
+        Route::get('/promotion/add', 'PromotionAdd')->name('promotion.add');
+        Route::post('/promotion/store', 'PromotionStore')->name('promotion.store');
+        Route::get('/promotion/view', 'PromotionView')->name('promotion.view');
+        Route::get('/promotion/edit/{id}', 'PromotionEdit')->name('promotion.edit');
+        Route::post('/promotion/update/{id}', 'PromotionUpdate')->name('promotion.update');
+        Route::get('/promotion/delete/{id}', 'PromotionDelete')->name('promotion.delete');
     });
 });
 

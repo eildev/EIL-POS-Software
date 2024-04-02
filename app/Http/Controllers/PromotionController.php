@@ -79,12 +79,39 @@ class PromotionController extends Controller
             'message' => 'Promotion Details Added Successfully',
              'alert-type' => 'info'
          ];
-         return redirect()->back()->with($notification);
+         return redirect()->route('promotion.details.view')->with($notification);
     }//End Method
     public function PromotionDetailsView(){
         $promotion_details = PromotionDetails::all();
         return view('pos.promotion.promotion_details_view',compact('promotion_details'));
     }//End Method
+    public function PromotionDetailsEdit($id){
+        $product = Product::latest()->get();
+        $promotions = Promotion::latest()->get();
+        $promotion_details = PromotionDetails::findOrFail($id);
+        return view('pos.promotion.promotion_details_edit',compact('promotion_details','product','promotions'));
+    }//End Method
+    public function PromotionDetailsUpdate( Request $request){
+        PromotionDetails::findOrFail($request->id)->update([
+            'promotion_id' => $request->promotion_id,
+            'Product_id' => $request->Product_id,
+            'additional_conditions' => $request->additional_conditions,
+            'updated_at' =>  Carbon::now(),
+        ]);
+        $notification = [
+            'message' => 'Promotion Details Updated Successfully',
+             'alert-type' => 'info'
+         ];
+         return redirect()->route('promotion.details.view')->with($notification);
+    }//
+    public function PromotionDetailsDelete($id){
+        PromotionDetails::findOrFail($id)->delete();
+        $notification = [
+           'message' => 'Promotion Details Deleted Successfully',
+             'alert-type' => 'info'
+         ];
+         return redirect()->route('promotion.details.view')->with($notification);
+    }
 
 
 }

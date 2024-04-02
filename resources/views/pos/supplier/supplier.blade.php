@@ -51,7 +51,8 @@
                 <div class="modal-body">
                     <form id="signupForm" class="supplierForm row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Supplier Name</label>
+                            <label for="name" class="form-label">Supplier Name <span
+                                    class="text-danger">*</span></label>
                             <input id="defaultconfig" class="form-control supplier_name" maxlength="255" name="name"
                                 type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger supplier_name_error"></span>
@@ -62,7 +63,8 @@
                                 type="email">
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Phone Nnumber</label>
+                            <label for="name" class="form-label">Phone Nnumber <span
+                                    class="text-danger">*</span></label>
                             <input id="defaultconfig" class="form-control phone" maxlength="39" name="phone"
                                 type="tel" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger phone_error"></span>
@@ -104,7 +106,8 @@
                 <div class="modal-body">
                     <form id="signupForm" class="editSupplierForm row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Supplier Name</label>
+                            <label for="name" class="form-label">Supplier Name <span
+                                    class="text-danger">*</span></label>
                             <input id="defaultconfig" class="form-control edit_supplier_name" maxlength="255"
                                 name="name" type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger edit_name_error"></span>
@@ -115,7 +118,8 @@
                                 type="email">
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Phone Nnumber</label>
+                            <label for="name" class="form-label">Phone Nnumber <span
+                                    class="text-danger">*</span></label>
                             <input id="defaultconfig" class="form-control edit_phone" maxlength="39" name="phone"
                                 type="tel" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger edit_phone_error"></span>

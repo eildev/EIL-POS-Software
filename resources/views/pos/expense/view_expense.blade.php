@@ -70,7 +70,7 @@
     </li>
     <li class="nav-item">
       {{-- <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#" role="tab" aria-controls="contact" aria-selected="false"></a> --}}
-      <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#contact1" role="tab" aria-controls="profile" aria-selected="false">Expense Report</a>
+      <a class="nav-link" id="expense-tab" data-bs-toggle="tab" href="#expense" role="tab" aria-controls="profile" aria-selected="false">Expense Report</a>
     </li>
 
 
@@ -207,7 +207,7 @@
         </div>
           {{-- End Expense Category --}}
           {{-- /// Expense Report  --}}
-          <div class="tab-pane fade" id="contact1" role="tabpanel" aria-labelledby="contact-tab">
+          <div class="tab-pane fade" id="expense" role="tabpanel" aria-labelledby="expense-tab">
             {{-- /////Expensse Report Start --}}
           <div class="row">
             <div class="col-md-12   grid-margin stretch-card">
@@ -248,13 +248,13 @@
                             <div class="col-md-11 mb-2"> <!-- Left Section -->
                                 <div class="justify-content-left">
                                     <a href="" class="btn btn-sm bg-info text-dark mr-2" id="filter">Filter</a>
-                                    <a class="btn btn-sm bg-primary text-dark" href="">Reset</a>
+                                    <a class="btn btn-sm bg-primary text-dark" onclick="resetWindow()">Reset</a>
                                 </div>
                             </div>
 
                             <div class="col-md-1"> <!-- Right Section -->
                                 <div class="justify-content-end">
-                                    <a href="#" onclick="printTable()" class="btn btn-sm bg-info text-dark mr-2">Print</a>
+                                    <a href="#" onclick="printTable()" class="btn btn-sm bg-info text-dark mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-printer btn-icon-prepend"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>Print</a>
                                 </div>
                             </div>
                         </div>
@@ -394,8 +394,22 @@
     });
 }//
 
-// function
+// Print function
 function printTable() {
+
+    // Hide action buttons
+    var actionButtons = document.querySelectorAll('.btn-icon');
+    actionButtons.forEach(function(button) {
+        button.style.display = 'none';
+    });
+    var actionColumn = document.querySelectorAll('.action th:last-child');
+    actionColumn.forEach(function(column) {
+        column.style.display = 'none';
+    });
+    var actionthColumn = document.querySelectorAll('.showData td:last-child');
+    actionthColumn.forEach(function(column) {
+        column.style.display = 'none';
+    });
     // Hide all other elements on the page temporarily
     var bodyContent = document.body.innerHTML;
     var tableContent = document.getElementById('tableContainer').innerHTML;
@@ -407,6 +421,24 @@ function printTable() {
 
     // Restore the original content of the page
     document.body.innerHTML = bodyContent;
+
+    // Restore action buttons
+    actionButtons.forEach(function(button) {
+        button.style.display = 'block';
+    });
+    // var tabToActivateId = "#expense-tab";
+    // window.location.reload();
+    window.location.reload();
+    // document.getElementById(tabToActivateId).click();
+//
+
+}
+////reset button
+function resetWindow() {
+    // Reload the page
+    window.location.reload();
+    // Restore the "Expense Report" tab after the page reloads
+    // document.getElementById("profile-tab").click();
 }
 </script>
 @endsection

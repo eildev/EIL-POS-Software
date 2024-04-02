@@ -6,7 +6,7 @@
 
             <div id="tableContainer" class="table-responsive">
                 <table class="table">
-                    <thead>
+                    <thead class="action">
                         <tr>
                             <th>SN</th>
                             <th>purpose</th>

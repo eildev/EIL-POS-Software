@@ -32,8 +32,8 @@
                                 @endphp
                                 <label for="ageSelect" class="form-label">Category <span
                                         class="text-danger">*</span></label>
-                                <select class="form-select category_id" id="category_name" name="category_id"
-                                    onclick="errorRemove(this);" onblur="errorRemove(this);">
+                                <select class="js-example-basic-single form-select category_id" id="category_name"
+                                    name="category_id" onclick="errorRemove(this);" onblur="errorRemove(this);">
                                     @if ($categories->count() > 0)
                                         <option selected disabled>Select category</option>
                                         @foreach ($categories as $category)
@@ -48,9 +48,9 @@
                             <div class="mb-3 col-md-4">
                                 <label for="ageSelect" class="form-label">Subcategory <span
                                         class="text-danger">*</span></label>
-                                <select class="form-select subcategory_id" name="subcategory_id"
+                                <select class="js-example-basic-single form-select subcategory_id" name="subcategory_id"
                                     onclick="errorRemove(this);" onblur="errorRemove(this);">
-                                    <option selected disabled>Please Select Subcategory</option>
+                                    <option selected disabled>Select Subcategory</option>
                                 </select>
                                 <span class="text-danger subcategory_id_error"></span>
                             </div>
@@ -59,8 +59,8 @@
                                     $brands = App\Models\Brand::get();
                                 @endphp
                                 <label for="ageSelect" class="form-label">Brand <span class="text-danger">*</span></label>
-                                <select class="form-select brand_id" name="brand_id" onclick="errorRemove(this);"
-                                    onblur="errorRemove(this);">
+                                <select class="js-example-basic-single form-select brand_id" name="brand_id"
+                                    onclick="errorRemove(this);" onblur="errorRemove(this);">
                                     @if ($brands->count() > 0)
                                         <option selected disabled>Select Brand</option>
                                         @foreach ($brands as $brand)
@@ -115,7 +115,7 @@
                             </div>
                             <div class="mb-3 col-12">
                                 <label for="ageSelect" class="form-label">Size </label>
-                                <select class="form-select size_id" name="size_id">
+                                <select class="js-example-basic-single form-select size_id" name="size_id">
                                     <option selected disabled>Select Size</option>
                                 </select>
                             </div>
@@ -124,8 +124,8 @@
                                     $units = App\Models\Unit::get();
                                 @endphp
                                 <label for="ageSelect" class="form-label">Unit <span class="text-danger">*</span></label>
-                                <select class="form-select unit_id" name="unit_id" onclick="errorRemove(this);"
-                                    onblur="errorRemove(this);">
+                                <select class="js-example-basic-single form-select unit_id" name="unit_id"
+                                    onclick="errorRemove(this);" onblur="errorRemove(this);">
                                     @if ($units->count() > 0)
                                         <option selected disabled>Select Unit</option>
                                         @foreach ($units as $unit)
@@ -178,47 +178,58 @@
             }
 
             // when select category
-            const category = document.querySelector('#category_name');
-            category.addEventListener('change', function() {
-                let category_id = $(this).val();
-                // alert(category_id);
-                // console.log(category_id);
-                if (category_id) {
+            $('.category_id').change(function() {
+                let id = $(this).val();
+                // alert(id);
+                if (id) {
                     $.ajax({
-                        url: '/subcategory/find/' + category_id,
+                        url: '/subcategory/find/' + id,
                         type: 'GET',
                         dataType: 'JSON',
                         success: function(res) {
                             if (res.status == 200) {
-                                // console.log(res.data)
-                                // subcategory data 
-                                $('select[name="subcategory_id"]').html(
-                                    '<option selected disabled>Select a Sub-Category</option>'
-                                );
-                                $.each(res.data, function(key, item) {
-                                    $('select[name="subcategory_id"]').append(
-                                        '<option myid="' + item.id +
-                                        '" value="' + item.id +
-                                        '">' + item
-                                        .name + '</option>');
-                                })
+                                $('.subcategory_id').empty();
+                                // $('.subcategory_id').size_id();
+                                // console.log(res);
 
-                                // size selcet 
-                                $('select[name="size_id"]').html(
-                                    '<option selected disabled>Select a Size</option>');
-                                $.each(res.size, function(key, item) {
-                                    $('select[name="size_id"]').append(
-                                        '<option myid="' + item.id +
-                                        '" value="' + item.id +
-                                        '">' + item
-                                        .size + '</option>');
-                                })
+                                // show subcategory 
+                                if (res.data.length > 0) {
 
+                                    // console.log(res.data)
+                                    $('.subcategory_id').html(
+                                        '<option selected disabled>Select a SubCategory</option>'
+                                    );
+                                    $.each(res.data, function(key, item) {
+                                        $('.subcategory_id').append(
+                                            `<option value="${item.id}">${item.name}</option>`
+                                        );
+                                    })
+                                } else {
+                                    $('.subcategory_id').html(`
+                                        <option selected disable>Please add Subcategory</option>`)
+                                }
+
+                                // show Size 
+                                if (res.size.length > 0) {
+                                    // console.log(res.size);
+                                    $('.size_id').html(
+                                        '<option selected disabled>Select a Size</option>'
+                                    );
+                                    $.each(res.size, function(key, item) {
+
+                                        $('.size_id').append(
+                                            `<option value="${item.id}">${item.size}</option>`
+                                        );
+                                    })
+                                } else {
+                                    $('.size_id').html(`
+                                        <option selected disable>Please add Size</option>`)
+                                }
                             }
                         }
                     });
                 }
-            });
+            })
 
 
             // product save 

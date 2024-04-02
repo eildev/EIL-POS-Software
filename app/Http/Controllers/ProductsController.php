@@ -36,8 +36,10 @@ class ProductsController extends Controller
             $product->price  =  $request->price;
             $product->details  =  $request->details;
             $product->color  =  $request->color;
-            $product->size_id  =  $request->size_id;
             $product->unit_id  =  $request->unit_id;
+            if ($request->size_id) {
+                $product->size_id  =  $request->size_id;
+            }
             if ($request->stock) {
                 $product->stock  =  $request->stock;
             }
@@ -136,5 +138,13 @@ class ProductsController extends Controller
         }
         $product->delete();
         return back()->with('message', "Product deleted successfully");
+    }
+    public function find($id)
+    {
+        $product = Product::findOrFail($id);
+        return response()->json([
+            'status' => '200',
+            'data' => $product
+        ]);
     }
 }

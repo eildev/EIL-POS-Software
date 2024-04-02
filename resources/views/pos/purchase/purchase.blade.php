@@ -34,7 +34,8 @@
 
                             <label for="password" class="form-label">Purchase Date</label>
                             <div class="input-group flatpickr" id="flatpickr-date">
-                                <input type="text" class="form-control" placeholder="Select date" data-input>
+                                <input type="text" class="form-control purchase_date" placeholder="Select date"
+                                    data-input>
                                 <span class="input-group-text input-group-addon" data-toggle><i
                                         data-feather="calendar"></i></span>
                             </div>
@@ -44,7 +45,7 @@
                                 $products = App\Models\Product::get();
                             @endphp
                             <label for="ageSelect" class="form-label">Product</label>
-                            <select class="js-example-basic-single form-select" data-width="100%">
+                            <select class="js-example-basic-single form-select product_id" data-width="100%">
                                 @if ($products->count() > 0)
                                     <option selected disabled>Select Product</option>
                                     @foreach ($products as $product)
@@ -92,7 +93,33 @@
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        Grand Total : 0.00
+                                        <div class="row align-items-center">
+                                            <div class="col-md-4">
+                                                Total :
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="number" class="form-control total border-0 " name="total"
+                                                    readonly value="0.00" />
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center">
+                                            <div class="col-md-4">
+                                                Discount :
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="number" class="form-control discount border-0 "
+                                                    name="discount" readonly value="0.00" />
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center">
+                                            <div class="col-md-4">
+                                                Grand Total :
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="number" class="form-control grand_total border-0 "
+                                                    name="grand_total" readonly value="0.00" />
+                                            </div>
+                                        </div>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -100,7 +127,9 @@
                         </table>
                     </div>
                     <div class="my-3">
-                        <button class="btn btn-primary "><i class="fa-solid fa-money-check-dollar"></i> Payment</button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal"><i
+                                class="fa-solid fa-money-check-dollar"></i>
+                            Payment</button>
                     </div>
                 </div>
             </div>
@@ -163,58 +192,61 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    {{-- <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
+
+    {{-- payement modal  --}}
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Supplier</h5>
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Category</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="signupForm" class="editSupplierForm row">
+                    <form id="signupForm" class="supplierForm row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Supplier Name</label>
-                            <input id="defaultconfig" class="form-control edit_supplier_name" maxlength="255"
-                                name="name" type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
-                            <span class="text-danger edit_name_error"></span>
+                            <label for="name" class="form-label">Supplier Name <span
+                                    class="text-danger">*</span></label>
+                            <input id="defaultconfig" class="form-control supplier_name" maxlength="255" name="name"
+                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
+                            <span class="text-danger supplier_name_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Email</label>
-                            <input id="defaultconfig" class="form-control edit_email" maxlength="39" name="email"
+                            <input id="defaultconfig" class="form-control email" maxlength="39" name="email"
                                 type="email">
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Phone Nnumber</label>
-                            <input id="defaultconfig" class="form-control edit_phone" maxlength="39" name="phone"
+                            <label for="name" class="form-label">Phone Nnumber <span
+                                    class="text-danger">*</span></label>
+                            <input id="defaultconfig" class="form-control phone" maxlength="39" name="phone"
                                 type="tel" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
-                            <span class="text-danger edit_phone_error"></span>
+                            <span class="text-danger phone_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Address</label>
-                            <input id="defaultconfig" class="form-control edit_address" maxlength="39" name="address"
+                            <input id="defaultconfig" class="form-control address" maxlength="39" name="address"
                                 type="text">
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Opening Receivable</label>
-                            <input id="defaultconfig" class="form-control edit_opening_receivable" maxlength="39"
+                            <input id="defaultconfig" class="form-control opening_receivable" maxlength="39"
                                 name="opening_receivable" type="number">
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Opening Payable</label>
-                            <input id="defaultconfig" class="form-control edit_opening_payable" maxlength="39"
+                            <input id="defaultconfig" class="form-control opening_payable" maxlength="39"
                                 name="opening_payable" type="number">
                         </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary update_supplier">Update</button>
+                    <button type="button" class="btn btn-primary save_supplier">Save</button>
                 </div>
                 </form>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     <script>
         // error remove 
@@ -276,16 +308,6 @@
                     }
                 });
             })
-            // $('select[name="subcategory_id"]').html(
-            //     '<option selected disabled>Select a SubCategory</option>'
-            // );
-            // $.each(res.data, function(key, item) {
-            //     $('select[name="subcategory_id"]').append(
-            //         '<option myid="' + item.id +
-            //         '" value="' + item.id +
-            //         '">' + item
-            //         .name + '</option>');
-            // })
             // show supplier
             function supplierView() {
                 $.ajax({
@@ -312,183 +334,96 @@
             }
             supplierView();
 
-            // function purchaseView() {
-            //     $.ajax({
-            //         url: '/supplier/view',
-            //         method: 'GET',
-            //         success: function(res) {
-            //             const suppliers = res.data;
-            //             $('.showData').empty();
+            // Function to update SL numbers
+            function updateSLNumbers() {
+                $('.showData > tr').each(function(index) {
+                    $(this).find('td:first').text(index + 1);
+                });
+            }
 
-            //             if (suppliers.length > 0) {
-            //                 $.each(suppliers, function(index, supplier) {
-            //                     const tr = document.createElement('tr');
-            //                     tr.innerHTML = `
-        //                 <td>
-        //                     ${index+1}
-        //                 </td>
-        //                 <td>
-        //                     ${supplier.phone ?? ""}
-        //                 </td>
-        //                 <td>
-        //                     ${supplier.email ?? ''}
-        //                 </td>
-        //                 <td>
-        //                     <input type="text" class="form-control" name="" value="${supplier.name ?? ''}" />
-        //                 </td>
-        //                 <td>
-        //                     ${supplier.address ? supplier.address.slice(0,15) : ""}
-        //                 </td>
-        //                 <td>
-        //                     <a href="#" class="btn btn-danger btn-icon supplier_delete" data-id=${supplier.id}>
-        //                         <i class="fa-solid fa-trash-can"></i>
-        //                     </a>
-        //                 </td>
-        //                 `;
-            //                     $('.showData').append(tr);
-            //                 })
-            //             } else {
-            //                 $('.showData').html(`
-        //                 <tr>
-        //                     <td colspan='8'>
-        //                         <div class="text-center text-warning mb-2">Data Not Found</div>
-        //                         <div class="text-center">
-        //                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLongScollable">Add
-        //                                 Supplier<i data-feather="plus"></i></button>
-        //                         </div>
-        //                     </td>
-        //                 </tr>`)
-            //             }
+            $('.product_id').change(function() {
+                let id = $(this).val();
+                // alert(id);
+                if ($(`.data_row${id}`).length === 0 && id) {
+                    $.ajax({
+                        url: '/product/find/' + id,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        success: function(res) {
+                            updateSLNumbers();
+                            const product = res.data;
+                            // console.log(product);
+                            // $('.showData').empty();
 
-            //         }
-            //     })
-            // }
-            // purchaseView();
+                            $('.showData').append(
+                                `<tr class="data_row${product.id}">
+                                    <td>
+                                       
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
+                                    </td>
+                                    <td>
+                                        <input type="hidden" name="product_id[]" readonly value="${product.id ?? 0}" />
+                                        <input type="number" class="form-control product_price${product.id} border-0 "  name="product_price[]" readonly value="${product.price ?? 0}" />
+                                    </td>
+                                    <td>
+                                        <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="" />
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control product_subtotal${product.id} border-0 "  name="product_subTotal[]" readonly value="00.00" />
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </a>
+                                    </td>
+                                    </tr>`
+                            );
+                            // Update SL numbers
+                            updateSLNumbers();
+                        }
+                    })
+                }
+            })
 
-            // edit Unit 
-            // $(document).on('click', '.supplier_edit', function(e) {
-            //     e.preventDefault();
-            //     // console.log('0k');
-            //     let id = this.getAttribute('data-id');
-            //     $.ajaxSetup({
-            //         headers: {
-            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //         }
-            //     });
-            //     $.ajax({
-            //         url: `/supplier/edit/${id}`,
-            //         type: 'GET',
-            //         success: function(res) {
-            //             if (res.status == 200) {
-            //                 $('.edit_supplier_name').val(res.supplier.name);
-            //                 $('.edit_email').val(res.supplier.email);
-            //                 $('.edit_phone').val(res.supplier.phone);
-            //                 $('.edit_address').val(res.supplier.address);
-            //                 $('.edit_email').val(res.supplier.email);
-            //                 $('.edit_opening_receivable').val(res.supplier.opening_receivable);
-            //                 $('.edit_opening_payable').val(res.supplier.opening_payable);
-            //                 $('.update_supplier').val(res.supplier.id);
-            //             } else {
-            //                 Swal.fire({
-            //                     position: "top-end",
-            //                     icon: "warning",
-            //                     title: "No Data Found",
-            //                     showConfirmButton: false,
-            //                     timer: 1500
-            //                 });
-            //             }
-            //         }
-            //     });
-            // })
+            // Function to recalculate grand total
+            function calculateGrandTotal() {
+                let total = 0;
+                $('.quantity').each(function() {
+                    let productId = $(this).attr('product-id');
+                    let qty = parseFloat($(this).val());
+                    let price = parseFloat($('.product_price' + productId).val());
+                    total += qty * price;
+                });
+                $('.total').val(total.toFixed(2));
+            }
 
-            // update supplier 
-            // $('.update_supplier').click(function(e) {
-            //     e.preventDefault();
-            //     // alert('ok');
-            //     let id = $(this).val();
-            //     // console.log(id);
-            //     let formData = new FormData($('.editSupplierForm')[0]);
-            //     $.ajaxSetup({
-            //         headers: {
-            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //         }
-            //     });
-            //     $.ajax({
-            //         url: `/supplier/update/${id}`,
-            //         type: 'POST',
-            //         data: formData,
-            //         processData: false,
-            //         contentType: false,
-            //         success: function(res) {
-            //             if (res.status == 200) {
-            //                 $('#edit').modal('hide');
-            //                 $('.editSupplierForm')[0].reset();
-            //                 supplierView();
-            //                 Swal.fire({
-            //                     position: "top-end",
-            //                     icon: "success",
-            //                     title: res.message,
-            //                     showConfirmButton: false,
-            //                     timer: 1500
-            //                 });
-            //             } else {
-            //                 if (res.error.name) {
-            //                     showError('.edit_supplier_name', res.error.name);
-            //                 }
-            //                 if (res.error.phone) {
-            //                     showError('.edit_phone', res.error.phone);
-            //                 }
-            //             }
-            //         }
-            //     });
-            // })
+            $(document).on('keyup', '.quantity', function() {
+                let id = $(this).attr("product-id")
+                let quantity = $(this).val();
+                quantity = parseInt(quantity);
+                let productPrice = $('.product_price' + id).val();
+                productPrice = parseFloat(productPrice);
+                let subTotal = $('.product_subtotal' + id);
+                let subTotalPrice = parseFloat(quantity * productPrice).toFixed(2);
+                subTotal.val(subTotalPrice);
+                calculateGrandTotal();
+            })
 
-            // supplier Delete 
-            // $(document).on('click', '.supplier_delete', function(e) {
-            //     // $('.supplier_delete').click(function(e) {
-            //     e.preventDefault();
-            //     let id = this.getAttribute('data-id');
 
-            //     Swal.fire({
-            //         title: "Are you sure?",
-            //         text: "You won't be able to Delete this!",
-            //         icon: "warning",
-            //         showCancelButton: true,
-            //         confirmButtonColor: "#3085d6",
-            //         cancelButtonColor: "#d33",
-            //         confirmButtonText: "Yes, delete it!"
-            //     }).then((result) => {
-            //         if (result.isConfirmed) {
-            //             $.ajaxSetup({
-            //                 headers: {
-            //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //                 }
-            //             });
-            //             $.ajax({
-            //                 url: `/supplier/destroy/${id}`,
-            //                 type: 'GET',
-            //                 success: function(data) {
-            //                     if (data.status == 200) {
-            //                         Swal.fire({
-            //                             title: "Deleted!",
-            //                             text: "Your file has been deleted.",
-            //                             icon: "success"
-            //                         });
-            //                         supplierView();
-            //                     } else {
-            //                         Swal.fire({
-            //                             position: "top-end",
-            //                             icon: "warning",
-            //                             title: "Deleted Unsuccessful!",
-            //                             showConfirmButton: false,
-            //                             timer: 1500
-            //                         });
-            //                     }
-            //                 }
-            //             });
-            //         }
-            //     });
-            // })
+
+            // purchase Delete 
+            $(document).on('click', '.purchase_delete', function(e) {
+                // alert('ok');
+                let id = $(this).attr('data-id');
+                let dataRow = $('.data_row' + id);
+                dataRow.remove();
+                // Recalculate grand total
+                calculateGrandTotal();
+
+                updateSLNumbers()
+            })
         });
     </script>
 @endsection

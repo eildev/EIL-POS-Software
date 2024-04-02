@@ -107,8 +107,24 @@
                                                 Discount :
                                             </div>
                                             <div class="col-md-8">
-                                                <input type="number" class="form-control discount border-0 "
-                                                    name="discount" readonly value="0.00" />
+                                                @php
+                                                    $promotions = App\Models\Promotion::get();
+                                                @endphp
+                                                <select class="js-example-basic-single form-select promotion_id"
+                                                    data-width="100%">
+                                                    @if ($promotions->count() > 0)
+                                                        <option selected disabled>Select Discount</option>
+                                                        @foreach ($promotions as $promotion)
+                                                            <option value="{{ $promotion->id }}">
+                                                                {{ $promotion->promotion_name }}
+                                                                ({{ $promotion->discount_value }} /
+                                                                {{ $promotion->discount_type }})
+                                                            </option>
+                                                        @endforeach
+                                                    @else
+                                                        <option selected disabled>Please Add Product</option>
+                                                    @endif
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="row align-items-center">
@@ -350,7 +366,6 @@
                         type: 'GET',
                         dataType: 'JSON',
                         success: function(res) {
-                            updateSLNumbers();
                             const product = res.data;
                             // console.log(product);
                             // $('.showData').empty();
@@ -388,7 +403,7 @@
             })
 
             // Function to recalculate grand total
-            function calculateGrandTotal() {
+            function calculateTotal() {
                 let total = 0;
                 $('.quantity').each(function() {
                     let productId = $(this).attr('product-id');
@@ -408,10 +423,24 @@
                 let subTotal = $('.product_subtotal' + id);
                 let subTotalPrice = parseFloat(quantity * productPrice).toFixed(2);
                 subTotal.val(subTotalPrice);
-                calculateGrandTotal();
+                calculateTotal();
             })
 
-
+            $('.promotion_id').change(function() {
+                let id = $(this).val();
+                // alert(id);
+                if (id) {
+                    $.ajax({
+                        url: '/promotion/find/' + id,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        success: function(res) {
+                            const promotion = res.data;
+                            // console.log(product);  
+                        }
+                    })
+                }
+            })
 
             // purchase Delete 
             $(document).on('click', '.purchase_delete', function(e) {
@@ -420,7 +449,7 @@
                 let dataRow = $('.data_row' + id);
                 dataRow.remove();
                 // Recalculate grand total
-                calculateGrandTotal();
+                calculateTotal();
 
                 updateSLNumbers()
             })

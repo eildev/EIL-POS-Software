@@ -190,17 +190,18 @@ Route::middleware('auth')->group(function () {
         Route::post('/purchase/update/{id}', 'update')->name('purchase.update');
         Route::get('/purchase/destroy/{id}', 'destroy')->name('purchase.destroy');
     });
-     // Promotion  related route(n)
-     Route::controller(PromotionController::class)->group(function () {
+    // Promotion  related route(n)
+    Route::controller(PromotionController::class)->group(function () {
         Route::get('/promotion/add', 'PromotionAdd')->name('promotion.add');
         Route::post('/promotion/store', 'PromotionStore')->name('promotion.store');
         Route::get('/promotion/view', 'PromotionView')->name('promotion.view');
         Route::get('/promotion/edit/{id}', 'PromotionEdit')->name('promotion.edit');
         Route::post('/promotion/update/{id}', 'PromotionUpdate')->name('promotion.update');
         Route::get('/promotion/delete/{id}', 'PromotionDelete')->name('promotion.delete');
+        Route::get('/promotion/find/{id}', 'find')->name('promotion.find');
     });
-     // Promotion Details related route(n)
-     Route::controller(PromotionController::class)->group(function () {
+    // Promotion Details related route(n)
+    Route::controller(PromotionController::class)->group(function () {
         Route::get('/promotion/details/add', 'PromotionDetailsAdd')->name('promotion.details.add');
         Route::post('/promotion/details/store', 'PromotionDetailsStore')->name('promotion.details.store');
         Route::get('/promotion/details/view', 'PromotionDetailsView')->name('promotion.details.view');

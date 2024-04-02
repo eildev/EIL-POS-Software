@@ -130,6 +130,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/product/edit/{id}', 'edit')->name('product.edit');
         Route::post('/product/update/{id}', 'update')->name('product.update');
         Route::get('/product/destroy/{id}', 'destroy')->name('product.destroy');
+        Route::get('/product/find/{id}', 'find')->name('product.find');
     });
 
     // Product  related route(n)

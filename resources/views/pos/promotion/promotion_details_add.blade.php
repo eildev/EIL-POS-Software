@@ -18,7 +18,7 @@
                     <div class="col-sm-6">
                         <div class="mb-3 form-valid-groups">
                             <label class="form-label">Promotion<span class="text-danger">*</span></label>
-                            <select class="form-select" name="promotion_id" aria-invalid="false">
+                            <select class="form-select js-example-basic-single" name="promotion_id" aria-invalid="false">
                                 <option selected="" disabled="">Select Promotion</option>
                                 @foreach ($promotions as $promotion)
                                 <option value="{{$promotion->id}}">{{$promotion->promotion_name}}</option>
@@ -29,7 +29,7 @@
                     <div class="col-sm-6">
                         <div class="mb-3 form-valid-groups">
                             <label class="form-label">Product <span class="text-danger">*</span></label>
-                            <select class="form-select" name="Product_id" aria-invalid="false">
+                            <select class="form-select js-example-basic-single" name="Product_id" aria-invalid="false">
                                 <option selected="" disabled="">Select Product </option>
                                 @foreach ($product as $products)
                                 <option value="{{$products->id}}">{{$products->name}}</option>

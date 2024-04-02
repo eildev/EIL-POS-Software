@@ -15,6 +15,8 @@ class ExpenseController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
+        ],[
+            'name' => 'required Expense Category Name'
         ]);
         $expenseCategory = new ExpenseCategory;
         if ($validator->passes()) {

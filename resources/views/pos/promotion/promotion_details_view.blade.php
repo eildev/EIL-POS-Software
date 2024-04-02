@@ -5,7 +5,7 @@
 
 <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
     <div class="">
-        <h4 class="text-right"><a href="{{route('promotion.add')}}" class="btn btn-primary">Add Promotion Details</a></h4>
+        <h4 class="text-right"><a href="{{route('promotion.details.add')}}" class="btn btn-primary">Add Promotion Details</a></h4>
     </div>
 </div>
 <div class="col-md-12 grid-margin stretch-card">
@@ -29,8 +29,8 @@
                             @foreach ($promotion_details as $key => $promotions_details)
                                 <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $promotions_details->promotion_name ?? ''}}</td>
-                                <td>{{ $promotions_details->start_date ?? ''}}</td>
+                                <td>{{ $promotions_details['promotion']['promotion_name'] ?? ''}}</td>
+                                <td>{{ $promotions_details['product']['name'] ?? ''}}</td>
                                 <td>{{ $promotions_details->additional_conditions ?? ''}}</td>
                                 <td>
                                     <a href="{{route('promotion.details.edit',$promotions_details->id)}}" class="btn btn-sm btn-primary btn-icon">
@@ -47,7 +47,7 @@
                             <td colspan="12">
                                 <div class="text-center text-warning mb-2">Data Not Found</div>
                                 <div class="text-center">
-                                    <a href="{{route('promotion.add')}}" class="btn btn-primary">Add Promotion<i
+                                    <a href="{{route('promotion.details.add')}}" class="btn btn-primary">Add Promotion Details<i
                                             data-feather="plus"></i></a>
                                 </div>
                             </td>

@@ -30,8 +30,8 @@ return new class extends Migration
             $table->integer('stock')->default(0);
             $table->integer('main_unit_stock')->default(0);
             $table->integer('total_sold')->default(0);
-            $table->string('color', 255);
-            $table->integer('size_id');
+            $table->string('color', 255)->nullable();
+            $table->integer('size_id')->nullable();
             $table->integer('unit_id');
             $table->timestamps();
         });

@@ -15,7 +15,7 @@
                         <button class="btn btn-rounded-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#exampleModalLongScollable"><i data-feather="plus"></i></button>
                     </div>
-                    <div id="" class="table-responsive">
+                    <div class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -27,7 +27,9 @@
                                 </tr>
                             </thead>
                             <tbody class="showData">
+                                <tr>
 
+                                </tr>
                             </tbody>
                         </table>
                     </div>

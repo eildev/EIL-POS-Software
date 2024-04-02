@@ -20,24 +20,16 @@
                     </div>
                     <form id="signupForm" class="row">
                         <div class="mb-3 col-md-6">
-                            @php
-                                $suppliers = App\Models\Supplier::get();
-                            @endphp
-                            <label for="ageSelect" class="form-label">Supplier</label>
-                            <select class="js-example-basic-single form-select" data-width="100%">
 
-                                @if ($suppliers->count() > 0)
-                                    <option selected disabled>Select Supplier</option>
-                                    @foreach ($suppliers as $supplier)
-                                        <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
-                                    @endforeach
-                                @else
-                                    <option selected disabled>Please Add Supplier</option>
-                                @endif
+                            <label for="ageSelect" class="form-label">Supplier</label>
+                            <select class="js-example-basic-single form-select select-supplier" data-width="100%"
+                                name="">
+
                             </select>
                         </div>
 
                         <div class="mb-3 col-md-6">
+
                             <label for="password" class="form-label">Purchase Date</label>
                             <div class="input-group flatpickr" id="flatpickr-date">
                                 <input type="text" class="form-control" placeholder="Select date" data-input>
@@ -46,18 +38,21 @@
                             </div>
                         </div>
                         <div class="mb-3 col-md-6">
+                            @php
+                                $products = App\Models\Product::get();
+                            @endphp
                             <label for="ageSelect" class="form-label">Product</label>
-                            <select class="select-tag-2 form-select" data-width="100%">
-                                <option value="TX">Texas</option>
-                                <option value="NY">New York</option>
-                                <option value="FL">Florida</option>
-                                <option value="KN">Kansas</option>
-                                <option value="HW">Hawaii</option>
+                            <select class="js-example-basic-single form-select" data-width="100%">
+                                @if ($products->count() > 0)
+                                    <option selected disabled>Select Product</option>
+                                    @foreach ($products as $product)
+                                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                    @endforeach
+                                @else
+                                    <option selected disabled>Please Add Product</option>
+                                @endif
                             </select>
                         </div>
-                        {{-- <div class="col-md-12">
-                            <input class="btn btn-primary" type="submit" value="Submit">
-                        </div> --}}
                     </form>
                 </div>
             </div>
@@ -225,6 +220,7 @@
                 $(element).css('border-color', 'green');
             }
         }
+
         $(document).ready(function() {
             // show error 
             function showError(name, message) {
@@ -236,6 +232,7 @@
             const saveSupplier = document.querySelector('.save_supplier');
             saveSupplier.addEventListener('click', function(e) {
                 e.preventDefault();
+                alert('ok')
                 let formData = new FormData($('.supplierForm')[0]);
                 $.ajaxSetup({
                     headers: {
@@ -250,6 +247,7 @@
                     contentType: false,
                     success: function(res) {
                         if (res.status == 200) {
+                            console.log(res);
                             $('#exampleModalLongScollable').modal('hide');
                             $('.supplierForm')[0].reset();
                             supplierView();
@@ -261,6 +259,7 @@
                                 timer: 1500
                             });
                         } else {
+                            console.log(res);
                             if (res.error.name) {
                                 showError('.supplier_name', res.error.name);
                             }
@@ -271,10 +270,31 @@
                     }
                 });
             })
-
-
-            // show Unit
+            // show supplier
             function supplierView() {
+                $.ajax({
+                    url: '/supplier/view',
+                    method: 'GET',
+                    success: function(res) {
+                        const suppliers = res.data;
+                        console.log(suppliers);
+                        $('.select-supplier').empty();
+                        if (suppliers.length > 0) {
+                            $.each(suppliers, function(index, supplier) {
+                                const option = document.createElement('option');
+                                option.textContent = `${supplier->name}`;
+                                $('.select-supplier').append(option);
+                            })
+                        } else {
+                            $('.select-supplier').html(`
+                            <option selected disable>No data found</option>`)
+                        }
+                    }
+                })
+            }
+            supplierView();
+
+            function purchaseView() {
                 $.ajax({
                     url: '/supplier/view',
                     method: 'GET',
@@ -325,7 +345,7 @@
                     }
                 })
             }
-            supplierView();
+            purchaseView();
 
             // edit Unit 
             $(document).on('click', '.supplier_edit', function(e) {

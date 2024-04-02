@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Promotion;
+use App\Models\Product;
+use App\Models\PromotionDetails;
 use Carbon\Carbon;
 class PromotionController extends Controller
 {
@@ -61,6 +63,28 @@ class PromotionController extends Controller
         return redirect()->route('promotion.view')->with($notification);
     }//End Method
     ///////////////////////Start Promotion Details All Method ////////////////////////
+    public function PromotionDetailsAdd(){
+        $product = Product::latest()->get();
+        $promotions = Promotion::latest()->get();
+        return view('pos.promotion.promotion_details_add',compact('product','promotions'));
+    }//
+    public function PromotionDetailsStore(Request $request){
+        PromotionDetails::insert([
+            'promotion_id' => $request->promotion_id,
+            'Product_id' => $request->Product_id,
+            'additional_conditions' => $request->additional_conditions,
+            'created_at' =>  Carbon::now(),
+        ]);
+        $notification = [
+            'message' => 'Promotion Details Added Successfully',
+             'alert-type' => 'info'
+         ];
+         return redirect()->back()->with($notification);
+    }//End Method
+    public function PromotionDetailsView(){
+        $promotion_details = PromotionDetails::all();
+        return view('pos.promotion.promotion_details_view',compact('promotion_details'));
+    }//End Method
 
 
 }

@@ -199,6 +199,15 @@ Route::middleware('auth')->group(function () {
         Route::post('/promotion/update/{id}', 'PromotionUpdate')->name('promotion.update');
         Route::get('/promotion/delete/{id}', 'PromotionDelete')->name('promotion.delete');
     });
+     // Promotion Details related route(n)
+     Route::controller(PromotionController::class)->group(function () {
+        Route::get('/promotion/details/add', 'PromotionDetailsAdd')->name('promotion.details.add');
+        Route::post('/promotion/details/store', 'PromotionDetailsStore')->name('promotion.details.store');
+        Route::get('/promotion/details/view', 'PromotionDetailsView')->name('promotion.details.view');
+        Route::get('/promotion/details/edit/{id}', 'PromotionDetailsEdit')->name('promotion.details.edit');
+        Route::post('/promotion/details/update/{id}', 'PromotionDetailsUpdate')->name('promotion.details.update');
+        Route::get('/promotion/details/delete/{id}', 'PromotionDetailsDelete')->name('promotion.details.delete');
+    });
 });
 
 require __DIR__ . '/auth.php';

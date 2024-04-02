@@ -3,7 +3,7 @@
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Category</li>
+            <li class="breadcrumb-item active" aria-current="page">Brand</li>
         </ol>
     </nav>
     <div class="row">
@@ -11,25 +11,23 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h6 class="card-title">Category Table</h6>
+                        <h6 class="card-title">Brand Table</h6>
                         <button class="btn btn-rounded-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#exampleModalLongScollable"><i data-feather="plus"></i></button>
                     </div>
-                    <div class="table-responsive">
+                    <div id="" class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>SN</th>
-                                    <th>Category Name</th>
+                                    <th>Brand Name</th>
+                                    <th>Description</th>
                                     <th>Image</th>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody class="showData">
-                                <tr>
 
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -45,27 +43,31 @@
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add Category</h5>
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add Brand</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="signupForm" class="categoryForm" enctype="multipart/form-data">
+                    <form id="signupForm" class="brandForm" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Category Name</label>
-                            <input id="defaultconfig" class="form-control category_name" maxlength="250" name="name"
+                            <label for="name" class="form-label">Brand Name</label>
+                            <input id="defaultconfig" class="form-control brand_name" maxlength="250" name="name"
                                 type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
-                            <span class="text-danger category_name_error"></span>
+                            <span class="text-danger brand_name_error"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label description">Description</label>
+                            <textarea class="form-control" id="defaultconfig-4" rows="5" placeholder="" name="description"></textarea>
                         </div>
                         <div class="mb-3">
                             <div class="card">
                                 <div class="card-body">
-                                    <h6 class="card-title">Category Image</h6>
+                                    <h6 class="card-title">Brand Image</h6>
                                     <p class="mb-3 text-warning">Note: <span class="fst-italic">Image not
                                             required. If you
                                             add
-                                            a category image
-                                            please add a 400 X 400 size image.</span></p>
-                                    <input type="file" class="categoryImage" name="image" id="myDropify" />
+                                            a brand image
+                                            please add a 400 X 400 pixel size image.</span></p>
+                                    <input type="file" class="brandImage" name="image" id="myDropify" />
                                 </div>
                             </div>
                         </div>
@@ -73,7 +75,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary save_category">Save</button>
+                    <button type="button" class="btn btn-primary save_brand">Save</button>
                 </div>
                 </form>
             </div>
@@ -85,28 +87,33 @@
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Category</h5>
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Brand</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="signupForm" class="categoryFormEdit" enctype="multipart/form-data">
+                    <form id="signupForm" class="brandFormEdit" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Category Name</label>
-                            <input id="defaultconfig" class="form-control edit_category_name" maxlength="250" name="name"
+                            <label for="name" class="form-label">Brand Name</label>
+                            <input id="defaultconfig" class="form-control edit_brand_name" maxlength="250" name="name"
                                 type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
-                            <span class="text-danger edit_category_name_error"></span>
+                            <span class="text-danger edit_brand_name_error"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label ">Description</label>
+                            <textarea class="form-control edit_description" id="defaultconfig-4" rows="5" placeholder=""
+                                name="description"></textarea>
                         </div>
                         <div class="mb-3">
                             <div class="card">
                                 <div class="card-body">
-                                    <h6 class="card-title">Category Image</h6>
+                                    <h6 class="card-title">Brand Image</h6>
                                     <div style="height:150px;position:relative">
                                         <button class="btn btn-info edit_upload_img"
                                             style="position: absolute;top:50%;left:50%;transform:translate(-50%,-50%)">Browse</button>
                                         <img class="img-fluid showEditImage" src=""
                                             style="height:100%; object-fit:cover">
                                     </div>
-                                    <input hidden type="file" class="categoryImage edit_image" name="image" />
+                                    <input hidden type="file" class="brandImage edit_image" name="image" />
                                 </div>
                             </div>
                         </div>
@@ -114,7 +121,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary update_category">Update</button>
+                    <button type="button" class="btn btn-primary update_brand">Update</button>
                 </div>
                 </form>
             </div>
@@ -130,7 +137,7 @@
         }
 
         $(document).ready(function() {
-            // image onload when category edit
+            // image onload when brand edit
             const edit_upload_img = document.querySelector('.edit_upload_img');
             const edit_image = document.querySelector('.edit_image');
             edit_upload_img.addEventListener('click', function(e) {
@@ -146,25 +153,25 @@
                 });
             });
 
-            // show error
+            // show error 
             function showError(name, message) {
-                $(name).css('border-color', 'red'); // Highlight input with red border
-                $(name).focus(); // Set focus to the input field
-                $(`${name}_error`).show().text(message); // Show error message
+                $(name).css('border-color', 'red');
+                $(name).focus();
+                $(`${name}_error`).show().text(message);
             }
 
-            // save category
-            const saveCategory = document.querySelector('.save_category');
-            saveCategory.addEventListener('click', function(e) {
+            // save brand
+            const saveBrand = document.querySelector('.save_brand');
+            saveBrand.addEventListener('click', function(e) {
                 e.preventDefault();
-                let formData = new FormData($('.categoryForm')[0]);
+                let formData = new FormData($('.brandForm')[0]);
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
                 $.ajax({
-                    url: '/category/store',
+                    url: '/brand/store',
                     type: 'POST',
                     data: formData,
                     processData: false,
@@ -174,8 +181,8 @@
                             $('#exampleModalLongScollable').modal('hide');
                             // formData.delete(entry[0]);
                             // alert('added successfully');
-                            $('.categoryForm')[0].reset();
-                            categoryView();
+                            $('.brandForm')[0].reset();
+                            brandView();
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
@@ -184,44 +191,43 @@
                                 timer: 1500
                             });
                         } else {
-                            showError('.category_name', res.error.name);
+                            showError('.brand_name', res.error.name);
                         }
                     }
                 });
             })
 
 
-            // show category
-            function categoryView() {
+            // show brand
+            function brandView() {
                 $.ajax({
-                    url: '/category/view',
+                    url: '/brand/view',
                     method: 'GET',
                     success: function(res) {
                         // console.log(res.data);
-                        const categories = res.data;
+                        const brands = res.data;
                         $('.showData').empty();
-                        if (categories.length > 0) {
-                            $.each(categories, function(index, category) {
+                        if (brands.length > 0) {
+                            $.each(brands, function(index, brand) {
                                 const tr = document.createElement('tr');
                                 tr.innerHTML = `
                             <td>
                                 ${index+1}
                             </td>
                             <td>
-                                ${category.name ?? ""}
+                                ${brand.name ?? ""}
                             </td>
                             <td>
-                                <img src="${category.image ? 'http://127.0.0.1:8000/uploads/category/' + category.image : 'http://127.0.0.1:8000/dummy/image.jpg'}" alt="cat Image">
+                                ${brand.description ? brand.description.slice(0,15)  : ""}
                             </td>
                             <td>
-                                <button id="categoryButton_${category.id}" class="btn ${category.status != 0 ? 'btn-success' : 'btn-danger' } categoryButton"
-                                data-id="${category.id}">${category.status != 0 ? 'Active' : 'Inactive'}</button>
+                                <img src="${brand.image ? 'http://127.0.0.1:8000/uploads/brand/' + brand.image : 'http://127.0.0.1:8000/dummy/image.jpg'}" alt="Brand Image">
                             </td>
                             <td>
-                                <a href="#" class="btn btn-primary btn-icon category_edit" data-id=${category.id} data-bs-toggle="modal" data-bs-target="#edit">
+                                <a href="#" class="btn btn-primary btn-icon brand_edit" data-id=${brand.id} data-bs-toggle="modal" data-bs-target="#edit">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a href="#" class="btn btn-danger btn-icon category_delete" data-id=${category.id}>
+                                <a href="#" class="btn btn-danger btn-icon brand_delete" data-id=${brand.id}>
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
                             </td>
@@ -235,7 +241,7 @@
                                     <div class="text-center text-warning mb-2">Data Not Found</div>
                                     <div class="text-center">
                                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLongScollable">Add
-                                            Category<i data-feather="plus"></i></button>
+                                            Brand<i data-feather="plus"></i></button>
                                     </div>
                                 </td>
                             </tr>`)
@@ -245,10 +251,10 @@
                     }
                 })
             }
-            categoryView();
+            brandView();
 
-            // edit category
-            $(document).on('click', '.category_edit', function(e) {
+            // edit brand 
+            $(document).on('click', '.brand_edit', function(e) {
                 e.preventDefault();
                 // alert('ok');
                 let id = this.getAttribute('data-id');
@@ -259,15 +265,21 @@
                     }
                 });
                 $.ajax({
-                    url: `/category/edit/${id}`,
+                    url: `/brand/edit/${id}`,
                     type: 'GET',
                     success: function(data) {
-                        // console.log(data.category.name);
-                        $('.edit_category_name').val(data.category.name);
-                        $('.update_category').val(data.category.id);
-                        if (data.category.image) {
+                        // console.log(data.brand.name);
+                        $('.edit_brand_name').val(data.brand.name);
+
+                        $('.update_brand').val(data.brand.id);
+                        if (data.brand.description) {
+                            $('.edit_description').val(data.brand.description);
+                        } else {
+                            $('.edit_description').val('');
+                        }
+                        if (data.brand.image) {
                             $('.showEditImage').attr('src',
-                                'http://127.0.0.1:8000/uploads/category/' + data.category
+                                'http://127.0.0.1:8000/uploads/brand/' + data.brand
                                 .image);
                         } else {
                             $('.showEditImage').attr('src',
@@ -277,20 +289,20 @@
                 });
             })
 
-            // update category
-            $('.update_category').click(function(e) {
+            // update brand 
+            $('.update_brand').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
-                let id = $('.update_category').val();
+                let id = $('.update_brand').val();
                 // console.log(id);
-                let formData = new FormData($('.categoryFormEdit')[0]);
+                let formData = new FormData($('.brandFormEdit')[0]);
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
                 $.ajax({
-                    url: `/category/update/${id}`,
+                    url: `/brand/update/${id}`,
                     type: 'POST',
                     data: formData,
                     processData: false,
@@ -298,8 +310,8 @@
                     success: function(res) {
                         if (res.status == 200) {
                             $('#edit').modal('hide');
-                            $('.categoryFormEdit')[0].reset();
-                            categoryView();
+                            $('.brandFormEdit')[0].reset();
+                            brandView();
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
@@ -308,19 +320,15 @@
                                 timer: 1500
                             });
                         } else {
-                            showError('.edit_category_name', res.error.name)
-                            // $('.edit_category_name').css('border-color', 'red');
-                            // $('.edit_category_name').focus();
-                            // $('.edit_category_name_error').show();
-                            // $('.edit_category_name_error').text(res.error.name);
+                            showError('.edit_brand_name', res.error.name);
                         }
                     }
                 });
             })
 
 
-            // category Delete
-            $(document).on('click', '.category_delete', function(e) {
+            // brand Delete 
+            $(document).on('click', '.brand_delete', function(e) {
                 e.preventDefault();
                 // alert("ok")
                 let id = this.getAttribute('data-id');
@@ -341,7 +349,7 @@
                             }
                         });
                         $.ajax({
-                            url: `/category/destroy/${id}`,
+                            url: `/brand/destroy/${id}`,
                             type: 'GET',
                             success: function(res) {
                                 if (res.status == 200) {
@@ -350,7 +358,7 @@
                                         text: "Your file has been deleted.",
                                         icon: "success"
                                     });
-                                    categoryView();
+                                    brandView();
                                 } else {
                                     Swal.fire({
                                         position: "top-end",
@@ -366,42 +374,6 @@
                     }
                 });
             })
-
-
-            // category Status
-            $(document).ready(function() {
-                $('.showData').on('click', '.categoryButton', function() {
-                    var categoryId = $(this).data('id');
-                    // alert(categoryId);
-                    $.ajax({
-                        url: '/category/status/' + categoryId,
-                        type: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            if (response.status == 200) {
-                                // var button = $('#categoryButton_' + categoryId);
-                                if (response.status == 200) {
-                                    var button = $('#categoryButton_' + categoryId);
-                                    if (response.newStatus == 1) {
-                                        button.removeClass('btn-danger').addClass(
-                                            'btn-success').text('Active');
-                                    } else {
-                                        button.removeClass('btn-success').addClass(
-                                            'btn-danger').text('Inactive');
-                                    }
-                                } else {
-                                    button.removeClass('btn-success').addClass(
-                                        'btn-danger').text(
-                                        'Inactive');
-                                }
-                            }
-                        }
-                    });
-                });
-            });
-
 
         });
     </script>

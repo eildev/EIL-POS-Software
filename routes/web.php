@@ -5,12 +5,15 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ProductsSizeController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ExpenseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,6 +58,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/category/destroy/{id}', 'destroy')->name('category.destroy');
         // Route::get('/categories/all', 'categoryAll')->name('categories.all');
     });
+
     // subcategory related route(n)
     Route::controller(SubCategoryController::class)->group(function () {
         Route::get('/subcategory', 'index')->name('subcategory');
@@ -64,7 +68,20 @@ Route::middleware('auth')->group(function () {
         Route::post('/subcategory/update/{id}', 'update')->name('subcategory.update');
         Route::get('/subcategory/destroy/{id}', 'destroy')->name('subcategory.destroy');
         Route::post('/subcategory/status/{id}', 'status')->name('subcategory.status');
+        Route::get('/subcategory/find/{id}', 'find')->name('subcategory.find');
     });
+
+    // Brand related route
+    Route::controller(BrandController::class)->group(function () {
+        Route::get('/brand', 'index')->name('brand');
+        Route::post('/brand/store', 'store')->name('brand.store');
+        Route::get('/brand/view', 'view')->name('brand.view');
+        Route::get('/brand/edit/{id}', 'edit')->name('brand.edit');
+        Route::post('/brand/update/{id}', 'update')->name('brand.update');
+        Route::post('/brand/status/{id}', 'status')->name('brand.status');
+        Route::get('/brand/destroy/{id}', 'destroy')->name('brand.destroy');
+    });
+
     // Branch related route(n)
     Route::controller(BranchController::class)->group(function () {
         Route::get('/branch', 'index')->name('branch');
@@ -74,6 +91,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/branch/update/{id}', 'BranchUpdate')->name('branch.update');
         Route::get('/branch/delete/{id}', 'BranchDelete')->name('branch.delete');
     });
+
     // Customer related route(n)
     Route::controller(CustomerController::class)->group(function () {
         Route::get('/customer/add', 'AddCustomer')->name('customer.add');
@@ -83,6 +101,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/customer/update/{id}', 'CustomerUpdate')->name('customer.update');
         Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
     });
+
     // Unit related route
     Route::controller(UnitController::class)->group(function () {
         Route::get('/unit', 'index')->name('unit');
@@ -92,6 +111,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/unit/update/{id}', 'update')->name('unit.update');
         Route::get('/unit/destroy/{id}', 'destroy')->name('unit.destroy');
     });
+
     // Product Size related route(n)
     Route::controller(ProductsSizeController::class)->group(function () {
         Route::get('/product/size/add', 'ProductSizeAdd')->name('product.size.add');
@@ -101,14 +121,17 @@ Route::middleware('auth')->group(function () {
         Route::post('/product/size/update/{id}', 'ProductSizeUpdate')->name('product.size.update');
         Route::get('/product/size/delete/{id}', 'ProductSizeDelete')->name('product.size.delete');
     });
+
     // Product  related route(n)
     Route::controller(ProductsController::class)->group(function () {
-        Route::get('/product/add', 'ProducAdd')->name('product.add');
-        Route::post('/product/store', 'ProducStore')->name('product.store');
-        Route::get('/product/view', 'ProducView')->name('product.view');
-        Route::get('/product/edit/{id}', 'ProducEdit')->name('product.edit');
-        Route::post('/product/update/{id}', 'ProducUpdate')->name('product.update');
+        Route::get('/product', 'index')->name('product');
+        Route::post('/product/store', 'store')->name('product.store');
+        Route::get('/product/view', 'view')->name('product.view');
+        Route::get('/product/edit/{id}', 'edit')->name('product.edit');
+        Route::post('/product/update/{id}', 'update')->name('product.update');
+        Route::get('/product/destroy/{id}', 'destroy')->name('product.destroy');
     });
+
     // Product  related route(n)
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employee/add', 'EmployeeAdd')->name('employee.add');
@@ -119,8 +142,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/employee/delete/{id}', 'EmployeeDelete')->name('employee.delete');
     });
 
-
-    // Banks related route 
+    // Banks related route
     Route::controller(BankController::class)->group(function () {
         Route::get('/bank', 'index')->name('bank');
         Route::post('/bank/store', 'store')->name('bank.store');
@@ -130,7 +152,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/bank/destroy/{id}', 'destroy')->name('bank.destroy');
     });
 
-    // Supplier related route 
+    // Supplier related route
     Route::controller(SupplierController::class)->group(function () {
         Route::get('/supplier', 'index')->name('supplier');
         Route::post('/supplier/store', 'store')->name('supplier.store');
@@ -138,6 +160,33 @@ Route::middleware('auth')->group(function () {
         Route::get('/supplier/edit/{id}', 'edit')->name('supplier.edit');
         Route::post('/supplier/update/{id}', 'update')->name('supplier.update');
         Route::get('/supplier/destroy/{id}', 'destroy')->name('supplier.destroy');
+    });
+    // Expense related route(n)
+    Route::controller(ExpenseController::class)->group(function () {
+        //Expense category route(n)
+        Route::post('/expense/category/store', 'ExpenseCategoryStore')->name('expense.category.store');
+        Route::get('/expense/category/delete/{id}', 'ExpenseCategoryDelete')->name('expense.category.delete');
+        Route::get('/expense/category/edit/{id}', 'ExpenseCategoryEdit')->name('expense.category.edit');
+        Route::post('/expense/category/update/{id}', 'ExpenseCategoryUpdate')->name('expense.category.update');
+        //Expense route
+        Route::get('/expense/add', 'ExpenseAdd')->name('expense.add');
+        Route::post('/expense/store', 'ExpenseStore')->name('expense.store');
+        Route::get('/expense/view', 'ExpenseView')->name('expense.view');
+        Route::get('/expense/edit/{id}', 'ExpenseEdit')->name('expense.edit');
+        Route::post('/expense/update/{id}', 'ExpenseUpdate')->name('expense.update');
+        Route::get('/expense/delete/{id}', 'ExpenseDelete')->name('expense.delete');
+        ///expense Filter route//
+        Route::get('/expense/filter/rander', 'ExpenseFilterView')->name('expense.filter.view');
+    });
+
+    // Purchase related route
+    Route::controller(PurchaseController::class)->group(function () {
+        Route::get('/purchase', 'index')->name('purchase');
+        Route::post('/purchase/store', 'store')->name('purchase.store');
+        Route::get('/purchase/view', 'view')->name('purchase.view');
+        Route::get('/purchase/edit/{id}', 'edit')->name('purchase.edit');
+        Route::post('/purchase/update/{id}', 'update')->name('purchase.update');
+        Route::get('/purchase/destroy/{id}', 'destroy')->name('purchase.destroy');
     });
 });
 

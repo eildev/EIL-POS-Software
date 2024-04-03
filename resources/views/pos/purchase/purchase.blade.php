@@ -252,26 +252,25 @@
                     <form id="signupForm" class="supplierForm row">
                         <div class="mb-3 col-md-12">
                             <label for="name" class="form-label">Note</label>
-                            <textarea name="note" class="form-control" id="" placeholder="Enter Note (Optional)" rows="3"></textarea>
+                            <textarea name="note" class="form-control note" id="" placeholder="Enter Note (Optional)"
+                                rows="3"></textarea>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Transaction Account <span
+                            <label for="name" class="form-label">Transaction Method <span
                                     class="text-danger">*</span></label>
                             @php
-                                $transaction = App\Models\Promotion::get();
+                                $payments = App\Models\PaymentMethod::get();
                             @endphp
-                            <select class="js-example-basic-single form-select transaction_id" data-width="100%">
-                                @if ($transaction->count() > 0)
-                                    <option selected disabled>Select Discount</option>
-                                    @foreach ($transaction as $promotion)
-                                        <option value="{{ $promotion->id }}">
-                                            {{ $promotion->promotion_name }}
-                                            ({{ $promotion->discount_value }} /
-                                            {{ $promotion->discount_type }})
+                            <select class="form-select payment_method" data-width="100%">
+                                @if ($payments->count() > 0)
+                                    <option selected disabled>Select Transaction</option>
+                                    @foreach ($payments as $payemnt)
+                                        <option value="{{ $payemnt->id }}">
+                                            {{ $payemnt->name }}
                                         </option>
                                     @endforeach
                                 @else
-                                    <option selected disabled>Please Add Product</option>
+                                    <option selected disabled>Please Add Transaction</option>
                                 @endif
                             </select>
                         </div>
@@ -288,8 +287,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary save_supplier"><i
-                            class="fa-solid fa-cart-shopping"></i> Purchase</button>
+                    <button type="button" class="btn btn-primary purchase_btn"><i class="fa-solid fa-cart-shopping"></i>
+                        Purchase</button>
                 </div>
                 </form>
             </div>
@@ -544,9 +543,8 @@
             // payment button click event
             $('.payment_btn').click(function(e) {
                 e.preventDefault();
-                // alert('ok');
-                let grandTotal = $('.grand_total').val();
-                $('.total_payable_amount').text(grandTotal);
+                $('.total_payable_amount').text($('.grand_total').val());
+                $('.total_due').text($('.grand_total').val());
             })
 
             // paid amount 
@@ -555,6 +553,113 @@
                 // alert('ok');
                 let grandTotal = $('.grand_total').val();
                 $('.total_payable').val(grandTotal);
+                totalDue();
+            })
+
+            // total_payable
+            $('.total_payable').change(function(e) {
+                let grandTotal = $('.grand_total').val();
+                let value = parseFloat($(this).val());
+
+                if (value <= grandTotal) {
+                    totalDue()
+                } else {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "warning",
+                        title: "Please Add valid value",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+
+            // due 
+            function totalDue() {
+                let pay = $('.total_payable').val();
+                let grandTotal = $('.grand_total').val();
+                let due = grandTotal - pay;
+                $('.total_due').text(due)
+            }
+
+            $('.purchase_btn').click(function(e) {
+                e.preventDefault();
+                // alert('ok');
+                let supplier_id = $('.select-supplier').val();
+                let purchse_date = $('.purchase_date').val();
+                let total_quantity = 4;
+                let total_amount = $('.total').val();
+                let discount = $('.total_payable').val();
+                let discount_amount = $('.total_payable').val();
+                let sub_total = $('.grand_total').val();
+                let paid = $('.total_payable').val();
+                let due = sub_total - paid;
+                let carrying_cost = $('.carrying_cost').val();
+                let note = $('.note').val();
+
+                let allData = {
+                    // for purchase table 
+                    supplier_id,
+                    purchse_date,
+                    total_quantity,
+                    total_amount,
+                    discount,
+                    discount_amount,
+                    sub_total,
+                    paid,
+                    due,
+                    carrying_cost,
+                    note
+                }
+
+                console.log(allData);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: '/purchase/store',
+                    type: 'POST',
+                    data: {
+                        supplier_id,
+                        purchse_date,
+                        total_quantity,
+                        total_amount,
+                        discount,
+                        discount_amount,
+                        sub_total,
+                        paid,
+                        due,
+                        carrying_cost,
+                        note
+                    },
+                    success: function(res) {
+                        if (res.status == 200) {
+                            console.log(res);
+                            $('#paymentModal').modal('hide');
+                            // $('.supplierForm')[0].reset();
+                            // supplierView();
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: res.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        } else {
+                            console.log(res);
+                            // if (res.error.name) {
+                            //     showError('.supplier_name', res.error.name);
+                            // }
+                            // if (res.error.phone) {
+                            //     showError('.phone', res.error.phone);
+                            // }
+                        }
+                    }
+                });
+
             })
 
         });

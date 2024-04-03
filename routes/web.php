@@ -15,6 +15,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\TaxController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -208,6 +209,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/promotion/details/edit/{id}', 'PromotionDetailsEdit')->name('promotion.details.edit');
         Route::post('/promotion/details/update/{id}', 'PromotionDetailsUpdate')->name('promotion.details.update');
         Route::get('/promotion/details/delete/{id}', 'PromotionDetailsDelete')->name('promotion.details.delete');
+    });
+    // Taxes related route(n)
+    Route::controller(TaxController::class)->group(function () {
+        Route::get('/tax/add', 'TaxAdd')->name('tax.add');
+        Route::post('/tax/store', 'TaxStore')->name('tax.store');
+        Route::get('/tax/view', 'TaxView')->name('tax.view');
+        Route::get('/tax/edit/{id}', 'TaxEdit')->name('tax.edit');
+        Route::post('/tax/update/{id}', 'TaxUpdate')->name('tax.update');
+        Route::get('/tax/delete/{id}', 'TaxDelete')->name('tax.delete');
     });
 });
 

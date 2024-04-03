@@ -25,7 +25,7 @@
 
                             <select class="js-example-basic-single form-select select-supplier" data-width="100%"
                                 name="">
-                                <option value="">Select Value</option>
+                                <option value="">Select Supplier</option>
 
                             </select>
                         </div>
@@ -34,8 +34,7 @@
 
                             <label for="password" class="form-label">Purchase Date</label>
                             <div class="input-group flatpickr" id="flatpickr-date">
-                                <input type="text" class="form-control purchase_date" placeholder="Select date"
-                                    data-input>
+                                <input type="date" class="form-control purchase_date" placeholder="" data-input>
                                 <span class="input-group-text input-group-addon" data-toggle><i
                                         data-feather="calendar"></i></span>
                             </div>
@@ -129,6 +128,15 @@
                                         </div>
                                         <div class="row align-items-center">
                                             <div class="col-md-4">
+                                                Carrying Cost :
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="number" class="form-control carrying_cost"
+                                                    name="carrying_cost" value="0.00" />
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center">
+                                            <div class="col-md-4">
                                                 Grand Total :
                                             </div>
                                             <div class="col-md-8">
@@ -143,7 +151,7 @@
                         </table>
                     </div>
                     <div class="my-3">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal"><i
+                        <button class="btn btn-primary payment_btn" data-bs-toggle="modal" data-bs-target="#paymentModal"><i
                                 class="fa-solid fa-money-check-dollar"></i>
                             Payment</button>
                     </div>
@@ -215,49 +223,73 @@
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Category</h5>
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Payment</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                 </div>
                 <div class="modal-body">
+                    <div id="" class="table-responsive mb-5">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Paying Items :</th>
+                                    <th>
+                                        <span class="paying_items">0</span>
+                                    </th>
+                                    <th>Total Payable :</th>
+                                    <th>
+                                        (<span class="total_payable_amount">00</span>TK)
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>Total Due :</th>
+                                    <th>
+                                        <span class="total_due">0</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                     <form id="signupForm" class="supplierForm row">
+                        <div class="mb-3 col-md-12">
+                            <label for="name" class="form-label">Note</label>
+                            <textarea name="note" class="form-control" id="" placeholder="Enter Note (Optional)" rows="3"></textarea>
+                        </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Supplier Name <span
+                            <label for="name" class="form-label">Transaction Account <span
                                     class="text-danger">*</span></label>
-                            <input id="defaultconfig" class="form-control supplier_name" maxlength="255" name="name"
-                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
-                            <span class="text-danger supplier_name_error"></span>
+                            @php
+                                $transaction = App\Models\Promotion::get();
+                            @endphp
+                            <select class="js-example-basic-single form-select transaction_id" data-width="100%">
+                                @if ($transaction->count() > 0)
+                                    <option selected disabled>Select Discount</option>
+                                    @foreach ($transaction as $promotion)
+                                        <option value="{{ $promotion->id }}">
+                                            {{ $promotion->promotion_name }}
+                                            ({{ $promotion->discount_value }} /
+                                            {{ $promotion->discount_type }})
+                                        </option>
+                                    @endforeach
+                                @else
+                                    <option selected disabled>Please Add Product</option>
+                                @endif
+                            </select>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Email</label>
-                            <input id="defaultconfig" class="form-control email" maxlength="39" name="email"
-                                type="email">
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Phone Nnumber <span
+                            <label for="name" class="form-label">Pay Amount <span
                                     class="text-danger">*</span></label>
-                            <input id="defaultconfig" class="form-control phone" maxlength="39" name="phone"
-                                type="tel" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
-                            <span class="text-danger phone_error"></span>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Address</label>
-                            <input id="defaultconfig" class="form-control address" maxlength="39" name="address"
-                                type="text">
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Opening Receivable</label>
-                            <input id="defaultconfig" class="form-control opening_receivable" maxlength="39"
-                                name="opening_receivable" type="number">
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Opening Payable</label>
-                            <input id="defaultconfig" class="form-control opening_payable" maxlength="39"
-                                name="opening_payable" type="number">
+                            <div class="d-flex align-items-center">
+                                <input class="form-control total_payable border-end-0 rounded-0" name="total_payable"
+                                    type="number">
+                                <button class="btn btn-info border-start-0 rounded-0 paid_btn">Paid</button>
+                            </div>
+                            <span class="text-danger total_payable_error"></span>
                         </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary save_supplier">Save</button>
+                    <button type="button" class="btn btn-primary save_supplier"><i
+                            class="fa-solid fa-cart-shopping"></i> Purchase</button>
                 </div>
                 </form>
             </div>
@@ -274,6 +306,17 @@
         }
         $(document).ready(function() {
             // console.log('hello');
+            function getTodayDate() {
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = today.getMonth(); // Month is 0-indexed, add 1 to get the correct month
+                const day = today.getDate();
+                console.log(`${year} - ${month} - ${day}`);
+                document.querySelector('.purchase_date').value = `${year} - ${month} - ${day}`;
+                return `${year} - ${month} - ${day}`;
+            }
+            getTodayDate();
+
 
             // show error 
             function showError(name, message) {
@@ -281,9 +324,37 @@
                 $(name).focus();
                 $(`${name}_error`).show().text(message);
             }
+
+
+            // show supplier
+            function supplierView() {
+                // console.log('hello')
+                $.ajax({
+                    url: '/supplier/view',
+                    method: 'GET',
+                    success: function(res) {
+                        const suppliers = res.data;
+                        // console.log(suppliers);
+                        $('.select-supplier').empty();
+                        if (suppliers.length > 0) {
+                            $('.select-supplier').html(
+                                `<option selected disabled>Select a Supplier</option>`);
+                            $.each(suppliers, function(index, supplier) {
+                                $('.select-supplier').append(
+                                    `<option value="${supplier.id}">${supplier.name}</option>`
+                                );
+                            })
+                        } else {
+                            $('.select-supplier').html(`
+                    <option selected disable>Please add supplier</option>`)
+                        }
+                    }
+                })
+            }
+            supplierView();
+
             // save supplier
             const saveSupplier = document.querySelector('.save_supplier');
-            // console.log(saveSupplier);
             saveSupplier.addEventListener('click', function(e) {
                 e.preventDefault();
                 // alert('ok')
@@ -324,31 +395,9 @@
                     }
                 });
             })
-            // show supplier
-            function supplierView() {
-                $.ajax({
-                    url: '/supplier/view',
-                    method: 'GET',
-                    success: function(res) {
-                        const suppliers = res.data;
-                        // console.log(suppliers);
-                        $('.select-supplier').empty();
-                        if (suppliers.length > 0) {
-                            $('.select-supplier').html(
-                                `<option selected disabled>Select a Supplier</option>`);
-                            $.each(suppliers, function(index, supplier) {
-                                $('.select-supplier').append(
-                                    `<option value="${supplier.id}">${supplier.name}</option>`
-                                );
-                            })
-                        } else {
-                            $('.select-supplier').html(`
-                            <option selected disable>Please add supplier</option>`)
-                        }
-                    }
-                })
-            }
-            supplierView();
+
+
+
 
             // Function to update SL numbers
             function updateSLNumbers() {
@@ -357,52 +406,92 @@
                 });
             }
 
+            // select product 
             $('.product_id').change(function() {
                 let id = $(this).val();
+                let supplier = $('.select-supplier').val();
                 // alert(id);
-                if ($(`.data_row${id}`).length === 0 && id) {
-                    $.ajax({
-                        url: '/product/find/' + id,
-                        type: 'GET',
-                        dataType: 'JSON',
-                        success: function(res) {
-                            const product = res.data;
-                            // console.log(product);
-                            // $('.showData').empty();
+                if (supplier) {
+                    if ($(`.data_row${id}`).length === 0 && id) {
+                        $.ajax({
+                            url: '/product/find/' + id,
+                            type: 'GET',
+                            dataType: 'JSON',
+                            success: function(res) {
+                                const product = res.data;
+                                // console.log(product);
+                                // $('.showData').empty();
+                                // updateSLNumbers();
 
-                            $('.showData').append(
-                                `<tr class="data_row${product.id}">
-                                    <td>
-                                       
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
-                                    </td>
-                                    <td>
-                                        <input type="hidden" name="product_id[]" readonly value="${product.id ?? 0}" />
-                                        <input type="number" class="form-control product_price${product.id} border-0 "  name="product_price[]" readonly value="${product.price ?? 0}" />
-                                    </td>
-                                    <td>
-                                        <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="" />
-                                    </td>
-                                    <td>
-                                        <input type="number" class="form-control product_subtotal${product.id} border-0 "  name="product_subTotal[]" readonly value="00.00" />
-                                    </td>
-                                    <td>
-                                        <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </a>
-                                    </td>
-                                    </tr>`
-                            );
-                            // Update SL numbers
-                            updateSLNumbers();
-                        }
-                    })
+                                $('.showData').append(
+                                    `<tr class="data_row${product.id}">
+                        <td>
+
+                        </td>
+                        <td>
+                            <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
+                        </td>
+                        <td>
+                            <input type="hidden" name="product_id[]" readonly value="${product.id ?? 0}" />
+                            <input type="number" class="form-control product_price${product.id} border-0 "  name="product_price[]" readonly value="${product.price ?? 0}" />
+                        </td>
+                        <td>
+                            <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="" />
+                        </td>
+                        <td>
+                            <input type="number" class="form-control product_subtotal${product.id} border-0 "  name="product_subTotal[]" readonly value="00.00" />
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
+                                <i class="fa-solid fa-trash-can"></i>
+                            </a>
+                        </td>
+                        </tr>`
+                                );
+                                // Update SL numbers
+                                updateSLNumbers();
+                            }
+                        })
+                    }
+                } else {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "warning",
+                        title: "Please select A Supplier",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
+
             })
 
-            // Function to recalculate grand total
+            // grandTotalCalulate
+            function calculateGrandTotal() {
+                let id = $('.promotion_id').val();
+                let total = parseFloat($('.total').val());
+                // alert(id);
+                $.ajax({
+                    url: `/promotion/find/${id}`,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function(res) {
+                        // console.log(res)
+                        const promotion = res.data;
+                        if (promotion.discount_type == 'percentage') {
+                            let grandTotalAmount = parseFloat(total - ((total * promotion
+                                .discount_value) / 100)).toFixed(2);
+                            $('.grand_total').val(grandTotalAmount);
+                        } else {
+                            let grandTotalAmount = parseFloat(total - promotion.discount_value)
+                                .toFixed(2);
+                            $('.grand_total').val(grandTotalAmount);
+                        }
+                    }
+                })
+            }
+
+            calculateGrandTotal();
+            // Function to recalculate total
             function calculateTotal() {
                 let total = 0;
                 $('.quantity').each(function() {
@@ -414,6 +503,14 @@
                 $('.total').val(total.toFixed(2));
             }
 
+
+            // Function to update grand total when a product is added or deleted
+            function updateGrandTotal() {
+                calculateTotal();
+                calculateGrandTotal();
+            }
+
+
             $(document).on('keyup', '.quantity', function() {
                 let id = $(this).attr("product-id")
                 let quantity = $(this).val();
@@ -423,34 +520,14 @@
                 let subTotal = $('.product_subtotal' + id);
                 let subTotalPrice = parseFloat(quantity * productPrice).toFixed(2);
                 subTotal.val(subTotalPrice);
-                calculateTotal();
+                updateGrandTotal();
             })
 
+
+
+            // discount 
             $('.promotion_id').change(function() {
-                let id = $(this).val();
-                // alert(id);
-                if (id) {
-                    $.ajax({
-                        url: '/promotion/find/' + id,
-                        type: 'GET',
-                        dataType: 'JSON',
-                        success: function(res) {
-                            const promotion = res.data;
-                            // console.log(promotion.percentage);
-                            if (promotion.discount_type != 'fixed_amount') {
-                                let total = parseFloat($('.total').val());
-
-                                let grandTotalAmount = (total * promotion.discount_value) / 100;
-                                console.log(grandTotalAmount);
-
-                                $('.grand_total').val(grandTotalAmount);
-                            } else {
-
-                            }
-
-                        }
-                    })
-                }
+                calculateGrandTotal();
             })
 
             // purchase Delete 
@@ -460,10 +537,26 @@
                 let dataRow = $('.data_row' + id);
                 dataRow.remove();
                 // Recalculate grand total
-                calculateTotal();
-
+                updateGrandTotal();
                 updateSLNumbers()
             })
+
+            // payment button click event
+            $('.payment_btn').click(function(e) {
+                e.preventDefault();
+                // alert('ok');
+                let grandTotal = $('.grand_total').val();
+                $('.total_payable_amount').text(grandTotal);
+            })
+
+            // paid amount 
+            $('.paid_btn').click(function(e) {
+                e.preventDefault();
+                // alert('ok');
+                let grandTotal = $('.grand_total').val();
+                $('.total_payable').val(grandTotal);
+            })
+
         });
     </script>
 @endsection

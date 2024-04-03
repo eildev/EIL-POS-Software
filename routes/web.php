@@ -15,6 +15,8 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\TaxController;
+use App\Http\Controllers\PaymentMethodController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -208,6 +210,24 @@ Route::middleware('auth')->group(function () {
         Route::get('/promotion/details/edit/{id}', 'PromotionDetailsEdit')->name('promotion.details.edit');
         Route::post('/promotion/details/update/{id}', 'PromotionDetailsUpdate')->name('promotion.details.update');
         Route::get('/promotion/details/delete/{id}', 'PromotionDetailsDelete')->name('promotion.details.delete');
+    });
+    // Tax related route(n)
+    Route::controller(TaxController::class)->group(function () {
+        Route::get('/tax/add', 'TaxAdd')->name('tax.add');
+        Route::post('/tax/store', 'TaxStore')->name('tax.store');
+        Route::get('/tax/view', 'TaxView')->name('tax.view');
+        Route::get('/tax/edit/{id}', 'TaxEdit')->name('tax.edit');
+        Route::post('/tax/update/{id}', 'TaxUpdate')->name('tax.update');
+        Route::get('/tax/delete/{id}', 'TaxDelete')->name('tax.delete');
+    });
+    // Payment Method related route(n)
+    Route::controller(PaymentMethodController::class)->group(function () {
+        Route::get('/payment/method/add', 'PaymentMethodAdd')->name('payment.method.add');
+        Route::post('/payment/method/store', 'PaymentMethodStore')->name('payment.method.store');
+        Route::get('/payment/method/view', 'PaymentMethodView')->name('payment.method.view');
+        Route::get('/payment/method/edit/{id}', 'PaymentMethodEdit')->name('payment.method.edit');
+        Route::post('/payment/method/update/{id}', 'PaymentMethodUpdate')->name('payment.method.update');
+        Route::get('/payment/method/delete/{id}', 'PaymentMethodDelete')->name('payment.method.delete');
     });
 });
 

@@ -63,20 +63,22 @@
 {{-- ///////////tab//////////// --}}
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
-      <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">View Expense</a>
+        {{-- <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#" role="tab" aria-controls="contact" aria-selected="false"></a> --}}
+        <a class="nav-link active" id="expense-tab" data-bs-toggle="tab" href="#expense" role="tab" aria-controls="profile" aria-selected="false">Expense Report</a>
+      </li>
+
+    <li class="nav-item">
+      <a class="nav-link " id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">View/Add Expense</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">View Expense Category</a>
     </li>
-    <li class="nav-item">
-      {{-- <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#" role="tab" aria-controls="contact" aria-selected="false"></a> --}}
-      <a class="nav-link" id="expense-tab" data-bs-toggle="tab" href="#expense" role="tab" aria-controls="profile" aria-selected="false">Expense Report</a>
-    </li>
+
 
 
   </ul>
   <div class="tab-content border border-top-0 p-3" id="myTabContent">
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="tab-pane fade  " id="home" role="tabpanel" aria-labelledby="home-tab">
         {{-- ///Expense --}}
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
@@ -148,10 +150,9 @@
 
             </div>
         </div>
-
         {{-- ///End Expense --}}
         {{-- ///Expense Category --}}
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
             {{-- /// Expense Category --}}
             <div class="row">
                         <div class="col-md-12 grid-margin stretch-card">
@@ -207,7 +208,7 @@
         </div>
           {{-- End Expense Category --}}
           {{-- /// Expense Report  --}}
-          <div class="tab-pane fade" id="expense" role="tabpanel" aria-labelledby="expense-tab">
+          <div class="tab-pane fade show active" id="expense" role="tabpanel" aria-labelledby="expense-tab">
             {{-- /////Expensse Report Start --}}
           <div class="row">
             <div class="col-md-12   grid-margin stretch-card">

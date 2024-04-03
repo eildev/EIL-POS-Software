@@ -33,11 +33,11 @@
                         <td>{{ $expenses->expense_date ?? ''}}</td>
 
                         <td>
-                            <a href="{{route('expense.edit',$expenses->id)}}" class="btn btn-sm btn-primary btn-icon">
-                                <i data-feather="edit"></i>
+                            <a href="{{route('expense.edit',$expenses->id)}}" class="btn btn-sm btn-primary " title="Edit">
+                               Edit
                             </a>
-                            <a href="{{route('expense.delete',$expenses->id)}}" id="delete" class="btn btn-sm btn-danger btn-icon">
-                                <i data-feather="trash-2"></i>
+                            <a href="{{route('expense.delete',$expenses->id)}}" id="delete" class="btn btn-sm btn-danger " title="Delete">
+                                Delete
                             </a>
                         </td>
                     </tr>

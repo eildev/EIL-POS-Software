@@ -128,6 +128,12 @@
                     <span class="link-title">Payemnet Method</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('transaction.add') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Transaction</span>
+                </a>
+            </li>
             <li class="nav-item nav-category">PROMOTIONS</li>
             <li class="nav-item">
                 <a href="{{ route('promotion.view') }}" class="nav-link">

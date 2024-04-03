@@ -40,13 +40,13 @@
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add Tax</h5>
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add Payement Method</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="signupForm" class="paymentMethodForm row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Tax Name</label>
+                            <label for="name" class="form-label">Payement Method Name</label>
                             <input id="defaultconfig" class="form-control payment_method_name" maxlength="39" name="name"
                                 type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger payment_method_name_error"></span>

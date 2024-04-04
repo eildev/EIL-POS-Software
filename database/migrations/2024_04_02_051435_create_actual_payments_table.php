@@ -16,10 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('branch_id')->unsigned();
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
             $table->enum('payment_type', ['receive', 'pay']);
-            $table->string('payment_mrthod');
+            $table->integer('payment_method');
             $table->integer('customer_id')->nullable();
             $table->integer('supplier_id')->nullable();
-            $table->decimal('amount',12,2);
+            $table->decimal('amount', 12, 2);
             $table->date('date')->nullable();
             $table->text('note')->nullable();
             $table->timestamps();

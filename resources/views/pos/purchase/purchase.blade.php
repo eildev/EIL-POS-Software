@@ -44,7 +44,7 @@
                                 $products = App\Models\Product::get();
                             @endphp
                             <label for="ageSelect" class="form-label">Product</label>
-                            <select class="js-example-basic-single form-select product_id" data-width="100%">
+                            <select class="js-example-basic-single form-select product_select" data-width="100%">
                                 @if ($products->count() > 0)
                                     <option selected disabled>Select Product</option>
                                     @foreach ($products as $product)
@@ -69,6 +69,7 @@
                     <div class="mb-3">
                         <h6 class="card-title">Purchase Table</h6>
                     </div>
+
                     <div id="" class="table-responsive">
                         <table class="table">
                             <thead>
@@ -150,6 +151,7 @@
                             </tfoot>
                         </table>
                     </div>
+
                     <div class="my-3">
                         <button class="btn btn-primary payment_btn" data-bs-toggle="modal" data-bs-target="#paymentModal"><i
                                 class="fa-solid fa-money-check-dollar"></i>
@@ -290,7 +292,7 @@
                     <button type="button" class="btn btn-primary purchase_btn"><i class="fa-solid fa-cart-shopping"></i>
                         Purchase</button>
                 </div>
-                </form>
+
             </div>
         </div>
     </div>
@@ -406,7 +408,7 @@
             }
 
             // select product 
-            $('.product_id').change(function() {
+            $('.product_select').change(function() {
                 let id = $(this).val();
                 let supplier = $('.select-supplier').val();
                 // alert(id);
@@ -424,28 +426,28 @@
 
                                 $('.showData').append(
                                     `<tr class="data_row${product.id}">
-                        <td>
+                                        <td>
 
-                        </td>
-                        <td>
-                            <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
-                        </td>
-                        <td>
-                            <input type="hidden" name="product_id[]" readonly value="${product.id ?? 0}" />
-                            <input type="number" class="form-control product_price${product.id} border-0 "  name="product_price[]" readonly value="${product.price ?? 0}" />
-                        </td>
-                        <td>
-                            <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="" />
-                        </td>
-                        <td>
-                            <input type="number" class="form-control product_subtotal${product.id} border-0 "  name="product_subTotal[]" readonly value="00.00" />
-                        </td>
-                        <td>
-                            <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
-                                <i class="fa-solid fa-trash-can"></i>
-                            </a>
-                        </td>
-                        </tr>`
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
+                                        </td>
+                                        <td>
+                                            <input type="hidden" class="product_id" name="product_id[]" readonly value="${product.id ?? 0}" />
+                                            <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.price ?? 0}" />
+                                        </td>
+                                        <td>
+                                            <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="" />
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control product_subtotal${product.id} border-0 "  name="total_price[]" readonly value="00.00" />
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </a>
+                                        </td>
+                                    </tr>`
                                 );
                                 // Update SL numbers
                                 updateSLNumbers();
@@ -596,6 +598,29 @@
                 let due = sub_total - paid;
                 let carrying_cost = $('.carrying_cost').val();
                 let note = $('.note').val();
+                let payment_method = $('.payment_method').val();
+                // let product_id = $('.product_id').val();
+                // console.log(product_id);
+
+                let products = [];
+
+                $('tr[class^="data_row"]').each(function() {
+                    let row = $(this);
+                    // Get values from the current row's elements
+                    let product_id = row.find('.product_id').val();
+                    let quantity = row.find('input[name="quantity[]"]').val();
+                    let unit_price = row.find('input[name="unit_price[]"]').val();
+
+                    // Create an object with the gathered data
+                    let product = {
+                        product_id,
+                        quantity,
+                        unit_price,
+                    };
+
+                    // Push the object into the products array
+                    products.push(product);
+                });
 
                 let allData = {
                     // for purchase table 
@@ -609,10 +634,12 @@
                     paid,
                     due,
                     carrying_cost,
-                    note
+                    note,
+                    payment_method,
+                    products
                 }
 
-                console.log(allData);
+                // console.log(allData);
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -622,22 +649,10 @@
                 $.ajax({
                     url: '/purchase/store',
                     type: 'POST',
-                    data: {
-                        supplier_id,
-                        purchse_date,
-                        total_quantity,
-                        total_amount,
-                        discount,
-                        discount_amount,
-                        sub_total,
-                        paid,
-                        due,
-                        carrying_cost,
-                        note
-                    },
+                    data: allData,
                     success: function(res) {
                         if (res.status == 200) {
-                            console.log(res.data);
+                            // console.log(res.data);
                             $('#paymentModal').modal('hide');
                             // $('.supplierForm')[0].reset();
                             // supplierView();

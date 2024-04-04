@@ -637,7 +637,7 @@
                     },
                     success: function(res) {
                         if (res.status == 200) {
-                            console.log(res);
+                            console.log(res.data);
                             $('#paymentModal').modal('hide');
                             // $('.supplierForm')[0].reset();
                             // supplierView();

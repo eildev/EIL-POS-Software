@@ -110,22 +110,20 @@
 </div>
 </div>
 <script>
-    document.getElementById("account_type").addEventListener("change", function() {
+       document.getElementById("account_type").addEventListener("change", function() {
         var accountType = this.value;
         var options = '<option selected disabled value="">Select Account ID</option>';
 
         if (accountType === "supplier") {
             @foreach ($supplier as $supply)
-                options += '<option  value="{{ $supply->id}}">{{ $supply->name }} (supplier)</option>';
+                options += '<option  value="{{ $supply->id}}">{{ $supply->name }} </option>';
             @endforeach
-            // $('#supplier-info').slideDown();
-            //  $('#customer-info').hide();
+
         } else if (accountType === "customer") {
             @foreach ($customer as $customers)
-                options += '<option value="{{ $customers->id }}">{{ $customers->name }}(customer)</option>';
+                options += '<option value="{{ $customers->id }}">{{ $customers->name }}</option>';
             @endforeach
-            // $('#supplier-info').hide();
-            // $('#customer-info').slideDown();
+
         }
 
         document.getElementById("account_id").innerHTML = options;

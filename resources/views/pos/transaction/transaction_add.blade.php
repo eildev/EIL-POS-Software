@@ -4,7 +4,7 @@
 <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
     <div class="">
 
-        <h4 class="text-right"><a href="{{route('customer.view')}}" class="btn btn-info">View Transaction</a></h4>
+        <h4 class="text-right"><a href="{{route('transaction.view')}}" class="btn btn-info">View Transaction</a></h4>
     </div>
 </div>
 <div class="col-md-12 stretch-card">
@@ -15,10 +15,10 @@
 				@csrf
 				<div class="row">
 					<!-- Col -->
-					<div class="col-sm-6">
+					<div class="col-sm-12">
 						<div class="mb-3 form-valid-groups">
 							<label class="form-label">Personal/Direct Transaction</label>
-                            <select class="form-select"data-width="100%" name="bank_account_id" aria-invalid="false">
+                            <select class="form-select"data-width="100%" name="dirrect_transaction" aria-invalid="false">
                                 <option value="no">No</option>
                                 <option value="yes">Yes</option>
 
@@ -35,7 +35,7 @@
 						</div>
 					</div>
 					<div class="col-sm-6">
-						<div class="mb-3">
+						<div class="mb-3 form-valid-groups">
 							<label class="form-label">Transaction Type <span class="text-danger">*</span></label>
 							<select class="form-select bank_id "data-width="100%" name="transaction_type" aria-invalid="false">
                                 <option selected="" disabled value="">Select Type</option>
@@ -45,7 +45,7 @@
 						</div>
 					</div><!-- Col -->
 					<div class="col-sm-6">
-						<div class="mb-3">
+						<div class="mb-3 form-valid-groups">
 							<label class="form-label">Account Type<span class="text-danger">*</span></label>
                             <select class="form-select" data-width="100%" name="account_type" id="account_type" aria-invalid="false">
                                 <option selected disabled value="">Select Account Type</option>
@@ -57,11 +57,19 @@
 					<div class="col-sm-6">
 						<div class="mb-3">
 							<label class="form-label">Account ID<span class="text-danger">*</span></label>
-                            <select class="form-select" data-width="100%" name="bank_account_id" id="account_id" aria-invalid="false">
+                            <select class="form-select select-account-id" data-width="100%" name="bank_account_id" id="account_id" aria-invalid="false">
                                 <option selected disabled value="">Select Account ID</option>
                             </select>
 						</div>
 					</div><!-- Col -->
+                    <div>
+                        <h5 id="account-details"></h5>
+                        <h5 id="due_invoice_count"></h5>
+                        <h5 id="total_invoice_due"></h5>
+                        <h5 id="personal_balance"></h5>
+                        <h5 id="total_due"></h5>
+
+                    </div>
                     <div class="col-sm-6">
 						<div class="mb-3 form-valid-groups">
 							<label class="form-label">Amount<span class="text-danger">*</span></label>
@@ -79,7 +87,8 @@
                             </select>
 						</div>
 					</div>
-					<div class="col-sm-6">
+
+					<div class="col-sm-12">
 						<div class="mb-3">
 							<label class="form-label">Note</label>
 							<textarea name="note" class="form-control"  placeholder="Write Note (Optional)" rows="4" cols="50"></textarea>
@@ -101,54 +110,104 @@
 </div>
 </div>
 </div>
-
 <script>
-    document.getElementById("account_type").addEventListener("change", function() {
+       document.getElementById("account_type").addEventListener("change", function() {
         var accountType = this.value;
         var options = '<option selected disabled value="">Select Account ID</option>';
 
         if (accountType === "supplier") {
             @foreach ($supplier as $supply)
-                options += '<option  value="{{ $supply->id}}">{{ $supply->name }}</option>';
+                options += '<option  value="{{ $supply->id}}">{{ $supply->name }} </option>';
             @endforeach
+
         } else if (accountType === "customer") {
             @foreach ($customer as $customers)
                 options += '<option value="{{ $customers->id }}">{{ $customers->name }}</option>';
             @endforeach
+
         }
 
         document.getElementById("account_id").innerHTML = options;
     });
     //
     // document.getElementById("account_id").addEventListener("change", function() {
-    //         var accountId = this.value;
+    //    var accountId = this.value;
+    //     $('#supplier-info').slideDown();
+    //   //  $('#customer-info').hide();
+    //   if (!accountId) {
+    //     $('#supplier-info').hide();;
+    // }
+    //  });
+    var account_id=  document.querySelector('.select-account-id');
+    account_id.addEventListener('change', function(){
+// alert('ok');
+    let accountId  = this.value;
+    // console.log(id);
+    $.ajax({
+        url: '/getDataForAccountId',
+        method: 'GET',
+        data: { id: accountId },
+        success: function(data) {
+          //  console.log(data);
+            $('#account-details').text('Name: ' + data.name);
+            $('#due_invoice_count').text('Due Invoice Count: ');
+            $('#total_invoice_due').text('Total Invoice Due: ');
+            $('#personal_balance').text('Personal Balance: '+ data);
+            $('#total_due').text('Total Due: ');
+        },
+        error: function(xhr, status, error) {
+            // Error handling
+            console.error('Request failed:', error);
+        }
+    });
+    });
+//Validation
+$(document).ready(function (){
+        $('#myValidForm').validate({
+            rules: {
+                account_type: {
+                    required : true,
+                },
+                transaction_type: {
+                    required : true,
+                },
+                date: {
+                    required : true,
+                },
+                balance: {
+                    required : true,
+                },
+            },
+            messages :{
+                account_type: {
+                    required : 'Please Select Account Type',
+                },
+                date: {
+                    required : 'Please Select Date',
+                },
+                transaction_type: {
+                    required : 'Please Select Transaction Type',
+                },
+                balance: {
+                    required : 'Enter Transaction Balance',
+                },
+            },
+            errorElement : 'span',
+            errorPlacement: function (error,element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-valid-groups').append(error);
+            },
+            highlight : function(element, errorClass, validClass){
+                $(element).addClass('is-invalid');
+            },
+            unhighlight : function(element, errorClass, validClass){
+                $(element).removeClass('is-invalid');
+                $(element).addClass('is-valid');
+            },
+        });
+    });
 
-    //         // Make an AJAX request to fetch data
-    //         fetch('/fetch-account-data/' + accountId)
-    //             .then(response => response.json())
-    //             .then(data => {
-    //                 // Display the data in a table
-    //                 displayData(data);
-    //             })
-    //             .catch(error => {
-    //                 console.error('Error:', error);
-    //             });
-    //     });
-
-    //     function displayData(data) {
-    //         // Clear previous data
-    //         var tableBody = document.getElementById("account_data");
-    //         tableBody.innerHTML = "";
-
-    //         // Iterate over the data and create table rows
-    //         data.forEach(item => {
-    //             var row = "<tr>";
-    //             row += "<td>" + item.field1 + "</td>"; // Replace field1, field2, etc. with your actual field names
-    //             row += "<td>" + item.field2 + "</td>";
-    //             // Add more fields as needed
-    //             row += "</tr>";
-    //             tableBody.innerHTML += row;
-    //         });
-    //     }
 </script>
+
+
 @endsection

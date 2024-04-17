@@ -15,19 +15,44 @@ class TransactionController extends Controller
         $customer = Customer::latest()->get();
         return view('pos.transaction.transaction_add',compact('paymentMethod','supplier','customer'));
     }//
-    // public function fetchAccountData(Request $request, $accountId)
-    // {
-    //     // Retrieve the account data based on the account type (supplier or customer)
-    //     $accountType = $request->input('accountType');
+    public function TransactionView(){
+        return view('pos.transaction.transaction_view');
+    }
+    public function getDataForAccountId(Request $request)
+    {
+        $accountId = $request->input('id');
+        //dd($accountId);
+        $supplier = Supplier::findOrFail($accountId);
+        $customer = Customer::findOrFail($accountId);
+        if ($supplier) {
+            return response()->json($supplier);
+        } else if($customer){
+            return response()->json($customer);
+        }
+        // else {
+        //     // Return an error response if the account does not exist
+        //     return response()->json(['error' => 'Account not found'], 404);
+        // }
+    }
+    // public function TransactionStore(Request $request){
+    //     $transaction = Transaction::create([
+    //         'transaction_type' => $request->payment_method_id,
+    //        'supplier_id' => $request->supplier_id,
+    //         'customer_id' => $request->customer_id,
+    //         'amount' => $request->amount,
+    //         'payment_type' => $request->payment_type,
+    //         'particulars' => $request->particulars,
+    //         'credit' => $request->credit,
+    //         'balance' => $request->balance,
+    //         'payment_method' => $request->payment_method,
+    //         'date' => $request->date,
+    //         'note' => $request->note,
+    //     ]);
+    //     $notification = [
+    //         'message' => 'Transaction Added Successfully',
+    //         'alert-type' => 'info'
+    //     ];
+    //     return redirect()->back()->with( $notification );
 
-    //     if ($accountType === 'supplier') {
-    //         $accountData = Supplier::find($accountId);
-    //     } elseif ($accountType === 'customer') {
-    //         $accountData = Customer::find($accountId);
-    //     }
-
-    //     // Return the account data as JSON
-    //     return response()->json($accountData);
     // }
-
 }

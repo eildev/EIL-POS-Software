@@ -6,9 +6,14 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Support\Str;
-
+use App\Repositories\RepositoryIntefaces\CategoryInterface;
 class CategoryController extends Controller
 {
+    private $CategoryRepo;
+    public function __construct(CategoryInterface $CategoryRepo)
+    {
+        $this->CategoryRepo = $CategoryRepo;
+    }
     public function index()
     {
         return view('pos.products.category');
@@ -42,7 +47,8 @@ class CategoryController extends Controller
     }
     public function view()
     {
-        $categories = Category::all();
+        $categories = $this->CategoryRepo->getAllCategory();
+        // $categories = Category::all();
         return response()->json([
             "status" => 200,
             "data" => $categories

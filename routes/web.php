@@ -238,7 +238,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/transaction/edit/{id}', 'TransactionEdit')->name('transaction.edit');
         Route::post('/transaction/update/{id}', 'TransactionUpdate')->name('transaction.update');
         Route::get('/transaction/delete/{id}', 'TransactionDelete')->name('transaction.delete');
-        // Route::get('/fetch-account-data/{accountId}', 'fetchAccountData');
+        Route::get('/getDataForAccountId','getDataForAccountId');
     });
 });
 

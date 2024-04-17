@@ -6,9 +6,13 @@ use App\Models\Brand;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
+use App\Repositories\RepositoryIntefaces\BrandInterface;
 class BrandController extends Controller
 {
+    private $brandRepo;
+    public function __construct(BrandInterface $brandRepos){
+        $this->brandRepo = $brandRepos;
+    }
     public function index()
     {
         return view('pos.products.brand');
@@ -43,7 +47,9 @@ class BrandController extends Controller
     }
     public function view()
     {
-        $brands = Brand::all();
+        // $brands = Brand::all();
+        $brands = $this->brandRepo->getAllBrand();
+        // dd($brands);
         return response()->json([
             "status" => 200,
             "data" => $brands
@@ -51,7 +57,7 @@ class BrandController extends Controller
     }
     public function edit($id)
     {
-        $brand = Brand::findOrFail($id);
+        $brand = $this->brandRepo->editData($id);
         if ($brand) {
             return response()->json([
                 'status' => 200,

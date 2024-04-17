@@ -16,35 +16,36 @@
                         <h6 class="card-title">Create Purchase</h6>
                         <button class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#exampleModalLongScollable"><i class="fa-solid fa-plus"></i> Add
-                            Supplier</button>
+                            Supplier
+                        </button>
                     </div>
                     <form id="signupForm" class="row">
                         <div class="mb-3 col-md-6">
-
                             <label for="ageSelect" class="form-label">Supplier</label>
-
-                            <select class="js-example-basic-single form-select select-supplier" data-width="100%"
-                                name="">
+                            <select class="js-example-basic-single form-select select-supplier supplier_id"
+                                data-width="100%" name="" onclick="errorRemove(this);" onblur="errorRemove(this);">
                                 <option value="">Select Supplier</option>
-
                             </select>
+                            <span class="text-danger supplier_id_error"></span>
                         </div>
 
                         <div class="mb-3 col-md-6">
-
                             <label for="password" class="form-label">Purchase Date</label>
                             <div class="input-group flatpickr" id="flatpickr-date">
-                                <input type="date" class="form-control purchase_date" placeholder="" data-input>
+                                <input type="date" class="form-control purchase_date" placeholder="" data-input
+                                    onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                                 <span class="input-group-text input-group-addon" data-toggle><i
                                         data-feather="calendar"></i></span>
                             </div>
+                            <span class="text-danger purchase_date_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
                             @php
                                 $products = App\Models\Product::get();
                             @endphp
                             <label for="ageSelect" class="form-label">Product</label>
-                            <select class="js-example-basic-single form-select product_select" data-width="100%">
+                            <select class="js-example-basic-single form-select product_select" data-width="100%"
+                                onclick="errorRemove(this);" onblur="errorRemove(this);">
                                 @if ($products->count() > 0)
                                     <option selected disabled>Select Product</option>
                                     @foreach ($products as $product)
@@ -54,6 +55,7 @@
                                     <option selected disabled>Please Add Product</option>
                                 @endif
                             </select>
+                            <span class="text-danger product_select_error"></span>
                         </div>
                     </form>
                 </div>
@@ -111,7 +113,8 @@
                                                     $promotions = App\Models\Promotion::get();
                                                 @endphp
                                                 <select class="js-example-basic-single form-select promotion_id"
-                                                    data-width="100%">
+                                                    data-width="100%" onclick="errorRemove(this);"
+                                                    onblur="errorRemove(this);">
                                                     @if ($promotions->count() > 0)
                                                         <option selected disabled>Select Discount</option>
                                                         @foreach ($promotions as $promotion)
@@ -125,6 +128,7 @@
                                                         <option selected disabled>Please Add Product</option>
                                                     @endif
                                                 </select>
+                                                <span class="text-danger promotion_id_error"></span>
                                             </div>
                                         </div>
                                         <div class="row align-items-center">
@@ -263,9 +267,10 @@
                             @php
                                 $payments = App\Models\PaymentMethod::get();
                             @endphp
-                            <select class="form-select payment_method" data-width="100%">
+                            <select class="form-select payment_method" data-width="100%" onclick="errorRemove(this);"
+                                onblur="errorRemove(this);">
                                 @if ($payments->count() > 0)
-                                    <option selected disabled>Select Transaction</option>
+                                    <option selected disabled>Select Payment Method</option>
                                     @foreach ($payments as $payemnt)
                                         <option value="{{ $payemnt->id }}">
                                             {{ $payemnt->name }}
@@ -275,6 +280,7 @@
                                     <option selected disabled>Please Add Transaction</option>
                                 @endif
                             </select>
+                            <span class="text-danger payment_method_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Pay Amount <span
@@ -589,7 +595,7 @@
                 // alert('ok');
                 let supplier_id = $('.select-supplier').val();
                 let purchse_date = $('.purchase_date').val();
-                let total_quantity = 4;
+                let total_quantity = $('.showData > tr').length;
                 let total_amount = $('.total').val();
                 let discount = $('.total_payable').val();
                 let discount_amount = $('.total_payable').val();
@@ -600,7 +606,7 @@
                 let note = $('.note').val();
                 let payment_method = $('.payment_method').val();
                 // let product_id = $('.product_id').val();
-                // console.log(product_id);
+                // console.log(total_quantity);
 
                 let products = [];
 
@@ -664,13 +670,25 @@
                                 timer: 1500
                             });
                         } else {
-                            console.log(res);
-                            // if (res.error.name) {
-                            //     showError('.supplier_name', res.error.name);
-                            // }
-                            // if (res.error.phone) {
-                            //     showError('.phone', res.error.phone);
-                            // }
+                            $('#paymentModal').modal('hide');
+                            if (res.error.supplier_id) {
+                                showError('.supplier_id', res.error.supplier_id);
+                            }
+                            if (res.error.products) {
+                                showError('.product_select', res.error.products);
+                            }
+                            if (res.error.purchase_date) {
+                                showError('.purchase_date', res.error.purchase_date);
+                            }
+                            if (res.error.discount) {
+                                showError('.promotion_id', res.error.discount);
+                            }
+                            if (res.error.payment_method) {
+                                showError('.promotion_id', res.error.payment_method);
+                            }
+                            if (res.error.paid) {
+                                showError('.promotion_id', res.error.paid);
+                            }
                         }
                     }
                 });

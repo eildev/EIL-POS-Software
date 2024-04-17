@@ -26,7 +26,7 @@ class TransactionController extends Controller
         $customer = Customer::findOrFail($accountId);
         if ($supplier) {
             return response()->json($supplier);
-        } else{
+        } else if($customer){
             return response()->json($customer);
         }
         // else {

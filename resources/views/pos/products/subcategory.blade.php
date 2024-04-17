@@ -105,7 +105,7 @@
                             <select class="form-select category_name" name="category_id">
                                 <option selected disabled >Select Category </option>
                                 @foreach ($categories as $category)
-                                <option value="{{ $category->id}}">{{$category->name}}</option>
+                                <option value="{{ $category->id}}" >{{$category->name}}</option>
                               @endforeach
                               <span class="text-danger category_name_error"></span>
                             </select>
@@ -284,7 +284,7 @@
                     type: 'GET',
                     success: function(data) {
                         // console.log(data.category.name);
-                        $('.category_name').val(data.subcategory.name);
+                        //$('.category_name').val(data.subcategory.name);
                         $('.edit_subcategory_name').val(data.subcategory.name);
                         $('.update_subcategory').val(data.subcategory.id);
                         if (data.subcategory.image) {

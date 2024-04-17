@@ -7,10 +7,17 @@ use App\Models\Psize;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Repositories\RepositoryIntefaces\SubCategoryInterface;
 use Validator;
 
 class SubCategoryController extends Controller
 {
+
+    private $subCategory;
+    public function __construct(SubCategoryInterface $subCategory){
+        $this->subCategory = $subCategory;
+    }
+
     public function index()
     {
         $categories = Category::get();
@@ -25,30 +32,33 @@ class SubCategoryController extends Controller
         ]);
 
         if ($validator->passes()) {
-            $subcategory = new SubCategory;
-            if ($request->image) {
+            $data = $request->only(['name', 'category_id']);
+
+            if ($request->hasFile('image')) {
                 $imageName = rand() . '.' . $request->image->extension();
                 $request->image->move(public_path('uploads/subcategory'), $imageName);
-                $subcategory->image = $imageName;
+                $data['image'] = $imageName;
             }
-            $subcategory->name =  $request->name;
-            $subcategory->slug = Str::slug($request->name);
-            $subcategory->category_id =  $request->category_id;
-            $subcategory->save();
+
+            $data['slug'] = Str::slug($request->name);
+
+            $this->subCategory->create($data);
             return response()->json([
                 'status' => 200,
-                'message' => 'Sub Category Save Successfully',
+                'message' => 'Sub Category Saved Successfully',
             ]);
         } else {
             return response()->json([
                 'status' => '500',
                 'error' => $validator->messages()
             ]);
-        }
-    } //
+        }//
+    }
+     //
     public function view()
     {
-        $subcategories = SubCategory::all();
+     //   $subcategories = SubCategory::all();
+        $subcategories = $this->subCategory->getAllSubCategory();
         // return view('pos.products.category-show-table', compact('categories'))->render();
         return response()->json([
             "status" => 200,
@@ -57,7 +67,8 @@ class SubCategoryController extends Controller
     } //
     public function edit($id)
     {
-        $subcategory = SubCategory::findOrFail($id);
+      //  $subcategory = SubCategory::findOrFail($id);
+        $subcategory = $this->subCategory->editData($id);
         $categories = Category::get();
         if ($subcategory) {
             return response()->json([

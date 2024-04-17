@@ -7,4 +7,3 @@ class CategoryRepository implements CategoryInterface{
         return Category::all();
     }
 }
-

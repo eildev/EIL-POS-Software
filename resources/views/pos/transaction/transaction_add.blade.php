@@ -15,7 +15,7 @@
 				@csrf
 				<div class="row">
 					<!-- Col -->
-					<div class="col-sm-6">
+					<div class="col-sm-12">
 						<div class="mb-3 form-valid-groups">
 							<label class="form-label">Personal/Direct Transaction</label>
                             <select class="form-select"data-width="100%" name="dirrect_transaction" aria-invalid="false">
@@ -63,10 +63,11 @@
 						</div>
 					</div><!-- Col -->
                     <div>
-
-                        <div id="account-details" class="col-sm-6">
-
-                        </div>
+                        <h5 id="account-details"></h5>
+                        <h5 id="due_invoice_count"></h5>
+                        <h5 id="total_invoice_due"></h5>
+                        <h5 id="personal_balance"></h5>
+                        <h5 id="total_due"></h5>
 
                     </div>
                     <div class="col-sm-6">
@@ -87,7 +88,7 @@
 						</div>
 					</div>
 
-					<div class="col-sm-6">
+					<div class="col-sm-12">
 						<div class="mb-3">
 							<label class="form-label">Note</label>
 							<textarea name="note" class="form-control"  placeholder="Write Note (Optional)" rows="4" cols="50"></textarea>
@@ -129,14 +130,14 @@
         document.getElementById("account_id").innerHTML = options;
     });
     //
-    document.getElementById("account_id").addEventListener("change", function() {
-       var accountId = this.value;
-        $('#supplier-info').slideDown();
-      //  $('#customer-info').hide();
-      if (!accountId) {
-        $('#supplier-info').hide();;
-    }
-     });
+    // document.getElementById("account_id").addEventListener("change", function() {
+    //    var accountId = this.value;
+    //     $('#supplier-info').slideDown();
+    //   //  $('#customer-info').hide();
+    //   if (!accountId) {
+    //     $('#supplier-info').hide();;
+    // }
+    //  });
     var account_id=  document.querySelector('.select-account-id');
     account_id.addEventListener('change', function(){
 // alert('ok');
@@ -147,8 +148,12 @@
         method: 'GET',
         data: { id: accountId },
         success: function(data) {
-            console.log(data);
-            $('#account-details').text(data.name);
+          //  console.log(data);
+            $('#account-details').text('Name: ' + data.name);
+            $('#due_invoice_count').text('Due Invoice Count: ');
+            $('#total_invoice_due').text('Total Invoice Due: ');
+            $('#personal_balance').text('Personal Balance: '+ data);
+            $('#total_due').text('Total Due: ');
         },
         error: function(xhr, status, error) {
             // Error handling

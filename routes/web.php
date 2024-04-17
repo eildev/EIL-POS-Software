@@ -192,6 +192,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/purchase/edit/{id}', 'edit')->name('purchase.edit');
         Route::post('/purchase/update/{id}', 'update')->name('purchase.update');
         Route::get('/purchase/destroy/{id}', 'destroy')->name('purchase.destroy');
+        Route::get('/purchase/invoice/{id}', 'invoice')->name('purchase.invoice');
     });
     // Promotion  related route(n)
     Route::controller(PromotionController::class)->group(function () {
@@ -238,7 +239,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/transaction/edit/{id}', 'TransactionEdit')->name('transaction.edit');
         Route::post('/transaction/update/{id}', 'TransactionUpdate')->name('transaction.update');
         Route::get('/transaction/delete/{id}', 'TransactionDelete')->name('transaction.delete');
-        Route::get('/getDataForAccountId','getDataForAccountId');
+        Route::get('/getDataForAccountId', 'getDataForAccountId');
     });
 });
 

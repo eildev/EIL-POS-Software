@@ -164,6 +164,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 
@@ -233,7 +234,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                 </div>
                 <div class="modal-body">
-                    <div id="" class="table-responsive mb-5">
+                    <div id="" class="table-responsive mb-3">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -261,6 +262,7 @@
                             <textarea name="note" class="form-control note" id="" placeholder="Enter Note (Optional)"
                                 rows="3"></textarea>
                         </div>
+
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Transaction Method <span
                                     class="text-danger">*</span></label>
@@ -282,7 +284,27 @@
                             </select>
                             <span class="text-danger payment_method_error"></span>
                         </div>
+
                         <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Tax</label>
+                            @php
+                                $taxs = App\Models\Tax::get();
+                            @endphp
+                            <select class="form-select tax" data-width="100%" onclick="errorRemove(this);"
+                                onblur="errorRemove(this);" value="tax">
+                                @if ($taxs->count() > 0)
+                                    <option selected disabled>Select Taxes</option>
+                                    @foreach ($taxs as $taxs)
+                                        <option value="{{ $taxs->percentage }}">
+                                            {{ $taxs->percentage }} %
+                                        </option>
+                                    @endforeach
+                                @else
+                                    <option selected disabled>Please Add Transaction</option>
+                                @endif
+                            </select>
+                        </div>
+                        <div class="mb-3 col-12">
                             <label for="name" class="form-label">Pay Amount <span
                                     class="text-danger">*</span></label>
                             <div class="d-flex align-items-center">
@@ -292,6 +314,8 @@
                             </div>
                             <span class="text-danger total_payable_error"></span>
                         </div>
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -302,6 +326,9 @@
             </div>
         </div>
     </div>
+
+
+
 
     <script>
         // error remove 
@@ -318,7 +345,7 @@
                 const year = today.getFullYear();
                 const month = today.getMonth(); // Month is 0-indexed, add 1 to get the correct month
                 const day = today.getDate();
-                console.log(`${year} - ${month} - ${day}`);
+                // console.log(`${year} - ${month} - ${day}`);
                 document.querySelector('.purchase_date').value = `${year} - ${month} - ${day}`;
                 return `${year} - ${month} - ${day}`;
             }
@@ -405,6 +432,20 @@
 
 
 
+            let totalQuantity = 0;
+
+            // Function to update total quantity
+            function updateTotalQuantity() {
+                totalQuantity = 0;
+                $('.quantity').each(function() {
+                    let quantity = parseFloat($(this).val());
+                    if (!isNaN(quantity)) {
+                        totalQuantity += quantity;
+                    }
+                });
+                // console.log(totalQuantity);
+            }
+
 
             // Function to update SL numbers
             function updateSLNumbers() {
@@ -472,6 +513,19 @@
 
             })
 
+
+            // Function to recalculate total
+            function calculateTotal() {
+                let total = 0;
+                $('.quantity').each(function() {
+                    let productId = $(this).attr('product-id');
+                    let qty = parseFloat($(this).val());
+                    let price = parseFloat($('.product_price' + productId).val());
+                    total += qty * price;
+                });
+                $('.total').val(total.toFixed(2));
+            }
+
             // grandTotalCalulate
             function calculateGrandTotal() {
                 let id = $('.promotion_id').val();
@@ -496,25 +550,14 @@
                     }
                 })
             }
-
             calculateGrandTotal();
-            // Function to recalculate total
-            function calculateTotal() {
-                let total = 0;
-                $('.quantity').each(function() {
-                    let productId = $(this).attr('product-id');
-                    let qty = parseFloat($(this).val());
-                    let price = parseFloat($('.product_price' + productId).val());
-                    total += qty * price;
-                });
-                $('.total').val(total.toFixed(2));
-            }
 
 
             // Function to update grand total when a product is added or deleted
             function updateGrandTotal() {
                 calculateTotal();
                 calculateGrandTotal();
+                updateTotalQuantity();
             }
 
 
@@ -528,6 +571,8 @@
                 let subTotalPrice = parseFloat(quantity * productPrice).toFixed(2);
                 subTotal.val(subTotalPrice);
                 updateGrandTotal();
+                updateTotalQuantity();
+
             })
 
 
@@ -545,7 +590,8 @@
                 dataRow.remove();
                 // Recalculate grand total
                 updateGrandTotal();
-                updateSLNumbers()
+                updateSLNumbers();
+                updateTotalQuantity();
             })
 
             // payment button click event
@@ -589,13 +635,27 @@
                 let due = grandTotal - pay;
                 $('.total_due').text(due)
             }
+            // console.log(totalQuantity);
+
+            $('.tax').change(function() {
+                let grandTotal = parseFloat($('.grand_total').val());
+                let value = parseFloat($(this).val());
+                // alert(value);
+
+                let taxTotal = ((grandTotal * value) / 100);
+                taxTotal = (taxTotal + grandTotal).toFixed(2);
+                $('.grand_total').val(taxTotal);
+            })
+
+
+
 
             $('.purchase_btn').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
                 let supplier_id = $('.select-supplier').val();
                 let purchse_date = $('.purchase_date').val();
-                let total_quantity = $('.showData > tr').length;
+                let total_quantity = totalQuantity;
                 let total_amount = $('.total').val();
                 let discount = $('.total_payable').val();
                 let discount_amount = $('.total_payable').val();
@@ -669,6 +729,11 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             });
+                            let id = res.purchaseId;
+                            // console.log(id)
+
+                            window.location.href = '/purchase/invoice/' + id;
+
                         } else {
                             $('#paymentModal').modal('hide');
                             if (res.error.supplier_id) {
@@ -685,9 +750,6 @@
                             }
                             if (res.error.payment_method) {
                                 showError('.promotion_id', res.error.payment_method);
-                            }
-                            if (res.error.paid) {
-                                showError('.promotion_id', res.error.paid);
                             }
                         }
                     }

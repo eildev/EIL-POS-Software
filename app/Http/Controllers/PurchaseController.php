@@ -39,6 +39,7 @@ class PurchaseController extends Controller
             $purchase->paid = $request->paid;
             $purchase->due = $request->due;
             $purchase->carrying_cost = $request->carrying_cost;
+            $purchase->payment_method = $request->payment_method;
             $purchase->note = $request->note;
             $purchase->save();
 
@@ -78,6 +79,7 @@ class PurchaseController extends Controller
 
             return response()->json([
                 'status' => 200,
+                'purchaseId' => $purchase->id,
                 'message' => 'successfully save',
             ]);
         } else {
@@ -86,5 +88,10 @@ class PurchaseController extends Controller
                 'error' => $validator->messages()
             ]);
         }
+    }
+    public function invoice($id)
+    {
+        $purchase = Purchase::findOrFail($id);
+        return view('pos.purchase.invoice', compact('purchase'));
     }
 }

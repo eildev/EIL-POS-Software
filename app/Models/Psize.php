@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Psize extends Model
 {
     use HasFactory;
-    protected $guarded =[];
-    public function category(){
+    protected $guarded = [];
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 }

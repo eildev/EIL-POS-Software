@@ -73,10 +73,8 @@
     <li class="nav-item">
       <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">View Expense Category</a>
     </li>
+</ul>
 
-
-
-  </ul>
   <div class="tab-content border border-top-0 p-3" id="myTabContent">
     <div class="tab-pane fade  " id="home" role="tabpanel" aria-labelledby="home-tab">
         {{-- ///Expense --}}

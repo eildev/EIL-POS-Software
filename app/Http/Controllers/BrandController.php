@@ -6,7 +6,7 @@ use App\Models\Brand;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Repositories\RepositoryIntefaces\BrandInterface;
+use App\Repositories\RepositoryInterfaces\BrandInterface;
 class BrandController extends Controller
 {
     private $brandRepo;

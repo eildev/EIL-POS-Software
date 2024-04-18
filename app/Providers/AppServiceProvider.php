@@ -4,13 +4,19 @@ namespace App\Providers;
 
 use App\Repositories\RepositoryClasses\BankRepository;
 use Illuminate\Support\ServiceProvider;
-use App\Repositories\RepositoryIntefaces\CategoryInterface;
+use App\Repositories\RepositoryInterfaces\CategoryInterface;
 use App\Repositories\RepositoryClasses\CategoryRepository;
 use App\Repositories\RepositoryClasses\SubCategoryRepository;
-use App\Repositories\RepositoryIntefaces\BrandInterface;
+use App\Repositories\RepositoryInterfaces\BrandInterface;
 use App\Repositories\RepositoryClasses\BrandRepository;
-use App\Repositories\RepositoryIntefaces\BankInterface;
-use App\Repositories\RepositoryIntefaces\SubCategoryInterface;
+use App\Repositories\RepositoryInterfaces\BankInterface;
+use App\Repositories\RepositoryInterfaces\SubCategoryInterface;
+use App\Repositories\RepositoryInterfaces\BranchInterface;
+use App\Repositories\RepositoryClasses\BranchRepository;
+use App\Repositories\RepositoryInterfaces\CustomerInterfaces;
+use App\Repositories\RepositoryClasses\CustomerRepository;
+use App\Repositories\RepositoryInterfaces\EmployeeInterface;
+use App\Repositories\RepositoryClasses\EmployeeRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BrandInterface::class,BrandRepository::class);
         $this->app->bind(SubCategoryInterface::class,SubCategoryRepository::class);
         $this->app->bind(BankInterface::class,BankRepository::class);
+        $this->app->bind(BranchInterface::class,BranchRepository::class);
+        $this->app->bind(CustomerInterfaces::class,CustomerRepository::class);
+        $this->app->bind(EmployeeInterface::class,EmployeeRepository::class);
     }
 
     /**

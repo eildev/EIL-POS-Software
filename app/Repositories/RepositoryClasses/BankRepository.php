@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories\RepositoryClasses;
 use App\Models\Bank;
-use App\Repositories\RepositoryIntefaces\BankInterface;
+use App\Repositories\RepositoryInterfaces\BankInterface;
 
 class BankRepository implements BankInterface{
     public function getAllBank(){

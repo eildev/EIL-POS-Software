@@ -4,8 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use  App\Models\Branch;
+use App\Repositories\RepositoryInterfaces\BranchInterface;
+
 class BranchController extends Controller
 {
+
+    private $branchrepo;
+    public function __construct(BranchInterface $branchInterface){
+        $this->branchrepo = $branchInterface;
+    }
+
    public function  index(){
 
     return view('pos.branches.index');
@@ -38,16 +46,17 @@ class BranchController extends Controller
     }
    }//End Method
    public function BranchView(){
-    $branches = Branch::latest()->get();
+    $branches = $this->branchrepo->getAllBranch();
+    // $branches = Branch::latest()->get();
     return view('pos.branches.all_branches',compact('branches'));
    }//End Method
    public function BranchEdit($id){
-    $branch = Branch::find($id);
+    $branch = $this->branchrepo->editBranch();
     return view('pos.branches.edit-branch',compact('branch'));
    }//End Method
    public function BranchUpdate(Request $request,$id){
-   
-   
+
+
     if ($request->hasFile('logo')) {
         $request->validate([
             'name' => 'required|max:200',
@@ -56,7 +65,7 @@ class BranchController extends Controller
             'email' => 'required',
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
-        
+
         $imageName = rand() . '.' . $request->logo->extension();
         $request->logo->move(public_path('uploads/branch/'), $imageName);
         $branch = Branch::find($id);
@@ -75,7 +84,7 @@ class BranchController extends Controller
             'alert-type'=> 'info'
          );
         return redirect()->back()->with($notification);
-    
+
         }else{
             $request->validate([
                 'name' => 'required|max:200',

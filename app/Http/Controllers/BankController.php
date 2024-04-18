@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bank;
-use App\Repositories\RepositoryIntefaces\BankInterface;
+use App\Repositories\RepositoryInterfaces\BankInterface;
 use Illuminate\Http\Request;
 use Validator;
 

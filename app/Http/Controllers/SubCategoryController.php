@@ -7,7 +7,7 @@ use App\Models\Psize;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Repositories\RepositoryIntefaces\SubCategoryInterface;
+use App\Repositories\RepositoryInterfaces\SubCategoryInterface;
 use Validator;
 
 class SubCategoryController extends Controller

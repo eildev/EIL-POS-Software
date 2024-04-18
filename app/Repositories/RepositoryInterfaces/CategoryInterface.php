@@ -1,5 +1,5 @@
 <?php
-    namespace App\Repositories\RepositoryIntefaces;
+    namespace App\Repositories\RepositoryInterfaces;
 
     interface CategoryInterface
     {

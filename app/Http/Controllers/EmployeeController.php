@@ -16,7 +16,7 @@ class EmployeeController extends Controller
         return view('pos.employee.add_employee');
     }//
     public function EmployeeStore(Request $request){
-       
+
         if ($request->image) {
             $employee = new Employee();
             $imageName = rand() . '.' . $request->image->extension();
@@ -77,7 +77,7 @@ class EmployeeController extends Controller
                 $employee->designation = $request->designation;
                 $employee->status = 0;
                 $employee->updated_at = Carbon::now();
-                $employee->save();
+                $employee->update();
             }
             $notification = array(
                 'message' =>'Employee Updated Successfully',

@@ -7,12 +7,11 @@
     <li class="nav-item">
       <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Add Transaction</a>
     </li>
-
   </ul>
   <div class="tab-content border border-top-0 p-3" id="myTabContent">
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div class="row">
-            <div class="col-md-12   grid-margin stretch-card">
+            <div class="col-md-12  grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -21,8 +20,7 @@
                                 <div class="mb-3 w-100">
                                     {{-- <label class="form-label">Amount<span class="text-danger">*</span></label> --}}
                                     <select class="expense_category_name is-valid js-example-basic-single form-control filter-category @error('expense_category_id') is-invalid @enderror" name="expense_category_id" aria-invalid="false" width="100">
-                                        <option selected="" disabled="">Select Customer </option>
-
+                                        <option selected="" disabled="">Select Customer</option>
                                          <option value=""></option>
 
                                     </select>
@@ -41,13 +39,13 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group flatpickr" id="flatpickr-date">
-                                    <input type="text" class="form-control from-date" placeholder="Select date" data-input>
+                                    <input type="text" class="form-control from-date" placeholder="Start date" data-input>
                                     <span class="input-group-text input-group-addon" data-toggle><i data-feather="calendar"></i></span>
                                   </div>
                             </div><!-- Col -->
                             <div class="col-sm-3">
                                 <div class="input-group flatpickr" id="flatpickr-date">
-                                    <input type="text" class="form-control to-date" placeholder="Select date" data-input>
+                                    <input type="text" class="form-control to-date" placeholder="End date" data-input>
                                     <span class="input-group-text input-group-addon" data-toggle><i data-feather="calendar"></i></span>
                                   </div>
                             </div>

@@ -47,7 +47,7 @@
                                 </td> --}}
                             </tr>
                         {{-- @endforeach
-                    @else --}}
+                        @else --}}
                         <tr>
                             <td colspan="12">
                                 <div class="text-center text-warning mb-2">Data Not Found</div>
@@ -57,11 +57,10 @@
                                 </div>
                             </td>
                         </tr>
-                       {{-- @endif --}}
-
+                            {{-- @endif --}}
                             </tbody>
-                        </table>
-                    </div>
+                       </table>
+                     </div>
                 </div>
             </div>
         </div>

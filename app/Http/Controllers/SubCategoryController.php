@@ -21,7 +21,7 @@ class SubCategoryController extends Controller
     public function index()
     {
         $categories = Category::get();
-        // return view('pos.products.category', compact('categories'));
+        // return view('pos.products.category',compact('categories'));
         return view('pos.products.subcategory', compact('categories'));
     }
     public function store(Request $request)
@@ -67,13 +67,14 @@ class SubCategoryController extends Controller
     } //
     public function edit($id)
     {
-      //  $subcategory = SubCategory::findOrFail($id);
+      //  $category = SubCategory::findOrFail($id);
         $subcategory = $this->subCategory->editData($id);
-        $categories = Category::get();
+        // $categories = Category::get();
         if ($subcategory) {
             return response()->json([
                 'status' => 200,
-                'subcategory' => $subcategory
+                'subcategory' => $subcategory,
+                // 'categories' => $categories
             ]);
         } else {
             return response()->json([

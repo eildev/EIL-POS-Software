@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bank;
+use App\Repositories\RepositoryIntefaces\BankInterface;
 use Illuminate\Http\Request;
 use Validator;
 
 class BankController extends Controller
 {
+    private $bankrepo;
+    public function __construct(BankInterface $bankInterface){
+        $this->bankrepo = $bankInterface;
+    }
     public function index()
     {
         return view('pos.bank.bank');
@@ -45,7 +50,8 @@ class BankController extends Controller
     }
     public function view()
     {
-        $banks = Bank::get();
+        // $banks = Bank::get();
+        $banks = $this->bankrepo->getAllBank();
         return response()->json([
             "status" => 200,
             "data" => $banks
@@ -53,7 +59,7 @@ class BankController extends Controller
     }
     public function edit($id)
     {
-        $bank = Bank::findOrFail($id);
+        $bank = $this->bankrepo->editBank($id);
         if ($bank) {
             return response()->json([
                 'status' => 200,

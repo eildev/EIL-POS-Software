@@ -7,52 +7,86 @@ use App\Models\Transaction;
 use App\Models\PaymentMethod;
 use App\Models\Supplier;
 use App\Models\Customer;
+use App\Models\Purchase;
+
 class TransactionController extends Controller
 {
     public function TransactionAdd(){
         $paymentMethod = PaymentMethod::all();
         $supplier = Supplier::latest()->get();
         $customer = Customer::latest()->get();
-        return view('pos.transaction.transaction_add',compact('paymentMethod','supplier','customer'));
+        $transaction = Transaction::latest()->get();
+        return view('pos.transaction.transaction_add',compact('paymentMethod','supplier','customer','transaction'));
     }//
-    public function TransactionView(){
-        return view('pos.transaction.transaction_view');
-    }
+    // public function TransactionView(){
+    //     return view('pos.transaction.transaction_view');
+    // }
     public function getDataForAccountId(Request $request)
     {
         $accountId = $request->input('id');
+        $account_type = $request->input('account_type');
         //dd($accountId);
-        $supplier = Supplier::findOrFail($accountId);
-        $customer = Customer::findOrFail($accountId);
-        if ($supplier) {
-            return response()->json($supplier);
-        } else if($customer){
-            return response()->json($customer);
+        if($account_type == "supplier"){
+            $info = Supplier::findOrFail($accountId);
+            $count = Purchase::where('supplier_id',$accountId)->where('due', '>' ,0)->count();
         }
-        // else {
-        //     // Return an error response if the account does not exist
-        //     return response()->json(['error' => 'Account not found'], 404);
-        // }
-    }
-    // public function TransactionStore(Request $request){
-    //     $transaction = Transaction::create([
-    //         'transaction_type' => $request->payment_method_id,
-    //        'supplier_id' => $request->supplier_id,
-    //         'customer_id' => $request->customer_id,
-    //         'amount' => $request->amount,
-    //         'payment_type' => $request->payment_type,
-    //         'particulars' => $request->particulars,
-    //         'credit' => $request->credit,
-    //         'balance' => $request->balance,
-    //         'payment_method' => $request->payment_method,
-    //         'date' => $request->date,
-    //         'note' => $request->note,
-    //     ]);
-    //     $notification = [
-    //         'message' => 'Transaction Added Successfully',
-    //         'alert-type' => 'info'
-    //     ];
-    //     return redirect()->back()->with( $notification );
+        else{
+            $info = Customer::findOrFail($accountId);
+            $count = Purchase::where('supplier_id',$accountId)->where('due', '>' ,0)->count();
+        }
+        return response()->json([
+            "info" =>$info,
+            "count" => $count
+        ]);
+    }// End function
+    public function TransactionStore(Request $request){
+        if($request->account_type == 'supplier') {
+            $supplier = Supplier::findOrFail($request->account_id);
+            $currentBalance = $supplier->wallet_balance;
+            $newBalance = $currentBalance ?? 0 + $request->amount;
+            $tracBalance = Transaction::where('supplier_id', $supplier->id)->latest()->first();
+            $newTraBalance = $tracBalance->balance ?? 0 + $request->amount;
+            $transaction = Transaction::create([
+                'date' => $request->date,
+                'transaction_type' => $request->transaction_type,
+                'debit' => $request->amount,
+                'payment_method' => $request->payment_method,
+                'balance' => $newTraBalance,
+                'note' => $request->note,
+                'supplier_id' => $request->account_id
+            ]);
+            $supplier->update(['wallet_balance' => $newBalance]);
+        } elseif ($request->account_type == 'customer') {
+            $customer = Customer::findOrFail($request->account_id);
+            $currentBalance = $customer->wallet_balance;
+            $newBalance = $currentBalance + $request->amount;
+            $tracsBalance = Transaction::where('customer_id', $customer->id)->latest()->first();
+            $newTrasBalance = $tracsBalance->balance ?? 0 + $request->amount;
+            $transaction = Transaction::create([
+                'date' => $request->date,
+                'transaction_type' => $request->transaction_type,
+                'debit' => $request->amount,
+                'payment_method' => $request->payment_method,
+                'note' => $request->note,
+                'balance' => $newTrasBalance,
+                'customer_id' => $request->account_id
+            ]);
+            $customer->update(['wallet_balance' => $newBalance]);
+        }
+        $notification = [
+            'message' => 'Transaction Payment Successfully',
+            'alert-type' => 'info'
+        ];
+        return redirect()->back()->with($notification );
+    }//
+    public function TransactionDelete($id){
+        Transaction::find($id)->delete();
+        $notification = [
+           'message' => 'Transaction Deleted Successfully',
+            'alert-type' => 'info'
+        ];
+        return redirect()->back()->with($notification );
+    }//
 
-    // }
+    
 }

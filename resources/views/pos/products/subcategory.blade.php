@@ -105,9 +105,15 @@
                             <select class="form-select category_name_edit" name="category_id">
                                 <option selected disabled>Select Category </option>
                                 @foreach ($categories as $category)
+<<<<<<< HEAD
+                                <option value="{{ $category->id}}" data-category-id="{{ $category->id }}">{{$category->name}}</option>
+                              @endforeach
+                              <span class="text-danger category_name_error"></span>
+=======
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                                 <span class="text-danger category_name_error"></span>
+>>>>>>> 6f6bf567e295f554aaa355879e5db38629f23a3a
                             </select>
                             <span class="text-danger related_sign_error"></span>
                         </div>
@@ -272,8 +278,12 @@
             $(document).on('click', '.subcategory_edit', function(e) {
                 e.preventDefault();
                 // alert('ok');
+
                 let id = this.getAttribute('data-id');
                 // alert(id);
+                // var selectedCategoryId = data.subcategory.category_id;
+                // var categoryId = option.getAttribute('data-category-id');
+                // selectedCategoryId ==categoryId ? 'selected'
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -299,7 +309,6 @@
                     }
                 });
             })
-
             // update category
             $('.update_subcategory').click(function(e) {
                 e.preventDefault();
@@ -339,13 +348,10 @@
                             $('.subcategory_name_error').text(res.error.name);
                             $('.category_name_error').show();
                             $('.category_name_error').text(res.error.name);
-
                         }
                     }
                 });
             })
-
-
             // category Delete
             $(document).on('click', '.subcategory_delete', function(e) {
                 e.preventDefault();

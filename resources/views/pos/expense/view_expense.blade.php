@@ -65,32 +65,29 @@
                     aria-controls="profile" aria-selected="false">Expense Report</a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link " id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home"
-                    aria-selected="true">View/Add Expense</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab"
-                    aria-controls="profile" aria-selected="false">View Expense Category</a>
-            </li>
+    <li class="nav-item">
+      <a class="nav-link " id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">View/Add Expense</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">View Expense Category</a>
+    </li>
 
 
 
-        </ul>
-        <div class="tab-content border border-top-0 p-3" id="myTabContent">
-            <div class="tab-pane fade  " id="home" role="tabpanel" aria-labelledby="home-tab">
-                {{-- ///Expense --}}
-                <div class="row">
-                    <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
-                        <div class="">
-                            <h4 class="text-right"><a href="{{ route('expense.add') }}" class="btn btn-info">Add New
-                                    Expense</a></h4>
-                        </div>
-                    </div>
-                    <div class="col-md-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="card-title text-info">View Expense List</h6>
+  </ul>
+  <div class="tab-content border border-top-0 p-3" id="myTabContent">
+    <div class="tab-pane fade  " id="home" role="tabpanel" aria-labelledby="home-tab">
+        {{-- ///Expense --}}
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
+                <div class="">
+                    <h4 class="text-right"><a href="{{route('expense.add')}}" class="btn btn-info">Add New Expense</a></h4>
+                </div>
+            </div>
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                    <h6 class="card-title text-info">View Expense List</h6>
 
                                 <div class="table-responsive">
                                     <table id="dataTableExample" class="table">

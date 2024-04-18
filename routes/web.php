@@ -189,6 +189,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/purchase', 'index')->name('purchase');
         Route::post('/purchase/store', 'store')->name('purchase.store');
         Route::get('/purchase/view', 'view')->name('purchase.view');
+        Route::get('/purchase/view/{id}', 'viewDetails')->name('purchase.view.details');
         Route::get('/purchase/edit/{id}', 'edit')->name('purchase.edit');
         Route::post('/purchase/update/{id}', 'update')->name('purchase.update');
         Route::get('/purchase/destroy/{id}', 'destroy')->name('purchase.destroy');

@@ -49,14 +49,14 @@
                 </div>
                 <div class="modal-body">
                     <form id="signupForm" class="subcategoryForm" enctype="multipart/form-data">
-                    <div class="mb-3 ">
+                        <div class="mb-3 ">
                             <label for="ageSelect" class="form-label">Select Category</label>
                             <select class="form-select category_name" name="category_id">
                                 <option selected disabled>Select Category </option>
                                 @foreach ($categories as $category)
-                                <option value="{{ $category->id}}">{{$category->name}}</option>
-                              @endforeach
-                              <span class="text-danger category_name_error"></span>
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                                <span class="text-danger category_name_error"></span>
                             </select>
                             <span class="text-danger related_sign_error"></span>
                         </div>
@@ -100,21 +100,27 @@
                 </div>
                 <div class="modal-body">
                     <form id="signupForm" class="subcategoryFormEdit" enctype="multipart/form-data">
-                    <div class="mb-3 ">
+                        <div class="mb-3 ">
                             <label for="ageSelect" class="form-label">Select Category</label>
-                            <select class="form-select category_name" name="category_id">
-                                <option selected disabled >Select Category </option>
+                            <select class="form-select category_name_edit" name="category_id">
+                                <option selected disabled>Select Category </option>
                                 @foreach ($categories as $category)
+<<<<<<< HEAD
                                 <option value="{{ $category->id}}" data-category-id="{{ $category->id }}">{{$category->name}}</option>
                               @endforeach
                               <span class="text-danger category_name_error"></span>
+=======
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                                <span class="text-danger category_name_error"></span>
+>>>>>>> 6f6bf567e295f554aaa355879e5db38629f23a3a
                             </select>
                             <span class="text-danger related_sign_error"></span>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Sub Category Name</label>
-                            <input id="defaultconfig" class="form-control edit_subcategory_name" maxlength="250" name="name"
-                                type="text">
+                            <input id="defaultconfig" class="form-control edit_subcategory_name" maxlength="250"
+                                name="name" type="text">
                             <span class="text-danger edit_subcategory_name_error"></span>
                         </div>
                         <div class="mb-3">
@@ -199,7 +205,7 @@
                             // formData.delete(entry[0]);
                             // alert('added successfully');
                             $('.subcategoryForm')[0].reset();
-                           categoryView();
+                            categoryView();
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
@@ -268,7 +274,7 @@
                 })
             }
             categoryView();
-         //   edit category
+            //   edit category
             $(document).on('click', '.subcategory_edit', function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -288,13 +294,13 @@
                     type: 'GET',
                     success: function(data) {
                         // console.log(data.category.name);
-
-                        //$('.category_name_edit').val(data.categories.name);
+                        $('.category_name_edit').val(data.subcategory.id);
                         $('.edit_subcategory_name').val(data.subcategory.name);
                         $('.update_subcategory').val(data.subcategory.id);
                         if (data.subcategory.image) {
                             $('.showEditImage').attr('src',
-                                'http://127.0.0.1:8000/uploads/subcategory/' + data.subcategory
+                                'http://127.0.0.1:8000/uploads/subcategory/' + data
+                                .subcategory
                                 .image);
                         } else {
                             $('.showEditImage').attr('src',
@@ -410,7 +416,8 @@
                             if (response.status == 200) {
                                 // var button = $('#categoryButton_' + categoryId);
                                 if (response.status == 200) {
-                                    var button = $('#subcategoryButton_' + subcategoryId);
+                                    var button = $('#subcategoryButton_' +
+                                        subcategoryId);
                                     if (response.newStatus == 1) {
                                         button.removeClass('btn-danger').addClass(
                                             'btn-success').text('Active');

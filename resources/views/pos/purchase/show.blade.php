@@ -150,7 +150,7 @@
                     </div>
                     <div class="container-fluid w-100 btn_group">
                         {{-- <a href="javascript:;" class="btn btn-primary float-end mt-4 ms-2"><i data-feather="send"
-                                class="me-3 icon-md"></i>Send Invoice</a> --}}
+                        class="me-3 icon-md"></i>Send Invoice</a> --}}
                         <a href="javascript:;" class="btn btn-outline-primary float-end mt-4" onclick="window.print();"><i
                                 data-feather="printer" class="me-2 icon-md"></i>Print</a>
                     </div>

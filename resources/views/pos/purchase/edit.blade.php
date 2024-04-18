@@ -13,7 +13,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h6 class="card-title">Create Purchase</h6>
+                        <h6 class="card-title">Update Purchase</h6>
                         <button class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#exampleModalLongScollable"><i class="fa-solid fa-plus"></i> Add
                             Supplier
@@ -33,7 +33,8 @@
                             <label for="password" class="form-label">Purchase Date</label>
                             <div class="input-group flatpickr" id="flatpickr-date">
                                 <input type="date" class="form-control purchase_date" placeholder="" data-input
-                                    onkeyup="errorRemove(this);" onblur="errorRemove(this);">
+                                    onkeyup="errorRemove(this);" onblur="errorRemove(this);"
+                                    value="{{ $purchase->purchse_date }}">
                                 <span class="input-group-text input-group-addon" data-toggle><i
                                         data-feather="calendar"></i></span>
                             </div>
@@ -71,7 +72,6 @@
                     <div class="mb-3">
                         <h6 class="card-title">Purchase Table</h6>
                     </div>
-
                     <div id="" class="table-responsive">
                         <table class="table">
                             <thead>
@@ -354,6 +354,13 @@
             //     }
             //     getTodayDate();
 
+            // show purchaseItem 
+            function showAllItems() {
+                let items = {{ $purchase->purchaseItem }}
+
+            }
+            showAllItems();
+            console.log('{{ $purchase->purchaseItem }}');
 
             // show error 
             function showError(name, message) {
@@ -375,15 +382,15 @@
                         $('.select-supplier').empty();
                         if (suppliers.length > 0) {
                             $('.select-supplier').html(
-                                `<option selected disabled>Select a Supplier</option>`);
+                                `<option disabled>Select a Supplier</option>`);
                             $.each(suppliers, function(index, supplier) {
                                 $('.select-supplier').append(
-                                    `<option value="${supplier.id}">${supplier.name}</option>`
+                                    `<option value="${supplier.id}" ${supplier.id} == {{ $purchase->supplier->id }} ? 'selected' : ''>${supplier.name}</option>`
                                 );
                             })
                         } else {
                             $('.select-supplier').html(`
-                    <option selected disable>Please add supplier</option>`)
+                <option selected disable>Please add supplier</option>`)
                         }
                     }
                 })
@@ -476,28 +483,28 @@
 
                                 $('.showData').append(
                                     `<tr class="data_row${product.id}">
-                                        <td>
+                                    <td>
 
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
-                                        </td>
-                                        <td>
-                                            <input type="hidden" class="product_id" name="product_id[]" readonly value="${product.id ?? 0}" />
-                                            <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.price ?? 0}" />
-                                        </td>
-                                        <td>
-                                            <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="" />
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control product_subtotal${product.id} border-0 "  name="total_price[]" readonly value="00.00" />
-                                        </td>
-                                        <td>
-                                            <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
-                                                <i class="fa-solid fa-trash-can"></i>
-                                            </a>
-                                        </td>
-                                    </tr>`
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
+                                    </td>
+                                    <td>
+                                        <input type="hidden" class="product_id" name="product_id[]" readonly value="${product.id ?? 0}" />
+                                        <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.price ?? 0}" />
+                                    </td>
+                                    <td>
+                                        <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="" />
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control product_subtotal${product.id} border-0 "  name="total_price[]" readonly value="00.00" />
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </a>
+                                    </td>
+                                </tr>`
                                 );
                                 // Update SL numbers
                                 updateSLNumbers();
@@ -765,4 +772,7 @@
 
         });
     </script>
+
+
+
 @endsection

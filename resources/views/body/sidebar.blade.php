@@ -104,11 +104,24 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('purchase') }}" role="button" aria-controls="general-pages">
-                    <i class="link-icon" data-feather="book"></i>
+                <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
+                    aria-controls="emails">
+                    <i class="link-icon" data-feather="mail"></i>
                     <span class="link-title">Purchase</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
+                <div class="collapse" id="emails">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('purchase') }}" class="nav-link">Add Purchase</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('purchase.view') }}" class="nav-link">Manage Purchase</a>
+                        </li>
+                    </ul>
+                </div>
             </li>
+
             <li class="nav-item nav-category">Bank</li>
             <li class="nav-item">
                 <a href="{{ route('bank') }}" class="nav-link">

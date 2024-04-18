@@ -86,7 +86,7 @@ class EmployeeController extends Controller
                 $employee->designation = $request->designation;
                 $employee->status = 0;
                 $employee->updated_at = Carbon::now();
-                $employee->save();
+                $employee->update();
             }
             $notification = array(
                 'message' =>'Employee Updated Successfully',

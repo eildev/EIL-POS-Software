@@ -76,7 +76,7 @@
             </div>
             {{-- ////list// --}}
            <div id="filter-rander">
-            {{-- @include('pos.expense.expense-filter-rander-table') --}}
+            @include('pos.transaction.transaction-filter-rander-table')
            </div>
           </div>
     </div>

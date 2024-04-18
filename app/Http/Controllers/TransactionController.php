@@ -15,11 +15,12 @@ class TransactionController extends Controller
         $paymentMethod = PaymentMethod::all();
         $supplier = Supplier::latest()->get();
         $customer = Customer::latest()->get();
-        return view('pos.transaction.transaction_add',compact('paymentMethod','supplier','customer'));
+        $transaction = Transaction::latest()->get();
+        return view('pos.transaction.transaction_add',compact('paymentMethod','supplier','customer','transaction'));
     }//
-    public function TransactionView(){
-        return view('pos.transaction.transaction_view');
-    }
+    // public function TransactionView(){
+    //     return view('pos.transaction.transaction_view');
+    // }
     public function getDataForAccountId(Request $request)
     {
         $accountId = $request->input('id');
@@ -77,5 +78,15 @@ class TransactionController extends Controller
             'alert-type' => 'info'
         ];
         return redirect()->back()->with($notification );
-    }
+    }//
+    public function TransactionDelete($id){
+        Transaction::find($id)->delete();
+        $notification = [
+           'message' => 'Transaction Deleted Successfully',
+            'alert-type' => 'info'
+        ];
+        return redirect()->back()->with($notification );
+    }//
+
+    
 }

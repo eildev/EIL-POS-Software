@@ -147,6 +147,13 @@
                     <span class="link-title">Promotion Details</span>
                 </a>
             </li>
+            <li class="nav-item nav-category">SETTING & CUSTOMIZE</li>
+            <li class="nav-item">
+                <a href="{{route('pos.settings.add')}}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">Settings</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

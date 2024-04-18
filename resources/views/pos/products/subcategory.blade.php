@@ -105,15 +105,9 @@
                             <select class="form-select category_name_edit" name="category_id">
                                 <option selected disabled>Select Category </option>
                                 @foreach ($categories as $category)
-<<<<<<< HEAD
-                                <option value="{{ $category->id}}" data-category-id="{{ $category->id }}">{{$category->name}}</option>
-                              @endforeach
-                              <span class="text-danger category_name_error"></span>
-=======
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                                 <span class="text-danger category_name_error"></span>
->>>>>>> 6f6bf567e295f554aaa355879e5db38629f23a3a
                             </select>
                             <span class="text-danger related_sign_error"></span>
                         </div>

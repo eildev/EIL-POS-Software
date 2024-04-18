@@ -18,6 +18,7 @@ use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\PosSettingsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -240,6 +241,16 @@ Route::middleware('auth')->group(function () {
         Route::post('/transaction/update/{id}', 'TransactionUpdate')->name('transaction.update');
         Route::get('/transaction/delete/{id}', 'TransactionDelete')->name('transaction.delete');
         Route::get('/getDataForAccountId', 'getDataForAccountId');
+    });
+    Route::controller(PosSettingsController::class)->group(function () {
+        Route::get('/pos/settings/add', 'PosSettingsAdd')->name('pos.settings.add');
+        Route::get('/pos/settings/add', 'PosSettingsAdd')->name('pos.settings.add');
+        Route::post('/pos/settings/store', 'PosSettingsStore')->name('pos.settings.store');
+        Route::get('/pos/settings/view', 'PosSettingsView')->name('pos.settings.view');
+        Route::get('/pos/settings/edit/{id}', 'PosSettingsEdit')->name('pos.settings.edit');
+        Route::post('/pos/settings/update/{id}', 'PosSettingsUpdate')->name('pos.settings.update');
+        Route::get('/pos/settings/delete/{id}', 'PosSettingsDelete')->name('pos.settings.delete');
+
     });
 });
 

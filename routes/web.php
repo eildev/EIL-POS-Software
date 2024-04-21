@@ -245,7 +245,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::controller(PosSettingsController::class)->group(function () {
         Route::get('/pos/settings/add', 'PosSettingsAdd')->name('pos.settings.add');
-        Route::get('/pos/settings/add', 'PosSettingsAdd')->name('pos.settings.add');
+        // Route::get('/pos/settings/add', 'PosSettingsAdd')->name('pos.settings.add');
         Route::post('/pos/settings/store', 'PosSettingsStore')->name('pos.settings.store');
         Route::get('/pos/settings/view', 'PosSettingsView')->name('pos.settings.view');
         Route::get('/pos/settings/edit/{id}', 'PosSettingsEdit')->name('pos.settings.edit');

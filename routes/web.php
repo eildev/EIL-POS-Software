@@ -251,6 +251,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/pos/settings/edit/{id}', 'PosSettingsEdit')->name('pos.settings.edit');
         Route::post('/pos/settings/update/{id}', 'PosSettingsUpdate')->name('pos.settings.update');
         Route::get('/pos/settings/delete/{id}', 'PosSettingsDelete')->name('pos.settings.delete');
+        Route::post('/pos/switch_mode', 'switch_mode')->name('switch_mode');
 
     });
 });

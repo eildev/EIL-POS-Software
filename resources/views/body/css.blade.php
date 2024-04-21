@@ -37,9 +37,17 @@
 <link rel="stylesheet" href="{{ asset('assets') }}/fonts/feather-font/css/iconfont.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/vendors/flag-icon-css/css/flag-icon.min.css">
 <!-- endinject -->
-
+@php
+    $mode = App\models\PosSetting::all()->first();
+@endphp
 <!-- Layout styles -->
-<link rel="stylesheet" href="{{ asset('assets') }}/css/demo2/style.css">
+@if (empty($mode->dark_mode))
+<link rel="stylesheet" href="{{ asset('assets') }}/css/demo1/style.css">
+@else
+<link rel="stylesheet" href="{{ asset('assets') }}/css/demo{{ $mode->dark_mode }}/style.css">
+@endif
+
+
 <!-- End layout styles -->
 
 <link rel="shortcut icon" href="{{ asset('assets') }}/images/favicon.png" />

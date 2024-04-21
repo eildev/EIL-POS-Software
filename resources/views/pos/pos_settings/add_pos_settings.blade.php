@@ -16,21 +16,21 @@
                     <input type="hidden" name="setting_id"value="1">
                     <div class="row">
                         <!-- Col -->
-                        <div class="row">
-                        <div class="col-sm-4">
+
+                        <div class="col-sm-6">
                             <div class="mb-3 form-valid-groups">
                                 <label class="form-label">Logo
-                                    {{-- <img src="{{asset('uploads/pos_setting/'.$allData->logo) ?? ''}}" alt=""> --}}
+                                    <img src="{{ asset('uploads/pos_setting/' . $allData->logo) }}" alt="logo">
                             </div>
                         </div><!-- Col -->
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <div class="mb-3 form-valid-groups">
                                 <label class="form-label">Logo
-                                <input type="file" name="logo" class="form-control field_required"
+                                <input type="file" name="logo" id="myDropify" class="form-control field_required"
                                     placeholder="Select Company logo">
                             </div>
                         </div><!-- Col -->
-                    </div>
+
                         <div class="col-sm-6">
                             <div class="mb-3 form-valid-groups">
                                 <label class="form-label">Company
@@ -91,12 +91,14 @@
                     <div class="col-sm-6">
                         <div class="mb-3 form-valid-groups">
                             <label class="form-label">Invoice Logo Type</label><br>
-                            <input type="radio" id="age1" name="invoice_logo_type" value="logo" {{ !empty($allData->id) && $allData->invoice_logo_type == 'Logo' ?  'checked' : '' }}>
-                            <label for="age11" style="padding-right: 10px;padding-left: 5px" >Logo</label>
-                              <input type="radio" id="age11" name="invoice_logo_type" value="name" {{ !empty($allData->id) && $allData->invoice_logo_type == 'Name' ?  'checked' : '' }}>
-                            <label for="age11" style="padding-right: 10px;padding-left: 5px" >Name</label>
 
-                            <input type="radio" id="age111" name="invoice_logo_type" value="both" {{ !empty($allData->id) && $allData->invoice_logo_type == 'Both' ?  'checked' : '' }}>
+                            <input type="radio" id="age11" class="form-check-input" name="invoice_logo_type" value="logo" {{ !empty($allData->id) && $allData->invoice_logo_type == 'Logo' ?  'checked' : '' }}>
+                            <label for="age11" style="padding-right: 10px;padding-left: 5px" >Logo</label>
+
+                     <input type="radio" id="age11s" class="form-check-input" name="invoice_logo_type" value="name" {{ !empty($allData->id) && $allData->invoice_logo_type == 'Name' ?  'checked' : '' }}>
+                            <label for="age11s" style="padding-right: 10px;padding-left: 5px" >Name</label>
+
+                            <input type="radio" id="age111" class="form-check-input" name="invoice_logo_type" value="both" {{ !empty($allData->id) && $allData->invoice_logo_type == 'Both' ?  'checked' : '' }}>
                             <label for="age111" style="padding-right: 10px;padding-left: 5px" >Both</label>
                         </div>
                     </div>
@@ -121,9 +123,9 @@
                     <div class="col-sm-6">
                         <div class="mb-3 form-valid-groups">
                             <label class="form-label">Barcode Type</label><br>
-                            <input type="radio" id="barcode" name="barcode_type" value="single" {{ !empty($allData->id) && $allData->barcode_type == 'single' ?  'checked' : '' }}>
-                            <label for="barcode" style="padding-right: 10px;padding-left: 5px">Single</label>
-                            <input type="radio" id="barcode1" name="barcode_type" value="a4" {{ !empty($allData->id) && $allData->barcode_type == 'a4' ?  'checked' : '' }}>
+                            <input type="radio" class="form-check-input" id="barcode" name="barcode_type" value="single" {{ !empty($allData->id) && $allData->barcode_type == 'single' ?  'checked' : '' }}>
+                            <label for="barcode"  style="padding-right: 10px;padding-left: 5px">Single</label>
+                            <input type="radio" class="form-check-input" id="barcode1" name="barcode_type" value="a4" {{ !empty($allData->id) && $allData->barcode_type == 'a4' ?  'checked' : '' }}>
                             <label for="barcode1" style="padding-right: 10px;padding-left: 5px">A4</label>
 
                         </div>
@@ -134,7 +136,7 @@
                     <div class="col-sm-6">
                         <div class="mb-3 form-valid-groups">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="dark_mode" role="switch" id="flexSwitchCheckDefault">
+                                <input class=" form-check-input" type="checkbox" name="dark_mode" role="switch" id="flexSwitchCheckDefault">
                                 <label class="form-check-label" for="flexSwitchCheckDefault">Dark Mode</label>
                               </div>
                         </div>
@@ -143,7 +145,7 @@
                         <div class="mb-3 form-valid-groups">
                                 <label class="form-label">
                                     Low Stock Quantity<span class="text-danger"></span></label>
-                                <input type="number" name="low_stock" class="form-control" placeholder="Enter low stock" value="5">
+                                <input type="number" name="low_stock" class="form-control" placeholder="Enter low stock" value="{{ !empty($allData->id) ? $allData->low_stock : ''}}" >
                         </div>
                         </div>
                     </div>

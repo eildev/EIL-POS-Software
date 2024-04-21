@@ -68,7 +68,7 @@ class PromotionController extends Controller
         ];
         return redirect()->route('promotion.view')->with($notification);
     } //End Method
-    // find 
+    // find
     public function find($id)
     {
         $promotion = Promotion::findOrFail($id);

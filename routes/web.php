@@ -247,12 +247,13 @@ Route::middleware('auth')->group(function () {
     // pos setting related route 
     Route::controller(PosSettingsController::class)->group(function () {
         Route::get('/pos/settings/add', 'PosSettingsAdd')->name('pos.settings.add');
-        Route::get('/pos/settings/add', 'PosSettingsAdd')->name('pos.settings.add');
+        // Route::get('/pos/settings/add', 'PosSettingsAdd')->name('pos.settings.add');
         Route::post('/pos/settings/store', 'PosSettingsStore')->name('pos.settings.store');
         Route::get('/pos/settings/view', 'PosSettingsView')->name('pos.settings.view');
         Route::get('/pos/settings/edit/{id}', 'PosSettingsEdit')->name('pos.settings.edit');
         Route::post('/pos/settings/update/{id}', 'PosSettingsUpdate')->name('pos.settings.update');
         Route::get('/pos/settings/delete/{id}', 'PosSettingsDelete')->name('pos.settings.delete');
+        Route::post('/pos/switch_mode', 'switch_mode')->name('switch_mode');
     });
     // sale related routes
     Route::controller(SaleController::class)->group(function () {

@@ -11,6 +11,23 @@
     </div>
     <div class="sidebar-body">
         <ul class="nav">
+            <li class="nav-item nav-category">theme</li>
+            <li class="nav-item">
+                <div class="form-valid-groups">
+                    @php
+                        $mode = App\models\PosSetting::all()->first();
+                    @endphp
+                    <form action="{{ route('switch_mode') }}" method="POST" id="darkModeForm">
+                        @csrf
+                        <div class="form-check form-switch">
+                            <input class="form-check-input flexSwitchCheckDefault" type="checkbox"
+                                {{ $mode->dark_mode == 2 ? 'checked' : '' }} name="dark_mode" role="switch"
+                                id="flexSwitchCheckDefault">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Dark Mode</label>
+                        </div>
+                    </form>
+                </div>
+            </li>
             <li class="nav-item nav-category">Main</li>
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}" class="nav-link">
@@ -90,7 +107,8 @@
             </li>
             <li class="nav-item nav-category">PEOPLES</li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('customer.view') }}" role="button" aria-controls="general-pages">
+                <a class="nav-link" href="{{ route('customer.view') }}" role="button"
+                    aria-controls="general-pages">
                     <i class="link-icon" data-feather="book"></i>
                     <span class="link-title">Customer</span>
                 </a>

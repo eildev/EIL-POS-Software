@@ -334,6 +334,7 @@
 
 
     <script>
+        console.log('hello');
         // error remove 
         function errorRemove(element) {
             if (element.value != '') {
@@ -371,14 +372,15 @@
 
 
             // show supplier
+            console.log('hello')
+
             function supplierView() {
-                // console.log('hello')
                 $.ajax({
                     url: '/supplier/view',
                     method: 'GET',
                     success: function(res) {
                         const suppliers = res.data;
-                        // console.log(suppliers);
+                        console.log(suppliers);
                         $('.select-supplier').empty();
                         if (suppliers.length > 0) {
                             $('.select-supplier').html(

@@ -114,18 +114,18 @@
                                 <input class="form-control" name="main_unit_stock" type="number" placeholder="00"
                                     value="{{ $product->main_unit_stock ?? '' }}">
                             </div>
-                            <div class="mb-3 col-md-6">
+                            {{-- <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Total Sold</label>
                                 <input class="form-control" name="total_sold" type="number" placeholder="00"
                                     value="{{ $product->total_sold ?? '' }}">
-                            </div>
+                            </div> --}}
                             <div class="mb-3 col-md-6">
                                 <label for="ageSelect" class="form-label">Color</label>
                                 {{-- <div id="pickr_1"></div> --}}
                                 <input type="color" class="form-control" name="color" id=""
                                     value="{{ $product->color ?? '#000' }}">
                             </div>
-                            <div class="mb-3 col-12">
+                            <div class="mb-3 col-md-6">
                                 @php
                                     $sizes = App\Models\Psize::get();
                                 @endphp

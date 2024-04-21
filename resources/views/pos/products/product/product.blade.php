@@ -104,16 +104,16 @@
                                 <label for="name" class="form-label">Main Unit Stock</label>
                                 <input class="form-control" name="main_unit_stock" type="number" placeholder="00">
                             </div>
-                            <div class="mb-3 col-md-6">
+                            {{-- <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Total Sold</label>
                                 <input class="form-control" name="total_sold" type="number" placeholder="00">
-                            </div>
+                            </div> --}}
                             <div class="mb-3 col-md-6">
                                 <label for="ageSelect" class="form-label">Color</label>
                                 {{-- <div id="pickr_1"></div> --}}
                                 <input type="color" class="form-control" name="color" id="">
                             </div>
-                            <div class="mb-3 col-12">
+                            <div class="mb-3 col-md-6">
                                 <label for="ageSelect" class="form-label">Size </label>
                                 <select class="js-example-basic-single form-select size_id" name="size_id">
                                     <option selected disabled>Select Size</option>

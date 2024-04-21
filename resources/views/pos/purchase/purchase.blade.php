@@ -484,7 +484,7 @@
                                         </td>
                                         <td>
                                             <input type="hidden" class="product_id" name="product_id[]" readonly value="${product.id ?? 0}" />
-                                            <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.price ?? 0}" />
+                                            <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.cost ?? 0}" />
                                         </td>
                                         <td>
                                             <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="" />

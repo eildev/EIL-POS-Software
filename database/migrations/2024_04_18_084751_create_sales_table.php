@@ -29,22 +29,24 @@ return new class extends Migration
             // $table->unsignedBigInteger('agent_id')->nullable();
             // Initial Data -> Actual Pricing of the added products
             $table->integer('quantity')->default(0); //total product quantity
-            $table->decimal('total',12,2)->default(0); //total product price
+            $table->decimal('total', 12, 2)->default(0); //total product price
             $table->string('discount')->nullable(); //user input
-            $table->decimal('change_amount',12,2)->nullable();
+            $table->decimal('change_amount', 12, 2)->nullable();
             // $table->string('delivery_cost')->nullable(); //user input
-            $table->decimal('actual_discount',12,2)->default(0); //calculated discount
-            $table->decimal('receivable',12,2)->nullable(); //receivable after discount
+            $table->decimal('actual_discount', 12, 2)->default(0); //calculated discount
+            $table->integer('tax')->nullable; //calculated tax
+            $table->decimal('receivable', 12, 2)->nullable(); //receivable after discount
 
             // Update on payment create/delete
-            $table->decimal('paid',12,2)->default(0); //total paid
+            $table->decimal('paid', 12, 2)->default(0); //total paid
 
             // updates on new sell / return create/delete
-            $table->decimal('returned',12,2)->default(0);//returned amount
-            $table->decimal('final_receivable',12,2)->default(0);//after return -> receivable
-            $table->decimal('due',12,2)->default(0); // updated due
+            $table->decimal('returned', 12, 2)->default(0); //returned amount
+            $table->decimal('final_receivable', 12, 2)->default(0); //after return -> receivable
+            $table->decimal('due', 12, 2)->default(0); // updated due
             $table->decimal('total_purchase_cost', 12, 2)->nullable(); //updated after return
-            $table->decimal('profit',10,2)->default(0);
+            $table->decimal('profit', 10, 2)->default(0);
+            $table->integer('payment_method');
             $table->text('note')->nullable();
             // $table->integer('courier_id');
             // $table->integer('delivery_method_id');

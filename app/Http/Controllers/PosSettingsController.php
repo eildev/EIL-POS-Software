@@ -7,8 +7,22 @@ use Illuminate\Http\Request;
 class PosSettingsController extends Controller
 {
     public function PosSettingsAdd(Request $request){
-      $allData = PosSetting::whereId(1)->first();
+        $allData = PosSetting::whereId(1)->first();
         return view('pos.pos_settings.add_pos_settings',compact('allData'));
+
+    }//
+    public function switch_mode(Request $request){
+        if($request->has('dark_mode')){
+            $mdVal=2;
+         }
+         else{
+            $mdVal=1;
+         }
+        //  dd($mdVal);
+         $PosSetting = PosSetting::all()->first();
+         $PosSetting->dark_mode = $mdVal;
+         $PosSetting->update();
+        return back();
     }//
     public function PosSettingsStore(Request $request){
         // PosSetting
@@ -23,6 +37,12 @@ class PosSettingsController extends Controller
              $requestData['logo'] = 'uploads/pos_setting/' . $imageName;
              $settingId = $request->input('setting_id');
              // $requestData = $request->all();
+             if($request->has('dark_mode')){
+                $mdVal=2;
+             }
+             else{
+                $mdVal=1;
+             }
              $values = [
               'company' => $request->input('company'),
              'email' => $request->input('email'),
@@ -34,7 +54,7 @@ class PosSettingsController extends Controller
              'invoice_logo_type' => $request->input('invoice_logo_type'),
              'invoice_type' => $request->input('invoice_type'),
              'barcode_type' => $request->input('barcode_type'),
-             'dark_mode' => $request->has('dark_mode'), // Checkbox value can be checked directly
+             'dark_mode' => $mdVal, // Checkbox value can be checked directly
              'low_stock' => $request->input('low_stock'),
              'logo' => $requestData['logo'] ?? null,
                 // Add more fields as needed
@@ -59,8 +79,6 @@ class PosSettingsController extends Controller
         ];
         PosSetting::updateOrCreate(['id' => $settingId],$values);
         }
-
-
         $notification = [
             'message' => 'Settings updated successfully!',
             'alert-type' => 'info'

@@ -20,7 +20,7 @@
                         <div class="col-sm-6">
                             <div class="mb-3 form-valid-groups">
                                 <label class="form-label">Logo
-                                    <img src="{{ asset('uploads/pos_setting/' . $allData->logo) }}" alt="logo">
+                                    {{-- <img src="{{ asset('uploads/pos_setting/' . $allData->logo) }}" alt="logo"> --}}
                             </div>
                         </div><!-- Col -->
                         <div class="col-sm-6">
@@ -52,7 +52,7 @@
                                 <label class="form-label">Facebook
                                     {{-- <span class="text-danger">*</span> --}}
                                 </label>
-                                <input type="url" name="facebook" value="{{ !empty($allData->id) ?$allData->facebook : ''}}" class="form-control" placeholder="Enter facebook url">
+                                <input type="text" name="facebook" value="{{ !empty($allData->id) ?$allData->facebook : ''}}" class="form-control" placeholder="Enter facebook url">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -60,7 +60,7 @@
                                 <label class="form-label">Header  Text
                                     {{-- <span class="text-danger">*</span> --}}
                                 </label>
-                                <input type="url" name="header_text" value="{{ !empty($allData->id) ?$allData->header_text : ''}}" class="form-control" placeholder="Enter Header text">
+                                <input type="text" name="header_text" value="{{ !empty($allData->id) ?$allData->header_text : ''}}" class="form-control" placeholder="Enter Header text">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -68,7 +68,7 @@
                                 <label class="form-label">Footer Text
                                     {{-- <span class="text-danger">*</span> --}}
                                 </label>
-                                <input type="url" name="footer_text" value="{{ !empty($allData->id) ?$allData->footer_text : ''}}"  class="form-control" placeholder="Enter footer text">
+                                <input type="text" name="footer_text" value="{{ !empty($allData->id) ?$allData->footer_text : ''}}"  class="form-control" placeholder="Enter footer text">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -136,7 +136,7 @@
                     <div class="col-sm-6">
                         <div class="mb-3 form-valid-groups">
                             <div class="form-check form-switch">
-                                <input class=" form-check-input" type="checkbox" name="dark_mode" role="switch" id="flexSwitchCheckDefault">
+                                <input class=" form-check-input" type="checkbox" name="dark_mode" role="switch" id="flexSwitchCheckDefault"  {{ $allData->dark_mode == 2 ?  'checked' : '' }}>
                                 <label class="form-check-label" for="flexSwitchCheckDefault">Dark Mode</label>
                               </div>
                         </div>
@@ -145,7 +145,7 @@
                         <div class="mb-3 form-valid-groups">
                                 <label class="form-label">
                                     Low Stock Quantity<span class="text-danger"></span></label>
-                                <input type="number" name="low_stock" class="form-control" placeholder="Enter low stock" value="{{ !empty($allData->id) ? $allData->low_stock : ''}}" >
+                                <input type="number" required name="low_stock" class="form-control" placeholder="Enter low stock" value="{{ !empty($allData->id) ? $allData->low_stock : ''}}" >
                         </div>
                         </div>
                     </div>

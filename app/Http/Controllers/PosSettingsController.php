@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 class PosSettingsController extends Controller
 {
     public function PosSettingsAdd(Request $request){
-
-        return view('pos.pos_settings.add_pos_settings');
+      $allData = PosSetting::whereId(1)->first();
+        return view('pos.pos_settings.add_pos_settings',compact('allData'));
     }//
     public function PosSettingsStore(Request $request){
         // PosSetting
@@ -67,8 +67,8 @@ class PosSettingsController extends Controller
         ];
         return redirect()->back()->with($notification);
     }//
-    // public function PosSettingsEdit(){
-    //     $allData = PosSetting::findOrFail(1);
-    //     return view('pos.pos_settings.add_pos_settings',compact('allData'));
-    // }//
+    public function PosSettingsEdit(){
+        $allData = PosSetting::findOrFail(1);
+        return view('pos.pos_settings.add_pos_settings');
+    }//
 }

@@ -1,5 +1,8 @@
 @extends('master')
 @section('admin')
+{{-- @php
+    $allData = App\Models\PosSetting::findOrFail(1);
+@endphp --}}
 <h2 style="margin: 20px">Settings</h2>
 <div class="row">
     <div class="col-md-12 stretch-card">
@@ -13,26 +16,27 @@
                     <input type="hidden" name="setting_id"value="1">
                     <div class="row">
                         <!-- Col -->
+                        <div class="row">
                         <div class="col-sm-4">
                             <div class="mb-3 form-valid-groups">
                                 <label class="form-label">Logo
-                                    <img src="" alt="">
+                                    {{-- <img src="{{asset('uploads/pos_setting/'.$allData->logo) ?? ''}}" alt=""> --}}
                             </div>
                         </div><!-- Col -->
                         <div class="col-sm-8">
                             <div class="mb-3 form-valid-groups">
                                 <label class="form-label">Logo
-
                                 <input type="file" name="logo" class="form-control field_required"
                                     placeholder="Select Company logo">
                             </div>
                         </div><!-- Col -->
+                    </div>
                         <div class="col-sm-6">
                             <div class="mb-3 form-valid-groups">
                                 <label class="form-label">Company
                                     {{-- value="{{$allData->company}}"  --}}
-                                <input type="text" name="company" class="form-control field_required"
-                                    placeholder="Enter company Name">
+                                <input type="text" name="company"  class="form-control" placeholder="Enter company Name" value="{{ !empty($allData->id) ?$allData->company : ''}}">
+
                             </div>
                         </div><!-- Col -->
                         <div class="col-sm-6">
@@ -40,7 +44,7 @@
                                 <label class="form-label">Email Address
                                     {{-- <span class="text-danger">*</span> --}}
                                 </label>
-                                <input type="email" name="email" class="form-control" placeholder="Enter email Address">
+                                <input type="email" name="email" value="{{ !empty($allData->id) ?$allData->email : ''}}"class="form-control" placeholder="Enter email Address">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -48,7 +52,7 @@
                                 <label class="form-label">Facebook
                                     {{-- <span class="text-danger">*</span> --}}
                                 </label>
-                                <input type="url" name="facebook" class="form-control" placeholder="Enter facebook url">
+                                <input type="url" name="facebook" value="{{ !empty($allData->id) ?$allData->facebook : ''}}" class="form-control" placeholder="Enter facebook url">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -56,7 +60,7 @@
                                 <label class="form-label">Header  Text
                                     {{-- <span class="text-danger">*</span> --}}
                                 </label>
-                                <input type="url" name="header_text" class="form-control" placeholder="Enter Header text">
+                                <input type="url" name="header_text" value="{{ !empty($allData->id) ?$allData->header_text : ''}}" class="form-control" placeholder="Enter Header text">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -64,20 +68,20 @@
                                 <label class="form-label">Footer Text
                                     {{-- <span class="text-danger">*</span> --}}
                                 </label>
-                                <input type="url" name="footer_text" class="form-control" placeholder="Enter footer text">
+                                <input type="url" name="footer_text" value="{{ !empty($allData->id) ?$allData->footer_text : ''}}"  class="form-control" placeholder="Enter footer text">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="mb-3 form-valid-groups">
                                 <label class="form-label">Phone
-                                    <span class="text-danger">*</span></label>
-                                <input type="number" name="phone" class="form-control" placeholder="Enter Phone">
+
+                                <input type="number" name="phone"   class="form-control" placeholder="Enter Phone Number"value="{{ !empty($allData->id) ?$allData->phone : ''}}">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="mb-3 form-valid-groups">
-                                <label class="form-label">Address<span class="text-danger">*</span></label>
-                                <input type="text" name="address" class="form-control" placeholder="Enter Address">
+                                <label class="form-label">Address</label>
+                                <input type="text" class="form-control"  placeholder="Enter Address"  name="address" value="{{ !empty($allData->id) ?$allData->address : ''}}">
                             </div>
                         </div>
                     </div>
@@ -86,13 +90,14 @@
                     <h6 class="card-title text-info">Invoice Settings</h6><br><br>
                     <div class="col-sm-6">
                         <div class="mb-3 form-valid-groups">
-                            <label class="form-label">Invoice Logo Type<span class="text-danger">*</span></label><br>
-                            <input type="radio" id="age1" name="invoice_logo_type" value="logo">
-                            <label for="age1" style="padding-right: 10px;padding-left: 5px">Logo</label>
-                            <input type="radio" id="age11" name="invoice_logo_type" value="name">
-                            <label for="age11" style="padding-right: 10px;padding-left: 5px">Name</label>
-                            <input type="radio" id="age111" name="invoice_logo_type" value="both">
-                            <label for="age111" style="padding-right: 10px;padding-left: 5px">Both</label>
+                            <label class="form-label">Invoice Logo Type</label><br>
+                            <input type="radio" id="age1" name="invoice_logo_type" value="logo" {{ !empty($allData->id) && $allData->invoice_logo_type == 'Logo' ?  'checked' : '' }}>
+                            <label for="age11" style="padding-right: 10px;padding-left: 5px" >Logo</label>
+                              <input type="radio" id="age11" name="invoice_logo_type" value="name" {{ !empty($allData->id) && $allData->invoice_logo_type == 'Name' ?  'checked' : '' }}>
+                            <label for="age11" style="padding-right: 10px;padding-left: 5px" >Name</label>
+
+                            <input type="radio" id="age111" name="invoice_logo_type" value="both" {{ !empty($allData->id) && $allData->invoice_logo_type == 'Both' ?  'checked' : '' }}>
+                            <label for="age111" style="padding-right: 10px;padding-left: 5px" >Both</label>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -101,10 +106,10 @@
                                 {{-- <span class="text-danger">*</span> --}}
                             </label>
                             <select name="invoice_type" class="form-control">
-                                <option value="a4">A4</option>
+                                <option value="a4" {{ !empty($allData->id) && $allData->invoice_type == 'a4' ?  'selected' : '' }}>A4</option>
                                 {{-- <option value="a4-2" selected="">A4 - 2</option> --}}
                                 {{-- <option value="a4-3">A4 - 3</option> --}}
-                                <option value="pos">Pos Printer</option>
+                                <option value="pos" {{ !empty($allData->id) && $allData->invoice_type == 'pos' ?  'selected' : '' }}>Pos Printer</option>
                                 {{-- <option value="pos-2">Pos Printer - 2</option>
                                 <option value="pos-3">Pos Printer - 3</option> --}}
                             </select>
@@ -115,10 +120,10 @@
                     <h6 class="card-title text-info">Barcode Settings</h6><br><br>
                     <div class="col-sm-6">
                         <div class="mb-3 form-valid-groups">
-                            <label class="form-label">Barcode Type<span class="text-danger">*</span></label><br>
-                            <input type="radio" id="barcode" name="barcode_type" value="single">
+                            <label class="form-label">Barcode Type</label><br>
+                            <input type="radio" id="barcode" name="barcode_type" value="single" {{ !empty($allData->id) && $allData->barcode_type == 'single' ?  'checked' : '' }}>
                             <label for="barcode" style="padding-right: 10px;padding-left: 5px">Single</label>
-                            <input type="radio" id="barcode1" name="barcode_type" value="a4">
+                            <input type="radio" id="barcode1" name="barcode_type" value="a4" {{ !empty($allData->id) && $allData->barcode_type == 'a4' ?  'checked' : '' }}>
                             <label for="barcode1" style="padding-right: 10px;padding-left: 5px">A4</label>
 
                         </div>

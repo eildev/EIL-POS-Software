@@ -46,9 +46,6 @@ class ProductsController extends Controller
             if ($request->main_unit_stock) {
                 $product->main_unit_stock  =  $request->main_unit_stock;
             }
-            if ($request->total_sold) {
-                $product->total_sold  =  $request->total_sold;
-            }
             if ($request->image) {
                 $imageName = rand() . '.' . $request->image->extension();
                 $request->image->move(public_path('uploads/product/'), $imageName);
@@ -106,9 +103,6 @@ class ProductsController extends Controller
             }
             if ($request->main_unit_stock) {
                 $product->main_unit_stock  =  $request->main_unit_stock;
-            }
-            if ($request->total_sold) {
-                $product->total_sold  =  $request->total_sold;
             }
             if ($request->image) {
                 $imageName = rand() . '.' . $request->image->extension();

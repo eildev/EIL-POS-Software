@@ -171,9 +171,6 @@
                                         <td colspan="9"> No Data Found</td>
                                     </tr>
                                 @endif
-                                <tr>
-
-                                </tr>
                             </tbody>
                         </table>
                     </div>

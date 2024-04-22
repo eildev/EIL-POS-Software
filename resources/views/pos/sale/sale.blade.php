@@ -358,7 +358,7 @@
                                 `<option selected disabled>Select a Customer</option>`);
                             $.each(customers, function(index, customer) {
                                 $('.select-customer').append(
-                                    `<option value="${customer.id}">${customer.name}</option>`
+                                    `<option value="${customer.id}">${customer.name}(${customer.phone})</option>`
                                 );
                             })
                         } else {

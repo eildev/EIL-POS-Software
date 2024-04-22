@@ -20,7 +20,9 @@
                     <form action="{{ route('switch_mode') }}" method="POST" id="darkModeForm">
                         @csrf
                         <div class="form-check form-switch">
-                            <input class="form-check-input flexSwitchCheckDefault" type="checkbox"  {{ ($mode->dark_mode == 2 ) ? 'checked' : '' }} name="dark_mode" role="switch" id="flexSwitchCheckDefault">
+                            <input class="form-check-input flexSwitchCheckDefault" type="checkbox"
+                                {{ $mode->dark_mode == 2 ? 'checked' : '' }} name="dark_mode" role="switch"
+                                id="flexSwitchCheckDefault">
                             <label class="form-check-label" for="flexSwitchCheckDefault">Dark Mode</label>
                         </div>
                     </form>
@@ -33,7 +35,12 @@
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
-
+            <li class="nav-item">
+                <a href="{{ route('sale') }}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">POS</span>
+                </a>
+            </li>
             <li class="nav-item nav-category">Products</li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
@@ -100,14 +107,16 @@
             </li>
             <li class="nav-item nav-category">PEOPLES</li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('customer.view') }}" role="button" aria-controls="general-pages">
+                <a class="nav-link" href="{{ route('customer.view') }}" role="button"
+                    aria-controls="general-pages">
                     <i class="link-icon" data-feather="book"></i>
                     <span class="link-title">Customer</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('employee.view') }}" role="button" aria-controls="general-pages">
+                <a class="nav-link" href="{{ route('employee.view') }}" role="button"
+                    aria-controls="general-pages">
                     <i class="link-icon" data-feather="book"></i>
                     <span class="link-title">Employee</span>
                 </a>
@@ -178,7 +187,7 @@
             </li>
             <li class="nav-item nav-category">SETTING & CUSTOMIZE</li>
             <li class="nav-item">
-                <a href="{{route('pos.settings.add')}}" class="nav-link">
+                <a href="{{ route('pos.settings.add') }}" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">Settings</span>
                 </a>

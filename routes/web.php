@@ -19,6 +19,7 @@ use App\Http\Controllers\TaxController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\PosSettingsController;
+use App\Http\Controllers\SaleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -243,6 +244,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/transaction/delete/{id}', 'TransactionDelete')->name('transaction.delete');
         Route::get('/getDataForAccountId', 'getDataForAccountId');
     });
+    // pos setting related route 
     Route::controller(PosSettingsController::class)->group(function () {
         Route::get('/pos/settings/add', 'PosSettingsAdd')->name('pos.settings.add');
         // Route::get('/pos/settings/add', 'PosSettingsAdd')->name('pos.settings.add');
@@ -252,7 +254,19 @@ Route::middleware('auth')->group(function () {
         Route::post('/pos/settings/update/{id}', 'PosSettingsUpdate')->name('pos.settings.update');
         Route::get('/pos/settings/delete/{id}', 'PosSettingsDelete')->name('pos.settings.delete');
         Route::post('/pos/switch_mode', 'switch_mode')->name('switch_mode');
-
+    });
+    // sale related routes
+    Route::controller(SaleController::class)->group(function () {
+        Route::get('/sale', 'index')->name('sale');
+        Route::post('/sale/store', 'store')->name('sale.store');
+        Route::get('/sale/view', 'view')->name('sale.view');
+        Route::get('/sale/view/{id}', 'viewDetails')->name('sale.view.details');
+        Route::get('/sale/edit/{id}', 'edit')->name('sale.edit');
+        Route::post('/sale/update/{id}', 'update')->name('sale.update');
+        Route::get('/sale/destroy/{id}', 'destroy')->name('sale.destroy');
+        Route::get('/get/customer', 'getCustomer')->name('get.customer');
+        Route::post('/add/customer', 'addCustomer')->name('add.customer');
+        Route::get('/sale/invoice/{id}', 'invoice')->name('sale.invoice');
     });
 });
 

@@ -17,14 +17,14 @@
                             <p class="show_branch_email">{{ $branch->email ?? '' }}</p>
                             <p class="show_branch_phone">{{ $branch->phone ?? '' }}</p>
 
-                            <hr>
 
-
-                            <p class="mt-3 mb-1 show_supplier_name"><b>{{ $customer->name ?? '' }}</b></p>
+                        </div>
+                        <div class="col-lg-3">
+                            <h5 class="mt-5 mb-2 text-muted">Invoice to :</h5>
+                            <p class="mt-1 mb-1 show_supplier_name"><b>{{ $customer->name ?? '' }}</b></p>
                             <p class="show_supplier_address">{{ $customer->address ?? '' }}</p>
                             <p class="show_supplier_email">{{ $customer->email ?? '' }}</p>
                             <p class="show_supplier_phone">{{ $customer->phone ?? '' }}</p>
-
                         </div>
                         <div class="col-lg-3 pe-0 text-end">
                             <h4 class="fw-bolder text-uppercase text-end mt-4 mb-2">invoice</h4>

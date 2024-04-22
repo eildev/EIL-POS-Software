@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActualPayment;
+use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Models\Supplier;
@@ -58,6 +59,10 @@ class PurchaseController extends Controller
                 $items->quantity = $product['quantity'];
                 $items->total_price = $product['unit_price'] * $product['quantity'];
                 $items->save();
+
+                $items2 = Product::findOrFail($product['product_id']);
+                $items2->stock = $items2->stock + $product['quantity'];
+                $items2->save();
             }
 
             $actualPayment = new ActualPayment;
@@ -124,7 +129,7 @@ class PurchaseController extends Controller
 
     public function view()
     {
-        $purchase = Purchase::latest()->get();
+        $purchase = Purchase::where('branch_id', Auth::user()->branch_id)->latest()->get();
         return view('pos.purchase.view', compact('purchase'));
     }
 

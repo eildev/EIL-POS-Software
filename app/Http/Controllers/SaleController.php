@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActualPayment;
 use App\Models\Customer;
+use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SaleItem;
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -60,6 +63,7 @@ class SaleController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'customer_id' => 'required',
             'products' => 'required',
@@ -76,15 +80,15 @@ class SaleController extends Controller
             $sale->invoice_number = rand(123456, 99999);
             $sale->order_type = "general";
             $sale->quantity = $request->quantity;
-            $sale->total = $request->total;
+            $sale->total = $request->total_amount;
             $sale->discount = $request->discount;
+            $sale->change_amount = $request->total;
             $sale->actual_discount = $request->actual_discount;
             $sale->tax = $request->tax;
-            $sale->change_amount = $request->change_amount;
+            $sale->receivable = $request->change_amount;
             $sale->paid = $request->paid;
             $sale->due = $request->due;
             $sale->returned = $request->due;
-            $sale->receivable = $request->change_amount;
             $sale->final_receivable = $request->change_amount;
             $sale->payment_method = $request->payment_method;
             $sale->note = $request->note;
@@ -102,6 +106,53 @@ class SaleController extends Controller
                 $items->sub_total = $product['unit_price'] * $product['quantity'];
                 $items->total_purchase_cost = $product['unit_price'] * $product['quantity'];
                 $items->save();
+
+                $items2 = Product::findOrFail($product['product_id']);
+                $items2->stock = $items2->stock - $product['quantity'];
+                $items2->save();
+            }
+
+
+            $customer = Customer::findOrFail($request->customer_id);
+            $customer->total_receivable = $customer->total_receivable + $request->change_amount;
+            $customer->total_payable = $customer->total_payable + $request->paid;
+            $customer->wallet_balance = $customer->wallet_balance + ($request->paid - $request->change_amount);
+            $customer->save();
+
+
+            $actualPayment = new ActualPayment;
+            $actualPayment->branch_id =  Auth::user()->branch_id;
+            $actualPayment->payment_type =  'receive';
+            $actualPayment->payment_method =  $request->payment_method;
+            $actualPayment->customer_id = $request->customer_id;
+            $actualPayment->amount = $request->paid;
+            $actualPayment->date = $request->sale_date;
+            $actualPayment->save();
+
+            $transaction = Transaction::where('customer_id', $request->customer_id)->first();
+
+            if ($transaction) {
+                // Update existing transaction
+                $transaction->date =  $request->sale_date;
+                $transaction->payment_type = 'receive';
+                $transaction->particulars = 'Sale#' . $saleId;
+                $transaction->credit = $transaction->credit + $request->change_amount;
+                $transaction->debit = $transaction->debit + $request->paid;
+                $transaction->balance = $transaction->balance + ($request->paid - $request->change_amount);
+                $transaction->payment_method = $request->payment_method;
+                $transaction->save();
+            } else {
+                // Create new transaction
+                $transaction = new Transaction;
+                $transaction->date =  $request->sale_date;
+                $transaction->payment_type = 'receive';
+                $transaction->particulars = 'Sale#' . $saleId;
+                $transaction->customer_id = $request->customer_id;
+                $transaction->credit = $request->change_amount;
+                $transaction->debit = $request->paid;
+                $transaction->balance = $request->paid - $request->change_amount;
+                $transaction->payment_method = $request->payment_method;
+                $transaction->save();
             }
 
             return response()->json([
@@ -120,5 +171,28 @@ class SaleController extends Controller
     {
         $sale = Sale::findOrFail($id);
         return view('pos.sale.invoice', compact('sale'));
+    }
+
+    public function view()
+    {
+        $sales = Sale::where('branch_id', Auth::user()->branch_id)->get();
+        return view('pos.sale.view', compact('sales'));
+    }
+    public function viewDetails($id)
+    {
+        $sale = Sale::findOrFail($id);
+        return view('pos.sale.show', compact('sale'));
+    }
+
+    public function edit($id)
+    {
+        $sale = Sale::findOrFail($id);
+        return view('pos.sale.edit', compact('sale'));
+    }
+    public function destroy($id)
+    {
+        $sale = Sale::findOrFail($id);
+        $sale->delete();
+        return back()->with('message', "Sale successfully Deleted");
     }
 }

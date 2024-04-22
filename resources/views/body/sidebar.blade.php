@@ -31,14 +31,20 @@
             <li class="nav-item nav-category">Main</li>
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
+                    <i class="fa-solid fa-house link-icon"></i>
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('sale') }}" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
+                    <i class="link-icon" data-feather="shopping-cart"></i>
                     <span class="link-title">POS</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('sale.view') }}" class="nav-link">
+                    <i class="link-icon" data-feather="shopping-bag"></i>
+                    <span class="link-title">Sale</span>
                 </a>
             </li>
             <li class="nav-item nav-category">Products</li>

@@ -85,8 +85,5 @@ class PosSettingsController extends Controller
         ];
         return redirect()->back()->with($notification);
     }//
-    public function PosSettingsEdit(){
-        $allData = PosSetting::findOrFail(1);
-        return view('pos.pos_settings.add_pos_settings');
-    }//
+
 }

@@ -17,23 +17,27 @@
                     <div class="row">
                         <!-- Col -->
 
-                        <div class="col-sm-6">
-                            <div class="mb-3 form-valid-groups">
-                                <label class="form-label">Logo
-                                    {{-- <img src="{{ asset('uploads/pos_setting/' . $allData->logo) }}" alt="logo"> --}}
-                            </div>
-                        </div><!-- Col -->
-                        <div class="col-sm-6">
-                            <div class="mb-3 form-valid-groups">
-                                <label class="form-label">Logo
-                                <input type="file" name="logo" id="myDropify" class="form-control field_required"
-                                    placeholder="Select Company logo">
-                            </div>
-                        </div><!-- Col -->
 
                         <div class="col-sm-6">
                             <div class="mb-3 form-valid-groups">
-                                <label class="form-label">Company
+                                <!-- Label for the file input -->
+                                <label class="form-label" for="myDropify">Upload New Logo</label>
+                                <!-- File input -->
+                                <input type="file" name="logo" id="myDropify" class="form-control field_required">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-3 form-valid-groups">
+                                <!-- Label for the image -->
+                                <label class="form-label">Current Logo</label>
+                                <!-- Image -->
+                                <img src="{{ asset($allData->logo) }}" height="auto" width="400" alt="logo">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="mb-3 form-valid-groups">
+                                <label class="form-label">Company</label>
                                     {{-- value="{{$allData->company}}"  --}}
                                 <input type="text" name="company"  class="form-control" placeholder="Enter company Name" value="{{ !empty($allData->id) ?$allData->company : ''}}">
 
@@ -73,7 +77,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="mb-3 form-valid-groups">
-                                <label class="form-label">Phone
+                                <label class="form-label">Phone</label>
 
                                 <input type="number" name="phone"   class="form-control" placeholder="Enter Phone Number"value="{{ !empty($allData->id) ?$allData->phone : ''}}">
                             </div>
@@ -136,9 +140,10 @@
                     <div class="col-sm-6">
                         <div class="mb-3 form-valid-groups">
                             <div class="form-check form-switch">
-                                <input class=" form-check-input" type="checkbox" name="dark_mode" role="switch" id="flexSwitchCheckDefault"  {{ $allData->dark_mode == 2 ?  'checked' : '' }}>
+                                <input class=" form-check-input" type="checkbox" name="dark_mode" role="switch" id="flexSwitchCheckDefault" >
                                 <label class="form-check-label" for="flexSwitchCheckDefault">Dark Mode</label>
                               </div>
+                              {{-- {{ $allData->dark_mode == 2 ?  'checked' : '' }} --}}
                         </div>
                         </div>
                     <div class="col-sm-6">

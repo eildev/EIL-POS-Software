@@ -1,8 +1,8 @@
 @extends('master')
 @section('admin')
-{{-- @php
-    $allData = App\Models\PosSetting::findOrFail(1);
-@endphp --}}
+@php
+$mode = App\models\PosSetting::all()->first();
+@endphp
 <h2 style="margin: 20px">Settings</h2>
 <div class="row">
     <div class="col-md-12 stretch-card">
@@ -140,7 +140,7 @@
                     <div class="col-sm-6">
                         <div class="mb-3 form-valid-groups">
                             <div class="form-check form-switch">
-                                <input class=" form-check-input" type="checkbox" name="dark_mode" role="switch" id="flexSwitchCheckDefault" >
+                                <input class=" form-check-input" type="checkbox"  {{ $mode->dark_mode == 2 ? 'checked' : '' }} name="dark_mode" role="switch" id="flexSwitchCheckDefault" >
                                 <label class="form-check-label" for="flexSwitchCheckDefault">Dark Mode</label>
                               </div>
                               {{-- {{ $allData->dark_mode == 2 ?  'checked' : '' }} --}}

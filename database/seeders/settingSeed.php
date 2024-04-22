@@ -20,7 +20,7 @@ class settingSeed extends Seeder
             'address' => 'Banasree,Dhaka,Bangladesh',
             'email' => 'ebbdemo@gmail.com',
             'facebook' => 'https:/www.ebb.com',
-            'phone' => '017........',
+            'phone' => '017..',
             'header_text' => 'Demo Header',
             'footer_text' => 'Demo Footer',
             'invoice_type' => 'a4',

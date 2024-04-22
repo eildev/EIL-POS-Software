@@ -5,7 +5,7 @@
         <h6 class="card-title text-info">Transaction </h6>
 
             <div  class="table-responsive">
-                <table id="tableContainer" class="table">
+                <table id="tableContainer" class="table" >
                     <thead class="action">
                         <tr>
                             <th>SN</th>
@@ -30,7 +30,12 @@
                         @endif
                         <td>{{$trans->date}}</td>
                         <td>{{$trans->debit}}</td>
-                        <td>{{$trans->transaction_type}}</td>
+                        <td>
+                            @if($trans->payment_type  == 'pay' )
+                            <span>Cash Payment</span>
+                            @else
+                            <span>Cash Received</span>
+                            @endif
                         <td>{{$trans['paymentMethod']['name']}}</td>
                         <td>{{$trans->note}}</td>
 
@@ -49,10 +54,10 @@
                 <tr>
                     <td colspan="12">
                         <div class="text-center text-warning mb-2">Data Not Found</div>
-                        <div class="text-center">
+                        {{-- <div class="text-center">
                             <a href="{{route('transaction.add')}}" class="btn btn-primary">Add Transaction<i
                                     data-feather="plus"></i></a>
-                        </div>
+                        </div> --}}
                     </td>
                 </tr>
 

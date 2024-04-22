@@ -1,4 +1,4 @@
-@extends('master')
+{{-- @extends('master')
 @section('admin')
 
 <div class="row">
@@ -30,10 +30,10 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody class="showData">
+                            <tbody class="showData"> --}}
                             {{-- @if ($customers->count() > 0)
                             @foreach ($customers as $key => $customer) --}}
-                                <tr>
+                                {{-- <tr> --}}
                                 {{-- <td>{{ $key + 1 }}</td>
                                 <td>{{ $customer->name ?? ''}}</td>
                                  --}}
@@ -45,26 +45,26 @@
                                         <i data-feather="trash-2"></i>
                                     </a>
                                 </td> --}}
-                            </tr>
+                            {{-- </tr> --}}
                         {{-- @endforeach
                         @else --}}
-                        <tr>
+                        {{-- <tr>
                             <td colspan="12">
                                 <div class="text-center text-warning mb-2">Data Not Found</div>
                                 <div class="text-center">
-                                    <a href="#" class="btn btn-primary">Add Transaction<i
+                                    <a href="{{route('transaction.add')}}" class="btn btn-primary">Add Transaction<i
                                             data-feather="plus"></i></a>
                                 </div>
                             </td>
-                        </tr>
+                        </tr> --}}
                             {{-- @endif --}}
-                            </tbody>
+                            {{-- </tbody>
                        </table>
                      </div>
                 </div>
             </div>
         </div>
-</div>
-@endsection
+</div> --}}
+{{-- @endsection --}}
 
 

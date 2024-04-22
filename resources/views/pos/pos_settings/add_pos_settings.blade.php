@@ -79,7 +79,7 @@ $mode = App\models\PosSetting::all()->first();
                             <div class="mb-3 form-valid-groups">
                                 <label class="form-label">Phone</label>
 
-                                <input type="number" name="phone"   class="form-control" placeholder="Enter Phone Number"value="{{ !empty($allData->id) ?$allData->phone : ''}}">
+                                <input type="number" name="phone"   class="form-control" placeholder="Enter Phone Number"value="{{ !empty($allData->id) ? $allData->phone : ''}}">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -163,4 +163,45 @@ $mode = App\models\PosSetting::all()->first();
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('#myValidForm').validate({
+            rules: {
+                company: {
+                    required : true,
+                },
+                invoice_type: {
+                    required : true,
+                },
+                barcode_type: {
+                    required : true,
+                },
+            },
+            messages :{
+                company: {
+                    required : 'Compsny Name Required',
+                },
+                invoice_type: {
+                    required : 'Select invoice type',
+                },
+                barcode_type: {
+                    required : 'Select Barchode type',
+                },
+            },
+            errorElement : 'span',
+            errorPlacement: function (error,element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-valid-groups').append(error);
+            },
+            highlight : function(element, errorClass, validClass){
+                $(element).addClass('is-invalid');
+            },
+            unhighlight : function(element, errorClass, validClass){
+                $(element).removeClass('is-invalid');
+                $(element).addClass('is-valid');
+            },
+        });
+    });
+
+</script>
 @endsection

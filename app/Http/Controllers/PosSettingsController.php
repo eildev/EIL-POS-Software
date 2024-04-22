@@ -85,5 +85,6 @@ class PosSettingsController extends Controller
         ];
         return redirect()->back()->with($notification);
     }//
+    
 
 }

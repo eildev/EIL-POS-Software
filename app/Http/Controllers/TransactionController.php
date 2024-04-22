@@ -48,7 +48,7 @@ class TransactionController extends Controller
             $newTraBalance = $tracBalance->balance ?? 0 + $request->amount;
             $transaction = Transaction::create([
                 'date' => $request->date,
-                'transaction_type' => $request->transaction_type,
+                'payment_type' => $request->transaction_type,
                 'debit' => $request->amount,
                 'payment_method' => $request->payment_method,
                 'balance' => $newTraBalance,
@@ -64,7 +64,7 @@ class TransactionController extends Controller
             $newTrasBalance = $tracsBalance->balance ?? 0 + $request->amount;
             $transaction = Transaction::create([
                 'date' => $request->date,
-                'transaction_type' => $request->transaction_type,
+                'payment_type' => $request->transaction_type,
                 'debit' => $request->amount,
                 'payment_method' => $request->payment_method,
                 'note' => $request->note,
@@ -87,6 +87,27 @@ class TransactionController extends Controller
         ];
         return redirect()->back()->with($notification );
     }//
+    public function TransactionFilterView(Request $request){
+        // $customerName="";
+        // $suplyerName="";
+        // if($request->filterCustomer == 'Select Customer'){
+        //     $customerName = null;
+        // }
+        // if($request->filterSupplier == 'Select Supplier'){
+        //     $suplyerName = null;
+        // }
+        $transaction = Transaction::when($request->filterCustomer != 'Select Customer', function ($query) use ($request) {
+            return $query->where('customer_id', $request->filterCustomer);
+        })
+        ->when($request->filterSupplier != 'Select Supplier', function ($query) use ($request) {
+            return $query->where('supplier_id', $request->filterSupplier);
+        })
+        ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+            return $query->whereBetween('date', [$request->startDate, $request->endDate]);
+        })
+        ->get();
+        return view('pos.transaction.transaction-filter-rander-table', compact('transaction'))->render();
 
-    
+    }
+
 }

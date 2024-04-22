@@ -244,8 +244,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/transaction/update/{id}', 'TransactionUpdate')->name('transaction.update');
         Route::get('/transaction/delete/{id}', 'TransactionDelete')->name('transaction.delete');
         Route::get('/getDataForAccountId', 'getDataForAccountId');
+        /////Filer Transaction////
+        Route::get('/transaction/filter/rander', 'TransactionFilterView')->name('transaction.filter.view');
+
     });
-    // pos setting related route 
+    // pos setting related route
     Route::controller(PosSettingsController::class)->group(function () {
         Route::get('/pos/settings/add', 'PosSettingsAdd')->name('pos.settings.add');
         // Route::get('/pos/settings/add', 'PosSettingsAdd')->name('pos.settings.add');

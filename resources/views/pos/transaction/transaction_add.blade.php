@@ -1,5 +1,7 @@
 @extends('master')
 @section('admin')
+<link rel="stylesheet" type="text/css" href="print.css" media="print">
+
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
       <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Transaction List</a>
@@ -19,33 +21,36 @@
                             <div class="col-sm-3">
                                 <div class="mb-3 w-100">
                                     {{-- <label class="form-label">Amount<span class="text-danger">*</span></label> --}}
-                                    <select class="expense_category_name is-valid js-example-basic-single form-control filter-category @error('expense_category_id') is-invalid @enderror" name="expense_category_id" aria-invalid="false" width="100">
-                                        <option selected="" disabled="">Select Customer</option>
-                                         <option value=""></option>
-
+                                    <select class="transaction_customer_name is-valid js-example-basic-single form-control filter-category @error('transaction_customer_id') is-invalid @enderror" name="transaction_customer_id" aria-invalid="false" width="100">
+                                        <option>Select Customer</option>
+                                        @foreach ($customer as $customers)
+                                        <option value="{{$customers->id}}">{{{$customers->name}}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="mb-3 w-100">
                                     {{-- <label class="form-label">Amount<span class="text-danger">*</span></label> --}}
-                                    <select class="expense_category_name is-valid js-example-basic-single form-control filter-category @error('expense_category_id') is-invalid @enderror" name="expense_category_id" aria-invalid="false" width="100">
-                                        <option selected="" disabled="">Select Supplier </option>
+                                    <select class="transaction_supplier_name is-valid js-example-basic-single form-control filter-category @error('transaction_supplier_id') is-invalid @enderror" name="transaction_supplier_id" aria-invalid="false" width="100">
+                                        <option>Select Supplier</option>
+                                            @foreach ($supplier as $suppliers)
+                                            <option value="{{$suppliers->id}}">{{$suppliers->name}}</option>
+                                            @endforeach
 
-                                         <option value=""></option>
 
                                     </select>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group flatpickr" id="flatpickr-date">
-                                    <input type="text" class="form-control from-date" placeholder="Start date" data-input>
+                                    <input type="text" class="form-control start-date" placeholder="Start date" data-input>
                                     <span class="input-group-text input-group-addon" data-toggle><i data-feather="calendar"></i></span>
                                   </div>
                             </div><!-- Col -->
                             <div class="col-sm-3">
                                 <div class="input-group flatpickr" id="flatpickr-date">
-                                    <input type="text" class="form-control to-date" placeholder="End date" data-input>
+                                    <input type="text" class="form-control end-date" placeholder="End date" data-input>
                                     <span class="input-group-text input-group-addon" data-toggle><i data-feather="calendar"></i></span>
                                   </div>
                             </div>
@@ -59,15 +64,15 @@
                         <div class="row">
                             <div class="col-md-11 mb-2"> <!-- Left Section -->
                                 <div class="justify-content-left">
-                                    <a href="" class="btn btn-sm bg-info text-dark mr-2" id="filter">Filter</a>
-                                    <a class="btn btn-sm bg-primary text-dark" onclick="resetWindow()">Reset</a>
+                                    <a href="" class="btn btn-sm bg-info text-dark mr-2" id="transactionfilter">Filter</a>
+                                    <a class="btn btn-sm bg-primary text-dark" onclick="window.location.reload();">Reset</a>
                                 </div>
                             </div>
 
                             <div class="col-md-1"> <!-- Right Section -->
-                                {{-- <div class="justify-content-end">
-                                    <a href="#" onclick="printTable()" class="btn btn-sm bg-info text-dark mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-printer btn-icon-prepend"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>Print</a>
-                                </div> --}}
+                                <div class="justify-content-end">
+                                    <a href="#" onClick="window.print();" class="btn btn-sm bg-info text-dark mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-printer btn-icon-prepend"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>Print</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -75,7 +80,7 @@
                 </div>
             </div>
             {{-- ////list// --}}
-           <div id="filter-rander">
+           <div id="transaction-filter-rander">
             @include('pos.transaction.transaction-filter-rander-table')
            </div>
           </div>
@@ -114,8 +119,8 @@
                                             <label class="form-label">Transaction Type <span class="text-danger">*</span></label>
                                             <select class="form-select bank_id "data-width="100%" name="transaction_type" aria-invalid="false">
                                                 <option selected="" disabled value="">Select Type</option>
-                                                <option value="cash_receive">Cash Receive</option>
-                                                <option value="cash_payment">Cash Payment</option>
+                                                <option value="receive">Cash Receive</option>
+                                                <option value="pay">Cash Payment</option>
                                             </select>
                                         </div>
                                     </div><!-- Col -->
@@ -242,8 +247,34 @@
         }
     });
     });
-//Validation
+
 $(document).ready(function (){
+
+    document.querySelector('#transactionfilter').addEventListener('click', function(e) {
+        e.preventDefault();
+        let startDate = document.querySelector('.start-date').value;
+
+            let endDate = document.querySelector('.end-date').value;
+            // alert(endDate);
+            let filterCustomer = document.querySelector('.transaction_customer_name').value;
+            let filterSupplier = document.querySelector('.transaction_supplier_name').value;
+            //   alert(filterCustomer);
+            //   alert(filterSupplier);
+            $.ajax({
+                url: "{{ route('transaction.filter.view') }}",
+                method: 'GET',
+                data: {
+                    startDate,
+                    endDate,
+                    filterCustomer,
+                    filterSupplier,
+                },
+                success: function(res) {
+                    jQuery('#transaction-filter-rander').html(res);
+                }
+            });
+        });
+    /////Validation
         $('#myValidForm').validate({
             rules: {
                 account_type: {
@@ -288,7 +319,7 @@ $(document).ready(function (){
         });
     });
 
-</script>
 
+</script>
 
 @endsection

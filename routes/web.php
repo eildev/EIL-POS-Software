@@ -191,6 +191,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/purchase', 'index')->name('purchase');
         Route::post('/purchase/store', 'store')->name('purchase.store');
         Route::get('/purchase/view', 'view')->name('purchase.view');
+        Route::get('/purchase/view-all', 'viewAll')->name('purchase.view.all');
         Route::get('/purchase/view/{id}', 'viewDetails')->name('purchase.view.details');
         Route::get('/purchase/edit/{id}', 'edit')->name('purchase.edit');
         Route::post('/purchase/update/{id}', 'update')->name('purchase.update');
@@ -260,6 +261,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/sale', 'index')->name('sale');
         Route::post('/sale/store', 'store')->name('sale.store');
         Route::get('/sale/view', 'view')->name('sale.view');
+        Route::get('/sale/view-all', 'viewAll')->name('sale.view.all');
         Route::get('/sale/view/{id}', 'viewDetails')->name('sale.view.details');
         Route::get('/sale/edit/{id}', 'edit')->name('sale.edit');
         Route::post('/sale/update/{id}', 'update')->name('sale.update');

@@ -16,7 +16,7 @@
                             data-bs-target="#exampleModalLongScollable"><i data-feather="plus"></i></button>
                     </div>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table id="dataTableExample" class="table">
                             <thead>
                                 <tr>
                                     <th>SN</th>
@@ -27,9 +27,7 @@
                                 </tr>
                             </thead>
                             <tbody class="showData">
-                                <tr>
 
-                                </tr>
                             </tbody>
                         </table>
                     </div>

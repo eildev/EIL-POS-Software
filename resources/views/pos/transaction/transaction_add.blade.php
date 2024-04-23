@@ -10,7 +10,7 @@
       <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Add Transaction</a>
     </li>
   </ul>
-  <div class="tab-content border border-top-0 p-3" id="myTabContent">
+  <div class="tab-content border border-print border-top-0 p-3" id="myTabContent">
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div class="row">
             <div class="col-md-12  grid-margin stretch-card filter_table">
@@ -70,9 +70,12 @@
                             </div>
 
                             <div class="col-md-1"> <!-- Right Section -->
-                                <div class="justify-content-end">
-                                    <a href="#" onClick="window.print();" class="btn btn-sm bg-info text-dark mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-printer btn-icon-prepend"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>Print</a>
-                                </div>
+
+                                <button type="button"
+                                class="btn btn-outline-primary btn-icon-text me-2 mb-2 mb-md-0 print-btn">
+                                <i class="btn-icon-prepend" data-feather="printer"></i>
+                                Print
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -193,8 +196,6 @@
         </div>
     </div>
   </div>
-
-
 <script>
        document.getElementById("account_type").addEventListener("change", function() {
         var accountType = this.value;
@@ -318,8 +319,15 @@ $(document).ready(function (){
             },
         });
     });
+///Print
+        $('.print-btn').click(function() {
+            // Remove the id attribute from the table
+            $('#dataTableExample').removeAttr('id');
+            $('.table-responsive').removeAttr('class');
+            // Trigger the print function
+            window.print();
 
-
+        });
 </script>
 <style>
     @media print {
@@ -337,8 +345,22 @@ $(document).ready(function (){
         .btn_group ,.filter_table{
             display: none !important;
         }
-
-
+        .border{
+            border: none !important;
+        }
+        table,th,td{
+            border: 1px solid black;
+            background: #fff
+        }
+        .actions{
+            display: none !important;
+        }
+        .card{
+            background: #fff!important;
+            box-shadow: none!important;
+            border: none !important;
+        }
     }
+
 </style>
 @endsection

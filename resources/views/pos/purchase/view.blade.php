@@ -1,14 +1,15 @@
 @extends('master')
 @section('admin')
+
     <div class="row">
-        <div class="col-md-12   grid-margin stretch-card">
+        <div class="col-md-12   grid-margin stretch-card filter_box">
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-3">
                             <div class="input-group flatpickr" id="flatpickr-date">
-                                <input type="text" class="form-control from-date flatpickr-input" placeholder="Start date"
-                                    data-input="" readonly="readonly">
+                                <input type="text" class="form-control from-date flatpickr-input start-date"
+                                    placeholder="Start date" data-input="" readonly="readonly" name="start_date">
                                 <span class="input-group-text input-group-addon" data-toggle=""><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -23,8 +24,8 @@
                         </div>
                         <div class="col-md-3">
                             <div class="input-group flatpickr" id="flatpickr-date">
-                                <input type="text" class="form-control from-date flatpickr-input" placeholder="End date"
-                                    data-input="" readonly="readonly">
+                                <input type="text" class="form-control from-date flatpickr-input end-date"
+                                    placeholder="End date" data-input="" readonly="readonly" name="end_date">
                                 <span class="input-group-text input-group-addon" data-toggle=""><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -43,7 +44,8 @@
                         @endphp
                         <div class="col-md-3">
                             <div class="input-group flatpickr" id="flatpickr-date">
-                                <select class="js-example-basic-single form-select product_select" data-width="100%">
+                                <select class="js-example-basic-single form-select product_select" data-width="100%"
+                                    name="product_id">
                                     @if ($products->count() > 0)
                                         <option selected disabled>Select Product</option>
                                         @foreach ($products as $product)
@@ -57,8 +59,9 @@
                         </div>
                         <div class="col-md-3">
                             <div class="input-group flatpickr" id="flatpickr-date">
-                                <select class="js-example-basic-single form-select select-supplier supplier_id"
-                                    data-width="100%" name="">
+                                <select style="height: 40px !important"
+                                    class="js-example-basic-single form-select select-supplier supplier_id"
+                                    data-width="100%" name="supplier_id">
                                     @if ($suppliers->count() > 0)
                                         <option selected disabled>Select Supplier</option>
                                         @foreach ($suppliers as $supplier)
@@ -75,26 +78,28 @@
                         <div class="col-md-6 mb-3">
                             <div class="justify-content-left">
                                 <button class="btn btn-sm bg-info text-dark mr-2" id="filter">Filter</button>
-                                <button class="btn btn-sm bg-primary text-dark">Reset</button>
+                                <button class="btn btn-sm bg-primary text-dark" id="reset">Reset</button>
                             </div>
                         </div>
                         <div class="col-md-6 ">
-                            <div class="flex text-md-end ">
-                                <button type="button" class="btn btn-outline-primary btn-icon-text me-2 mb-2 mb-md-0"
-                                    onclick="window.print();">
+                            <div class="flex text-md-end btn_group">
+                                <button type="button"
+                                    class="btn btn-outline-primary btn-icon-text me-2 mb-2 mb-md-0 print-btn">
                                     <i class="btn-icon-prepend" data-feather="printer"></i>
                                     Print
                                 </button>
+                                {{-- 
                                 <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
                                     <i class="btn-icon-prepend" data-feather="download-cloud"></i>
                                     Download Report
-                                </button>
+                                </button> --}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
@@ -104,7 +109,7 @@
                         <table id="dataTableExample" class="table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th class="id">#</th>
                                     <th>Bill Number</th>
                                     <th>Supplier</th>
                                     <th>Purchase Date</th>
@@ -112,10 +117,10 @@
                                     <th>Total</th>
                                     <th>Paid</th>
                                     <th>Due</th>
-                                    <th>Action</th>
+                                    <th class="id">Action</th>
                                 </tr>
                             </thead>
-                            <tbody class="showData">
+                            <tbody id="showData">
                                 @include('pos.purchase.table')
                             </tbody>
                         </table>
@@ -126,70 +131,75 @@
 
     </div>
 
+    <style>
+        @media print {
+            .page-content {
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+            }
+
+            button,
+            a,
+            .filter_box,
+            nav,
+            .footer,
+            .id,
+            .dataTables_filter,
+            .dataTables_length,
+            .dataTables_info {
+                display: none !important;
+            }
+
+            table {
+                padding-right: 50px !important;
+            }
+        }
+    </style>
 
 
 
     <script>
-        // show all purchase 
-        // function showAllPurchase() {
-        // $.ajax({
-        //     url: '/purchase/view-all',
-        //     method: 'GET',
-        //     success: function(res) {
-        //         if (res.status == 200) {
-        //             const purchase = res.purchase;
-        //             const supplier = res.supplier;
-        //             $('.showData').empty();
-        //             if (purchase.length > 0) {
-        //                 $.each(purchase, function(index, data) {
-        //                     console.log(data);
-        //                     const tr = document.createElement('tr');
-        //                     tr.innerHTML = `
-    //                 <td>
-    //                     ${index+1}
-    //                 </td>
-    //                 <td>
-    //                     #${data.id ?? 0}
-    //                 </td>
-    //                 <td>
-    //                     ${data.supplier ?? ""}
-    //                 </td>
-    //                 <td>
+        document.querySelector('#filter').addEventListener('click', function(e) {
+            e.preventDefault();
+            // alert('ok');
+            let startDate = document.querySelector('.start-date').value;
+            let endDate = document.querySelector('.end-date').value;
 
-    //                 </td>
-    //                 <td>
+            let product_id = document.querySelector('.product_select').value;
+            let supplier_id = document.querySelector('.supplier_id').value;
 
-    //                 </td>
-    //                 <td>
+            // alert(supplier_id);
+            $.ajax({
+                url: "{{ route('purchase.filter') }}",
+                method: 'GET',
+                data: {
+                    startDate,
+                    endDate,
+                    product_id,
+                    supplier_id,
+                },
+                success: function(res) {
+                    jQuery('#showData').html(res);
+                }
+            });
+        });
 
-    //                 </td>
-    //                 `;
-        //                     $('.showData').append(tr);
-        //                 })
-        //             } else {
-        //                 $('.showData').html(`
-    //                 <tr>
-    //                     <td colspan='8'>
-    //                         <div class="text-center text-warning mb-2">Data Not Found</div>
-    //                         <div class="text-center">
-    //                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLongScollable">Add
-    //                                 Category<i data-feather="plus"></i></button>
-    //                         </div>
-    //                     </td>
-    //                 </tr>`)
-        //             }
-        //         } else {
-        //             Swal.fire({
-        //                 position: "top-end",
-        //                 icon: "warning",
-        //                 title: "Data Not Found",
-        //                 showConfirmButton: false,
-        //                 timer: 1500
-        //             });
-        //         }
-        //     }
-        // })
-        // }
-        // showAllPurchase();
+        document.querySelector('#reset').addEventListener('click', function(e) {
+            e.preventDefault();
+            $('.start-date').val("");
+            $('.end-date').val("");
+            $('.product_select').val(null).trigger('change');
+            $('.supplier_id').val(null).trigger('change');
+        });
+
+        $('.print-btn').click(function() {
+            // Remove the id attribute from the table
+            $('#dataTableExample').removeAttr('id');
+            $('.table-responsive').removeAttr('class');
+            // Trigger the print function
+            window.print();
+            // Restore the id attribute after printing
+            // $('#dataTableExample').attr('id', 'dataTableExample');
+        });
     </script>
 @endsection

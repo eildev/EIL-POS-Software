@@ -13,7 +13,7 @@
   <div class="tab-content border border-top-0 p-3" id="myTabContent">
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div class="row">
-            <div class="col-md-12  grid-margin stretch-card">
+            <div class="col-md-12  grid-margin stretch-card filter_table">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -321,5 +321,24 @@ $(document).ready(function (){
 
 
 </script>
+<style>
+    @media print {
 
+        nav,.nav,
+        .footer {
+            display: none !important;
+        }
+
+        .page-content {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        .btn_group ,.filter_table{
+            display: none !important;
+        }
+
+
+    }
+</style>
 @endsection

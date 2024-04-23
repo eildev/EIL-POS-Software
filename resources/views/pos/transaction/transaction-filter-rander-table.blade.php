@@ -4,8 +4,8 @@
         <div class="card-body">
         <h6 class="card-title text-info">Transaction </h6>
 
-            <div  class="table-responsive">
-                <table id="tableContainer" class="table" >
+            <div class="table-responsive">
+                <table class="table" >
                     <thead class="action">
                         <tr>
                             <th>SN</th>
@@ -40,7 +40,7 @@
                         <td>{{$trans->note}}</td>
 
 
-                        <td>
+                        <td class="actions">
                             <a href="" class="btn btn-sm btn-primary " title="Print">
                                Print
                             </a>
@@ -68,3 +68,4 @@
         </div>
     </div>
 </div>
+

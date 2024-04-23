@@ -128,10 +128,16 @@ class PurchaseController extends Controller
     }
 
     public function view()
+
     {
         $purchase = Purchase::where('branch_id', Auth::user()->branch_id)->latest()->get();
         return view('pos.purchase.view', compact('purchase'));
     }
+    // public function viewAll()
+    // {
+    //     $purchase = Purchase::where('branch_id', Auth::user()->branch_id)->latest()->get();
+    //     return view('pos.purchase.table', compact('purchase'))->render();
+    // }
 
     public function viewDetails($id)
     {

@@ -15,6 +15,6 @@ class Purchase extends Model
     }
     function purchaseItem()
     {
-        return $this->hasMany(PurchaseItem::class, 'sale_id', 'id');
+        return $this->hasMany(PurchaseItem::class, 'purchase_id', 'id');
     }
 }

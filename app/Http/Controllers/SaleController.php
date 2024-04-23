@@ -175,8 +175,15 @@ class SaleController extends Controller
 
     public function view()
     {
+        return view('pos.sale.view');
+    }
+    public function viewAll()
+    {
         $sales = Sale::where('branch_id', Auth::user()->branch_id)->get();
-        return view('pos.sale.view', compact('sales'));
+        return response()->json([
+            'status' => 200,
+            'allData' => $sales,
+        ]);
     }
     public function viewDetails($id)
     {

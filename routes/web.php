@@ -198,6 +198,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/purchase/destroy/{id}', 'destroy')->name('purchase.destroy');
         Route::get('/purchase/invoice/{id}', 'invoice')->name('purchase.invoice');
         Route::get('/purchase/filter', 'filter')->name('purchase.filter');
+        Route::get('/purchase/find/{id}', 'find')->name('purchase.find');
+        Route::get('/purchase/item/{id}', 'purchaseItem')->name('purchase.item');
+        Route::post('/transaction/edit-amount/{id}', 'editTransaction')->name('transaction.edit.amount');
     });
     // Promotion  related route(n)
     Route::controller(PromotionController::class)->group(function () {

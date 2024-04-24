@@ -329,4 +329,163 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        // error remove 
+        function errorRemove(element) {
+            if (element.value != '') {
+                $(element).siblings('span').hide();
+                $(element).css('border-color', 'green');
+            }
+        }
+        $(document).ready(function() {
+            // show error 
+            function showError(name, message) {
+                $(name).css('border-color', 'red');
+                $(name).focus();
+                $(`${name}_error`).show().text(message);
+            }
+            let supplierId = '{{ $purchase->supplier_id }}';
+            // console.log(purchaseId);
+            // show supplier
+            function supplierView() {
+                $.ajax({
+                    url: '/supplier/view',
+                    method: 'GET',
+                    success: function(res) {
+                        const suppliers = res.data;
+                        // console.log(suppliers);
+                        $('.select-supplier').empty();
+                        if (suppliers.length > 0) {
+                            $('.select-supplier').html(
+                                `<option selected disabled>Select a Supplier</option>`);
+                            $.each(suppliers, function(index, supplier) {
+                                $('.select-supplier').append(
+                                    `<option value="${supplier.id}" ${ supplier.id == supplierId ? 'selected' : ''}>${supplier.name}</option>`
+                                );
+                            })
+                        } else {
+                            $('.select-supplier').html(`
+                    <option selected disable>Please add supplier</option>`)
+                        }
+                    }
+                });
+            }
+
+            supplierView();
+
+
+            // showItems 
+            function showItems() {
+                let id = '{{ $purchase->id }}'
+                $.ajax({
+                    url: '/purchase/item/' + id,
+                    method: 'GET',
+                    success: function(res) {
+                        const products = res.data;
+                        // console.log(products);
+                        // $('.showData').empty();
+
+
+                        if (products.length > 0) {
+                            $.each(products, function(index, product) {
+                                // console.log(product);
+                                const tr = document.createElement('tr');
+                                // console.log(tr)
+                                tr.innerHTML = `
+                                <td>${index+1}</td>
+                                <td> <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.id ?? ""}" />
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.unit_price ?? 0}" />
+                                        </td>
+                                        <td>
+                                            <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="${product.quantity ?? 0}" />
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control product_subtotal${product.id} border-0 "  name="total_price[]" readonly value="${product.total_price ?? 0}" />
+                                        </td>
+                                        <td>
+                                    <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </a>
+                                </td>
+                               
+                                `;
+                                $('.showData').append(tr);
+                            })
+                        }
+                        //     $.each(products, function(index, product) {
+                        //         const tr = document.createElement('tr');
+                        //         tr.innerHTML = `
+                    //             <td>
+
+                    //             </td>
+                    //             <td>
+                    //                 <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.product->name ?? ""}" />
+                    //             </td>
+                    //             <td>
+                    //                 <input type="hidden" class="product_id" name="product_id[]" readonly value="${product.id ?? 0}" />
+                    //                 <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.unit_price ?? 0}" />
+                    //             </td>
+                    //             <td>
+                    //                 <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="${product.quantity ?? 0}" />
+                    //             </td>
+                    //             <td>
+                    //                 <input type="number" class="form-control product_subtotal${product.id} border-0 "  name="total_price[]" readonly value="${product.total_price ?? 0}" />
+                    //             </td>
+
+                    //         $('.showData').append(tr);
+                    //     })
+                    // } else {
+                    //     $('.showData').html(`
+                        //     <tr>
+                        //         <td colspan='8'>
+                        //             <div class="text-center text-warning mb-2">Data Not Found</div>
+                        //             <div class="text-center">
+                        //                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLongScollable">Add
+                        //                     Category<i data-feather="plus"></i></button>
+                        //             </div>
+                        //         </td>
+                        //     </tr>`)
+                    // }
+                    // $('.showData').append(
+                    //     `<tr class="data_row${product.id}">
+                        //                
+
+
+                        //             </tr>`
+                        // );
+                        // // Update SL numbers
+                        // updateSLNumbers();
+                    }
+                });
+            }
+            showItems();
+
+
+            // total items quantity 
+            let totalQuantity = 0;
+
+            // Function to update total quantity
+            function updateTotalQuantity() {
+                totalQuantity = 0;
+                $('.quantity').each(function() {
+                    let quantity = parseFloat($(this).val());
+                    if (!isNaN(quantity)) {
+                        totalQuantity += quantity;
+                    }
+                });
+                // console.log(totalQuantity);
+            }
+
+            // Function to update SL numbers
+            function updateSLNumbers() {
+                $('.showData > tr').each(function(index) {
+                    $(this).find('td:first').text(index + 1);
+                });
+            }
+        })
+    </script>
 @endsection

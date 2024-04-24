@@ -63,12 +63,11 @@ class CustomerController extends Controller
 
     }//End Method
     public function CustomerDelete($id){
-         Customer::find($id)->delete();
+         Customer::findOrFail($id)->delete();
          $notification = array(
             'message' =>'Customer Deleted Successfully',
              'alert-type'=> 'info'
          );
          return redirect()->back()->with($notification);
-
     }
 }

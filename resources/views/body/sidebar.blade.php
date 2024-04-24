@@ -216,11 +216,6 @@
                     </ul>
                 </div>
             </li>
-
-
-
-
-
             <li class="nav-item nav-category">PEOPLES</li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('customer.view') }}" role="button"
@@ -235,6 +230,13 @@
                     aria-controls="general-pages">
                     <i class="link-icon" data-feather="user-check"></i>
                     <span class="link-title">Employee</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('employee.salary.add') }}" role="button"
+                    aria-controls="general-pages">
+                    <i class="link-icon" data-feather="user-check"></i>
+                    <span class="link-title">Employee Salary</span>
                 </a>
             </li>
             <li class="nav-item nav-category">Inventory</li>

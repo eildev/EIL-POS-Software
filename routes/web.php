@@ -20,6 +20,7 @@ use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\PosSettingsController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\EmployeeSalaryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -274,6 +275,15 @@ Route::middleware('auth')->group(function () {
         Route::post('/add/customer', 'addCustomer')->name('add.customer');
         Route::get('/sale/invoice/{id}', 'invoice')->name('sale.invoice');
     });
+      // Transaction related route(n)
+    Route::controller(EmployeeSalaryController::class)->group(function () {
+        Route::get('/employee/salary/add', 'EmployeeSalaryAdd')->name('employee.salary.add');
+        Route::get('/employee/salary/view', 'EmployeeSalaryView')->name('employee.salary.view');
+        Route::post('/employee/salary/store', 'EmployeeSalaryStore')->name('employee.salary.store');
+        Route::get('/employee/salary/edit/{id}', 'EmployeeSalaryEdit')->name('employee.salary.edit');
+        Route::post('/employee/salary/update/{id}', 'EmployeeSalaryUpdate')->name('employee.salary.update');
+        Route::get('/employee/salary/delete/{id}', 'EmployeeSalaryDelete')->name('employee.salary.delete');
+});
 });
 
 require __DIR__ . '/auth.php';

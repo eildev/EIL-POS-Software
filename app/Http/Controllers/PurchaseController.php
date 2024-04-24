@@ -83,7 +83,7 @@ class PurchaseController extends Controller
                 $transaction->particulars = 'Purchase#' . $purchaseId;
                 $transaction->credit = $transaction->credit + $request->grand_total;
                 $transaction->debit = $transaction->debit + $request->paid;
-                $transaction->balance = $transaction->balance + ($request->paid - $request->grand_total);
+                $transaction->balance = $transaction->balance + ($request->grand_total - $request->paid);
                 $transaction->payment_method = $request->payment_method;
                 $transaction->save();
             } else {
@@ -95,7 +95,7 @@ class PurchaseController extends Controller
                 $transaction->supplier_id = $request->supplier_id;
                 $transaction->credit = $request->grand_total;
                 $transaction->debit = $request->paid;
-                $transaction->balance = $request->paid - $request->grand_total;
+                $transaction->balance = $request->grand_total - $request->paid;
                 $transaction->payment_method = $request->payment_method;
                 $transaction->save();
             }
@@ -105,7 +105,7 @@ class PurchaseController extends Controller
             $supplier = Supplier::findOrFail($request->supplier_id);
             $supplier->total_receivable = $supplier->total_receivable + $request->grand_total;
             $supplier->total_payable = $supplier->total_payable + $request->paid;
-            $supplier->wallet_balance = $supplier->wallet_balance + ($request->paid - $request->grand_total);
+            $supplier->wallet_balance = $supplier->wallet_balance + ($request->grand_total - $request->paid);;
             $supplier->save();
 
 
@@ -134,11 +134,11 @@ class PurchaseController extends Controller
         return view('pos.purchase.view', compact('purchase'));
     }
 
-    // public function viewDetails($id)
-    // {
-    //     $purchase = Purchase::findOrFail($id);
-    //     return view('pos.purchase.show', compact('purchase'));
-    // }
+    public function viewDetails($id)
+    {
+        $purchase = Purchase::findOrFail($id);
+        return view('pos.purchase.show', compact('purchase'));
+    }
     public function edit($id)
     {
         $purchase = Purchase::findOrFail($id);
@@ -156,14 +156,14 @@ class PurchaseController extends Controller
         $purchaseQuery = Purchase::query();
 
         // Filter by product_id if provided
-        if ($request->product_id !="Select Product") {
-            $purchaseQuery->whereHas('purchaseItem', function($query) use ($request) {
+        if ($request->product_id != "Select Product") {
+            $purchaseQuery->whereHas('purchaseItem', function ($query) use ($request) {
                 $query->where('product_id', $request->product_id);
             });
         }
 
         // Filter by supplier_id if provided
-        if ($request->supplier_id !="Select Supplier") {
+        if ($request->supplier_id != "Select Supplier") {
             $purchaseQuery->where('supplier_id', $request->supplier_id);
         }
 
@@ -176,5 +176,73 @@ class PurchaseController extends Controller
         $purchase = $purchaseQuery->get();
 
         return view('pos.purchase.table', compact('purchase'))->render();
+    }
+
+    public function find($id)
+    {
+        // dd($id);
+        // $purchaseId = 'Purchase#' + $id;
+        $purchase = Purchase::findOrFail($id);
+        return response()->json([
+            'status' => 200,
+            'data' => $purchase
+        ]);
+    }
+    // transaction edit 
+    public function editTransaction(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            "transaction_account" => 'required',
+            "amount" => 'required',
+        ]);
+        if ($validator->passes()) {
+
+            $purchase = Purchase::findOrFail($id);
+            $purchase->paid = $purchase->paid + $request->amount;
+            $purchase->due = $purchase->due - $request->amount;
+            $purchase->save();
+
+            $supplier = Supplier::findOrFail($purchase->supplier_id);
+            $supplier->total_payable = $supplier->total_payable + $request->amount;
+            $supplier->wallet_balance = $supplier->wallet_balance + ($supplier->total_receivable - $request->amount);
+            $supplier->save();
+
+            $transaction = new Transaction;
+            $transaction->date = $request->payment_date;
+            $transaction->payment_type = 'pay';
+            $transaction->particulars = 'Purchase#' . $id;
+            $transaction->supplier_id = $supplier->id;
+            $transaction->debit = $transaction->debit + $request->amount;
+            $transaction->balance = $transaction->balance + $request->amount;
+            $transaction->payment_method = $request->transaction_account;
+            $transaction->save();
+
+            // return view('pos.purchase.table')->render();
+
+            return response()->json([
+                'status' => 200,
+                'message' => "Update successful"
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'error' => $validator->message()
+            ]);
+        }
+    }
+    public function purchaseItem($id)
+    {
+        $purchaseItem = PurchaseItem::where('purchase_id', $id)->get();
+        if ($purchaseItem) {
+            return response()->json([
+                'status' => 200,
+                'data' => $purchaseItem
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'message' => 'Data Not Found'
+            ]);
+        }
     }
 }

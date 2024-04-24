@@ -334,11 +334,6 @@
 
 
     <script>
-        $(function() {
-            $("#datepicker").datepicker({
-                maxDate: new Date()
-            });
-        });
         // error remove 
         function errorRemove(element) {
             if (element.value != '') {
@@ -437,7 +432,6 @@
                     }
                 });
             })
-
 
 
             let totalQuantity = 0;

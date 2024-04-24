@@ -116,7 +116,7 @@ class SaleController extends Controller
             $customer = Customer::findOrFail($request->customer_id);
             $customer->total_receivable = $customer->total_receivable + $request->change_amount;
             $customer->total_payable = $customer->total_payable + $request->paid;
-            $customer->wallet_balance = $customer->wallet_balance + ($request->paid - $request->change_amount);
+            $customer->wallet_balance = $customer->wallet_balance + ($request->change_amount - $request->paid);
             $customer->save();
 
 
@@ -138,7 +138,7 @@ class SaleController extends Controller
                 $transaction->particulars = 'Sale#' . $saleId;
                 $transaction->credit = $transaction->credit + $request->change_amount;
                 $transaction->debit = $transaction->debit + $request->paid;
-                $transaction->balance = $transaction->balance + ($request->paid - $request->change_amount);
+                $transaction->balance = $transaction->balance + ($request->change_amount - $request->paid);
                 $transaction->payment_method = $request->payment_method;
                 $transaction->save();
             } else {
@@ -150,7 +150,7 @@ class SaleController extends Controller
                 $transaction->customer_id = $request->customer_id;
                 $transaction->credit = $request->change_amount;
                 $transaction->debit = $request->paid;
-                $transaction->balance = $request->paid - $request->change_amount;
+                $transaction->balance = $request->change_amount - $request->paid;
                 $transaction->payment_method = $request->payment_method;
                 $transaction->save();
             }

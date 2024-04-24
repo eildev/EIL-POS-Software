@@ -5,6 +5,11 @@
         <div class="col-md-12   grid-margin stretch-card filter_box">
             <div class="card">
                 <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="card-title">Purchase Report</h6>
+                        <a href="{{ route('purchase') }}" class="btn btn-rounded-primary btn-sm"><i
+                                data-feather="plus"></i></a>
+                    </div>
                     <div class="row mb-3">
                         <div class="col-md-3">
                             <div class="input-group flatpickr" id="flatpickr-date">
@@ -131,6 +136,76 @@
 
     </div>
 
+    {{-- payement modal  --}}
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signupForm" class="paymentForm row">
+                        <div class="mb-3 col-md-12">
+                            <label for="name" class="form-label">Payment Date<span
+                                    class="text-danger">*</span></label>
+                            <div class="input-group flatpickr" id="flatpickr-date">
+                                <input type="text" class="form-control from-date flatpickr-input payment_date"
+                                    placeholder="Payment Date" data-input="" readonly="readonly" name="payment_date">
+                                <span class="input-group-text input-group-addon" data-toggle=""><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2">
+                                        </rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg></span>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Transaction Account<span
+                                    class="text-danger">*</span></label>
+                            @php
+                                $payments = App\Models\PaymentMethod::all();
+                            @endphp
+                            <select class="form-select transaction_account" data-width="100%" name="transaction_account"
+                                onclick="errorRemove(this);" onblur="errorRemove(this);">
+                                @if ($payments->count() > 0)
+                                    {{-- <option selected disabled>Select Transaction</option> --}}
+                                    @foreach ($payments as $payment)
+                                        <option value="{{ $payment->id }}">{{ $payment->name }}</option>
+                                    @endforeach
+                                @else
+                                    <option selected disabled>Please Add Payment</option>
+                                @endif
+                            </select>
+                            <span class="text-danger transaction_account_error"></span>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Amount<span class="text-danger">*</span></label>
+                            <input id="defaultconfig" class="form-control amount" maxlength="39" name="amount"
+                                type="number" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
+                            <span class="text-danger amount_error"></span>
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label for="name" class="form-label">Note</label>
+                            <textarea name="note" class="form-control note" id="" placeholder="Enter Note (Optional)"
+                                rows="3"></textarea>
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary save_payment">Payment</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <style>
         @media print {
             .page-content {
@@ -159,47 +234,133 @@
 
 
     <script>
-        document.querySelector('#filter').addEventListener('click', function(e) {
-            e.preventDefault();
-            // alert('ok');
-            let startDate = document.querySelector('.start-date').value;
-            let endDate = document.querySelector('.end-date').value;
+        // error remove 
+        function errorRemove(element) {
+            if (element.value != '') {
+                $(element).siblings('span').hide();
+                $(element).css('border-color', 'green');
+            }
+        }
+        $(document).ready(function() {
+            // show error 
+            function showError(name, message) {
+                $(name).css('border-color', 'red');
+                $(name).focus();
+                $(`${name}_error`).show().text(message);
+            }
+            // filter 
+            document.querySelector('#filter').addEventListener('click', function(e) {
+                e.preventDefault();
+                // alert('ok');
+                let startDate = document.querySelector('.start-date').value;
+                let endDate = document.querySelector('.end-date').value;
 
-            let product_id = document.querySelector('.product_select').value;
-            let supplier_id = document.querySelector('.supplier_id').value;
+                let product_id = document.querySelector('.product_select').value;
+                let supplier_id = document.querySelector('.supplier_id').value;
 
-            // alert(supplier_id);
-            $.ajax({
-                url: "{{ route('purchase.filter') }}",
-                method: 'GET',
-                data: {
-                    startDate,
-                    endDate,
-                    product_id,
-                    supplier_id,
-                },
-                success: function(res) {
-                    jQuery('#showData').html(res);
-                }
+                // alert(supplier_id);
+                $.ajax({
+                    url: "{{ route('purchase.filter') }}",
+                    method: 'GET',
+                    data: {
+                        startDate,
+                        endDate,
+                        product_id,
+                        supplier_id,
+                    },
+                    success: function(res) {
+                        jQuery('#showData').html(res);
+                    }
+                });
             });
-        });
 
-        document.querySelector('#reset').addEventListener('click', function(e) {
-            e.preventDefault();
-            $('.start-date').val("");
-            $('.end-date').val("");
-            $('.product_select').val(null).trigger('change');
-            $('.supplier_id').val(null).trigger('change');
-        });
+            // reset 
+            document.querySelector('#reset').addEventListener('click', function(e) {
+                e.preventDefault();
+                $('.start-date').val("");
+                $('.end-date').val("");
+                $('.product_select').val(null).trigger('change');
+                $('.supplier_id').val(null).trigger('change');
+            });
 
-        $('.print-btn').click(function() {
-            // Remove the id attribute from the table
-            $('#dataTableExample').removeAttr('id');
-            $('.table-responsive').removeAttr('class');
-            // Trigger the print function
-            window.print();
-            // Restore the id attribute after printing
-            // $('#dataTableExample').attr('id', 'dataTableExample');
+            // print 
+            $('.print-btn').click(function() {
+                // Remove the id attribute from the table
+                $('#dataTableExample').removeAttr('id');
+                $('.table-responsive').removeAttr('class');
+                // Trigger the print function
+                window.print();
+                // Restore the id attribute after printing
+                // $('#dataTableExample').attr('id', 'dataTableExample');
+            });
+
+
+
+            //    add payment 
+            $(document).on('click', '.add_payment', function(e) {
+                e.preventDefault();
+                // alert('ok');
+                let id = $(this).attr('data-id');
+                // console.log(`Purchase#${id}`);
+                var currentDate = new Date().toISOString().split('T')[0];
+                $('.payment_date').val(currentDate);
+                $('.save_payment').val(id);
+
+
+                $.ajax({
+                    url: '/purchase/find/' + id,
+                    method: "GET",
+                    success: function(res) {
+                        // console.log(res);
+                        if (res.status == 200) {
+                            // console.log(res);
+                            $('.amount').val(res.data.due);
+                        }
+                    }
+                })
+            });
+
+            // save payment 
+            $(document).on('click', '.save_payment', function(e) {
+                e.preventDefault();
+                let id = $(this).val();
+                // alert(id);
+                let formData = new FormData($('.paymentForm')[0]);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: `/transaction/edit-amount/${id}`,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status == 200) {
+                            $('#paymentModal').modal('hide');
+                            $('.paymentForm')[0].reset();
+                            // jQuery('#showData').html(res);
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: res.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        } else {
+                            // console.log(res.error);
+                            if (res.error.paid) {
+                                showError('.amount', res.error.paid);
+                            }
+                            if (res.error.payment_method) {
+                                showError('.transaction_account', res.error.payment_method);
+                            }
+                        }
+                    }
+                });
+            })
         });
     </script>
 @endsection

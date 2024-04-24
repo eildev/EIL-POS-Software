@@ -4,7 +4,7 @@
         <div class="card-body">
         <h6 class="card-title text-info ">Transaction History </h6>
             <div class="table-responsive">
-                <table class="table" >
+                <table id="dataTableExample" class="table" >
                     <thead class="action ">
                         <tr>
                             <th>SN</th>
@@ -12,7 +12,7 @@
                             <th>Transaction Date</th>
                             <th>Amount</th>
                             <th>Transaction Type</th>
-                            <th>Transaction Method</th>
+                            <th>Trans. Method</th>
                             <th>Note</th>
                             <th class="actions">Action</th>
                         </tr>

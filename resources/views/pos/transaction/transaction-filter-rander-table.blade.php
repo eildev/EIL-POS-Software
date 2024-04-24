@@ -36,9 +36,11 @@
                             <span>Cash Received</span>
                             @endif
                         <td>{{$trans['paymentMethod']['name']}}</td>
-                        <td>{{$trans->note}}</td>
-
-
+                        <td class="note_short"> @php
+                            $note = $trans->note;
+                            $noteChunks = str_split($note, 20);
+                            echo implode("<br>", $noteChunks);
+                            @endphp</td>
                         <td class="actions">
                             <a href="{{route('transaction.invoice.receipt',$trans->id)}}" class="btn btn-sm btn-primary " title="Print">
                             <i class="fa fa-print"></i><span style="padding-left: 5px">Receipt</span>

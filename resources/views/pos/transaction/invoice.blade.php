@@ -93,24 +93,24 @@
                         <th>Date</th>
                         <th>Previous Due</th>
                         <th>Paid</th>
-                        <th>Due</th>
+                        <th>Due/Wallet</th>
                     </tr>
                     </tbody><tbody>
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($transaction->date)->format('d F Y') }}</td>
                             <td>
-                                @if(isset($transaction['customer']['wallet_balance']))
-                                    {{ $transaction['customer']['wallet_balance'] }}
-                                @elseif(isset($transaction['supplier']['wallet_balance']))
-                                    {{ $transaction['supplier']['wallet_balance'] }}
+                                @if(isset($transaction['customer']['total_payable']))
+                                    {{ $transaction['customer']['total_payable'] }}
+                                @elseif(isset($transaction['supplier']['total_payable']))
+                                    {{ $transaction['supplier']['total_payable'] }}
                                 @endif
                             </td>
                             <td>{{ $transaction->debit }}</td>
                             <td>
-                                @if(isset($transaction['customer']['wallet_balance']))
-                                    {{ $transaction->debit + $transaction['customer']['wallet_balance'] }}
+                                @if(isset($transaction['customer']['total_payable']))
+                                    {{ $transaction->debit - $transaction['customer']['total_payable'] }}
                                 @elseif(isset($transaction['supplier']['wallet_balance']))
-                                    {{ $transaction->debit + $transaction['supplier']['wallet_balance'] }}
+                                    {{ $transaction->debit - $transaction['supplier']['total_payable'] }}
                                 @endif
                             </td>
                         </tr>

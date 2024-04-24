@@ -157,7 +157,16 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="w-100 mx-auto btn_group">
+                <a href="{{ route('purchase.view') }}" class="btn btn-primary  mt-4 ms-2"><i
+                        class="fa-solid fa-arrow-rotate-left me-2"></i>Manage Purchase</a>
+                <a href="{{ route('purchase') }}" class="btn btn-outline-primary mt-4"><i data-feather="plus-circle"
+                        class="me-2 icon-md"></i>Add Purchase</a>
+            </div>
+        </div>
     </div>
+
     <style>
         @media print {
 

@@ -1,7 +1,7 @@
 @if ($purchase->count() > 0)
     @foreach ($purchase as $index => $data)
         <tr>
-            <td>{{ $index + 1 }}</td>
+            <td class="id">{{ $index + 1 }}</td>
             <td>{{ $data->id ?? 0 }}</td>
             <td>{{ $data->supplier->name ?? '' }}</td>
             <td>{{ $data->purchse_date ?? 0 }}</td>
@@ -23,7 +23,7 @@
             <td>
                 ৳ {{ $data->Due ?? 0 }}
             </td>
-            <td>
+            <td class="id">
                 <div class="dropdown">
                     <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton1"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

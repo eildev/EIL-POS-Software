@@ -1,5 +1,17 @@
 @extends('master')
 @section('admin')
+<style>
+    .nav.nav-tabs .nav-item .nav-link.active {
+        color: #010205!important;
+    background: rgb(101 209 209) !important;
+    }
+.nav.nav-tabs .nav-item .nav-link {
+    border-color: #090c0f #030406 #1a1d1f;
+    color: #000;
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+</style>
 <link rel="stylesheet" type="text/css" href="print.css" media="print">
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -7,7 +19,7 @@
       <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Transaction List</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Add Transaction</a>
+      <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" style="background: " role="tab" aria-controls="profile" aria-selected="false">Add Transaction</a>
     </li>
   </ul>
   <div class="tab-content border border-print border-top-0 p-3" id="myTabContent">
@@ -342,7 +354,10 @@ $(document).ready(function (){
             padding-top: 0 !important;
         }
 
-        .btn_group ,.filter_table{
+        .btn_group ,.filter_table,.dataTables_length,.pagination,.dataTables_info{
+            display: none !important;
+        }
+        #dataTableExample_filter{
             display: none !important;
         }
         .border{

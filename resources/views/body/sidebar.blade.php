@@ -36,13 +36,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('sale') }}" class="nav-link">
+                <a href="{{ route('sale') }}" class="nav-link" id="pos">
                     <i class="link-icon" data-feather="shopping-cart"></i>
                     <span class="link-title">POS</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('sale.view') }}" class="nav-link">
+                <a href="{{ route('sale.view') }}" class="nav-link" id="sale">
                     <i class="link-icon" data-feather="shopping-bag"></i>
                     <span class="link-title">Sale</span>
                 </a>
@@ -103,14 +103,124 @@
                     <span class="link-title">Taxes</span>
                 </a>
             </li>
-            <li class="nav-item nav-category">INFORMATION</li>
+            <li class="nav-item nav-category">Customer Info. Management</li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
-                    <i class="link-icon" data-feather="sliders"></i>
-                    <span class="link-title">Branches</span>
+                <a class="nav-link" data-bs-toggle="collapse" href="#crm" role="button" aria-expanded="false"
+                    aria-controls="emails">
+                    <i class="link-icon" data-feather="package"></i>
+                    <span class="link-title">CRM</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
-
+                <div class="collapse" id="crm">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('product') }}" class="nav-link">Customize Customer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('product') }}" class="nav-link">Email Marketing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('product.view') }}" class="nav-link">SMS Marketing</a>
+                        </li>
+                    </ul>
+                </div>
             </li>
+            <li class="nav-item nav-category">All Reports</li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#report" role="button" aria-expanded="false"
+                    aria-controls="emails">
+                    <i class="link-icon" data-feather="package"></i>
+                    <span class="link-title">Reports</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="report">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                                <i class="link-icon" data-feather="sliders"></i>
+                                <span class="link-title">Today Report</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                                <i class="link-icon" data-feather="sliders"></i>
+                                <span class="link-title">Summary Report</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                                <i class="link-icon" data-feather="sliders"></i>
+                                <span class="link-title">Daily Report</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                                <i class="link-icon" data-feather="sliders"></i>
+                                <span class="link-title">Customer Due Report</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                                <i class="link-icon" data-feather="sliders"></i>
+                                <span class="link-title">Supplier Due Report</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                                <i class="link-icon" data-feather="sliders"></i>
+                                <span class="link-title">Low Stock Report</span>
+                            </a>
+                        </li><li class="nav-item">
+                            <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                                <i class="link-icon" data-feather="sliders"></i>
+                                <span class="link-title">Top Products</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                                <i class="link-icon" data-feather="sliders"></i>
+                                <span class="link-title">Purchase Report</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                                <i class="link-icon" data-feather="sliders"></i>
+                                <span class="link-title">Customer Ledger</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                                <i class="link-icon" data-feather="sliders"></i>
+                                <span class="link-title">Supplier Ledger</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                                <i class="link-icon" data-feather="sliders"></i>
+                                <span class="link-title">Bank Report</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                                <i class="link-icon" data-feather="sliders"></i>
+                                <span class="link-title">Stock Report</span>
+                            </a>
+                        </li>
+                        <li class="nav-item nav-category">INFORMATION</li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                                <i class="link-icon" data-feather="sliders"></i>
+                                <span class="link-title">Branches</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+
+
+
+
             <li class="nav-item nav-category">PEOPLES</li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('customer.view') }}" role="button"

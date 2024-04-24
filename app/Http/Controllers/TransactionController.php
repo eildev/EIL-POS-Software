@@ -109,5 +109,9 @@ class TransactionController extends Controller
         return view('pos.transaction.transaction-filter-rander-table', compact('transaction'))->render();
 
     }
+    public function TransactionInvoiceReceipt($id){
+        $transaction = Transaction::findOrFail($id);
+        return view('pos.transaction.invoice',compact('transaction'));
+    }
 
 }

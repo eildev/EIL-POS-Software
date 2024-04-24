@@ -2,11 +2,10 @@
 <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-        <h6 class="card-title text-info">Transaction </h6>
-
-            <div  class="table-responsive">
-                <table id="tableContainer" class="table" >
-                    <thead class="action">
+        <h6 class="card-title text-info ">Transaction History </h6>
+            <div class="table-responsive">
+                <table class="table" >
+                    <thead class="action ">
                         <tr>
                             <th>SN</th>
                             <th>Details</th>
@@ -15,7 +14,7 @@
                             <th>Transaction Type</th>
                             <th>Transaction Method</th>
                             <th>Note</th>
-                            <th>Action</th>
+                            <th class="actions">Action</th>
                         </tr>
                     </thead>
                     <tbody  class="showData">
@@ -40,9 +39,9 @@
                         <td>{{$trans->note}}</td>
 
 
-                        <td>
-                            <a href="" class="btn btn-sm btn-primary " title="Print">
-                               Print
+                        <td class="actions">
+                            <a href="{{route('transaction.invoice.receipt',$trans->id)}}" class="btn btn-sm btn-primary " title="Print">
+                            <i class="fa fa-print"></i><span style="padding-left: 5px">Receipt</span>
                             </a>
                             <a href="{{route('transaction.delete',$trans->id)}}" id="delete" class="btn btn-sm btn-danger " title="Delete">
                                 Delete
@@ -68,3 +67,4 @@
         </div>
     </div>
 </div>
+

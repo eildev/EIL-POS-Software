@@ -138,7 +138,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/product/destroy/{id}', 'destroy')->name('product.destroy');
         Route::get('/product/find/{id}', 'find')->name('product.find');
     });
-
     // Product  related route(n)
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/employee/add', 'EmployeeAdd')->name('employee.add');
@@ -191,11 +190,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/purchase', 'index')->name('purchase');
         Route::post('/purchase/store', 'store')->name('purchase.store');
         Route::get('/purchase/view', 'view')->name('purchase.view');
+        Route::get('/purchase/view-all', 'viewAll')->name('purchase.view.all');
         Route::get('/purchase/view/{id}', 'viewDetails')->name('purchase.view.details');
         Route::get('/purchase/edit/{id}', 'edit')->name('purchase.edit');
         Route::post('/purchase/update/{id}', 'update')->name('purchase.update');
         Route::get('/purchase/destroy/{id}', 'destroy')->name('purchase.destroy');
         Route::get('/purchase/invoice/{id}', 'invoice')->name('purchase.invoice');
+        Route::get('/purchase/filter', 'filter')->name('purchase.filter');
     });
     // Promotion  related route(n)
     Route::controller(PromotionController::class)->group(function () {
@@ -238,14 +239,15 @@ Route::middleware('auth')->group(function () {
     Route::controller(TransactionController::class)->group(function () {
         Route::get('/transaction/add', 'TransactionAdd')->name('transaction.add');
         Route::post('/transaction/store', 'TransactionStore')->name('transaction.store');
-        Route::get('/transaction/view', 'TransactionView')->name('transaction.view');
-        Route::get('/transaction/edit/{id}', 'TransactionEdit')->name('transaction.edit');
+        // Route::get('/transaction/view', 'TransactionView')->name('transaction.view');
+        // Route::get('/transaction/edit/{id}', 'TransactionEdit')->name('transaction.edit');
         Route::post('/transaction/update/{id}', 'TransactionUpdate')->name('transaction.update');
         Route::get('/transaction/delete/{id}', 'TransactionDelete')->name('transaction.delete');
         Route::get('/getDataForAccountId', 'getDataForAccountId');
         /////Filer Transaction////
         Route::get('/transaction/filter/rander', 'TransactionFilterView')->name('transaction.filter.view');
-
+        ////////Invoice///////////
+        Route::get('/transaction/invoice/receipt/{id}', 'TransactionInvoiceReceipt')->name('transaction.invoice.receipt');
     });
     // pos setting related route
     Route::controller(PosSettingsController::class)->group(function () {
@@ -263,6 +265,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/sale', 'index')->name('sale');
         Route::post('/sale/store', 'store')->name('sale.store');
         Route::get('/sale/view', 'view')->name('sale.view');
+        Route::get('/sale/view-all', 'viewAll')->name('sale.view.all');
         Route::get('/sale/view/{id}', 'viewDetails')->name('sale.view.details');
         Route::get('/sale/edit/{id}', 'edit')->name('sale.edit');
         Route::post('/sale/update/{id}', 'update')->name('sale.update');

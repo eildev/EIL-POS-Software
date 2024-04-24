@@ -33,7 +33,7 @@
                             <label for="password" class="form-label">Purchase Date</label>
                             <div class="input-group flatpickr" id="flatpickr-date">
                                 <input type="date" class="form-control purchase_date" placeholder="" data-input
-                                    onkeyup="errorRemove(this);" onblur="errorRemove(this);">
+                                    onkeyup="errorRemove(this);" onblur="errorRemove(this);" max="<?php echo date('Y-m-d'); ?>">
                                 <span class="input-group-text input-group-addon" data-toggle><i
                                         data-feather="calendar"></i></span>
                             </div>
@@ -334,6 +334,11 @@
 
 
     <script>
+        $(function() {
+            $("#datepicker").datepicker({
+                maxDate: new Date()
+            });
+        });
         // error remove 
         function errorRemove(element) {
             if (element.value != '') {

@@ -128,16 +128,17 @@ class PurchaseController extends Controller
     }
 
     public function view()
+
     {
         $purchase = Purchase::where('branch_id', Auth::user()->branch_id)->latest()->get();
         return view('pos.purchase.view', compact('purchase'));
     }
 
-    public function viewDetails($id)
-    {
-        $purchase = Purchase::findOrFail($id);
-        return view('pos.purchase.show', compact('purchase'));
-    }
+    // public function viewDetails($id)
+    // {
+    //     $purchase = Purchase::findOrFail($id);
+    //     return view('pos.purchase.show', compact('purchase'));
+    // }
     public function edit($id)
     {
         $purchase = Purchase::findOrFail($id);
@@ -148,5 +149,22 @@ class PurchaseController extends Controller
         $purchase = Purchase::findOrFail($id);
         $purchase->delete();
         return back()->with('message', "Purchase successfully Deleted");
+    }
+    public function filter(Request $request)
+    {
+        $purchaseItem = PurchaseItem::where('product_id', $request->product_id)->get();
+
+        $purchase = Purchase::whereHas('purchaseItem', function ($query) use ($purchaseItem) {
+            $query->whereIn('id', $purchaseItem->pluck('id'));
+        })
+            ->when($request->supplier_id, function ($query) use ($request) {
+                return $query->where('supplier_id', $request->supplier_id);
+            })
+            ->when($request->start_date && $request->end_date, function ($query) use ($request) {
+                return $query->whereBetween('purchse_date', [$request->start_date, $request->end_date]);
+            })
+            ->get();
+
+        return view('pos.purchase.table', compact('purchase'))->render();
     }
 }

@@ -80,7 +80,11 @@
                     </tr>
                     <tr>
                         <td>Note :</td>
-                        <td colspan="3">{{$transaction->note}}</td>
+                        <td colspan="3">@php
+                            $note = $transaction->note;
+                            $noteChunks = str_split($note, 70);
+                            echo implode("<br>", $noteChunks);
+                            @endphp</td>
                     </tr>
                 </tbody>
             </table>

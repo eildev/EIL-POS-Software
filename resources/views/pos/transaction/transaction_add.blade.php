@@ -360,6 +360,9 @@ $(document).ready(function (){
             box-shadow: none!important;
             border: none !important;
         }
+        .note_short{
+
+        }
     }
 
 </style>

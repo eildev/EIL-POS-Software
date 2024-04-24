@@ -152,18 +152,28 @@ class PurchaseController extends Controller
     }
     public function filter(Request $request)
     {
-        $purchaseItem = PurchaseItem::where('product_id', $request->product_id)->get();
+        // dd($request->all());
+        $purchaseQuery = Purchase::query();
 
-        $purchase = Purchase::whereHas('purchaseItem', function ($query) use ($purchaseItem) {
-            $query->whereIn('id', $purchaseItem->pluck('id'));
-        })
-            ->when($request->supplier_id, function ($query) use ($request) {
-                return $query->where('supplier_id', $request->supplier_id);
-            })
-            ->when($request->start_date && $request->end_date, function ($query) use ($request) {
-                return $query->whereBetween('purchse_date', [$request->start_date, $request->end_date]);
-            })
-            ->get();
+        // Filter by product_id if provided
+        if ($request->product_id !="Select Product") {
+            $purchaseQuery->whereHas('purchaseItem', function($query) use ($request) {
+                $query->where('product_id', $request->product_id);
+            });
+        }
+
+        // Filter by supplier_id if provided
+        if ($request->supplier_id !="Select Supplier") {
+            $purchaseQuery->where('supplier_id', $request->supplier_id);
+        }
+
+        // Filter by date range if both start_date and end_date are provided
+        if ($request->start_date && $request->end_date) {
+            $purchaseQuery->whereBetween('purchase_date', [$request->start_date, $request->end_date]);
+        }
+
+        // Execute the query
+        $purchase = $purchaseQuery->get();
 
         return view('pos.purchase.table', compact('purchase'))->render();
     }

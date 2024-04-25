@@ -63,6 +63,12 @@ class PosSettingsController extends Controller
         }
         else{
             $settingId = $request->input('setting_id');
+            if($request->has('dark_mode')){
+                $mdVal=2;
+             }
+             else{
+                $mdVal=1;
+             }
             $values = [
             'company' => $request->input('company'),
             'email' => $request->input('email'),
@@ -74,7 +80,7 @@ class PosSettingsController extends Controller
             'invoice_logo_type' => $request->input('invoice_logo_type'),
             'invoice_type' => $request->input('invoice_type'),
             'barcode_type' => $request->input('barcode_type'),
-            'dark_mode' => $request->has('dark_mode'), // Checkbox value can be checked directly
+            'dark_mode' => $mdVal, // Checkbox value can be checked directly
             'low_stock' => $request->input('low_stock'),
         ];
         PosSetting::updateOrCreate(['id' => $settingId],$values);
@@ -85,6 +91,6 @@ class PosSettingsController extends Controller
         ];
         return redirect()->back()->with($notification);
     }//
-    
+
 
 }

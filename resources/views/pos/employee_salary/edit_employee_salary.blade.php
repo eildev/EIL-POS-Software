@@ -20,13 +20,13 @@
 						<div class="mb-3 form-valid-groups">
 							<label class="form-label"> Branch Name<span class="text-danger">*</span></label>
 
-                            <input type="text"name="branch_id" value="{{$employeeSalary['branch']['name']}}" disabled  class="form-control" data-input>
+                            <input type="text"name="branch_id" value="{{$employeeSalary['branch']['name']}}"   class="form-control" data-input>
 						</div>
 					</div><!-- Col -->
 					<div class="col-sm-6">
 						<div class="mb-3 form-valid-groups">
 							<label class="form-label"> Employee Name<span class="text-danger">*</span></label>
-                            <input type="text" name="" value="{{$employeeSalary['emplyee']['full_name']}}" disabled name="employee_id" class="form-control" data-input>
+                            <input type="text"value="{{$employeeSalary['emplyee']['full_name']}}"  name="employee_id" class="form-control" data-input>
 						</div>
 					</div>
 					<div class="col-sm-6 form-valid-groups">
@@ -38,7 +38,7 @@
 					<div class="col-sm-6 form-valid-groups">
 						<div class="mb-3">
 							<label class="form-label">Payemnt Salary Amount (Due Amount {{$employeeSalary->balance}} Tk)<span class="text-danger">*</span></label>
-							<input type="number" value="{{$employeeSalary->debit}}"  class="form-control" name="debit"  placeholder="0.00">
+							<input type="number" value="{{$employeeSalary->balance}}"  class="form-control" name="debit"  placeholder="0.00">
 						</div>
 					</div><!-- Col -->
 					<div class="col-sm-12 form-valid-groups">

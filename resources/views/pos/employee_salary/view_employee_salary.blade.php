@@ -41,7 +41,7 @@
                                 <td>
                                     @php
                                     $note = $employeSalarys->note;
-                                    $noteChunks = str_split($note, 70);
+                                    $noteChunks = str_split($note, 40);
                                     echo implode("<br>", $noteChunks);
                                     @endphp</td>
                                 <td>

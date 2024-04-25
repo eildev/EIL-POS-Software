@@ -5,55 +5,48 @@
 <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
     <div class="">
 
-        <h4 class="text-right"><a href="{{route('employee.salary.view')}}" class="btn btn-info">View Salary History</a></h4>
+        <h4 class="text-right"><a href="{{route('employee.salary.advanced.view')}}" class="btn btn-info">View Advanced Salary History</a></h4>
     </div>
 </div>
 <div class="col-md-12 stretch-card">
 <div class="card">
 	<div class="card-body">
-		<h6 class="card-title text-info">Employee Salary</h6>
-			<form id="myValidForm" action="{{route('employee.salary.store')}}" method="post"  >
+		<h6 class="card-title text-info">Edit Advanced Employee Salary</h6>
+			<form id="myValidForm" action="{{route('employee.salary.advanced.update',$employeeSalary->id)}}" method="post"  >
 				@csrf
 				<div class="row">
 					<!-- Col -->
 					<div class="col-sm-6">
 						<div class="mb-3 form-valid-groups">
-							<label class="form-label">Select Branch <span class="text-danger">*</span></label>
-                            <select class="form-select mb-3"  name="branch_id">
-                                <option selected="" disabled>Select Branch</option>
-                                @foreach ($branch as $branchs)
-                                <option value="{{$branchs ->id}}">{{$branchs->name}}</option>
-                                @endforeach
-                            </select>
+							<label class="form-label"> Branch Name<span class="text-danger">*</span></label>
+                                <input type="text"name="branch_id" value="{{$employeeSalary['branch']['name']}}"   class="form-control" data-input>
+
 						</div>
 					</div><!-- Col -->
 					<div class="col-sm-6">
 						<div class="mb-3 form-valid-groups">
-							<label class="form-label">Select Employee Name<span class="text-danger">*</span></label>
-							<select class="form-select mb-3" name="employee_id">
-                                <option selected="" disabled>Select Employee Name</option>
-                                @foreach ($employees as $employee)
-                                <option value="{{$employee->id}}">{{$employee->full_name}}({{$employee->salary}} Tk) </option>
-                                @endforeach
-                            </select>
+							<label class="form-label">Employee Name<span class="text-danger">*</span></label>
+
+                                <input type="text"value="{{$employeeSalary['emplyee']['full_name']}}"  name="employee_id" class="form-control" data-input>
+
 						</div>
 					</div>
 					<div class="col-sm-6 form-valid-groups">
 						<div class="mb-3" id="flatpickr-date">
 							<label class="form-label">Salary Date<span class="text-danger">*</span></label>
-                            <input type="text" name="date" class="form-control" placeholder="Date" data-input>
+                            <input type="text" name="date" class="form-control" value="{{$employeeSalary->date}}" placeholder="Date" data-input>
 						</div>
 					</div><!-- Col -->
 					<div class="col-sm-6 form-valid-groups">
 						<div class="mb-3">
-							<label class="form-label">Salary Amount<span class="text-danger">*</span></label>
-							<input type="number" class="form-control" name="debit"  placeholder="0.00">
+							<label class="form-label">Advanced Payemnt Salary Amount({{$employeeSalary->debit}} Tk) (Due Amount {{$employeeSalary->balance}} Tk)<span class="text-danger">*</span></label>
+							<input type="number" class="form-control"value="{{$employeeSalary->balance}}"  name="debit"  placeholder="0.00">
 						</div>
 					</div><!-- Col -->
 					<div class="col-sm-12 form-valid-groups">
 						<div class="mb-3">
-							<label class="form-label">Note</label>
-							<textarea name="note" class="form-control" id="" cols="20" rows="5"></textarea>
+							<label class="form-label">Advanced Salaray Reason Note</label>
+							<textarea name="note" class="form-control" id="" cols="20" rows="5">{{$employeeSalary->note}}</textarea>
 						</div>
 					</div><!-- Col -->
 				</div><!-- Row -->

@@ -36,13 +36,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('sale') }}" class="nav-link" id="pos">
+                <a href="{{ route('sale')}}" class="nav-link" id="pos">
                     <i class="link-icon" data-feather="shopping-cart"></i>
                     <span class="link-title">POS</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('sale.view') }}" class="nav-link" id="sale">
+                <a href="{{ route('sale.view')}}" class="nav-link" id="sale">
                     <i class="link-icon" data-feather="shopping-bag"></i>
                     <span class="link-title">Sale</span>
                 </a>
@@ -58,10 +58,10 @@
                 <div class="collapse" id="emails">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="{{ route('product') }}" class="nav-link">Add Product</a>
+                            <a href="{{route('product')}}" class="nav-link">Add Product</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('product.view') }}" class="nav-link">Manage Products</a>
+                            <a href="{{route('product.view')}}" class="nav-link">Manage Products</a>
                         </li>
                     </ul>
                 </div>
@@ -239,6 +239,13 @@
                     <span class="link-title">Employee Salary</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('advanced.employee.salary.add') }}" role="button"
+                    aria-controls="general-pages">
+                    <i class="link-icon" data-feather="user-check"></i>
+                    <span class="link-title">Advanced Employee Salary</span>
+                </a>
+            </li>
             <li class="nav-item nav-category">Inventory</li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('supplier') }}" role="button" aria-controls="general-pages">
@@ -313,3 +320,4 @@
         </ul>
     </div>
 </nav>
+

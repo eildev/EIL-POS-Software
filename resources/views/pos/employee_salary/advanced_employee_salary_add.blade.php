@@ -5,14 +5,14 @@
 <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
     <div class="">
 
-        <h4 class="text-right"><a href="{{route('employee.salary.view')}}" class="btn btn-info">View Salary History</a></h4>
+        <h4 class="text-right"><a href="{{route('employee.salary.advanced.view')}}" class="btn btn-info">View Advanced Salary History</a></h4>
     </div>
 </div>
 <div class="col-md-12 stretch-card">
 <div class="card">
 	<div class="card-body">
-		<h6 class="card-title text-info">Employee Salary</h6>
-			<form id="myValidForm" action="{{route('employee.salary.store')}}" method="post"  >
+		<h6 class="card-title text-info">Advanced Employee Salary</h6>
+			<form id="myValidForm" action="{{route('advanced.employee.salary.store')}}" method="post"  >
 				@csrf
 				<div class="row">
 					<!-- Col -->
@@ -33,7 +33,7 @@
 							<select class="form-select mb-3" name="employee_id">
                                 <option selected="" disabled>Select Employee Name</option>
                                 @foreach ($employees as $employee)
-                                <option value="{{$employee->id}}">{{$employee->full_name}}({{$employee->salary}} Tk) </option>
+                                <option value="{{$employee->id}}">{{$employee->full_name}}</option>
                                 @endforeach
                             </select>
 						</div>
@@ -46,13 +46,13 @@
 					</div><!-- Col -->
 					<div class="col-sm-6 form-valid-groups">
 						<div class="mb-3">
-							<label class="form-label">Salary Amount<span class="text-danger">*</span></label>
+							<label class="form-label">Advanced Salary Amount<span class="text-danger">*</span></label>
 							<input type="number" class="form-control" name="debit"  placeholder="0.00">
 						</div>
 					</div><!-- Col -->
 					<div class="col-sm-12 form-valid-groups">
 						<div class="mb-3">
-							<label class="form-label">Note</label>
+							<label class="form-label">Advanced Salaray Reason Note</label>
 							<textarea name="note" class="form-control" id="" cols="20" rows="5"></textarea>
 						</div>
 					</div><!-- Col -->

@@ -18,13 +18,20 @@ public function EmployeeSalaryAdd(Request $request){
     return view('pos.employee_salary.add_employee_salary',compact('employees','branch'));
 }//
 public function EmployeeSalaryStore(Request $request){
+    $requestMonth = Carbon::createFromFormat('Y-m-d', $request->date)->format('m');
+    $requestYear = Carbon::createFromFormat('Y-m-d', $request->date)->format('Y');
+
+    // Get the first and last day of the month
+    $firstDayOfMonth = Carbon::create($requestYear, $requestMonth, 1)->startOfMonth();
+    $lastDayOfMonth = Carbon::create($requestYear, $requestMonth, 1)->endOfMonth();
     $employeeSalary = EmployeeSalary::where('employee_id', $request->employee_id)
     ->where('branch_id', $request->branch_id)
-    ->where('date', $request->date)
+    // ->where('date', $request->date)
+    ->whereBetween('date', [$firstDayOfMonth, $lastDayOfMonth])
     ->first();
  if ($employeeSalary) {
     $notification = [
-        'error' =>'Salary for this employee and branch has already been inserted you can update your employee',
+        'error' =>'Salary for this employee and branch has already been inserted to to this month you can update your employee Salaries',
         'alert-type'=> 'error'
     ];
     return redirect()->route('employee.salary.view')->with($notification);
@@ -80,5 +87,84 @@ public function EmployeeSalaryDelete($id){
         'alert-type'=> 'info'
     );
     return redirect()->route('employee.salary.view')->with($notification);
+}
+
+///////////////////////////Employee Salary Advanced //////////////////////////////
+
+public function EmployeeSalaryAdvancedAdd(){
+    $employees = Employee::latest()->get();
+    $branch = Branch::latest()->get();
+    return view('pos.employee_salary.advanced_employee_salary_add',compact('employees','branch'));
+}//End
+
+public function EmployeeSalaryAdvancedStore(Request $request){
+    $requestMonth = Carbon::createFromFormat('Y-m-d', $request->date)->format('m');
+    $requestYear = Carbon::createFromFormat('Y-m-d', $request->date)->format('Y');
+
+    // Get the first and last day of the month
+    $firstDayOfMonth = Carbon::create($requestYear, $requestMonth, 1)->startOfMonth();
+    $lastDayOfMonth = Carbon::create($requestYear, $requestMonth, 1)->endOfMonth();
+    $employeeSalary = EmployeeSalary::where('employee_id', $request->employee_id)
+    ->where('branch_id', $request->branch_id)
+    // ->where('date', $request->date)
+    ->whereBetween('date', [$firstDayOfMonth, $lastDayOfMonth])
+    ->first();
+ if ($employeeSalary) {
+    $notification = [
+        'error' =>'Salary for this employee and branch has already been Advanced to this month you can update your Employee Salaries Payment',
+        'alert-type'=> 'error'
+    ];
+    return redirect()->route('employee.salary.advanced.view')->with($notification);
+
+ } else {
+    $employeeSalary = new EmployeeSalary;
+    $employeeSalary->employee_id =  $request->employee_id;
+    $employeeSalary->branch_id =  $request->branch_id;
+    $requiestDebit=  $employeeSalary->debit =  $request->debit;
+    $employeeSalary->date =  $request->date;
+    $employee = Employee::findOrFail( $request->employee_id);
+    $employeeSalary->creadit = $employee->salary;
+    $employeeSalary->balance = $employee->salary - $requiestDebit;
+    $employeeSalary->note =  $request->note;
+    $employeeSalary->save();
+    $notification = array(
+        'message' =>'Employee Salary Send Successfully',
+         'alert-type'=> 'info'
+     );
+    return redirect()->route('employee.salary.advanced.view')->with($notification);
+}
+}
+public function EmployeeSalaryAdvancedView(){
+    $employeSalary = EmployeeSalary::where('debit', '>', 'creadit')->get();
+    return view('pos.employee_salary.view_advanced_employee_salary',compact('employeSalary'));
+}//
+public function EmployeeSalaryAdvancedEdit($id){
+    $employeeSalary = EmployeeSalary::findOrFail($id);
+    $employees = Employee::latest()->get();
+    $branch = Branch::latest()->get();
+    return view('pos.employee_salary.edit_advanced_employee_salary',compact('employeeSalary','employees','branch'));
+}
+public function EmployeeSalaryAdvancedUpdate(Request $request,$id){
+    // dd($request->all());
+    $employeeSalary = EmployeeSalary::findOrFail($id);
+    $requiestDebit = $employeeSalary->debit = $employeeSalary->debit + $request->debit;
+    $employeeSalary->date =  $request->date;
+    $employeeSalary->balance = $employeeSalary->creadit - $requiestDebit;
+    $employeeSalary->note  = $request->note;
+    $employeeSalary->update();
+    $notification = array(
+       'message' =>'Employee Salary Advanced Update Successfully',
+        'alert-type'=> 'info'
+    );
+    return redirect()->route('employee.salary.advanced.view')->with($notification);
+
+}//
+public function EmployeeSalaryAdvancedDelete($id){
+    EmployeeSalary::findOrFail($id)->delete();
+    $notification = array(
+       'message' =>'Employee Advanced Salary Deleted Successfully',
+        'alert-type'=> 'info'
+    );
+    return redirect()->route('employee.salary.advanced.view')->with($notification);
 }
 }

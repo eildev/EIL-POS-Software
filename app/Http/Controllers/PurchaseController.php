@@ -8,6 +8,7 @@ use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Models\Supplier;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -128,10 +129,33 @@ class PurchaseController extends Controller
     }
 
     public function view()
-
     {
         $purchase = Purchase::where('branch_id', Auth::user()->branch_id)->latest()->get();
+        // return view('pos.purchase.view');
         return view('pos.purchase.view', compact('purchase'));
+    }
+    public function viewAll()
+    {
+        $purchase = Purchase::where('branch_id', Auth::user()->branch_id)->latest()->get();
+        if ($purchase) {
+            return response()->json([
+                'status' => 200,
+                'data' => $purchase,
+            ]);
+        } else {
+            return response()->json([
+                'status' => '500',
+                'message' => "No Data Found"
+            ]);
+        }
+    }
+    public function supplierName($id)
+    {
+        $supplier = Supplier::findOrFail($id);
+        return response()->json([
+            'status' => 200,
+            'supplier' => $supplier
+        ]);
     }
 
     public function viewDetails($id)
@@ -176,6 +200,10 @@ class PurchaseController extends Controller
         $purchase = $purchaseQuery->get();
 
         return view('pos.purchase.table', compact('purchase'))->render();
+        // return response()->json([
+        //     'status' => 200,
+        //     'data' => $purchase
+        // ]);
     }
 
     public function find($id)
@@ -204,7 +232,7 @@ class PurchaseController extends Controller
 
             $supplier = Supplier::findOrFail($purchase->supplier_id);
             $supplier->total_payable = $supplier->total_payable + $request->amount;
-            $supplier->wallet_balance = $supplier->wallet_balance + ($supplier->total_receivable - $request->amount);
+            $supplier->wallet_balance = $supplier->wallet_balance - $request->amount;
             $supplier->save();
 
             $transaction = new Transaction;
@@ -217,11 +245,13 @@ class PurchaseController extends Controller
             $transaction->payment_method = $request->transaction_account;
             $transaction->save();
 
-            // return view('pos.purchase.table')->render();
+            // Render the updated purchase table HTML
+            // $purchaseTable = View::make('pos.purchase.table', compact('purchase'))->render();
 
             return response()->json([
                 'status' => 200,
-                'message' => "Update successful"
+                'message' => "Update successful",
+                'purchase' => $purchase
             ]);
         } else {
             return response()->json([
@@ -236,7 +266,22 @@ class PurchaseController extends Controller
         if ($purchaseItem) {
             return response()->json([
                 'status' => 200,
-                'data' => $purchaseItem
+                'purchaseItem' => $purchaseItem
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'message' => 'Data Not Found'
+            ]);
+        }
+    }
+    public function productName($id)
+    {
+        $product = Product::findOrFail($id);
+        if ($product) {
+            return response()->json([
+                'status' => 200,
+                'product' => $product
             ]);
         } else {
             return response()->json([

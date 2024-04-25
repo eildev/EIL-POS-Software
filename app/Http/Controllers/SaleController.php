@@ -72,6 +72,12 @@ class SaleController extends Controller
         ]);
 
         if ($validator->passes()) {
+            $productCost = 0;
+            $productAll = $request->products;
+            foreach ($productAll as $product) {
+                $items = Product::findOrFail($product['product_id']);
+                $productCost += $items->cost;
+            }
             $sale = new Sale;
             $sale->branch_id = Auth::user()->branch_id;
             $sale->customer_id = $request->customer_id;
@@ -91,8 +97,10 @@ class SaleController extends Controller
             $sale->returned = $request->due;
             $sale->final_receivable = $request->change_amount;
             $sale->payment_method = $request->payment_method;
+            $sale->profit = $request->change_amount - $productCost;
             $sale->note = $request->note;
             $sale->save();
+
 
             $saleId = $sale->id;
 
@@ -109,8 +117,10 @@ class SaleController extends Controller
 
                 $items2 = Product::findOrFail($product['product_id']);
                 $items2->stock = $items2->stock - $product['quantity'];
+
                 $items2->save();
             }
+
 
 
             $customer = Customer::findOrFail($request->customer_id);
@@ -202,5 +212,84 @@ class SaleController extends Controller
         $sale = Sale::findOrFail($id);
         $sale->delete();
         return back()->with('message', "Sale successfully Deleted");
+    }
+    public function filter(Request $request)
+    {
+        // dd($request->all());
+        $saleQuery = Sale::query();
+
+        // Filter by product_id if provided
+        if ($request->product_id != "Select Product") {
+            $saleQuery->whereHas('saleItem', function ($query) use ($request) {
+                $query->where('product_id', $request->product_id);
+            });
+        }
+
+        // Filter by customer_id if provided
+        if ($request->customer_id != "Select Customer") {
+            $saleQuery->where('customer_id', $request->customer_id);
+        }
+
+        // Filter by date range if both start_date and end_date are provided
+        if ($request->start_date && $request->end_date) {
+            $saleQuery->whereBetween('sale_date', [$request->start_date, $request->end_date]);
+        }
+
+        // Execute the query
+        $sales = $saleQuery->get();
+
+        return view('pos.sale.table', compact('sales'))->render();
+    }
+    public function find($id)
+    {
+        // dd($id);
+        // $purchaseId = 'Purchase#' + $id;
+        $sale = Sale::findOrFail($id);
+        return response()->json([
+            'status' => 200,
+            'data' => $sale
+        ]);
+    }
+    public function saleTransaction(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            "transaction_account" => 'required',
+            "amount" => 'required',
+        ]);
+        if ($validator->passes()) {
+            $sales = Sale::all();
+            $sale = Sale::findOrFail($id);
+            $sale->paid = $sale->paid + $request->amount;
+            $sale->due = $sale->due - $request->amount;
+            $sale->save();
+
+            $customer = Customer::findOrFail($sale->customer_id);
+            $customer->total_payable = $customer->total_payable + $request->amount;
+            $customer->wallet_balance = $customer->wallet_balance - $request->amount;
+            $customer->save();
+
+            $transaction = new Transaction;
+            $transaction->date = $request->payment_date;
+            $transaction->payment_type = 'receive';
+            $transaction->particulars = 'Sale#' . $id;
+            $transaction->customer_id = $customer->id;
+            $transaction->debit = $transaction->debit + $request->amount;
+            $transaction->balance = $transaction->balance + $request->amount;
+            $transaction->payment_method = $request->transaction_account;
+            $transaction->save();
+
+            // return view('pos.sale.table', compact('sales'))->render();
+
+            return response()->json([
+                'status' => 200,
+                'message' => "Update successful",
+                'sales' => $sales
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'error' => $validator->message()
+            ]);
+        }
     }
 }

@@ -191,6 +191,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/purchase/store', 'store')->name('purchase.store');
         Route::get('/purchase/view', 'view')->name('purchase.view');
         Route::get('/purchase/view-all', 'viewAll')->name('purchase.view.all');
+        Route::get('/purchase/supplier/{id}', 'supplierName')->name('purchase.supplier.name');
+        Route::get('/purchase/item/{id}', 'purchaseItem')->name('purchase.item');
+        Route::get('/purchase/product/{id}', 'productName')->name('purchase.product.name');
         Route::get('/purchase/view/{id}', 'viewDetails')->name('purchase.view.details');
         Route::get('/purchase/edit/{id}', 'edit')->name('purchase.edit');
         Route::post('/purchase/update/{id}', 'update')->name('purchase.update');
@@ -198,7 +201,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/purchase/invoice/{id}', 'invoice')->name('purchase.invoice');
         Route::get('/purchase/filter', 'filter')->name('purchase.filter');
         Route::get('/purchase/find/{id}', 'find')->name('purchase.find');
-        Route::get('/purchase/item/{id}', 'purchaseItem')->name('purchase.item');
         Route::post('/transaction/edit-amount/{id}', 'editTransaction')->name('transaction.edit.amount');
     });
     // Promotion  related route(n)
@@ -276,6 +278,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/get/customer', 'getCustomer')->name('get.customer');
         Route::post('/add/customer', 'addCustomer')->name('add.customer');
         Route::get('/sale/invoice/{id}', 'invoice')->name('sale.invoice');
+        Route::get('/sale/filter', 'filter')->name('sale.filter');
+        Route::get('/sale/find/{id}', 'find')->name('sale.find');
+        Route::post('/sale/transaction/{id}', 'saleTransaction')->name('sale.transaction');
     });
 });
 

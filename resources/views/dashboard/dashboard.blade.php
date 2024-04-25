@@ -20,6 +20,17 @@
             </button>
         </div>
     </div>
+    @php
+        $totalInvoice = App\Models\Sale::all();
+        $saleItems = App\Models\SaleItem::all();
+        $totalSaleItems = $saleItems->sum('qty');
+        $totalPurchase = App\Models\Purchase::all();
+        $purchaseItems = App\Models\PurchaseItem::all();
+        $totalPurchaseItems = $purchaseItems->sum('quantity');
+        $totalInvoiceAmount = $totalInvoice->sum('receivable');
+        $totalPay = $totalInvoice->sum('paid');
+        $profit = $totalInvoice->sum('profit');
+    @endphp
 
     <div class="row">
         <div class="col-12 col-xl-12 stretch-card">
@@ -30,7 +41,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <h6 class="card-title mb-0">Totasl Invoice</h6>
+                                <h6 class="card-title mb-0">Total Invoice</h6>
                                 <div class="dropdown mb-2">
                                     <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
@@ -57,7 +68,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2">3,897<span style="font-size: 15px; color:#6571ff">(total products)</span></h3>
+                                    <h3 class="mb-2">{{ $totalInvoice->count() }}<span
+                                            style="font-size: 15px; color:#6571ff"> ({{ $totalSaleItems }})</span>
+                                    </h3>
                                     <div class="d-flex align-items-baseline">
                                         <p class="text-success">
                                             <span>+3.3%</span>
@@ -100,7 +113,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2">3,897<span style="font-size: 15px; color:#6571ff">(total products)</span></h3>
+                                    <h3 class="mb-2">{{ $totalPurchase->count() }}<span
+                                            style="font-size: 15px; color:#6571ff"> ({{ $totalPurchaseItems }})</span></h3>
                                     <div class="d-flex align-items-baseline">
                                         <p class="text-success">
                                             <span>+3.3%</span>
@@ -118,8 +132,8 @@
                             <div class="d-flex justify-content-between align-items-baseline">
                                 <h6 class="card-title mb-0">total invoice product</h6>
                                 <div class="dropdown mb-2">
-                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
+                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
                                         <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -143,7 +157,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2">3,897<span style="font-size: 15px; color:#6571ff">(total amount)</span></h3>
+                                    <h3 class="mb-2">3,897<span style="font-size: 15px; color:#6571ff">(total
+                                            amount)</span></h3>
                                     <div class="d-flex align-items-baseline">
                                         <p class="text-success">
                                             <span>+3.3%</span>
@@ -161,8 +176,8 @@
                             <div class="d-flex justify-content-between align-items-baseline">
                                 <h6 class="card-title mb-0">total invoice amount</h6>
                                 <div class="dropdown mb-2">
-                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
+                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
                                         <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -186,7 +201,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2">3,897<span style="font-size: 15px; color:#6571ff">(total profit)</span></h3>
+                                    <h3 class="mb-2">{{ $totalInvoiceAmount }}<span
+                                            style="font-size: 15px; color:#6571ff"> ({{ $profit }})</span></h3>
                                     <div class="d-flex align-items-baseline">
                                         <p class="text-success">
                                             <span>+3.3%</span>
@@ -204,8 +220,8 @@
                             <div class="d-flex justify-content-between align-items-baseline">
                                 <h6 class="card-title mb-0">total expenses</h6>
                                 <div class="dropdown mb-2">
-                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
+                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
                                         <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -229,7 +245,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2">3,897<span style="font-size: 15px; color:#6571ff">(total amount)</span></h3>
+                                    <h3 class="mb-2">3,897<span style="font-size: 15px; color:#6571ff">(total
+                                            amount)</span></h3>
                                     <div class="d-flex align-items-baseline">
                                         <p class="text-success">
                                             <span>+3.3%</span>
@@ -247,8 +264,8 @@
                             <div class="d-flex justify-content-between align-items-baseline">
                                 <h6 class="card-title mb-0">new customer</h6>
                                 <div class="dropdown mb-2">
-                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
+                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
                                         <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -290,8 +307,8 @@
                             <div class="d-flex justify-content-between align-items-baseline">
                                 <h6 class="card-title mb-0">sale profit</h6>
                                 <div class="dropdown mb-2">
-                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
+                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
                                         <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -330,6 +347,4 @@
             </div>
         </div>
     </div> <!-- row -->
-
-
 @endsection

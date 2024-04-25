@@ -19,7 +19,7 @@
                             <label for="ageSelect" class="form-label">Barcode</label>
                             <div class="input-group">
                                 <div class="input-group-text" id="btnGroupAddon"><i class="fa-solid fa-barcode"></i></div>
-                                <input type="text" class="form-control" placeholder="Barcode"
+                                <input type="text" class="form-control barcode_input" placeholder="Barcode"
                                     aria-label="Input group example" aria-describedby="btnGroupAddon">
                             </div>
                         </div>
@@ -338,6 +338,9 @@
         }
 
         $(document).ready(function() {
+            $('.barcode_input').focus();
+            var currentDate = new Date().toISOString().split('T')[0];
+            $('.purchase_date').val(currentDate);
             // show error 
             function showError(name, message) {
                 $(name).css('border-color', 'red');

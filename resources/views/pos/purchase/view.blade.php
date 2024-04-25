@@ -2,7 +2,7 @@
 @section('admin')
 
     <div class="row">
-        <div class="col-md-12   grid-margin stretch-card filter_box">
+        <div class="col-md-12 grid-margin stretch-card filter_box">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -248,6 +248,7 @@
                 $(name).focus();
                 $(`${name}_error`).show().text(message);
             }
+
             // filter 
             document.querySelector('#filter').addEventListener('click', function(e) {
                 e.preventDefault();
@@ -339,9 +340,11 @@
                     contentType: false,
                     success: function(res) {
                         if (res.status == 200) {
+                            // console.log(res.purchase);
+                            // jQuery('#showData').html(res.purchase);
                             $('#paymentModal').modal('hide');
                             $('.paymentForm')[0].reset();
-                            // jQuery('#showData').html(res);
+                            window.location.href = '{{ route('purchase.view') }}'
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",

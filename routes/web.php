@@ -20,6 +20,7 @@ use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\PosSettingsController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\EmployeeSalaryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -282,6 +283,22 @@ Route::middleware('auth')->group(function () {
         Route::get('/sale/find/{id}', 'find')->name('sale.find');
         Route::post('/sale/transaction/{id}', 'saleTransaction')->name('sale.transaction');
     });
+      // Transaction related route(n)
+    Route::controller(EmployeeSalaryController::class)->group(function () {
+        Route::get('/employee/salary/add', 'EmployeeSalaryAdd')->name('employee.salary.add');
+        Route::get('/employee/salary/view', 'EmployeeSalaryView')->name('employee.salary.view');
+        Route::post('/employee/salary/store', 'EmployeeSalaryStore')->name('employee.salary.store');
+        Route::get('/employee/salary/edit/{id}', 'EmployeeSalaryEdit')->name('employee.salary.edit');
+        Route::post('/employee/salary/update/{id}', 'EmployeeSalaryUpdate')->name('employee.salary.update');
+        Route::get('/employee/salary/delete/{id}', 'EmployeeSalaryDelete')->name('employee.salary.delete');
+           /////////////////Employ Salary Advanced ////////////
+       Route::get('/advanced/employee/salary/add', 'EmployeeSalaryAdvancedAdd')->name('advanced.employee.salary.add');
+       Route::post('/advanced/employee/salary/store', 'EmployeeSalaryAdvancedStore')->name('advanced.employee.salary.store');
+       Route::get('/advanced/employee/salary/view', 'EmployeeSalaryAdvancedView')->name('employee.salary.advanced.view');
+       Route::get('/advanced/employee/salary/edit/{id}', 'EmployeeSalaryAdvancedEdit')->name('employee.salary.advanced.edit');
+       Route::post('/advanced/employee/salary/update/{id}', 'EmployeeSalaryAdvancedUpdate')->name('employee.salary.advanced.update');
+       Route::get('/advanced/employee/salary/delete/{id}', 'EmployeeSalaryAdvancedDelete')->name('employee.salary.advanced.delete');
+});
 });
 
 require __DIR__ . '/auth.php';

@@ -302,7 +302,17 @@ Route::middleware('auth')->group(function () {
     });
     // Report related routes
     Route::controller(ReportController::class)->group(function () {
-        Route::get('/report/today', 'todayReport')->name('today.report');
+        Route::group(['prefix' => 'report'], function () {
+            // Route::post('add/language', [LanguageController::class, 'SellerAddLanguge']);
+            Route::get('today', 'todayReport')->name('today.report');
+            Route::get('stock', 'stockReport')->name('stock.report');
+            // Gigs Route
+            // Route::post('/{username}/manage_gigs', [GigsController::class, 'SellerManageGigs']);
+            // Route::get('/delete/gig/{id}', [GigsController::class, 'SellerDeleteGig'])->name('SellerDeleteGig');
+            // Route::get('/pause/gig/{id}', [GigsController::class, 'SellerPauseGig'])->name('SellerPauseGig');
+            // Route::get('/active/gig/{id}', [GigsController::class, 'SellerActiveGig'])->name('SellerActiveGig');
+        });
+
         Route::get('/report/summary', 'summaryReport')->name('summary.report');
         Route::get('/report/customer-due', 'customerDueReport')->name('customer.due.report');
         Route::get('/report/supplier-due', 'supplierDueReport')->name('supplier.due.report');
@@ -312,7 +322,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/report/customer-ledger', 'customerLedger')->name('customer.ledger.report');
         Route::get('/report/supplier-ledger', 'supplierLedger')->name('supplier.ledger.report');
         Route::get('/report/bank', 'bankReport')->name('bank.report');
-        Route::get('/report/stock', 'stockReport')->name('stock.report');
+
     });
 });
 

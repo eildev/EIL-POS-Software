@@ -22,6 +22,9 @@
     </div>
     @php
         $totalInvoice = App\Models\Sale::all();
+        //total invoice product
+        $totalInvoiceProductTotal = $totalInvoice->sum('quantity');
+        $totalInvoiceProductAmount = $totalInvoice->sum('final_receivable');
         $saleItems = App\Models\SaleItem::all();
         $totalSaleItems = $saleItems->sum('qty');
         $totalPurchase = App\Models\Purchase::all();
@@ -30,10 +33,21 @@
         $totalInvoiceAmount = $totalInvoice->sum('receivable');
         $totalPay = $totalInvoice->sum('paid');
         $profit = $totalInvoice->sum('profit');
-
-        ///today report code
-        $todayDate = date("Y-m-d");
-        $saleItemsForDate = $saleItems->where('qty', $todayDate);
+        ///today report
+        $todayDate = now()->toDateString();
+        //Today Invoice
+        $saleItemsForDate = App\Models\SaleItem::whereDate('created_at', $todayDate);
+        $todaySaleItemsToday = $saleItemsForDate->sum('qty');
+        $totalInvoiceToday = App\Models\Sale::whereDate('sale_date', $todayDate)->count();
+        //Today Purchase
+        $todayPurchaseItems = App\Models\PurchaseItem::whereDate('created_at', $todayDate);
+        $todayPurchaseItemsToday = $todayPurchaseItems->sum('quantity');
+        $todayPurchaseToday = App\Models\Purchase::whereDate('purchse_date', $todayDate)->count();
+        //Today invoice product sale_date
+        $todayInvoiceProductItems = App\Models\Sale::whereDate('sale_date', $todayDate);
+        $todayInvoiceProductTotal = $todayInvoiceProductItems->sum('quantity');
+        $todayInvoiceProductAmount = $todayInvoiceProductItems->sum('final_receivable');
+    ;
     @endphp
 {{-- ///////Today Summary ////// --}}
 <div class="row">
@@ -72,8 +86,8 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-12 col-xl-12">
-                                <h3 class="mb-2">{{ $totalInvoice->count() }}<span
-                                        style="font-size: 15px; color:#6571ff"> ({{ $saleItemsForDate }})</span>
+                                <h3 class="mb-2">{{ $totalInvoiceToday }}<span
+                                        style="font-size: 15px; color:#6571ff"> ({{ $todaySaleItemsToday }})</span>
                                 </h3>
                                 <div class="d-flex align-items-baseline">
                                     <p class="text-success">
@@ -86,9 +100,98 @@
                     </div>
                 </div>
             </div>
-
+            <div class="col-md-3 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-baseline">
+                            <h6 class="card-title mb-0">Today Purchase</h6>
+                            <div class="dropdown mb-2">
+                                <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                                            data-feather="eye" class="icon-sm me-2"></i> <span
+                                            class="">View</span></a>
+                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                                            data-feather="edit-2" class="icon-sm me-2"></i> <span
+                                            class="">Edit</span></a>
+                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                                            data-feather="trash" class="icon-sm me-2"></i> <span
+                                            class="">Delete</span></a>
+                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                                            data-feather="printer" class="icon-sm me-2"></i> <span
+                                            class="">Print</span></a>
+                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                                            data-feather="download" class="icon-sm me-2"></i> <span
+                                            class="">Download</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-xl-12">
+                                <h3 class="mb-2">{{ $todayPurchaseToday }}<span
+                                        style="font-size: 15px; color:#6571ff"> ({{ $todayPurchaseItemsToday }})</span></h3>
+                                <div class="d-flex align-items-baseline">
+                                    <p class="text-success">
+                                        <span>+3.3%</span>
+                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- //due --}}
+            <div class="col-md-3 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-baseline">
+                            <h6 class="card-title mb-0">Today invoice product</h6>
+                            <div class="dropdown mb-2">
+                                <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                                            data-feather="eye" class="icon-sm me-2"></i> <span
+                                            class="">View</span></a>
+                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                                            data-feather="edit-2" class="icon-sm me-2"></i> <span
+                                            class="">Edit</span></a>
+                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                                            data-feather="trash" class="icon-sm me-2"></i> <span
+                                            class="">Delete</span></a>
+                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                                            data-feather="printer" class="icon-sm me-2"></i> <span
+                                            class="">Print</span></a>
+                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                                            data-feather="download" class="icon-sm me-2"></i> <span
+                                            class="">Download</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-xl-12">
+                                <h3 class="mb-2">3,897<span style="font-size: 15px; color:#6571ff">(total
+                                        amount)</span></h3>
+                                <div class="d-flex align-items-baseline">
+                                    <p class="text-success">
+                                        <span>+3.3%</span>
+                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 </div> <!-- row -->
 {{-- //////End Today /////// --}}
     <div class="row">
@@ -216,8 +319,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2">3,897<span style="font-size: 15px; color:#6571ff">(total
-                                            amount)</span></h3>
+                                    <h3 class="mb-2">{{$totalInvoiceProductTotal}}<span style="font-size: 15px; color:#6571ff">({{$totalInvoiceProductAmount}})</span></h3>
                                     <div class="d-flex align-items-baseline">
                                         <p class="text-success">
                                             <span>+3.3%</span>

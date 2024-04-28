@@ -45,15 +45,15 @@
                             </div>
                         </div>
                         @php
-                            $products = App\Models\Product::all();
+                            $products1 = App\Models\Product::all();
                             $customers = App\Models\Customer::all();
                         @endphp
                         <div class="col-md-3">
                             <div class="input-group flatpickr" id="flatpickr-date">
                                 <select class="js-example-basic-single form-select product_select" data-width="100%">
-                                    @if ($products->count() > 0)
+                                    @if ($products1->count() > 0)
                                         <option selected disabled>Select Product</option>
-                                        @foreach ($products as $product)
+                                        @foreach ($products1 as $product)
                                             <option value="{{ $product->id }}">{{ $product->name }}</option>
                                         @endforeach
                                     @else
@@ -98,6 +98,38 @@
                                 </button> --}}
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Low Stock Table</h6>
+                    <div class="table-responsive">
+                        <table id="dataTableExample" class="table">
+                            <thead>
+                                <tr>
+                                    <th class="id">#</th>
+                                    <th>Image</th>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Purchased</th>
+                                    <th>Sold</th>
+                                    <th>Damaged</th>
+                                    <th>Returned</th>
+                                    <th>Available Stock</th>
+                                    <th>Sell Value</th>
+                                    <th>Profit</th>
+                                    <th class="id">Action</th>
+                                </tr>
+                            </thead>
+                            {{-- @dd($products) --}}
+                            <tbody id="showData">
+                                @include('pos.report.products.stock_table')
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

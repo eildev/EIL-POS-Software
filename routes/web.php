@@ -313,11 +313,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/report/supplier-ledger', 'supplierLedger')->name('supplier.ledger.report');
         Route::get('/report/bank', 'bankReport')->name('bank.report');
         Route::get('/report/stock', 'stockReport')->name('stock.report');
-        // Route::post('/add/customer', 'addCustomer')->name('add.customer');
-        // Route::get('/sale/invoice/{id}', 'invoice')->name('sale.invoice');
-        // Route::get('/sale/filter', 'filter')->name('sale.filter');
-        // Route::get('/sale/find/{id}', 'find')->name('sale.find');
-        // Route::post('/sale/transaction/{id}', 'saleTransaction')->name('sale.transaction');
     });
 });
 

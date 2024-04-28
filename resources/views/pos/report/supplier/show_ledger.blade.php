@@ -4,15 +4,15 @@
             <thead>
                 <tr>
                     <td>Account Of</td>
-                    <td>Description</td>
+                    <td>{{ $supplier->name ?? '' }}</td>
                 </tr>
                 <tr>
                     <td>Address</td>
-                    <td>Unit cost</td>
+                    <td>{{ $supplier->address ?? '' }}</td>
                 </tr>
                 <tr>
                     <td>Contact No.</td>
-                    <td>Unit cost</td>
+                    <td>{{ $supplier->phone ?? '' }}</td>
                 </tr>
             </thead>
         </table>
@@ -32,13 +32,22 @@
                             <th>Credit</th>
                             <th>Balance</th>
                         </tr>
-                        <tr>
-                            <td>Address</td>
-                            <td>Unit cost</td>
-                            <td>Unit cost</td>
-                            <td>Unit cost</td>
-                            <td>Unit cost</td>
-                        </tr>
+                        @if ($transactions->count() > 0)
+                            @foreach ($transactions as $transaction)
+                                <tr>
+                                    <td>{{ $transactions->date }}</td>
+                                    <td>{{ $transactions->particulars }}</td>
+                                    <td>{{ $transactions->debit }}</td>
+                                    <td>{{ $transactions->credit }}</td>
+                                    <td>{{ $transactions->balance }}</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="5">No Data Found</td>
+                            </tr>
+                        @endif
+
                     </thead>
                 </table>
             </div>

@@ -111,7 +111,7 @@
 
                     </div>
                     <div class="card-body show_ledger">
-                        @include('pos.report.supplier.show_ledger')
+
                     </div>
                 </div>
             </div>
@@ -121,6 +121,68 @@
 
     <script>
         $(document).ready(function() {
+            function supplierInfo(supplier, transactions) {
+                $('.show_ledger').html(`
+                <div class="container-fluid mt-2 d-flex justify-content-center w-100">
+                    <div class="table-responsive w-100">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td>Account Of</td>
+                                    <td>${supplier.name ?? '' }</td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>${supplier.address ?? '' }</td>
+                                </tr>
+                                <tr>
+                                    <td>Contact No.</td>
+                                    <td>${supplier.phone ?? '' }</td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <h4 class="my-3 text-center">Supplier Ledger</h4>
+                <div class="container-fluid w-100">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Particulars</th>
+                                            <th>Debit</th>
+                                            <th>Credit</th>
+                                            <th>Balance</th>
+                                        </tr>
+                                        <tbody>
+                                            ${transactions.map((transaction) => `
+                                                            <tr>
+                                                                <td>${transaction.date ?? ''}</td>
+                                                                <td>${transaction.particulars ?? ''}</td>
+                                                                <td>${transaction.debit ?? ''}</td>
+                                                                <td>${transaction.credit ?? ''}</td>
+                                                                <td>${transaction.balance ?? 0}</td>
+                                                            </tr>
+                                                        `).join('')}
+                                        </tbody>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid w-100 btn_group">
+                    <a href="javascript:;" class="btn btn-outline-primary float-end mt-4" onclick="window.print();"><i
+                            data-feather="printer" class="me-2 icon-md"></i>Print</a>
+                </div>
+                `)
+            }
+
+            // transactioninfo
+
             $('#filter').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -132,16 +194,21 @@
 
                 // // alert(supplier_id);
                 $.ajax({
-                    url: "{{ route('sale.filter') }}",
+                    url: "{{ route('supplier.ledger.filter') }}",
                     method: 'GET',
                     data: {
                         startDate,
                         endDate,
-                        product_id,
-                        customer_id,
+                        supplierId
                     },
                     success: function(res) {
-                        jQuery('#showData').html(res);
+                        const supplier = res.supplier;
+                        const transactions = res.transactions;
+                        // if (supplier.length > 0 && transactions.length > 0) {
+                        //     console.log(transactions, supplier);
+                        // }
+                        supplierInfo(supplier, transactions);
+
                     }
                 });
             });

@@ -21,7 +21,7 @@ class SaleController extends Controller
     }
     public function getCustomer()
     {
-        $data = Customer::all();
+        $data = Customer::where('branch_id', Auth::user()->branch_id)->get();
         return response()->json([
             'status' => 200,
             'message' => 'successfully save',
@@ -117,6 +117,7 @@ class SaleController extends Controller
 
                 $items2 = Product::findOrFail($product['product_id']);
                 $items2->stock = $items2->stock - $product['quantity'];
+                $items2->total_sold = $items2->total_sold + $product['quantity'];
 
                 $items2->save();
             }

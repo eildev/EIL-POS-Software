@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
@@ -24,11 +27,20 @@ class ReportController extends Controller
     }
     public function lowStockReport()
     {
-        return view('pos.report.products.low_stock');
+        $products = Product::where('branch_id', Auth::user()->branch_id)
+            ->where('stock', '<=', 10)
+            ->get();
+        // dd($products);
+        return view('pos.report.products.low_stock', compact('products'));
     }
     public function topProducts()
     {
-        return view('pos.report.products.top_products');
+        $products = Product::where('branch_id', Auth::user()->branch_id)
+            ->orderBy('total_sold', 'desc')
+            ->take(20)
+            ->get();
+        // dd($products);
+        return view('pos.report.products.top_products', compact('products'));
     }
     public function purchaseReport()
     {
@@ -40,6 +52,8 @@ class ReportController extends Controller
     }
     public function supplierLedger()
     {
+        // $transaction = Transaction::where('branch_id', Auth::user()->branch_id)
+        //     ->get();
         return view('pos.report.supplier.supplier_ledger');
     }
     public function bankReport()
@@ -48,6 +62,7 @@ class ReportController extends Controller
     }
     public function stockReport()
     {
-        return view('pos.report.products.stock');
+        $products = Product::where('branch_id', Auth::user()->branch_id)->get();
+        return view('pos.report.products.stock', compact('products'));
     }
 }

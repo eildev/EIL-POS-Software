@@ -136,13 +136,13 @@
                 <div class="collapse" id="report">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('branch.view') }}" role="button"
+                            <a class="nav-link" href="{{ route('today.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Today Report
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('branch.view') }}" role="button"
+                            <a class="nav-link" href="{{ route('summary.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Summary Report
                             </a>
@@ -154,55 +154,55 @@
                             </a>
                         </li> --}}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('branch.view') }}" role="button"
+                            <a class="nav-link" href="{{ route('customer.due.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Customer Due Report
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('branch.view') }}" role="button"
+                            <a class="nav-link" href="{{ route('supplier.due.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Supplier Due Report
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('branch.view') }}" role="button"
+                            <a class="nav-link" href="{{ route('low.stock.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Low Stock Report
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('branch.view') }}" role="button"
+                            <a class="nav-link" href="{{ route('top.products.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Top Products
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('branch.view') }}" role="button"
+                            <a class="nav-link" href="{{ route('purchase.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Purchase Report
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('branch.view') }}" role="button"
+                            <a class="nav-link" href="{{ route('customer.ledger.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Customer Ledger
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('branch.view') }}" role="button"
+                            <a class="nav-link" href="{{ route('supplier.ledger.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Supplier Ledger
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('branch.view') }}" role="button"
+                            <a class="nav-link" href="{{ route('bank.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Bank Report
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('branch.view') }}" role="button"
+                            <a class="nav-link" href="{{ route('stock.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Stock Report
                             </a>

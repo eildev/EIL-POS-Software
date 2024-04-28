@@ -55,7 +55,6 @@
         }
         toastr.success("{{ session('message') }}");
     @endif
-
     @if (Session::has('error'))
         toastr.options = {
             "closeButton": true,
@@ -63,7 +62,6 @@
         }
         toastr.error("{{ session('error') }}");
     @endif
-
     @if (Session::has('info'))
         toastr.options = {
             "closeButton": true,
@@ -71,7 +69,6 @@
         }
         toastr.info("{{ session('info') }}");
     @endif
-
     @if (Session::has('warning'))
         toastr.options = {
             "closeButton": true,

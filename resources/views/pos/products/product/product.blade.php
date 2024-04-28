@@ -24,7 +24,7 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Product Code</label>
-                                <input class="form-control" name="barcode" type="text">
+                                <input class="form-control" name="barcode" type="number">
                             </div>
                             <div class="mb-3 col-md-4">
                                 @php

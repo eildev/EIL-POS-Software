@@ -303,19 +303,21 @@ Route::middleware('auth')->group(function () {
     // Report related routes
     Route::controller(ReportController::class)->group(function () {
         Route::get('/report/today', 'todayReport')->name('today.report');
-        Route::post('/report/summary', 'summaryReport')->name('summary.report');
+        Route::get('/report/summary', 'summaryReport')->name('summary.report');
         Route::get('/report/customer-due', 'customerDueReport')->name('customer.due.report');
-        Route::get('/sale/view-all', 'viewAll')->name('sale.view.all');
-        Route::get('/sale/view/{id}', 'viewDetails')->name('sale.view.details');
-        Route::get('/sale/edit/{id}', 'edit')->name('sale.edit');
-        Route::post('/sale/update/{id}', 'update')->name('sale.update');
-        Route::get('/sale/destroy/{id}', 'destroy')->name('sale.destroy');
-        Route::get('/get/customer', 'getCustomer')->name('get.customer');
-        Route::post('/add/customer', 'addCustomer')->name('add.customer');
-        Route::get('/sale/invoice/{id}', 'invoice')->name('sale.invoice');
-        Route::get('/sale/filter', 'filter')->name('sale.filter');
-        Route::get('/sale/find/{id}', 'find')->name('sale.find');
-        Route::post('/sale/transaction/{id}', 'saleTransaction')->name('sale.transaction');
+        Route::get('/report/supplier-due', 'supplierDueReport')->name('supplier.due.report');
+        Route::get('/report/low-stock', 'lowStockReport')->name('low.stock.report');
+        Route::get('/report/top-products', 'topProducts')->name('top.products.report');
+        Route::get('/report/purchase', 'purchaseReport')->name('purchase.report');
+        Route::get('/report/customer-ledger', 'customerLedger')->name('customer.ledger.report');
+        Route::get('/report/supplier-ledger', 'supplierLedger')->name('supplier.ledger.report');
+        Route::get('/report/bank', 'bankReport')->name('bank.report');
+        Route::get('/report/stock', 'stockReport')->name('stock.report');
+        // Route::post('/add/customer', 'addCustomer')->name('add.customer');
+        // Route::get('/sale/invoice/{id}', 'invoice')->name('sale.invoice');
+        // Route::get('/sale/filter', 'filter')->name('sale.filter');
+        // Route::get('/sale/find/{id}', 'find')->name('sale.find');
+        // Route::post('/sale/transaction/{id}', 'saleTransaction')->name('sale.transaction');
     });
 });
 

@@ -30,6 +30,10 @@
         $totalInvoiceAmount = $totalInvoice->sum('receivable');
         $totalPay = $totalInvoice->sum('paid');
         $profit = $totalInvoice->sum('profit');
+
+        ///today report code
+        $todayDate = date("Y-m-d");
+        $saleItemsForDate = $saleItems->where('qty', $todayDate);
     @endphp
 {{-- ///////Today Summary ////// --}}
 <div class="row">
@@ -41,7 +45,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-baseline">
-                            <h6 class="card-title mb-0">Total Invoice</h6>
+                            <h6 class="card-title mb-0">Today Invoice</h6>
                             <div class="dropdown mb-2">
                                 <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
@@ -69,7 +73,7 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-xl-12">
                                 <h3 class="mb-2">{{ $totalInvoice->count() }}<span
-                                        style="font-size: 15px; color:#6571ff"> ({{ $totalSaleItems }})</span>
+                                        style="font-size: 15px; color:#6571ff"> ({{ $saleItemsForDate }})</span>
                                 </h3>
                                 <div class="d-flex align-items-baseline">
                                     <p class="text-success">
@@ -96,7 +100,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <h6 class="card-title mb-0">TODAY SOLD</h6>
+                                <h6 class="card-title mb-0">Total Invoice</h6>
                                 <div class="dropdown mb-2">
                                     <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
@@ -123,7 +127,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2">{{ $totalInvoice->count() }}<span
+                                    <h3 class="mb-2">{{$totalInvoice->count() }}<span
                                             style="font-size: 15px; color:#6571ff"> ({{ $totalSaleItems }})</span>
                                     </h3>
                                     <div class="d-flex align-items-baseline">

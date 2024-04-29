@@ -37,8 +37,6 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
-
-
         View::composer('*', function ($view) {
             if (Auth::check()) {
                 $settings = PosSetting::first();

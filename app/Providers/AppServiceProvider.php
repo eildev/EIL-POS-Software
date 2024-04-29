@@ -16,7 +16,9 @@ use App\Repositories\RepositoryClasses\BranchRepository;
 use App\Repositories\RepositoryInterfaces\CustomerInterfaces;
 use App\Repositories\RepositoryClasses\CustomerRepository;
 use App\Repositories\RepositoryInterfaces\EmployeeInterface;
+use App\Repositories\RepositoryInterfaces\DamageInterface;
 use App\Repositories\RepositoryClasses\EmployeeRepository;
+use App\Repositories\RepositoryClasses\DamageRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BranchInterface::class,BranchRepository::class);
         $this->app->bind(CustomerInterfaces::class,CustomerRepository::class);
         $this->app->bind(EmployeeInterface::class,EmployeeRepository::class);
+        $this->app->bind(DamageInterface::class,DamageRepository::class);
     }
 
     /**

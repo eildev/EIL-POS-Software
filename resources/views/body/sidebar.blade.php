@@ -109,6 +109,12 @@
                     <span class="link-title">Purchase</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('damage') }}" role="button" aria-controls="general-pages">
+                    <i class="link-icon" data-feather="book"></i>
+                    <span class="link-title">Damage</span>
+                </a>
+            </li>
             <li class="nav-item nav-category">Bank</li>
             <li class="nav-item">
                 <a href="{{ route('bank') }}" class="nav-link">

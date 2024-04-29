@@ -53,7 +53,7 @@
 					<div class="col-sm-12 form-valid-groups">
 						<div class="mb-3">
 							<label class="form-label">Note</label>
-							<textarea name="note" class="form-control" id="" cols="20" rows="5"></textarea>
+							<textarea name="note" class="form-control" id=""  cols="20" rows="5"></textarea>
 						</div>
 					</div><!-- Col -->
 				</div><!-- Row -->

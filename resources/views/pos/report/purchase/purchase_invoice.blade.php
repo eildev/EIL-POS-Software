@@ -118,24 +118,23 @@
 
             </tbody></table>
 
-            <p class="note">Note: </p>
-
+            {{-- <p class="note">Note: </p> --}}
 
         </div>
-        <button class="btn btn-secondary btn-block" onclick="print_receipt('print-area')">
+        <button class="btn btn-secondary btn-block print-btn">
             <i class="fa fa-print"></i>
             Print
         </button>
-        <div class="row mt-4" bis_skin_checked="1">
+        <div class="row mt-4 footer-purches" bis_skin_checked="1">
             <div class="col-6" bis_skin_checked="1">
-                <a href="https://pos.softghor.com/back/purchase/create" class="btn btn-primary btn-block">
+                <a href="{{route('purchase')}}" class="btn btn-primary btn-block">
                     <i class="fa fa-reply"></i>
                     New Purchase
                 </a>
             </div>
 
             <div class="col-6" bis_skin_checked="1">
-                <a href="https://pos.softghor.com/back/purchase" class="btn btn-primary btn-block">
+                <a href="{{route('purchase.view')}}" class="btn btn-primary btn-block">
                     <i class="fa fa-reply"></i>
                     Purchase List
                 </a>
@@ -148,11 +147,22 @@
 
 </div>
 </div>
+<script>
+     $('.print-btn').click(function() {
+            // Remove the id attribute from the table
+            $('#dataTableExample').removeAttr('id');
+            $('.table-responsive').removeAttr('class');
+            // Trigger the print function
+            window.print();
+
+        });
+</script>
 <style>
+
     @media print {
 
         nav ,button,
-        .footer {
+        .footer,.footer-purches {
             display: none !important;
         }
 

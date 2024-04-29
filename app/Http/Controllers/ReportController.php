@@ -68,11 +68,13 @@ class ReportController extends Controller
         }
         $transactions = $transactionQuery->get();
         $supplier = Supplier::findOrFail($request->supplierId);
-        return response()->json([
-            'status' => 200,
-            'transactions' => $transactions,
-            'supplier' => $supplier,
-        ]);
+        // return response()->json([
+        //     'status' => 200,
+        //     'transactions' => $transactions,
+        //     'supplier' => $supplier,
+        // ]);
+
+        return view("pos.report.supplier.show_ledger", compact('supplier', 'transactions'))->render();
     }
     public function bankReport()
     {

@@ -1,6 +1,5 @@
 @extends('master')
 @section('admin')
-
 <div class="row" bis_skin_checked="1">
     <div class="col-md-2">
 
@@ -13,17 +12,33 @@
                 <div class="row">
                     <div class="col-md-7">
                         <div class="logo-area">
-                            <img src="" alt="logo">
-                            <h4></h4>
+                            @if(!empty($invoice_logo_type))
+                                @if($invoice_logo_type == 'Name')
+                                    <h4>{{ $siteTitle }}</h4>
+                                @elseif($invoice_logo_type == 'Logo')
+                                    @if(!empty($logo))
+                                    <img height="50" width="150" src="{{ url($logo) }}" alt="logo">
+                                    @else
+                                    <h4>{{ $siteTitle }}</h4>
+                                    @endif
+                                @elseif($invoice_logo_type == 'Both')
+                                    @if(!empty($logo))
+                                    <img height="50" width="150" src="{{ url($logo) }}" alt="logo">
+                                    @endif
+                                    <h4>{{ $siteTitle }}</h4>
+                                @endif
+                            @else
+                                <h4>EIL POS Software</h4>
+                            @endif
                         </div>
 
                     </div>
                     <div class="col-md-5">
                         <address class="text-right">
                             <p>
-                                Address : <strong>KUWAIT</strong><br>
-                                Phone : <strong>3108081</strong><br>
-                                Email : <strong>toyotalexusautoparts@gmail.com</strong>
+                                Address : {{ $address }}<br>
+                                Phone : <strong>{{$phone}}</strong><br>
+                                Email : <strong>{{$email}}</strong>
                             </p>
                         </address>
                     </div>
@@ -32,14 +47,14 @@
 
             <div class="bill-date border p-1" >
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <div class="bill-no" >
-                            Invoice No: <strong>{{$purchaseItem['Purchas']['id']}} </strong>
+                            Invoice No: <strong>#{{$purchase->id}} </strong>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="date">
-                            Date: <strong>{{$purchaseItem['Purchas']['purchse_date']}} </strong>
+                    <div class="col-md-3">
+                        <div class="date text-right">
+                            Date: <strong>{{$purchase->purchse_date}} </strong>
                         </div>
                     </div>
                 </div>
@@ -47,13 +62,13 @@
 
             <div class="name border  p-1" >
                 Supplier Name :
-                <strong>{{$purchaseItem['Purchas']['supplier_id']}} </strong>
+                <strong>{{$purchase->supplier->name}} </strong>
             </div>
             <div class="address border p-1" bis_skin_checked="1">
-                Address : <span>Default Address</span>
+                Address : <span>{{$purchase->supplier->address}}</span>
             </div>
             <div class="mobile-no border p-1" bis_skin_checked="1">
-                Mobile : <span>111111</span>
+                Mobile : <span>{{$purchase->supplier->phone}}</span>
             </div>
 
             <table class="table table-bordered table-plist my-3 order-details border">
@@ -64,34 +79,39 @@
                     <th>Price</th>
                     <th>Net.A</th>
                 </tr>
+                @forelse ($purchase->purchaseItem as $item)
                 <tr>
-                    <td>{{$purchaseItem->id}}</td>
-                    <td>{{$purchaseItem['product']['name']}}</td>
-                    <td>{{$purchaseItem->total_quantity}}</td>
-                    <td>{{$purchaseItem->unit_price}} Tk</td>
-                    <td>{{$purchaseItem->total_price}} Tk</td>
+                    <td>{{$item->id}}</td>
+                    <td>{{$item->product->name}}</td>
+                    <td>{{$item->quantity}}</td>
+                    <td>{{$item->unit_price}} Tk</td>
+                    <td>{{$item->total_price}} Tk</td>
                 </tr>
-
+                @empty
+                <tr>
+                    <td colspan="4">Data Not Found</td>
+                </tr>
+                @endforelse
 
 
                 <tr>
                     <td colspan="4" class="text-right">Grand Total : </td>
                     <td>
-                        <strong>{{$purchaseItem->total_price}}</strong>Tk
+                        <strong>{{$purchase->total_amount}}</strong>Tk
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="4" class="text-right">Paid : </td>
+                    <td colspan="4" >Paid : </td>
                     <td>
-                        <strong>415,000.00 </strong>Tk
+                        <strong>{{$purchase->paid}}</strong>Tk
                     </td>
                 </tr>
 
                 <tr>
                     <td colspan="4" class="text-right"> Due : </td>
                     <td>
-                        <strong>0.00
+                        <strong>{{$purchase->due}}
                         </strong>Tk
                     </td>
                 </tr>

@@ -68,8 +68,8 @@ class ReportController extends Controller
         return view('pos.report.purchase.purchase-filter-table',compact('purchaseItem'))->render();
     }//
     public function PurchaseDetailsInvoice($id){
-        $purchaseItem = PurchaseItem::findOrFail($id);
-        return view('pos.report.purchase.purchase_invoice',compact('purchaseItem'));
+        $purchase = Purchase::findOrFail($id);
+        return view('pos.report.purchase.purchase_invoice',compact('purchase'));
     }
     public function customerLedger()
     {

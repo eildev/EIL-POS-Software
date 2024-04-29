@@ -43,12 +43,18 @@ class RouteServiceProvider extends ServiceProvider
                 $siteTitle = $settings ? $settings->company : 'EIL POS || Eclipse Intellitech Limited POS Software';
                 $logo = $settings->logo;
                 $facebook = $settings->facebook;
-                $adress = $settings->adress;
+                $address = $settings->address;
+                $phone = $settings->phone;
+                $email = $settings->email;
+                $invoice_logo_type = $settings->invoice_logo_type;
                 $view->with([
                     'siteTitle' => $siteTitle,
                     'logo' => $logo,
-                    'adress' => $adress,
+                    'address' => $address,
                     'facebook' => $facebook,
+                    'phone' => $phone,
+                    'email' => $email,
+                    'invoice_logo_type' => $invoice_logo_type
                 ]);
             }
         });

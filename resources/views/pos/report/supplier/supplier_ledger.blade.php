@@ -111,7 +111,7 @@
 
                     </div>
                     <div class="card-body show_ledger">
-                        @include('pos.report.supplier.show_ledger')
+                        {{-- @include('pos.report.supplier.show_ledger') --}}
                     </div>
                 </div>
             </div>
@@ -119,79 +119,113 @@
     </div>
 
 
+
+    <style>
+        @media print {
+            .page-content {
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+                width: 100% !important;
+            }
+
+            button,
+            a,
+            .filter_box,
+            nav,
+            .footer,
+            .id,
+            .dataTables_filter,
+            .dataTables_length,
+            .dataTables_info {
+                display: none !important;
+            }
+
+            table {
+                padding-right: 50px !important;
+            }
+        }
+    </style>
     <script>
         $(document).ready(function() {
-            //     function supplierInfo(supplier, transactions) {
-            //         $('.show_ledger').html(`
-        //         <div class="container-fluid mt-2 d-flex justify-content-center w-100">
-        //             <div class="table-responsive w-100">
-        //                 <table class="table table-bordered">
-        //                     <thead>
-        //                         <tr>
-        //                             <td>Account Of</td>
-        //                             <td>${supplier.name ?? '' }</td>
-        //                         </tr>
-        //                         <tr>
-        //                             <td>Address</td>
-        //                             <td>${supplier.address ?? '' }</td>
-        //                         </tr>
-        //                         <tr>
-        //                             <td>Contact No.</td>
-        //                             <td>${supplier.phone ?? '' }</td>
-        //                         </tr>
-        //                     </thead>
-        //                 </table>
-        //             </div>
-        //         </div>
-        //         <h4 class="my-3 text-center">Supplier Ledger</h4>
-        //         <div class="container-fluid w-100">
-        //             <div class="row">
-        //                 <div class="col-md-12">
-        //                     <div class="table-responsive">
-        //                         <table class="table">
-        //                             <thead>
-        //                                 <tr>
-        //                                     <th>Date</th>
-        //                                     <th>Particulars</th>
-        //                                     <th>Debit</th>
-        //                                     <th>Credit</th>
-        //                                     <th>Balance</th>
-        //                                 </tr>
-        //                                 <tbody>
-        //                                     ${transactions.map((transaction) => `
-            //                                             <tr>
-            //                                                 <td>${transaction.date ?? ''}</td>
-            //                                                 <td>${transaction.particulars ?? ''}</td>
-            //                                                 <td>${transaction.debit ?? ''}</td>
-            //                                                 <td>${transaction.credit ?? ''}</td>
-            //                                                 <td>${transaction.balance ?? 0}</td>
-            //                                             </tr>
-            //                                         `).join('')}
-        //                                 </tbody>
-        //                                 <tfoot>
-        //                                     <tr>
-        //                                         <td></td>
-        //                                         <td>Total</td>
-        //                                         <td></td>
-        //                                         <td></td>
-        //                                         <td></td>
-        //                                     </tr>
-        //                                 </tfoot>
-        //                             </thead>
-        //                         </table>
-        //                     </div>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //         <div class="container-fluid w-100 btn_group">
-        //             <a href="javascript:;" class="btn btn-outline-primary float-end mt-4" onclick="window.print();"><i
-        //                     data-feather="printer" class="me-2 icon-md"></i>Print</a>
-        //         </div>
-        //         `)
-            //     }
+            function supplierInfo(supplier, transactions) {
+                let totalDebit = 0;
+                let totalCredit = 0;
+                let totalBalance = 0;
+
+                transactions.forEach(transaction => {
+                    totalDebit += parseFloat(transaction.debit ?? 0);
+                    totalCredit += parseFloat(transaction.credit ?? 0);
+                    totalBalance += parseFloat(transaction.balance ?? 0);
+                });
+
+                // console.log(totalDebit.toFixed(2));
+
+                $('.show_ledger').html(`
+                <div class="container-fluid mt-2 d-flex justify-content-center w-100">
+                    <div class="table-responsive w-100">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td>Account Of</td>
+                                    <td>${supplier.name ?? '' }</td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>${supplier.address ?? '' }</td>
+                                </tr>
+                                <tr>
+                                    <td>Contact No.</td>
+                                    <td>${supplier.phone ?? '' }</td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <h4 class="my-3 text-center">Supplier Ledger</h4>
+                <div class="container-fluid w-100">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Particulars</th>
+                                            <th>Debit</th>
+                                            <th>Credit</th>
+                                            <th>Balance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${transactions.map((transaction) => `
+                                                                                                                                <tr>
+                                                                                                                                    <td>${transaction.date ?? ''}</td>
+                                                                                                                                    <td>${transaction.particulars ?? ''}</td>
+                                                                                                                                    <td>৳ ${transaction.debit ?? ''}</td>
+                                                                                                                                    <td>৳ ${transaction.credit ?? ''}</td>
+                                                                                                                                    <td>৳ ${transaction.balance ?? 0}</td>
+                                                                                                                                </tr>
+                                                                                                                            `).join('')}
+                                    </tbody>
+                                    <tfoot>
+                                            <tr>
+                                                <td></td>
+                                                <td>Total</td>
+                                                <td>৳ ${totalDebit.toFixed(2)}</td>
+                                                <td>৳ ${totalCredit.toFixed(2)}</td>
+                                                <td>৳ ${totalBalance.toFixed(2)}</td>
+                                            </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `);
+
+            }
 
             // transactioninfo
-
             $('#filter').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -212,16 +246,20 @@
                     },
                     success: function(res) {
 
-                        $(".show_ledger").html(res);
-                        // const supplier = res.supplier;
-                        // const transactions = res.transactions;
-                        // // if (supplier.length > 0 && transactions.length > 0) {
-                        // //     console.log(transactions, supplier);
-                        // // }
-                        // supplierInfo(supplier, transactions);
-
+                        // $(".show_ledger").html(res);
+                        const supplier = res.supplier;
+                        const transactions = res.transactions;
+                        supplierInfo(supplier, transactions);
                     }
                 });
+            });
+            // print 
+            document.querySelector('.print-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                $('#dataTableExample').removeAttr('id');
+                $('.table-responsive').removeAttr('class');
+                // Trigger the print function
+                window.print();
             });
         })
     </script>

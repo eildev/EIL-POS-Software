@@ -7,6 +7,9 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
+use App\Models\PosSetting;
+use Illuminate\Support\Facades\Auth;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -33,6 +36,23 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+        });
+
+
+        View::composer('*', function ($view) {
+            if (Auth::check()) {
+                $settings = PosSetting::first();
+                $siteTitle = $settings ? $settings->company : 'EIL POS || Eclipse Intellitech Limited POS Software';
+                $logo = $settings->logo;
+                $facebook = $settings->facebook;
+                $adress = $settings->adress;
+                $view->with([
+                    'siteTitle' => $siteTitle,
+                    'logo' => $logo,
+                    'adress' => $adress,
+                    'facebook' => $facebook,
+                ]);
+            }
         });
     }
 

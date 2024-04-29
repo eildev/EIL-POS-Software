@@ -53,6 +53,7 @@
                                     <div id="customersChart" class="mt-md-3 mt-xl-0"></div>
                                 </div>
                             </div>
+                            <h2>This is blank page</h2>
                         </div>
                     </div>
                 </div>

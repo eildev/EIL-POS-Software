@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Supplier;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\Purchase;
@@ -75,9 +76,28 @@ class ReportController extends Controller
     }
     public function supplierLedger()
     {
-        // $transaction = Transaction::where('branch_id', Auth::user()->branch_id)
-        //     ->get();
         return view('pos.report.supplier.supplier_ledger');
+    }
+    public function supplierLedgerFilter(Request $request)
+    {
+        $transactionQuery = Transaction::query();
+        // Filter by supplier_id if provided
+        if ($request->supplier_id != "Select Supplier") {
+            $transactionQuery->where('supplier_id', $request->supplier_id);
+        }
+        // Filter by date range if both start_date and end_date are provided
+        if ($request->startDate && $request->endDate) {
+            $transactionQuery->whereBetween('date', [$request->startDate, $request->endDate]);
+        }
+        $transactions = $transactionQuery->get();
+        $supplier = Supplier::findOrFail($request->supplierId);
+        // return response()->json([
+        //     'status' => 200,
+        //     'transactions' => $transactions,
+        //     'supplier' => $supplier,
+        // ]);
+
+        return view("pos.report.supplier.show_ledger", compact('supplier', 'transactions'))->render();
     }
     public function bankReport()
     {

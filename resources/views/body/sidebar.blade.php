@@ -190,7 +190,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('supplier.ledger.report') }}" role="button"
+                            <a class="nav-link" href="{{ route('suppliers.ledger.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Supplier Ledger
                             </a>

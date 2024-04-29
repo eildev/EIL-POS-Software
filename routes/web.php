@@ -326,6 +326,20 @@ Route::middleware('auth')->group(function () {
             Route::get('bank', 'bankReport')->name('bank.report');
             Route::get('stock', 'stockReport')->name('stock.report');
         });
+
+        Route::get('/report/summary', 'summaryReport')->name('summary.report');
+        Route::get('/report/customer-due', 'customerDueReport')->name('customer.due.report');
+        Route::get('/report/supplier-due', 'supplierDueReport')->name('supplier.due.report');
+        Route::get('/report/low-stock', 'lowStockReport')->name('low.stock.report');
+        Route::get('/report/top-products', 'topProducts')->name('top.products.report');
+        //Purchese
+        Route::get('/report/purchase', 'purchaseReport')->name('purchase.report');
+        Route::get('/purchese/product/filter', 'PurchaseProductFilter')->name('purches.product.filter.view');
+        Route::get('/purchese/details/invoice/{id}', 'PurchaseDetailsInvoice')->name('purchse.details.invoice');
+        Route::get('/report/customer-ledger', 'customerLedger')->name('customer.ledger.report');
+        Route::get('/report/supplier-ledger', 'supplierLedger')->name('supplier.ledger.report');
+        Route::get('/report/bank', 'bankReport')->name('bank.report');
+
     });
 });
 

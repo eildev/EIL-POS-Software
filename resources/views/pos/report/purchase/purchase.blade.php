@@ -7,14 +7,14 @@
         </ol>
     </nav>
 
-    <div class="row">
+    <div class="row filter-class" >
         <div class="col-md-12   grid-margin stretch-card filter_box">
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-3">
                             <div class="input-group flatpickr" id="flatpickr-date">
-                                <input type="text" class="form-control from-date flatpickr-input start-date"
+                                <input type="text" class="form-control from-date flatpickr-input start-date-purches"
                                     placeholder="Start date" data-input="" readonly="readonly">
                                 <span class="input-group-text input-group-addon" data-toggle=""><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="input-group flatpickr" id="flatpickr-date">
-                                <input type="text" class="form-control from-date flatpickr-input end-date"
+                                <input type="text" class="form-control from-date flatpickr-input end-date-purches"
                                     placeholder="End date" data-input="" readonly="readonly">
                                 <span class="input-group-text input-group-addon" data-toggle=""><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -46,11 +46,10 @@
                         </div>
                         @php
                             $products = App\Models\Product::all();
-                            $customers = App\Models\Customer::all();
                         @endphp
                         <div class="col-md-3">
-                            <div class="input-group flatpickr" id="flatpickr-date">
-                                <select class="js-example-basic-single form-select product_select" data-width="100%">
+                            <div class=" input-group flatpickr" id="flatpickr-date">
+                                <select class="filter_product_name js-example-basic-single form-select product_select" data-width="100%">
                                     @if ($products->count() > 0)
                                         <option selected disabled>Select Product</option>
                                         @foreach ($products as $product)
@@ -62,34 +61,20 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="input-group flatpickr" id="flatpickr-date">
-                                <select class="js-example-basic-single form-select select-supplier customer_id"
-                                    data-width="100%" name="">
-                                    @if ($customers->count() > 0)
-                                        <option selected disabled>Select Customer</option>
-                                        @foreach ($customers as $customer)
-                                            <option value="{{ $customer->id }}">{{ $customer->name }}</option>
-                                        @endforeach
-                                    @else
-                                        <option selected disabled>Please Add Customer</option>
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div class="justify-content-left">
-                                <button class="btn btn-sm bg-info text-dark mr-2" id="filter">Filter</button>
-                                <button class="btn btn-sm bg-primary text-dark" id="reset">Reset</button>
+                                <button class="btn btn-sm bg-info text-dark mr-2" id="purchesfilter">Filter</button>
+                                <button class="btn btn-sm bg-primary text-dark"  onclick="window.location.reload();" id="reset">Reset</button>
                             </div>
                         </div>
                         <div class="col-md-6 ">
                             <div class="flex text-md-end ">
                                 <button type="button"
                                     class="btn btn-outline-primary btn-icon-text me-2 mb-2 mb-md-0 print-btn">
-                                    <i class="btn-icon-prepend" data-feather="printer"></i>
+                                    <i class="btn-icon-prepend" id="purchesfilter" data-feather="printer"></i>
                                     Print
                                 </button>
                                 {{-- <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
@@ -103,4 +88,81 @@
             </div>
         </div>
     </div>
+
+    <div id="purchase-filter-table">
+        @include('pos.report.purchase.purchase-filter-table')
+    </div>
+        <script>
+            $(document).ready(function (){
+
+document.querySelector('#purchesfilter').addEventListener('click', function(e) {
+    e.preventDefault();
+         let startDatePurches = document.querySelector('.start-date-purches').value;
+        let endDatePurches = document.querySelector('.end-date-purches').value;
+        //  alert(endDatePurches);
+        let filterProduct = document.querySelector('.filter_product_name').value;
+        // alert(filterProduct);
+        $.ajax({
+            url: "{{ route('purches.product.filter.view') }}",
+            method: 'GET',
+            data: {
+                startDatePurches,
+                endDatePurches,
+                filterProduct,
+            },
+            success: function(res) {
+                jQuery('#purchase-filter-table').html(res);
+            }
+        });
+    });
+    });
+    $('.print-btn').click(function() {
+            // Remove the id attribute from the table
+            $('#dataTableExample').removeAttr('id');
+            $('.table-responsive').removeAttr('class');
+            // Trigger the print function
+            window.print();
+
+        });
+        </script>
+<style>
+    @media print {
+
+        nav,.nav,
+        .footer {
+            display: none !important;
+        }
+
+        .page-content {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        .btn_group ,.filter_table,.dataTables_length,.pagination,.dataTables_info{
+            display: none !important;
+        }
+        #dataTableExample_filter{
+            display: none !important;
+        }
+        .border{
+            border: none !important;
+        }
+        table,th,td{
+            border: 1px solid black;
+            background: #fff
+        }
+        .actions ,.filter-class{
+            display: none !important;
+        }
+        .card{
+            background: #fff!important;
+            box-shadow: none!important;
+            border: none !important;
+        }
+        .note_short{
+
+        }
+    }
+
+</style>
 @endsection

@@ -6,6 +6,8 @@ use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\Purchase;
+use App\Models\PurchaseItem;
 use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
@@ -45,7 +47,28 @@ class ReportController extends Controller
     }
     public function purchaseReport()
     {
-        return view('pos.report.purchase.purchase');
+        $purchaseItem =PurchaseItem::all();
+        return view('pos.report.purchase.purchase',compact('purchaseItem'));
+    }
+    public function PurchaseProductFilter(Request $request){
+
+        $purchaseItem = PurchaseItem::when($request->filterProduct, function ($query) use ($request) {
+            return $query->where('product_id', $request->filterProduct);
+        })
+
+        ->when($request->startDatePurches && $request->endDatePurches, function ($query) use ($request){
+            $query->whereHas('Purchas', function($query) use ($request) {
+                return $query->whereBetween('purchse_date', [$request->startDatePurches, $request->endDatePurches]);
+               });
+       })
+        // ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+        //     return $query->whereBetween('purchse_date', [$request->startDate, $request->endDate]);
+        // })
+        ->get();
+        return view('pos.report.purchase.purchase-filter-table',compact('purchaseItem'))->render();
+    }//
+    public function PurchaseDetailsInvoice(){
+        return view('pos.report.purchase.purchase_invoice');
     }
     public function customerLedger()
     {

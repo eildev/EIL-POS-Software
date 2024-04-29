@@ -28,9 +28,17 @@
 
         </div>
     </div>
-
     @include('body.js')
-
 </body>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const flexSwitchCheckDefault = document.querySelector('.flexSwitchCheckDefault');
+        const form = document.getElementById('darkModeForm');
+        if (flexSwitchCheckDefault && form) {
+            flexSwitchCheckDefault.addEventListener('change', function() {
+                form.submit();
+            });
+        }
+    });
+</script>
 </html>

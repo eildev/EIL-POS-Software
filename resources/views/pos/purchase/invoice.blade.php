@@ -25,7 +25,7 @@
                             <p class="show_supplier_email">{{ $supplier->email ?? '' }}</p>
                             <p class="show_supplier_phone">{{ $supplier->phone ?? '' }}</p>
                             <p class="text-end mb-1 mt-5">Total </p>
-                            <h4 class="text-end fw-normal">৳ {{ $purchase->total_amount ?? 00.0 }}</h4>
+                            <h4 class="text-end fw-normal">৳ {{ $purchase->grand_total ?? 00.0 }}</h4>
                             <h6 class="mb-0 mt-2 text-end fw-normal"><span class="text-muted show_purchase_date">Invoice
                                     Date :</span> {{ $purchase->purchse_date ?? '' }}</h6>
                         </div>
@@ -95,24 +95,53 @@
                                         <tbody>
                                             <tr>
                                                 <td>Sub Total</td>
-                                                <td class="text-end">$ 14,900.00</td>
+                                                <td class="text-end">৳ {{ $purchase->total_amount }}</td>
                                             </tr>
+                                            @if ($purchase->discount != null)
+                                                @php
+                                                    $discount = App\Models\Promotion::findOrFail($purchase->discount);
+                                                @endphp
+                                                @if ($discount->discount_type == 'percentage')
+                                                    <tr>
+                                                        <td>Discount ({{ $discount->discount_value }} %)</td>
+                                                        <td class="text-end">৳ {{ $purchase->sub_total }}</td>
+                                                    </tr>
+                                                @else
+                                                    <tr>
+                                                        <td>Discount (৳ {{ $discount->discount_value }})</td>
+                                                        <td class="text-end">৳ {{ $purchase->sub_total }}</td>
+                                                    </tr>
+                                                @endif
+                                            @endif
+
+                                            @if ($purchase->tax != null)
+                                                <tr>
+                                                    <td>TAX ({{ $purchase->tax }}%)</td>
+                                                    <td class="text-end">৳ {{ $purchase->grand_total }} </td>
+                                                </tr>
+                                            @endif
                                             <tr>
-                                                <td>TAX (12%)</td>
-                                                <td class="text-end">$ 1,788.00</td>
+                                                <td class="text-bold-800">Grand Total</td>
+                                                <td class="text-bold-800 text-end">৳ {{ $purchase->grand_total }} </td>
                                             </tr>
-                                            <tr>
-                                                <td class="text-bold-800">Total</td>
-                                                <td class="text-bold-800 text-end"> $ 16,688.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Payment Made</td>
-                                                <td class="text-danger text-end">(-) $ 4,688.00</td>
-                                            </tr>
-                                            <tr class="bg-dark">
-                                                <td class="text-bold-800">Balance Due</td>
-                                                <td class="text-bold-800 text-end">$ 12,000.00</td>
-                                            </tr>
+                                            @if ($purchase->grand_total <= $purchase->paid)
+                                                <tr>
+                                                    <td>Payment Made</td>
+                                                    <td class="text-success text-end">৳ {{ $purchase->paid }} </td>
+                                                </tr>
+                                            @else
+                                                <tr>
+                                                    <td>Payment Made</td>
+                                                    <td class="text-danger text-end">(-) ৳ {{ $purchase->paid }} </td>
+                                                </tr>
+                                            @endif
+                                            @if ($purchase->due != 0)
+                                                <tr class="bg-dark">
+                                                    <td class="text-bold-800">Balance Due</td>
+                                                    <td class="text-bold-800 text-end">৳ {{ $purchase->due }} </td>
+                                                </tr>
+                                            @endif
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -128,7 +157,16 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="w-100 mx-auto btn_group">
+                <a href="{{ route('purchase.view') }}" class="btn btn-primary  mt-4 ms-2"><i
+                        class="fa-solid fa-arrow-rotate-left me-2"></i>Manage Purchase</a>
+                <a href="{{ route('purchase') }}" class="btn btn-outline-primary mt-4"><i data-feather="plus-circle"
+                        class="me-2 icon-md"></i>Add Purchase</a>
+            </div>
+        </div>
     </div>
+
     <style>
         @media print {
 

@@ -21,11 +21,10 @@
                                 <tr>
                                     <th>SN</th>
                                     <th>Name</th>
-                                    <th>Email</th>
                                     <th>Phone</th>
-                                    <th>Address</th>
-                                    <th>Opening Receivable</th>
-                                    <th>Opening Payable</th>
+                                    <th>Total Receivable</th>
+                                    <th>Total Payable</th>
+                                    <th>Wallet Balance</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -225,19 +224,16 @@
                                 ${supplier.name ?? ""}
                             </td>
                             <td>
-                                ${supplier.email ?? ""}
-                            </td>
-                            <td>
                                 ${supplier.phone ?? ""}
                             </td>
                             <td>
-                                ${supplier.address ? supplier.address.slice(0,15) : ""}
+                                ${supplier.total_receivable	 ?? 0 }
                             </td>
                             <td>
-                                ${supplier.opening_receivable ?? 0 }
+                                ${supplier.total_payable ?? 0 }
                             </td>
-                            <td>
-                                ${supplier.opening_payable ?? 0 }
+                            <td style="color: ${supplier.wallet_balance > 0 ? 'red' : 'green'};">
+                                ${supplier.wallet_balance ?? 0}
                             </td>
                             <td>
                                 <a href="#" class="btn btn-primary btn-icon supplier_edit" data-id=${supplier.id} data-bs-toggle="modal" data-bs-target="#edit">

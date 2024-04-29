@@ -33,7 +33,7 @@
                             <label for="password" class="form-label">Purchase Date</label>
                             <div class="input-group flatpickr" id="flatpickr-date">
                                 <input type="date" class="form-control purchase_date" placeholder="" data-input
-                                    onkeyup="errorRemove(this);" onblur="errorRemove(this);">
+                                    onkeyup="errorRemove(this);" onblur="errorRemove(this);" max="<?php echo date('Y-m-d'); ?>">
                                 <span class="input-group-text input-group-addon" data-toggle><i
                                         data-feather="calendar"></i></span>
                             </div>
@@ -128,7 +128,6 @@
                                                         <option selected disabled>Please Add Product</option>
                                                     @endif
                                                 </select>
-                                                <span class="text-danger promotion_id_error"></span>
                                             </div>
                                         </div>
                                         <div class="row align-items-center">
@@ -142,7 +141,7 @@
                                         </div>
                                         <div class="row align-items-center">
                                             <div class="col-md-4">
-                                                Grand Total :
+                                                Sub Total :
                                             </div>
                                             <div class="col-md-8">
                                                 <input type="number" class="form-control grand_total border-0 "
@@ -242,12 +241,16 @@
                                     <th>
                                         <span class="paying_items">0</span>
                                     </th>
+                                    <th>Grand Total :</th>
+                                    <th>
+                                        (<span class="grandTotal">00</span>TK)
+                                    </th>
+                                </tr>
+                                <tr>
                                     <th>Total Payable :</th>
                                     <th>
                                         (<span class="total_payable_amount">00</span>TK)
                                     </th>
-                                </tr>
-                                <tr>
                                     <th>Total Due :</th>
                                     <th>
                                         <span class="total_due">0</span>
@@ -291,7 +294,7 @@
                                 $taxs = App\Models\Tax::get();
                             @endphp
                             <select class="form-select tax" data-width="100%" onclick="errorRemove(this);"
-                                onblur="errorRemove(this);" value="tax">
+                                onblur="errorRemove(this);" value="">
                                 @if ($taxs->count() > 0)
                                     <option selected disabled>Select Taxes</option>
                                     @foreach ($taxs as $taxs)
@@ -339,17 +342,17 @@
             }
         }
         $(document).ready(function() {
-            // console.log('hello');
-            function getTodayDate() {
-                const today = new Date();
-                const year = today.getFullYear();
-                const month = today.getMonth(); // Month is 0-indexed, add 1 to get the correct month
-                const day = today.getDate();
-                // console.log(`${year} - ${month} - ${day}`);
-                document.querySelector('.purchase_date').value = `${year} - ${month} - ${day}`;
-                return `${year} - ${month} - ${day}`;
-            }
-            getTodayDate();
+            //     // console.log('hello');
+            //     function getTodayDate() {
+            //         const today = new Date();
+            //         const year = today.getFullYear();
+            //         const month = today.getMonth(); // Month is 0-indexed, add 1 to get the correct month
+            //         const day = today.getDate();
+            //         // console.log(`${year} - ${month} - ${day}`);
+            //         document.querySelector('.purchase_date').value = `${year} - ${month} - ${day}`;
+            //         return `${year} - ${month} - ${day}`;
+            //     }
+            //     getTodayDate();
 
 
             // show error 
@@ -431,7 +434,6 @@
             })
 
 
-
             let totalQuantity = 0;
 
             // Function to update total quantity
@@ -481,7 +483,7 @@
                                         </td>
                                         <td>
                                             <input type="hidden" class="product_id" name="product_id[]" readonly value="${product.id ?? 0}" />
-                                            <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.price ?? 0}" />
+                                            <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.cost ?? 0}" />
                                         </td>
                                         <td>
                                             <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="" />
@@ -530,25 +532,29 @@
             function calculateGrandTotal() {
                 let id = $('.promotion_id').val();
                 let total = parseFloat($('.total').val());
-                // alert(id);
-                $.ajax({
-                    url: `/promotion/find/${id}`,
-                    type: 'GET',
-                    dataType: 'JSON',
-                    success: function(res) {
-                        // console.log(res)
-                        const promotion = res.data;
-                        if (promotion.discount_type == 'percentage') {
-                            let grandTotalAmount = parseFloat(total - ((total * promotion
-                                .discount_value) / 100)).toFixed(2);
-                            $('.grand_total').val(grandTotalAmount);
-                        } else {
-                            let grandTotalAmount = parseFloat(total - promotion.discount_value)
-                                .toFixed(2);
-                            $('.grand_total').val(grandTotalAmount);
+                if (id) {
+                    $.ajax({
+                        url: `/promotion/find/${id}`,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        success: function(res) {
+                            // console.log(res)
+                            const promotion = res.data;
+                            if (promotion.discount_type == 'percentage') {
+                                let grandTotalAmount = parseFloat(total - ((total * promotion
+                                    .discount_value) / 100)).toFixed(2);
+                                $('.grand_total').val(grandTotalAmount);
+                            } else {
+                                let grandTotalAmount = parseFloat(total - promotion.discount_value)
+                                    .toFixed(2);
+                                $('.grand_total').val(grandTotalAmount);
+                            }
                         }
-                    }
-                })
+                    })
+                } else {
+                    $('.grand_total').val(total)
+                }
+
             }
             calculateGrandTotal();
 
@@ -571,8 +577,6 @@
                 let subTotalPrice = parseFloat(quantity * productPrice).toFixed(2);
                 subTotal.val(subTotalPrice);
                 updateGrandTotal();
-                updateTotalQuantity();
-
             })
 
 
@@ -597,43 +601,38 @@
             // payment button click event
             $('.payment_btn').click(function(e) {
                 e.preventDefault();
-                $('.total_payable_amount').text($('.grand_total').val());
+                // $('.total_payable_amount').text($('.grand_total').val());
                 $('.total_due').text($('.grand_total').val());
+                $('.grandTotal').text($('.grand_total').val());
+                $('.paying_items').text(totalQuantity);
+
             })
 
             // paid amount 
             $('.paid_btn').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
-                let grandTotal = $('.grand_total').val();
+                let grandTotal = $('.grandTotal').text();
                 $('.total_payable').val(grandTotal);
+                $('.total_payable_amount').text(grandTotal);
                 totalDue();
             })
 
             // total_payable
-            $('.total_payable').change(function(e) {
-                let grandTotal = $('.grand_total').val();
+            $('.total_payable').keyup(function(e) {
+                let grandTotal = parseFloat($('.grandTotal').text());
                 let value = parseFloat($(this).val());
 
-                if (value <= grandTotal) {
-                    totalDue()
-                } else {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "warning",
-                        title: "Please Add valid value",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
+                totalDue();
+                $('.total_payable_amount').text(value);
             })
 
             // due 
             function totalDue() {
                 let pay = $('.total_payable').val();
-                let grandTotal = $('.grand_total').val();
-                let due = grandTotal - pay;
-                $('.total_due').text(due)
+                let grandTotal = parseFloat($('.grandTotal').text());
+                let due = (grandTotal - pay).toFixed(2);
+                $('.total_due').text(due);
             }
             // console.log(totalQuantity);
 
@@ -644,7 +643,8 @@
 
                 let taxTotal = ((grandTotal * value) / 100);
                 taxTotal = (taxTotal + grandTotal).toFixed(2);
-                $('.grand_total').val(taxTotal);
+                $('.grandTotal').text(taxTotal);
+                $('.total_due').text(taxTotal);
             })
 
 
@@ -656,12 +656,14 @@
                 let supplier_id = $('.select-supplier').val();
                 let purchse_date = $('.purchase_date').val();
                 let total_quantity = totalQuantity;
-                let total_amount = $('.total').val();
-                let discount = $('.total_payable').val();
-                let discount_amount = $('.total_payable').val();
-                let sub_total = $('.grand_total').val();
+                let total_amount = parseFloat($('.total').val());
+                let discount = $('.promotion_id').val();
+                let sub_total = parseFloat($('.grand_total').val());
+                let tax = $('.tax').val();
+                let grand_total = parseFloat($('.grandTotal').text());
+                let discount_amount = sub_total - total_amount;
                 let paid = $('.total_payable').val();
-                let due = sub_total - paid;
+                let due = grand_total - paid;
                 let carrying_cost = $('.carrying_cost').val();
                 let note = $('.note').val();
                 let payment_method = $('.payment_method').val();
@@ -697,6 +699,8 @@
                     discount,
                     discount_amount,
                     sub_total,
+                    tax,
+                    grand_total,
                     paid,
                     due,
                     carrying_cost,
@@ -735,21 +739,22 @@
                             window.location.href = '/purchase/invoice/' + id;
 
                         } else {
-                            $('#paymentModal').modal('hide');
-                            if (res.error.supplier_id) {
-                                showError('.supplier_id', res.error.supplier_id);
-                            }
-                            if (res.error.products) {
-                                showError('.product_select', res.error.products);
-                            }
-                            if (res.error.purchase_date) {
-                                showError('.purchase_date', res.error.purchase_date);
-                            }
-                            if (res.error.discount) {
-                                showError('.promotion_id', res.error.discount);
-                            }
-                            if (res.error.payment_method) {
-                                showError('.promotion_id', res.error.payment_method);
+
+                            if (res.error.payment_method == null) {
+                                $('#paymentModal').modal('hide');
+                                if (res.error.supplier_id) {
+                                    showError('.supplier_id', res.error.supplier_id);
+                                }
+                                if (res.error.products) {
+                                    showError('.product_select', res.error.products);
+                                }
+                                if (res.error.purchase_date) {
+                                    showError('.purchase_date', res.error.purchase_date);
+                                }
+                            } else {
+                                if (res.error.payment_method) {
+                                    showError('.payment_method', res.error.payment_method);
+                                }
                             }
                         }
                     }

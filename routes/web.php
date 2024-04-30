@@ -203,6 +203,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/purchase/update/{id}', 'update')->name('purchase.update');
         Route::get('/purchase/destroy/{id}', 'destroy')->name('purchase.destroy');
         Route::get('/purchase/invoice/{id}', 'invoice')->name('purchase.invoice');
+        Route::get('/purchase/filter', 'filter')->name('purchase.filter');
     });
     // damage related route
     Route::controller(damageController::class)->group(function () {

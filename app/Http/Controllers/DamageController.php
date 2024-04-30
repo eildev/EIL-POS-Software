@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repositories\RepositoryInterfaces\DamageInterface;
 use Illuminate\Support\Str;
 use App\Models\Damage;
+use App\Models\Product;
 
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -16,6 +17,7 @@ class DamageController extends Controller
     private $damage_repo;
     public function __construct(DamageInterface $damage_interface){
         $this->damage_repo = $damage_interface;
+
     }
 
     /**
@@ -24,6 +26,7 @@ class DamageController extends Controller
     public function index()
     {
         return view('pos.damage.index');
+
     }
 
     public function store(Request $request)
@@ -31,34 +34,36 @@ class DamageController extends Controller
         // dd($request->all());
         $validator = Validator::make($request->all(), [
 
-            'product' => 'required|max:255',
+            'product_id' => 'required|max:255',
             'pc' => 'required|max:255',
+            'date' => 'required|max:50',
         ]);
 
         if ($validator->passes()) {
             // $data = $request->all();
 
             // $this->damage_repo->create($data);
-            // @dd($data->product);
+            // @dd($request);
             $damage = new Damage;
-            $damage->product_id = $request->product;
+            $damage->product_id = $request->product_id;
             $damage->qty = $request->pc;
             $damage->branch_id = Auth::user()->branch_id;
-
             $damage->date = $request->date;
             $damage->note = $request->note;
             $damage->save();
 
-            return response()->json([
-                'status' => 200,
-                'message' => 'Damage added Successfully',
-            ]);
-        } else {
-            return response()->json([
-                'status' => '500',
-                'error' => $validator->messages()
-            ]);
-        }//
+            $product_qty = Product::findOrFail($request->product_id);
+            $product_qty->stock = $product_qty->stock - $request->pc;
+            $product_qty->save();
+
+
+
+        }
+        $notification = array(
+            'message' =>'Damage Add Successfully',
+             'alert-type'=> 'info'
+         );
+         return redirect()->back()->with($notification);
     }
 
 

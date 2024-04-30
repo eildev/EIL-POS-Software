@@ -80,20 +80,18 @@
                     <th>Net.A</th>
                 </tr>
                 @forelse ($purchase->purchaseItem as $item)
-                <tr>
-                    <td>{{$item->id}}</td>
-                    <td>{{$item->product->name}}</td>
-                    <td>{{$item->quantity}}</td>
-                    <td>{{$item->unit_price}} Tk</td>
-                    <td>{{$item->total_price}} Tk</td>
-                </tr>
+                    <tr>
+                        <td>{{$item->id}}</td>
+                        <td>{{$item->product->name}}</td>
+                        <td>{{$item->quantity}}</td>
+                        <td>{{$item->unit_price}} Tk</td>
+                        <td>{{$item->total_price}} Tk</td>
+                    </tr>
                 @empty
-                <tr>
-                    <td colspan="4">Data Not Found</td>
-                </tr>
+                    <tr>
+                        <td colspan="4">Data Not Found</td>
+                    </tr>
                 @endforelse
-
-
                 <tr>
                     <td colspan="4" class="text-end">Grand Total : </td>
                     <td>

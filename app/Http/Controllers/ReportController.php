@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\EmployeeSalary;
 use App\Models\Expense;
 use App\Models\Product;
+use App\Models\Expense;
 use App\Models\Supplier;
 use App\Models\Transaction;
 use App\Models\Purchase;
@@ -24,6 +25,12 @@ class ReportController extends Controller
     // summary report function
     public function summaryReport()
     {
+        $products = Product::where('branch_id', Auth::user()->branch_id)
+            ->orderBy('total_sold', 'desc')
+            ->take(20)
+            ->get();
+        $expense =  Expense::all();
+        return view('pos.report.summary.summary',compact('products','expense'));
         $sale = Sale::where('branch_id', Auth::user()->branch_id)->get();
         $saleAmount = $sale->sum('receivable');
         $purchase = Purchase::where('branch_id', Auth::user()->branch_id)->get();

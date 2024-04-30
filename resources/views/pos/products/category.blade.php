@@ -243,7 +243,6 @@
             }
             categoryView();
 
-
             // edit category
             $(document).on('click', '.category_edit', function(e) {
                 e.preventDefault();

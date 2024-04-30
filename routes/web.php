@@ -347,6 +347,7 @@ Route::middleware('auth')->group(function () {
         Route::group(['prefix' => 'sms'], function () {
             Route::post('category', 'storeSmsCat')->name('sms.category.store');
             Route::get('category/view', 'viewSmsCat')->name('sms.category.view');
+            Route::post('category/update/{id}', 'updateSmsCat')->name('sms.category.update');
         });
     });
 });

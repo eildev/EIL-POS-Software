@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Expense;
 use App\Models\Supplier;
 use App\Models\Transaction;
 use App\Models\Purchase;
@@ -21,7 +22,12 @@ class ReportController extends Controller
     // summary report function
     public function summaryReport()
     {
-        return view('pos.report.summary.summary');
+        $products = Product::where('branch_id', Auth::user()->branch_id)
+            ->orderBy('total_sold', 'desc')
+            ->take(20)
+            ->get();
+        $expense =  Expense::all();
+        return view('pos.report.summary.summary',compact('products','expense'));
     }
     // customer due report function
     public function customerDue()

@@ -216,7 +216,7 @@ class PurchaseController extends Controller
             'data' => $purchase
         ]);
     }
-    // transaction edit 
+    // transaction edit
     public function editTransaction(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [

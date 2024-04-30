@@ -95,21 +95,21 @@
 
 
                 <tr>
-                    <td colspan="4" class="text-right">Grand Total : </td>
+                    <td colspan="4" class="text-end">Grand Total : </td>
                     <td>
                         <strong>{{$purchase->total_amount}}</strong>Tk
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="4" >Paid : </td>
+                    <td colspan="4" class="text-end">Paid : </td>
                     <td>
                         <strong>{{$purchase->paid}}</strong>Tk
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="4" class="text-right"> Due : </td>
+                    <td colspan="4" class="text-end"> Due : </td>
                     <td>
                         <strong>{{$purchase->due}}
                         </strong>Tk
@@ -117,7 +117,6 @@
                 </tr>
 
             </tbody></table>
-
             {{-- <p class="note">Note: </p> --}}
 
         </div>

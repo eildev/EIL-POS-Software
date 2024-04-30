@@ -3,10 +3,9 @@
 @section('admin')
 <div class="row">
 <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
-    <div class="">
-
+    {{-- <div class="">
         <h4 class="text-right"><a href="{{route('employee.salary.advanced.view')}}" class="btn btn-info">View Advanced Salary History</a></h4>
-    </div>
+    </div> --}}
 </div>
 <div class="col-md-12 stretch-card">
 <div class="card">
@@ -53,7 +52,7 @@
 					<div class="col-sm-12 form-valid-groups">
 						<div class="mb-3">
 							<label class="form-label">Advanced Salaray Reason Note</label>
-							<textarea name="note" class="form-control" id="" cols="20" rows="5"></textarea>
+							<textarea name="note" class="form-control"  placeholder="Advaced" cols="20" rows="5">Advance</textarea>
 						</div>
 					</div><!-- Col -->
 				</div><!-- Row -->

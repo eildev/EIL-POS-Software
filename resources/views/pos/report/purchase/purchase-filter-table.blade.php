@@ -24,7 +24,7 @@
                                     <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $purchase['Purchas']['purchse_date']  ?? ''}}</td>
-                                    <td><a href="{{route('purchse.details.invoice',$purchase->id)}}">Purchase#</a>{{ $purchase->id  ?? ''}}</td>
+                                    <td><a href="{{route('purchse.details.invoice',$purchase->purchase_id)}}">Purchase#</a>{{ $purchase->purchase_id  ?? ''}}</td>
                                     <td>{{ $purchase['product']['name'] ??''}}</td>
                                     <td>{{ $purchase->quantity ?? ''}}</td>
                                     <td>{{ $purchase->unit_price ?? ''}}</td>

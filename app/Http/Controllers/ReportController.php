@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\EmployeeSalary;
+use App\Models\Expense;
 use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\Transaction;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +24,16 @@ class ReportController extends Controller
     // summary report function
     public function summaryReport()
     {
-        return view('pos.report.summary.summary');
+        $sale = Sale::where('branch_id', Auth::user()->branch_id)->get();
+        $saleAmount = $sale->sum('receivable');
+        $purchase = Purchase::where('branch_id', Auth::user()->branch_id)->get();
+        $purchaseAmount = $purchase->sum('grand_total');
+        $expense = Expense::where('branch_id', Auth::user()->branch_id)->get();
+        $expenseAmount = $expense->sum('amount');
+        $sellProfit = $sale->sum('profit');
+        $salary = EmployeeSalary::where('branch_id', Auth::user()->branch_id)->get();
+        $totalSalary = $salary->sum('debit');
+        return view('pos.report.summary.summary', compact('saleAmount', 'purchaseAmount', 'expenseAmount', 'sellProfit', 'totalSalary'));
     }
     // customer due report function
     public function customerDue()
@@ -84,29 +96,31 @@ class ReportController extends Controller
     // purchase Report report function
     public function purchaseReport()
     {
-        $purchaseItem =PurchaseItem::all();
-        return view('pos.report.purchase.purchase',compact('purchaseItem'));
+        $purchaseItem = PurchaseItem::all();
+        return view('pos.report.purchase.purchase', compact('purchaseItem'));
     }
-    public function PurchaseProductFilter(Request $request){
+    public function PurchaseProductFilter(Request $request)
+    {
 
         $purchaseItem = PurchaseItem::when($request->filterProduct, function ($query) use ($request) {
             return $query->where('product_id', $request->filterProduct);
         })
 
-        ->when($request->startDatePurches && $request->endDatePurches, function ($query) use ($request){
-            $query->whereHas('Purchas', function($query) use ($request) {
-                return $query->whereBetween('purchse_date', [$request->startDatePurches, $request->endDatePurches]);
-               });
-       })
-        // ->when($request->startDate && $request->endDate, function ($query) use ($request) {
-        //     return $query->whereBetween('purchse_date', [$request->startDate, $request->endDate]);
-        // })
-        ->get();
-        return view('pos.report.purchase.purchase-filter-table',compact('purchaseItem'))->render();
-    }//
-    public function PurchaseDetailsInvoice($id){
+            ->when($request->startDatePurches && $request->endDatePurches, function ($query) use ($request) {
+                $query->whereHas('Purchas', function ($query) use ($request) {
+                    return $query->whereBetween('purchse_date', [$request->startDatePurches, $request->endDatePurches]);
+                });
+            })
+            // ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+            //     return $query->whereBetween('purchse_date', [$request->startDate, $request->endDate]);
+            // })
+            ->get();
+        return view('pos.report.purchase.purchase-filter-table', compact('purchaseItem'))->render();
+    } //
+    public function PurchaseDetailsInvoice($id)
+    {
         $purchase = Purchase::findOrFail($id);
-        return view('pos.report.purchase.purchase_invoice',compact('purchase'));
+        return view('pos.report.purchase.purchase_invoice', compact('purchase'));
         return view('pos.report.purchase.purchase');
     }
     // public function purchaseReport()

@@ -207,16 +207,16 @@
                                 Stock Report
                             </a>
                         </li>
-                        <li class="nav-item nav-category">INFORMATION</li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('branch.view') }}" role="button"
-                                aria-controls="general-pages">
-                                <i class="link-icon" data-feather="sliders"></i>
-                                <span class="link-title">Branches</span>
-                            </a>
-                        </li>
+
                     </ul>
                 </div>
+            </li>
+            <li class="nav-item nav-category">INFORMATION</li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                    <i class="link-icon" data-feather="sliders"></i>
+                    <span class="link-title">Branches</span>
+                </a>
             </li>
             <li class="nav-item nav-category">PEOPLES</li>
             <li class="nav-item">

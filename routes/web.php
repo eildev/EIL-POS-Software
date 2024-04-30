@@ -6,6 +6,7 @@ use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CRMController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ProductsSizeController;
@@ -326,6 +327,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/report/purchase', 'purchaseReport')->name('purchase.report');
             Route::get('/purchese/product/filter', 'PurchaseProductFilter')->name('purches.product.filter.view');
             Route::get('/purchese/details/invoice/{id}', 'PurchaseDetailsInvoice')->name('purchse.details.invoice');
+        });
+    });
+    // Report related routes
+    Route::controller(CRMController::class)->group(function () {
+        Route::group(['prefix' => 'crm'], function () {
+            Route::get('sms-page', 'smsToCustomerPage')->name('sms.To.Customer.Page');
+            Route::post('sms', 'smsToCustomer')->name('sms.To.Customer');
         });
     });
 });

@@ -345,7 +345,8 @@ Route::middleware('auth')->group(function () {
             Route::get('email-page', 'emailToCustomerPage')->name('email.To.Customer.Page');
         });
         Route::group(['prefix' => 'sms'], function () {
-            Route::post('category', '')->name('sms.category.store');
+            Route::post('category', 'storeSmsCat')->name('sms.category.store');
+            Route::get('category/view', 'viewSmsCat')->name('sms.category.view');
         });
     });
 });

@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SmsCategory;
+use Validator;
+
 use Illuminate\Http\Request;
 
 class CRMController extends Controller
 {
-    function smsToCustomerPage(){
+    function smsToCustomerPage()
+    {
         return view('pos.crm.sms-marketing');
     }
-    function smsToCustomer(Request $request){
-       // Assuming $request->number and $request->sms are provided correctly
+    function smsToCustomer(Request $request)
+    {
+        // Assuming $request->number and $request->sms are provided correctly
         $url = "http://bulksmsbd.net/api/smsapimany";
         $api_key = "0yRu5BkB8tK927YQBA8u";
         $senderid = "8809617615171";
@@ -49,10 +54,37 @@ class CRMController extends Controller
         curl_close($ch);
         return $response;
     }
-    public function smsCategoryStore(Request $request){
+    public function smsCategoryStore(Request $request)
+    {
         // dd($request->all());
     }
-    public function emailToCustomerPage(){
+    public function emailToCustomerPage()
+    {
         return view('pos.crm.email.compose');
+    }
+    public function storeSmsCat(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+        ]);
+        if ($validator->passes()) {
+            $smsCat = new SmsCategory;
+            $smsCat->name = $request->name;
+            $smsCat->save();
+
+            return response()->json([
+                'status' => 200,
+                'data' => $smsCat,
+                'message' => "Successfully saved"
+            ]);
+        }
+    }
+    public function viewSmsCat()
+    {
+        $smsCat = SmsCategory::get();
+        return response()->json([
+            'status' => 200,
+            'data' => $smsCat,
+        ]);
     }
 }

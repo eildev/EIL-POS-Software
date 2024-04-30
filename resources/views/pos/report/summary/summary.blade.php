@@ -393,7 +393,7 @@
                             </tr>
                         </thead>
                         <tbody class="showData">
-                        @if ($product->count() > 0)
+                        @if ($expense->count() > 0)
                             @php
                                 $num = 0;
                             @endphp

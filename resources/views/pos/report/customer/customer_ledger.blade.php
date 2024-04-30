@@ -197,14 +197,14 @@
                                     </thead>
                                     <tbody>
                                         ${transactions.map((transaction) => `
-                                                                                                                                                        <tr>
-                                                                                                                                                            <td>${transaction.date ?? ''}</td>
-                                                                                                                                                            <td>${transaction.particulars ?? ''}</td>
-                                                                                                                                                            <td>৳ ${transaction.debit ?? ''}</td>
-                                                                                                                                                            <td>৳ ${transaction.credit ?? ''}</td>
-                                                                                                                                                            <td>৳ ${transaction.balance ?? 0}</td>
-                                                                                                                                                        </tr>
-                                                                                                                                                    `).join('')}
+                <tr>
+                    <td>${transaction.date ?? ''}</td>
+                    <td>${transaction.particulars ?? ''}</td>
+                    <td>৳ ${transaction.debit ?? ''}</td>
+                    <td>৳ ${transaction.credit ?? ''}</td>
+                    <td>৳ ${transaction.balance ?? 0}</td>
+                </tr>
+            `).join('')}
                                     </tbody>
                                     <tfoot>
                                             <tr>

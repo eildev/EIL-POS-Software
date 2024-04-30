@@ -68,9 +68,9 @@
 
 
     {{-- SMS Category modal  --}}
-    <div class="modal fade bd-example-modal-lg" id="smsCategoryModal" tabindex="-1"
-        aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal fade " id="smsCategoryModal" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalScrollableTitle">SMS Category</h5>
@@ -82,51 +82,89 @@
                             <label for="name" class="form-label">Sms Category Name<span
                                     class="text-danger">*</span></label>
                             <div class="row">
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                     <input id="defaultconfig" class="form-control name " maxlength="100" name="name"
                                         type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                                 </div>
-                                <div class=" col-md-3">
-                                    <button class="btn btn-primary w-100">Save</button>
+                                <div class="col-md-4">
+                                    <button class="btn btn-primary w-100 catSave">Save</button>
                                 </div>
                             </div>
                         </div>
                     </form>
 
-                    <div class="row mt-5">
+                    <div class="row mt-3">
                         <div class="col-md-12">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Paying Items :</th>
+                                        <th>#SL</th>
                                         <th>
-                                            <span class="paying_items">0</span>
+                                            Category Name
                                         </th>
-                                        <th>Grand Total :</th>
-                                        <th>
-                                            (<span class="grandTotal">00</span>TK)
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>Total Payable :</th>
-                                        <th>
-                                            (<span class="total_payable_amount">00</span>TK)
-                                        </th>
-                                        <th>Total Due :</th>
-                                        <th>
-                                            <span class="total_due">0</span>
-                                        </th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
+                                <tbody class="showCategory">
+
+                                </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary save_payment">Payment</button>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <script>
+        // remove error 
+        function errorRemove(element) {
+            if (element.value != '') {
+                $(element).siblings('span').hide();
+                $(element).css('border-color', 'green');
+            }
+        }
+        $(document).ready(function() {
+            $(".catSave").click(function(e) {
+                e.preventDefault();
+                // alert("ok");
+                let formData = new FormData($('.smsCategoryForm')[0]);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '{{ route('sms.category.store') }}',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status == 200) {
+                            console.log(res);
+                            // $('#exampleModalLongScollable').modal('hide');
+                            // formData.delete(entry[0]);
+                            // alert('added successfully');
+                            // $('.categoryForm')[0].reset();
+                            // categoryView();
+                            // Swal.fire({
+                            //     position: "top-end",
+                            //     icon: "success",
+                            //     title: res.message,
+                            //     showConfirmButton: false,
+                            //     timer: 1500
+                            // });
+                        } else {
+                            showError('.category_name', res.error.name);
+                        }
+                    }
+                });
+            })
+        });
+    </script>
 @endsection

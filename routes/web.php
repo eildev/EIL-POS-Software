@@ -334,6 +334,7 @@ Route::middleware('auth')->group(function () {
         Route::group(['prefix' => 'crm'], function () {
             Route::get('sms-page', 'smsToCustomerPage')->name('sms.To.Customer.Page');
             Route::post('sms', 'smsToCustomer')->name('sms.To.Customer');
+            Route::get('email-page', 'emailToCustomerPage')->name('email.To.Customer.Page');
         });
     });
 });

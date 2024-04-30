@@ -21,6 +21,7 @@
 <script src="{{ asset('assets') }}/vendors/moment/moment.min.js"></script>
 <script src="{{ asset('assets') }}/vendors/sweetalert2/sweetalert2.min.js"></script>
 <script src="{{ asset('assets') }}/vendors/tinymce/tinymce.min.js"></script>
+<script src="{{ asset('assets') }}/vendors/easymde/easymde.min.js"></script>
 <!-- End plugin js for this page -->
 
 <!-- inject:js -->

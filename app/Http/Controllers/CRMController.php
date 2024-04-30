@@ -52,4 +52,7 @@ class CRMController extends Controller
     public function smsCategoryStore(Request $request){
         // dd($request->all());
     }
+    public function emailToCustomerPage(){
+        return view('pos.crm.email.compose');
+    }
 }

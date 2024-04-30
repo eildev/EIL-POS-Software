@@ -117,10 +117,10 @@
                             <a href="{{ route('product') }}" class="nav-link">Customize Customer</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('sms.To.Customer.Page') }}" class="nav-link">Email Marketing</a>
+                            <a href="{{ route('product') }}" class="nav-link">Email Marketing</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('product.view') }}" class="nav-link">SMS Marketing</a>
+                            <a href="{{ route('sms.To.Customer.Page') }}" class="nav-link">SMS Marketing</a>
                         </li>
                     </ul>
                 </div>

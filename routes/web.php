@@ -307,7 +307,7 @@ Route::middleware('auth')->group(function () {
             Route::get('summary', 'summaryReport')->name('summary.report');
             Route::get('low-stock', 'lowStockReport')->name('low.stock.report');
             Route::get('top-products', 'topProducts')->name('top.products.report');
-            Route::get('purchase', 'purchaseReport')->name('purchase.report');
+            // Route::get('purchase', 'purchaseReport')->name('purchase.report');
             Route::group(['prefix' => 'customer'], function () {
                 Route::get('ledger', 'customerLedger')->name('customer.ledger.report');
                 Route::get('filter', 'customerLedgerFilter')->name('customer.ledger.filter');
@@ -322,6 +322,10 @@ Route::middleware('auth')->group(function () {
             });
             Route::get('bank', 'bankReport')->name('bank.report');
             Route::get('stock', 'stockReport')->name('stock.report');
+            //
+            Route::get('/report/purchase', 'purchaseReport')->name('purchase.report');
+            Route::get('/purchese/product/filter', 'PurchaseProductFilter')->name('purches.product.filter.view');
+            Route::get('/purchese/details/invoice/{id}', 'PurchaseDetailsInvoice')->name('purchse.details.invoice');
         });
     });
 });

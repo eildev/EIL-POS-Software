@@ -7,8 +7,14 @@ use App\Models\Customer;
 use App\Models\Branch;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Repositories\RepositoryInterfaces\CustomerInterfaces;
 class CustomerController extends Controller
 {
+
+    private $customer_repo;
+    public function __construct(CustomerInterfaces $customer_interface){
+        $this->customer_repo = $customer_interface;
+    }
     public function AddCustomer(){
         return view('pos.customer.add_customer');
     }//End Method
@@ -34,11 +40,11 @@ class CustomerController extends Controller
         // return redirect()->route('pos.customer.view')->with($notification);
     }//End Method
     public function CustomerView(){
-        $customers = Customer::latest()->get();
+        $customers = $this->customer_repo->ViewAllCustomer();
         return view('pos.customer.view_customer',compact('customers'));
     }//
     public function CustomerEdit($id){
-        $customer = Customer::find($id);
+        $customer = $this->customer_repo->EditCustomer($id);
         return view('pos.customer.edit_customer',compact('customer'));
     }//
     public function CustomerUpdate(Request $request,$id){

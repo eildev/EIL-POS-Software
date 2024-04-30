@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories\RepositoryClasses;
 use App\Models\SubCategory;
-use App\Repositories\RepositoryIntefaces\SubCategoryInterface;
+use App\Repositories\RepositoryInterfaces\SubCategoryInterface;
 class SubCategoryRepository implements SubCategoryInterface{
     public function getAllSubCategory(){
         return SubCategory::all();

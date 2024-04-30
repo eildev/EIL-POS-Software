@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories\RepositoryIntefaces;
+namespace App\Repositories\RepositoryInterfaces;
 interface SubCategoryInterface {
 public function  getAllSubCategory();
 public function create(array $data);

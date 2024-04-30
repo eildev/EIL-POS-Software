@@ -81,4 +81,4 @@
 <script src="{{ asset('assets/js/codedeletesweet.js') }}"></script>
 
 <script src="{{ asset('assets/js/myvalidate.min.js') }}"></script>
-<!-- End custom js for this page -->
+<!-- End custom js for this page --->

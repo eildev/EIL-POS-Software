@@ -6,10 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+
+use App\Repositories\RepositoryInterfaces\EmployeeInterface;
+
 class EmployeeController extends Controller
 {
+
+    private $employee_repo;
+    public function __construct(EmployeeInterface $employee_interface){
+        $this->employee_repo = $employee_interface;
+    }
+
     public function EmployeeView(){
-        $employees = Employee::all();
+        $employees = $this->employee_repo->ViewAllEmployee();
         return view('pos.employee.view_employee',compact('employees'));
     }//
     public function EmployeeAdd(){
@@ -43,7 +52,7 @@ class EmployeeController extends Controller
              return redirect()->route('employee.view')->with($notification);
     }//
     public function EmployeeEdit($id){
-        $employees = Employee::findOrFail($id);
+        $employees =  $this->employee_repo->EditEmployee($id);
         return view('pos.employee.edit_employee',compact('employees'));
     }//
     public function EmployeeUpdate(Request $request){

@@ -6,7 +6,6 @@ use App\Models\Customer;
 use App\Models\EmployeeSalary;
 use App\Models\Expense;
 use App\Models\Product;
-use App\Models\Expense;
 use App\Models\Supplier;
 use App\Models\Transaction;
 use App\Models\Purchase;
@@ -30,7 +29,6 @@ class ReportController extends Controller
             ->take(20)
             ->get();
         $expense =  Expense::all();
-        return view('pos.report.summary.summary',compact('products','expense'));
         $sale = Sale::where('branch_id', Auth::user()->branch_id)->get();
         $saleAmount = $sale->sum('receivable');
         $purchase = Purchase::where('branch_id', Auth::user()->branch_id)->get();
@@ -40,7 +38,7 @@ class ReportController extends Controller
         $sellProfit = $sale->sum('profit');
         $salary = EmployeeSalary::where('branch_id', Auth::user()->branch_id)->get();
         $totalSalary = $salary->sum('debit');
-        return view('pos.report.summary.summary', compact('saleAmount', 'purchaseAmount', 'expenseAmount', 'sellProfit', 'totalSalary'));
+        return view('pos.report.summary.summary', compact('saleAmount', 'purchaseAmount', 'expenseAmount', 'sellProfit', 'totalSalary', 'products','expense'));
     }
     // customer due report function
     public function customerDue()

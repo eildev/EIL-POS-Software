@@ -117,7 +117,7 @@
                             <a href="{{ route('product') }}" class="nav-link">Customize Customer</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('product') }}" class="nav-link">Email Marketing</a>
+                            <a href="{{ route('email.To.Customer.Page') }}" class="nav-link">Email Marketing</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('sms.To.Customer.Page') }}" class="nav-link">SMS Marketing</a>
@@ -274,6 +274,12 @@
                 </div>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('damage') }}" role="button" aria-controls="general-pages">
+                    <i class="link-icon" data-feather="book"></i>
+                    <span class="link-title">Damage</span>
+                </a>
+            </li>
             <li class="nav-item nav-category">Bank</li>
             <li class="nav-item">
                 <a href="{{ route('bank') }}" class="nav-link">

@@ -36,6 +36,7 @@
 <!-- inject:css -->
 <link rel="stylesheet" href="{{ asset('assets') }}/fonts/feather-font/css/iconfont.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/vendors/flag-icon-css/css/flag-icon.min.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/vendors/easymde/easymde.min.css">
 <!-- endinject -->
 @php
     $mode = App\models\PosSetting::all()->first();

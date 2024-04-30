@@ -6,7 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Support\Str;
-use App\Repositories\RepositoryIntefaces\CategoryInterface;
+use App\Repositories\RepositoryInterfaces\CategoryInterface;
 class CategoryController extends Controller
 {
     private $CategoryRepo;

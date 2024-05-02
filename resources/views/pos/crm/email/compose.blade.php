@@ -87,49 +87,64 @@
               </div>
               <div class="p-3 pb-0">
                 <div class="to">
-                  <div class="row mb-3">
+                  <div class="row mb-3 form-valid-groups">
                     <label class="col-md-2 col-form-label">To:</label>
                     <div class="col-md-10">
                         @php
                         $customer = App\Models\Customer::all();
                         @endphp
-                        <form  method="POST" action="{{ route('customer.send.email') }}"">
+                        <form  id="myValidForm" method="POST" action="{{ route('customer.send.email') }}">
                             @csrf
-                      <select id="customerEmailSelect" name="recipients[]" class="compose-multiple-select form-select" multiple="multiple">
+                      <select id="customerEmailSelect" name="recipients[]" class="compose-multiple-select form-select @error('recipients') is-invalid @enderror" multiple="multiple">
+
                         {{-- <option selected disabled>Select Mail</option> --}}
                         @foreach ($customer as $customerEmail)
-
                             <option value="{{$customerEmail->email}}">{{$customerEmail->email}}</option>
                         @endforeach
                         <option value="selectAll">Select All</option>
                     </select>
-
+                    @error('recipients')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     </div>
                   </div>
                 </div>
                 <div class="to cc">
-                  <div class="row mb-3">
+                  <div class="row mb-3 form-valid-groups">
                     <label class="col-md-2 col-form-label">Cc</label>
                     <div class="col-md-10" >
-                      <input class="form-control" type="text" name="cc_recipients[]">
+                        {{-- <input id="tags" class="form-control  @error('cc_recipients') is-invalid @enderror" name="cc_recipients[]" style="color: rgb(102, 102, 102); width: 76.6667px;"> --}}
+                      <input multiple="multiple" class="form-control @error('cc_recipients') is-invalid @enderror" type="text" name="cc_recipients[]">
+
+
                     </div>
+                    @error('cc_recipients')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                     @enderror
                   </div>
                 </div>
                 <div class="subject">
-                  <div class="row mb-3">
+                  <div class="row mb-3 form-valid-groups">
                     <label class="col-md-2 col-form-label" >Subject</label>
                     <div class="col-md-10">
-                      <input class="form-control" name="subject" type="text">
+                      <input class="form-control @error('subject') is-invalid @enderror" name="subject" type="text">
+                      @error('subject')
+                      <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
+
                   </div>
                 </div>
               </div>
-              <div class="px-3">
-                <div class="col-md-12">
+              <div class="px-3 form-valid-groups">
+                <div class="col-md-12 ">
                   <div class="mb-3">
                     <label class="form-label visually-hidden" for="easyMdeEditor">Descriptions </label>
-                    <textarea class="form-control" name="message" id="easyMdeEditor" rows="5"></textarea>
+                    <textarea class="form-control @error('subject') is-invalid @enderror" name="message" id="easyMdeEditor" rows="5"></textarea>
                   </div>
+                  @error('message')
+                  <div class="alert alert-danger">{{ $message }}</div>
+                     @enderror
                 </div>
                 <div>
                   <div class="col-md-12">
@@ -157,5 +172,8 @@
             }
         });
     });
+
+    ///
+
 </script>
 @endsection

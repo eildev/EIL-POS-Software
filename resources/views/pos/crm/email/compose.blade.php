@@ -21,20 +21,14 @@
                 </div>
               <div class="email-aside-nav collapse">
                 <ul class="nav flex-column">
-                  <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center" href="../email/inbox.html">
-                      <i data-feather="inbox" class="icon-lg me-2"></i>
-                      Inbox
-                      <span class="badge bg-danger fw-bolder ms-auto">2
-                    </a>
-                  </li>
+
                   <li class="nav-item active">
                     <a class="nav-link d-flex align-items-center" href="#">
                       <i data-feather="mail" class="icon-lg me-2"></i>
                       Sent Mail
                     </a>
                   </li>
-                  <li class="nav-item">
+                  {{-- <li class="nav-item">
                     <a class="nav-link d-flex align-items-center" href="#">
                       <i data-feather="briefcase" class="icon-lg me-2"></i>
                       Important
@@ -46,8 +40,8 @@
                       <i data-feather="file" class="icon-lg me-2"></i>
                       Drafts
                     </a>
-                  </li>
-                  <li class="nav-item">
+                  </li> --}}
+                  {{-- <li class="nav-item">
                     <a class="nav-link d-flex align-items-center" href="#">
                       <i data-feather="star" class="icon-lg me-2"></i>
                       Tags
@@ -73,13 +67,13 @@
                     <i data-feather="tag" class="text-primary icon-lg me-2"></i>
                     Business
                   </a>
-                  </li>
-                  <li class="nav-item">
+                  </li> --}}
+                  {{-- <li class="nav-item">
                     <a class="nav-link d-flex align-items-center" href="#">
                       <i data-feather="tag" class="text-info icon-lg me-2"></i>
                       Inspiration
                     </a>
-                  </li>
+                  </li> --}}
                 </ul>
               </div>
               </div>
@@ -96,35 +90,36 @@
                   <div class="row mb-3">
                     <label class="col-md-2 col-form-label">To:</label>
                     <div class="col-md-10">
-                      <select class="compose-multiple-select form-select" multiple="multiple">
-                        <option value="AL">Alabama</option>
-                        <option value="WY">Wyoming</option>
-                        <option value="AM">America</option>
-                        <option value="CA">Canada</option>
-                        <option value="RU">Russia</option>
-                      </select>
+                        @php
+                        $customer = App\Models\Customer::all();
+                        @endphp
+                        <form  method="POST" action="{{ route('customer.send.email') }}"">
+                            @csrf
+                      <select id="customerEmailSelect" name="recipients[]" class="compose-multiple-select form-select" multiple="multiple">
+                        {{-- <option selected disabled>Select Mail</option> --}}
+                        @foreach ($customer as $customerEmail)
+
+                            <option value="{{$customerEmail->email}}">{{$customerEmail->email}}</option>
+                        @endforeach
+                        <option value="selectAll">Select All</option>
+                    </select>
+
                     </div>
                   </div>
                 </div>
                 <div class="to cc">
                   <div class="row mb-3">
                     <label class="col-md-2 col-form-label">Cc</label>
-                    <div class="col-md-10">
-                      <select class="compose-multiple-select form-select" multiple="multiple">
-                        <option value="Alabama">Alabama</option>
-                        <option value="Alaska" selected="selected">Alaska</option>
-                        <option value="Melbourne">Melbourne</option>
-                        <option value="Victoria" selected="selected">Victoria</option>
-                        <option value="Newyork">Newyork</option>
-                      </select>
+                    <div class="col-md-10" >
+                      <input class="form-control" type="text" name="cc_recipients[]">
                     </div>
                   </div>
                 </div>
                 <div class="subject">
                   <div class="row mb-3">
-                    <label class="col-md-2 col-form-label">Subject</label>
+                    <label class="col-md-2 col-form-label" >Subject</label>
                     <div class="col-md-10">
-                      <input class="form-control" type="text">
+                      <input class="form-control" name="subject" type="text">
                     </div>
                   </div>
                 </div>
@@ -133,7 +128,7 @@
                 <div class="col-md-12">
                   <div class="mb-3">
                     <label class="form-label visually-hidden" for="easyMdeEditor">Descriptions </label>
-                                    <textarea class="form-control" name="easymde" id="easyMdeEditor" rows="5"></textarea>
+                    <textarea class="form-control" name="message" id="easyMdeEditor" rows="5"></textarea>
                   </div>
                 </div>
                 <div>
@@ -142,6 +137,7 @@
                     <button class="btn btn-secondary me-1 mb-1" type="button"> Cancel</button>
                   </div>
                 </div>
+            </form>
               </div>
             </div>
           </div>
@@ -149,5 +145,17 @@
       </div>
     </div>
   </div>
-
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('customerEmailSelect').addEventListener('change', function() {
+            var selectAllOption = document.querySelector('#customerEmailSelect option[value="selectAll"]');
+            if (selectAllOption.selected) {
+                var options = document.querySelectorAll('#customerEmailSelect option:not([disabled]):not([value="selectAll"])');
+                for (var i = 0; i < options.length; i++) {
+                    options[i].selected = true;
+                }
+            }
+        });
+    });
+</script>
 @endsection

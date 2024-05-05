@@ -24,6 +24,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\EmployeeSalaryController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\damageController;
+use App\Http\Controllers\CustomeMailControler;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,7 +50,6 @@ Route::middleware('auth')->group(function () {
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
     //Profile Route
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'edit')->name('profile.edit');
@@ -203,6 +203,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/purchase/update/{id}', 'update')->name('purchase.update');
         Route::get('/purchase/destroy/{id}', 'destroy')->name('purchase.destroy');
         Route::get('/purchase/invoice/{id}', 'invoice')->name('purchase.invoice');
+        Route::get('/purchase/filter', 'filter')->name('purchase.filter');
     });
     // damage related route
     Route::controller(damageController::class)->group(function () {
@@ -342,8 +343,26 @@ Route::middleware('auth')->group(function () {
         Route::group(['prefix' => 'crm'], function () {
             Route::get('sms-page', 'smsToCustomerPage')->name('sms.To.Customer.Page');
             Route::post('sms', 'smsToCustomer')->name('sms.To.Customer');
+            Route::get('email-page', 'emailToCustomerPage')->name('email.To.Customer.Page');
+            Route::post('email', 'emailToCustomerSend')->name('email.To.Customer.Send');
+        });
+        Route::group(['prefix' => 'sms'], function () {
+            Route::post('category', 'storeSmsCat')->name('sms.category.store');
+            Route::get('category/view', 'viewSmsCat')->name('sms.category.view');
+            Route::post('category/update/{id}', 'updateSmsCat')->name('sms.category.update');
+        });
+        //Customize Customer CRM
+        Route::group(['prefix' => 'custimize-customer'], function () {
+            Route::get('list', 'CustomerlistView')->name('customer.list.view');
+            Route::get('filter.view', 'CustomerlistFilterView')->name('cutomer.Customize.filter.view');
         });
     });
+
+    ///Email Marketing
+    Route::controller(CustomeMailControler::class)->group(function () {
+        Route::post('/customer-send-email', 'CustomerSendEmail')->name('customer.send.email');
+    });
+
 });
 
 require __DIR__ . '/auth.php';

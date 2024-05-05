@@ -185,7 +185,6 @@ class PurchaseController extends Controller
                 $query->where('product_id', $request->product_id);
             });
         }
-
         // Filter by supplier_id if provided
         if ($request->supplier_id != "Select Supplier") {
             $purchaseQuery->where('supplier_id', $request->supplier_id);

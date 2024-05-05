@@ -354,6 +354,7 @@ Route::middleware('auth')->group(function () {
         //Customize Customer CRM
         Route::group(['prefix' => 'custimize-customer'], function () {
             Route::get('list', 'CustomerlistView')->name('customer.list.view');
+            Route::get('filter.view', 'CustomerlistFilterView')->name('cutomer.Customize.filter.view');
         });
     });
 

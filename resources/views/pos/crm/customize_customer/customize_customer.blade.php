@@ -17,7 +17,7 @@
                             <div class="col-sm-3">
                                 <div class="mb-3 w-100">
                                     {{-- <label class="form-label">Amount<span class="text-danger">*</span></label> --}}
-                                    <select class="transaction_customer_name is-valid js-example-basic-single form-control filter-category @error('transaction_customer_id') is-invalid @enderror" name="transaction_customer_id" aria-invalid="false" width="100">
+                                    <select class="cutomerCustomize_time is-valid js-example-basic-single form-control filter-category @error('cutomerCustomize_time_id') is-invalid @enderror" name="cutomerCustomize_time_id" aria-invalid="false" width="100">
                                         <option>Did not purchase</option>
                                         <option value="1">1 Month ago</option>
                                         <option value="2">2 Month ago</option>
@@ -52,7 +52,7 @@
                         <div class="row">
                             <div class="col-md-11 mb-2"> <!-- Left Section -->
                                 <div class="justify-content-left">
-                                    <a href="" class="btn btn-sm bg-info text-dark mr-2" id="transactionfilter">Filter</a>
+                                    <a href="" class="btn btn-sm bg-info text-dark mr-2" id="cutomerCustomizefilter">Filter</a>
                                     <a class="btn btn-sm bg-primary text-dark" onclick="window.location.reload();">Reset</a>
                                 </div>
                             </div>
@@ -71,14 +71,40 @@
                 </div>
             </div>
             {{-- ////list// --}}
-         <div id="customer">
+         <div id="customer-filter-rander">
             @include('pos.crm.customize_customer.customize_customer-table')
          </div>
         </div>
           </div>
     </div>
 
+<script>
+ $(document).ready(function (){
 
+    document.querySelector('#cutomerCustomizefilter').addEventListener('click', function(e) {
+        e.preventDefault();
+        let startDate = document.querySelector('.start-date').value;
+       // alert(startDate);
+            let endDate = document.querySelector('.end-date').value;
+           // alert(endDate);
+            let filterCustomer = document.querySelector('.cutomerCustomize_time').value;
+            //  alert(filterCustomer);
+
+            $.ajax({
+                url: "{{ route('cutomer.Customize.filter.view') }}",
+                method: 'GET',
+                data: {
+                    startDate,
+                    endDate,
+                    filterCustomer,
+                },
+                success: function(res) {
+                    jQuery('#customer-filter-rander').html(res);
+                }
+            });
+        });
+        });
+</script>
 
 
 @endsection

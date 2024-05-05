@@ -69,6 +69,7 @@
                 </div>
             </div>
         </div>
+        <h4 class="text-right"><a href="{{ route('damage.view') }}" class="btn btn-info">View All Damage List</a></h4>
     </div>
     <script type="text/javascript">
         $(document).ready(function() {

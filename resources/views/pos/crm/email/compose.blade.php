@@ -64,20 +64,6 @@
                     </div>
                   </div>
                 </div>
-                <div class="to cc">
-                  <div class="row mb-3 form-valid-groups">
-                    <label class="col-md-2 col-form-label">Cc</label>
-                    <div class="col-md-10" >
-                        {{-- <input id="tags" class="form-control  @error('cc_recipients') is-invalid @enderror" name="cc_recipients[]" style="color: rgb(102, 102, 102); width: 76.6667px;"> --}}
-                      <input multiple="multiple" class="form-control @error('cc_recipients') is-invalid @enderror" type="text" name="cc_recipients[]">
-
-
-                    </div>
-                    @error('cc_recipients')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                     @enderror
-                  </div>
-                </div>
                 <div class="subject">
                   <div class="row mb-3 form-valid-groups">
                     <label class="col-md-2 col-form-label" >Subject</label>

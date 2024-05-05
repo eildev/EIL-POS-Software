@@ -83,7 +83,7 @@
 
     document.querySelector('#cutomerCustomizefilter').addEventListener('click', function(e) {
         e.preventDefault();
-        let startDate = document.querySelector('.start-date').value;
+            let startDate = document.querySelector('.start-date').value;
        // alert(startDate);
             let endDate = document.querySelector('.end-date').value;
            // alert(endDate);

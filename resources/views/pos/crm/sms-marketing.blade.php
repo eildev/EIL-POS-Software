@@ -123,8 +123,10 @@
                                     class="text-danger">*</span></label>
                             <div class="row">
                                 <div class="col-md-8">
-                                    <input id="defaultconfig" class="form-control name " maxlength="100" name="name"
-                                        type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
+                                    <input id="defaultconfig" class="form-control category_name" maxlength="100"
+                                        name="name" type="text" onkeyup="errorRemove(this);"
+                                        onblur="errorRemove(this);">
+                                    <span class="text-danger category_name_error"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <button class="btn btn-primary w-100 catSave">Save</button>
@@ -252,10 +254,6 @@
                     success: function(res) {
                         // console.log(res);
                         if (res.status == 200) {
-                            console.log(res);
-                            // $('#exampleModalLongScollable').modal('hide');
-                            // formData.delete(entry[0]);
-                            // alert('added successfully');
                             $('.smsCategoryForm')[0].reset();
                             categoryView();
                             Swal.fire({
@@ -266,7 +264,7 @@
                                 timer: 1500
                             });
                         } else {
-                            console.log(res);
+                            // console.log(res);
                             showError('.category_name', res.error.name);
                         }
                     }
@@ -315,27 +313,61 @@
                         name: name
                     },
                     success: function(res) {
-                        console.log(res);
+                        // console.log(res);
                         if (res.status == 200) {
-                            console.log(res);
-                            // $('#edit').modal('hide');
-                            // $('.categoryFormEdit')[0].reset();
-                            // categoryView();
-                            // Swal.fire({
-                            //     position: "top-end",
-                            //     icon: "success",
-                            //     title: res.message,
-                            //     showConfirmButton: false,
-                            //     timer: 1500
-                            // });
+                            // console.log(res);
+                            $('#smsCategoryModal').modal('hide');
+                            $('.smsCategoryForm')[0].reset();
+                            categoryView();
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: res.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                         } else {
-                            console.log(res);
-                            // showError('.edit_category_name', res.error.name)
-                            // $('.edit_category_name').css('border-color', 'red');
-                            // $('.edit_category_name').focus();
-                            // $('.edit_category_name_error').show();
-                            // $('.edit_category_name_error').text(res.error.name);
+                            showError('.category_name', res.error.name);
                         }
+                    }
+                });
+            })
+
+
+            // delete category 
+            $(document).on('click', '.category_delete', function(e) {
+                e.preventDefault();
+                let id = this.getAttribute('data-id');
+
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: `/sms/category/delete/${id}`,
+                    type: 'GET',
+                    success: function(res) {
+                        if (res.status == 200) {
+                            $('#smsCategoryModal').modal('hide');
+                            categoryView();
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Deleted Successfully",
+                                icon: "success"
+                            });
+
+                        } else {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "warning",
+                                title: "File Delete Unsuccessful",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+
                     }
                 });
             })

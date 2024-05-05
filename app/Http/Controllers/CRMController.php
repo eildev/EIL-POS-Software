@@ -8,6 +8,7 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Mail\BulkMail;
 use App\Models\User;
+use App\Models\Customer;
 use App\Jobs\SendBulkEmails;
 use Illuminate\Support\Facades\Mail;
 class CRMController extends Controller
@@ -122,5 +123,10 @@ class CRMController extends Controller
             'status' => 200,
             'message' => "Successfully Updated"
         ]);
+    }//
+    public function CustomerlistView(){
+        $customer =  Customer::all();
+        $customerList =  Customer::latest()->get();
+        return view('pos.crm.customize_customer.customize_customer',compact('customer','customerList'));
     }
 }

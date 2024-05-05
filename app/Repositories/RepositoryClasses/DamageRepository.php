@@ -18,4 +18,8 @@ class DamageRepository implements DamageInterface{
         // $damage->save();
         return back();
     }
+
+    public function ViewAllDamage(){
+        return Damage::latest()->get();
+    }
 }

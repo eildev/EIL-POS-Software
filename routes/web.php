@@ -208,7 +208,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(damageController::class)->group(function () {
         Route::get('/damage', 'index')->name('damage');
         Route::post('/damage/store', 'store')->name('damage.store');
-        // Route::get('/damage/view', 'view')->name('damage.view');
+        Route::get('/damage/view', 'view')->name('damage.view');
         // Route::get('/damage/edit/{id}', 'edit')->name('damage.edit');
         // Route::post('/damage/update/{id}', 'update')->name('damage.update');
         // Route::get('/damage/destroy/{id}', 'destroy')->name('damage.destroy');

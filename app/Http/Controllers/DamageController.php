@@ -70,11 +70,10 @@ class DamageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function view(){
+        $damages = $this->damage_repo->ViewAllDamage();
+        return view('pos.damage.view_damage',compact('damages'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */

@@ -107,7 +107,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#crm" role="button" aria-expanded="false"
                     aria-controls="emails">
-                    <i class="link-icon" data-feather="package"></i>
+                    <i class="fa-solid fa-users-gear link-icon"></i>
                     <span class="link-title">CRM</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
@@ -129,7 +129,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#report" role="button" aria-expanded="false"
                     aria-controls="emails">
-                    <i class="link-icon" data-feather="package"></i>
+                    <i class="fa-solid fa-file-waveform link-icon"></i>
                     <span class="link-title">Reports</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>

@@ -209,7 +209,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(damageController::class)->group(function () {
         Route::get('/damage', 'index')->name('damage');
         Route::post('/damage/store', 'store')->name('damage.store');
-        // Route::get('/damage/view', 'view')->name('damage.view');
+        Route::get('/damage/view', 'view')->name('damage.view');
         // Route::get('/damage/edit/{id}', 'edit')->name('damage.edit');
         // Route::post('/damage/update/{id}', 'update')->name('damage.update');
         // Route::get('/damage/destroy/{id}', 'destroy')->name('damage.destroy');
@@ -350,6 +350,7 @@ Route::middleware('auth')->group(function () {
             Route::post('category', 'storeSmsCat')->name('sms.category.store');
             Route::get('category/view', 'viewSmsCat')->name('sms.category.view');
             Route::post('category/update/{id}', 'updateSmsCat')->name('sms.category.update');
+            Route::get('category/delete/{id}', 'deleteSmsCat')->name('sms.category.delete');
         });
         //Customize Customer CRM
         Route::group(['prefix' => 'custimize-customer'], function () {
@@ -362,7 +363,6 @@ Route::middleware('auth')->group(function () {
     Route::controller(CustomeMailControler::class)->group(function () {
         Route::post('/customer-send-email', 'CustomerSendEmail')->name('customer.send.email');
     });
-
 });
 
 require __DIR__ . '/auth.php';

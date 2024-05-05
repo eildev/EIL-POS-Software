@@ -301,138 +301,141 @@
     <div class="row">
         <!--//Top Sale Product Start// --->
         <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                        <h6 class="card-title text-info">Top Sale Product</h6>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title text-info">Top Sale Product</h6>
 
-                            <div id="" class="table-responsive">
-                                <table id="dataTableExample" class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>SN#</th>
-                                            <th>Product Name</th>
-                                            <th>Quantity</th>
-                                            <th>No Of Sales</th>
-                                            <th>Sale Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="showData">
-                                    @if ($products->count() > 0)
-                                        @php
-                                            $num = 0;
-                                        @endphp
-                                        <?php
-                                        $totalSaleAmount = 0;
-                                        $totalQty = 0;
-                                        $totalNoSale = 0;
-                                        ?>
+                    <div id="" class="table-responsive">
+                        <table id="dataTableExample" class="table">
+                            <thead>
+                                <tr>
+                                    <th>SN#</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>No Of Sales</th>
+                                    <th>Sale Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody class="showData">
+                                @if ($products->count() > 0)
+                                    @php
+                                        $num = 0;
+                                    @endphp
+                                    <?php
+                                    $totalSaleAmount = 0;
+                                    $totalQty = 0;
+                                    $totalNoSale = 0;
+                                    ?>
                                     @foreach ($products as $key => $productItem)
                                         <tr>
-                                        <td>{{ $num++ }}</td>
-                                        <td>{{ $productItem->name ?? ''}}</td>
-                                        @php
-                        $purchaseItems = App\Models\PurchaseItem::where('product_id', $productItem->id)->get();
-                         $totalPurchaseQuantity = $purchaseItems->sum('quantity');
+                                            <td>{{ $num++ }}</td>
+                                            <td>{{ $productItem->name ?? '' }}</td>
+                                            @php
+                                                $purchaseItems = App\Models\PurchaseItem::where(
+                                                    'product_id',
+                                                    $productItem->id,
+                                                )->get();
+                                                $totalPurchaseQuantity = $purchaseItems->sum('quantity');
 
-                        $saleItems = App\Models\SaleItem::where('product_id', $productItem->id)->get();
+                                                $saleItems = App\Models\SaleItem::where(
+                                                    'product_id',
+                                                    $productItem->id,
+                                                )->get();
 
-                        $totalsaleQuantity = $saleItems->sum('qty');
-                        $totalSalePrice = $saleItems->sum('sub_total');
-                        $noOfSales = $totalsaleQuantity - $totalPurchaseQuantity
-                                         @endphp
+                                                $totalsaleQuantity = $saleItems->sum('qty');
+                                                $totalSalePrice = $saleItems->sum('sub_total');
+                                                $noOfSales = $totalsaleQuantity - $totalPurchaseQuantity;
+                                            @endphp
 
-                                        <td> {{ $totalsaleQuantity ?? 0 }}</td>
-                                        <td>{{$noOfSales}}</td>
-                                        <td>{{$totalSalePrice ?? 0}}</td>
-                                        <?php
-                                        $totalSaleAmount += isset($totalSalePrice) ? $totalSalePrice : 0;
-                                        $totalQty += isset($totalsaleQuantity) ? $totalsaleQuantity : 0;
-                                        $totalNoSale  += isset($noOfSales) ? $noOfSales : 0;
-                                        ?>
+                                            <td> {{ $totalsaleQuantity ?? 0 }}</td>
+                                            <td>{{ $noOfSales }}</td>
+                                            <td>{{ $totalSalePrice ?? 0 }}</td>
+                                            <?php
+                                            $totalSaleAmount += isset($totalSalePrice) ? $totalSalePrice : 0;
+                                            $totalQty += isset($totalsaleQuantity) ? $totalsaleQuantity : 0;
+                                            $totalNoSale += isset($noOfSales) ? $noOfSales : 0;
+                                            ?>
 
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="12">
+                                            <div class="text-center text-warning mb-2">Data Not Found</div>
+                                        </td>
                                     </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="12">
-                                        <div class="text-center text-warning mb-2">Data Not Found</div>
-                                    </td>
-                                </tr>
-                               @endif
-                               <tfoot>
+                                @endif
+                            <tfoot>
                                 <tr>
                                     <th></th>
                                     <th></th>
-                                    <th>Qty : {{$totalQty}}</th>
-                                    <th>Total : {{$totalNoSale}}</th>
-                                    <th>Total : {{$totalSaleAmount}}Tk</th>
+                                    <th>Qty : {{ $totalQty }}</th>
+                                    <th>Total : {{ $totalNoSale }}</th>
+                                    <th>Total : {{ $totalSaleAmount }}Tk</th>
                                 </tr>
                             </tfoot>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-      <!--//Top Sale Product End// --->
-
-    <!-- //Expense Start// --->
-    <div class="col-md-6 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-            <h6 class="card-title text-info">Expense</h6>
-
-                <div id="" class="table-responsive">
-                    <table id="dataTableExample2" class="table">
-                        <thead>
-                            <tr>
-                                <th>SN#</th>
-                                <th>Expense Purpose</th>
-                                <th>Category</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody class="showData">
-                        @if ($expense->count() > 0)
-                            @php
-                                $num = 0;
-                            @endphp
-                        <?php
-                        $totalAmount = 0;
-                        ?>
-                        @foreach ($expense as $key => $expenseData)
-                            <tr>
-                            <td>{{ $num++ }}</td>
-                            <td>{{ $expenseData->purpose ?? ''}}</td>
-                            <td>{{$expenseData['expenseCat']['name']  ?? ''}}</td>
-                            <td>{{ $expenseData->amount ??''}}</td>
-                            <?php $totalAmount += isset($expenseData->amount) ? $expenseData->amount : 0; ?>
-                        </tr>
-                    @endforeach
-                   @else
-                    <tr>
-                        <td colspan="12">
-                            <div class="text-center text-warning mb-2">Data Not Found</div>
-                        </td>
-                    </tr>
-                   @endif
-
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th><strong>Total : {{ $totalAmount }} Tk</strong></th>
-                            </tr>
-                        </tfoot>
-                    </table>
                 </div>
             </div>
         </div>
-    </div>
-       <!-- //Expense End// --->
-    </div> <!-- //Row End//--->
 
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title text-info">Expense</h6>
+
+                    <div id="" class="table-responsive">
+                        <table id="dataTableExample2" class="table">
+                            <thead>
+                                <tr>
+                                    <th>SN#</th>
+                                    <th>Expense Purpose</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody class="showData">
+                                @if ($expense->count() > 0)
+                                    @php
+                                        $num = 0;
+                                    @endphp
+                                    <?php
+                                    $totalAmount = 0;
+                                    ?>
+                                    @foreach ($expense as $key => $expenseData)
+                                        <tr>
+                                            <td>{{ $num++ }}</td>
+                                            <td>{{ $expenseData->purpose ?? '' }}</td>
+                                            <td>{{ $expenseData['expenseCat']['name'] ?? '' }}</td>
+                                            <td>{{ $expenseData->amount ?? '' }}</td>
+                                            <?php $totalAmount += isset($expenseData->amount) ? $expenseData->amount : 0; ?>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="12">
+                                            <div class="text-center text-warning mb-2">Data Not Found</div>
+                                        </td>
+                                    </tr>
+                                @endif
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th><strong>Total : {{ $totalAmount }} Tk</strong></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--//Top Sale Product End// --->
+        </div>
+    </div>
 
 @endsection

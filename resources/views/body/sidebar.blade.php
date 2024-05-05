@@ -103,6 +103,103 @@
                     <span class="link-title">Taxes</span>
                 </a>
             </li>
+            <li class="nav-item nav-category">Inventory</li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('supplier') }}" role="button" aria-controls="general-pages">
+                    <i class="fa-solid fa-handshake link-icon"></i>
+                    <span class="link-title">Supplier</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
+                    aria-controls="emails">
+                    <i class="fa-solid fa-cart-plus link-icon"></i>
+                    <span class="link-title">Purchase</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="emails">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('purchase') }}" class="nav-link">Add Purchase</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('purchase.view') }}" class="nav-link">Manage Purchase</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('promotion.view') }}" class="nav-link">
+                    <i class="fa-solid fa-tag link-icon"></i>
+                    <span class="link-title">Promotion</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('promotion.details.view') }}" class="nav-link">
+                    <i class="fa-solid fa-tags link-icon"></i>
+                    <span class="link-title">Promotion Details</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('damage') }}" role="button" aria-controls="general-pages">
+                    <i class="link-icon" data-feather="book"></i>
+                    <span class="link-title">Damage</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('bank') }}" class="nav-link">
+                    <i class="fa-solid fa-building-columns link-icon"></i>
+                    <span class="link-title">Bank</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('expense.view') }}" class="nav-link">
+                    <i class="fa-solid fa-money-bill-transfer link-icon"></i>
+                    <span class="link-title">Expense</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('payment.method.add') }}" class="nav-link">
+                    <i class="fa-solid fa-cash-register link-icon"></i>
+                    <span class="link-title">Payemnet Method</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('transaction.add') }}" class="nav-link">
+                    <i class="fa-solid fa-receipt link-icon"></i>
+                    <span class="link-title">Transaction</span>
+                </a>
+            </li>
+            <li class="nav-item nav-category">PEOPLES</li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('customer.view') }}" role="button"
+                    aria-controls="general-pages">
+                    <i class="link-icon" data-feather="users"></i>
+                    <span class="link-title">Customer</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('employee.view') }}" role="button"
+                    aria-controls="general-pages">
+                    <i class="link-icon" data-feather="user-check"></i>
+                    <span class="link-title">Employee</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('employee.salary.add') }}" role="button"
+                    aria-controls="general-pages">
+                    <i class="link-icon" data-feather="user-check"></i>
+                    <span class="link-title">Employee Salary</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('advanced.employee.salary.add') }}" role="button"
+                    aria-controls="general-pages">
+                    <i class="link-icon" data-feather="user-check"></i>
+                    <span class="link-title">Advanced Employee Salary</span>
+                </a>
+            </li>
             <li class="nav-item nav-category">Customer Info. Management</li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#crm" role="button" aria-expanded="false"
@@ -114,7 +211,7 @@
                 <div class="collapse" id="crm">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="{{ route('product') }}" class="nav-link">Customize Customer</a>
+                            <a href="{{ route('customer.list.view') }}" class="nav-link">Customize Customer</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('email.To.Customer.Page') }}" class="nav-link">Email Marketing</a>
@@ -211,118 +308,17 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item nav-category">INFORMATION</li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
-                    <i class="link-icon" data-feather="sliders"></i>
-                    <span class="link-title">Branches</span>
-                </a>
-            </li>
-            <li class="nav-item nav-category">PEOPLES</li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('customer.view') }}" role="button"
-                    aria-controls="general-pages">
-                    <i class="link-icon" data-feather="users"></i>
-                    <span class="link-title">Customer</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('employee.view') }}" role="button"
-                    aria-controls="general-pages">
-                    <i class="link-icon" data-feather="user-check"></i>
-                    <span class="link-title">Employee</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('employee.salary.add') }}" role="button"
-                    aria-controls="general-pages">
-                    <i class="link-icon" data-feather="user-check"></i>
-                    <span class="link-title">Employee Salary</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('advanced.employee.salary.add') }}" role="button"
-                    aria-controls="general-pages">
-                    <i class="link-icon" data-feather="user-check"></i>
-                    <span class="link-title">Advanced Employee Salary</span>
-                </a>
-            </li>
-            <li class="nav-item nav-category">Inventory</li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('supplier') }}" role="button" aria-controls="general-pages">
-                    <i class="fa-solid fa-handshake link-icon"></i>
-                    <span class="link-title">Supplier</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
-                    aria-controls="emails">
-                    <i class="fa-solid fa-cart-plus link-icon"></i>
-                    <span class="link-title">Purchase</span>
-                    <i class="link-arrow" data-feather="chevron-down"></i>
-                </a>
-                <div class="collapse" id="emails">
-                    <ul class="nav sub-menu">
-                        <li class="nav-item">
-                            <a href="{{ route('purchase') }}" class="nav-link">Add Purchase</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('purchase.view') }}" class="nav-link">Manage Purchase</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('damage') }}" role="button" aria-controls="general-pages">
-                    <i class="link-icon" data-feather="book"></i>
-                    <span class="link-title">Damage</span>
-                </a>
-            </li>
-            <li class="nav-item nav-category">Bank</li>
-            <li class="nav-item">
-                <a href="{{ route('bank') }}" class="nav-link">
-                    <i class="fa-solid fa-building-columns link-icon"></i>
-                    <span class="link-title">Bank</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('expense.view') }}" class="nav-link">
-                    <i class="fa-solid fa-money-bill-transfer link-icon"></i>
-                    <span class="link-title">Expense</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('payment.method.add') }}" class="nav-link">
-                    <i class="fa-solid fa-cash-register link-icon"></i>
-                    <span class="link-title">Payemnet Method</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('transaction.add') }}" class="nav-link">
-                    <i class="fa-solid fa-receipt link-icon"></i>
-                    <span class="link-title">Transaction</span>
-                </a>
-            </li>
-            <li class="nav-item nav-category">PROMOTIONS</li>
-            <li class="nav-item">
-                <a href="{{ route('promotion.view') }}" class="nav-link">
-                    <i class="fa-solid fa-tag link-icon"></i>
-                    <span class="link-title">Promotion</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('promotion.details.view') }}" class="nav-link">
-                    <i class="fa-solid fa-tags link-icon"></i>
-                    <span class="link-title">Promotion Details</span>
-                </a>
-            </li>
             <li class="nav-item nav-category">SETTING & CUSTOMIZE</li>
             <li class="nav-item">
                 <a href="{{ route('pos.settings.add') }}" class="nav-link">
                     <i class="link-icon" data-feather="settings"></i>
                     <span class="link-title">Settings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
+                    <i class="link-icon" data-feather="sliders"></i>
+                    <span class="link-title">Branches</span>
                 </a>
             </li>
         </ul>

@@ -47,11 +47,12 @@
                         <div class="col-md-4">
                             <div class="d-flex justify-content-end ">
                                 <button class="btn btn-sm bg-info text-dark me-2" id="filter">Filter</button>
-                                <button type="button"
+                                <button class="btn btn-sm bg-warning text-dark me-2" id="filter">Reset</button>
+                                {{-- <button type="button"
                                     class="btn btn-outline-primary btn-icon-text ms-2 mb-2 mb-md-0 print-btn">
                                     <i class="btn-icon-prepend" data-feather="printer"></i>
                                     Print
-                                </button>
+                                </button> --}}
                             </div>
                         </div>
                     </div>
@@ -446,7 +447,7 @@
                 <h6 class="card-title text-info">Pay to Supplier</h6>
 
                 <div id="" class="table-responsive">
-                    <table id="dataTableExample" class="table">
+                    <table id="dataTableExample"class="table">
                         <thead>
                             <tr>
                                 <th>SN#</th>
@@ -501,7 +502,7 @@
                 <h6 class="card-title text-info">Receive from Customer</h6>
 
                 <div id="" class="table-responsive">
-                    <table id="dataTableExample2" class="table">
+                    <table id="dataTableExample3" class="table">
                         <thead>
                             <tr>
                                 <th>SN#</th>

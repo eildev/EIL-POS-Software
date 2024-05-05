@@ -41,59 +41,6 @@
                   New message
                 </div>
               </div>
-
-              <form action="{{route('email.To.Customer.Send')}}" method="POST">
-                    @csrf
-                    <div class="p-3 pb-0">
-                        <div class="to">
-                        <div class="row mb-3">
-                            <label class="col-md-2 col-form-label">To:</label>
-                            <div class="col-md-10">
-                            <select name="mails[]" class="compose-multiple-select form-select" multiple="multiple">
-                                <option value="majid.bd905@gmail.com">majid.bd905@gmail.com</option>
-                                <option value="abm.bd905@gmail.com">abm.bd905@gmail.com</option>
-                                <option value="eclipseintellitech@gmail.com">eclipseintellitech@gmail.com</option>
-                            </select>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="to cc">
-                        <div class="row mb-3">
-                            <label class="col-md-2 col-form-label">Cc</label>
-                            <div class="col-md-10">
-                            <select class="compose-multiple-select form-select" multiple="multiple">
-                                <option value="Alabama">Alabama</option>
-                                <option value="Alaska" selected="selected">Alaska</option>
-                                <option value="Melbourne">Melbourne</option>
-                                <option value="Victoria" selected="selected">Victoria</option>
-                                <option value="Newyork">Newyork</option>
-                            </select>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="subject">
-                        <div class="row mb-3">
-                            <label class="col-md-2 col-form-label">Subject</label>
-                            <div class="col-md-10">
-                            <input name="subject" class="form-control" type="text">
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="px-3">
-                        <div class="col-md-12">
-                        <div class="mb-3">
-                            <label class="form-label visually-hidden" for="easyMdeEditor">Descriptions </label>
-                                            <textarea name="message" class="form-control" name="easymde" id="easyMdeEditor" rows="5"></textarea>
-                        </div>
-                        </div>
-                        <div>
-                        <div class="col-md-12">
-                            <button class="btn btn-primary me-1 mb-1" type="submit">Send</button>
-                        </div>
-                        </div>
-                    </div>
-              </form>
               <div class="p-3 pb-0">
                 <div class="to">
                   <div class="row mb-3 form-valid-groups">

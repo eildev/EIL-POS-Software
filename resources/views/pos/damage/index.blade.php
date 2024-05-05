@@ -3,9 +3,7 @@
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
             <div class="">
-
-                <h4 class="text-right"><a href="{{ route('customer.view') }}" class="btn btn-info">View All Damage List</a>
-                </h4>
+                <h4 class="text-right"><a href="{{ route('damage.view') }}" class="btn btn-info">View All Damage List</a></h4>
             </div>
         </div>
         <div class="col-md-12 stretch-card">
@@ -69,7 +67,7 @@
                 </div>
             </div>
         </div>
-        <h4 class="text-right"><a href="{{ route('damage.view') }}" class="btn btn-info">View All Damage List</a></h4>
+
     </div>
     <script type="text/javascript">
         $(document).ready(function() {

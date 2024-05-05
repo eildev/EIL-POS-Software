@@ -17,6 +17,7 @@
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="ageSelect" class="form-label">Barcode</label>
+
                             <div class="input-group">
                                 <div class="input-group-text" id="btnGroupAddon"><i class="fa-solid fa-barcode"></i></div>
                                 <input type="text" class="form-control barcode_input" placeholder="Barcode"
@@ -25,10 +26,9 @@
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label for="password" class="form-label">Date</label>
+                            <label for="date" class="form-label">Date</label>
                             <div class="input-group flatpickr" id="flatpickr-date">
-                                <input type="date" class="form-control purchase_date" placeholder="" data-input
-                                    onkeyup="errorRemove(this);" onblur="errorRemove(this);">
+                                <input type="date" class="form-control purchase_date" placeholder="" data-input>
                                 <span class="input-group-text input-group-addon" data-toggle><i
                                         data-feather="calendar"></i></span>
                             </div>
@@ -266,7 +266,7 @@
                             <label for="name" class="form-label">Transaction Method <span
                                     class="text-danger">*</span></label>
                             @php
-                                $payments = App\Models\PaymentMethod::get();
+                                $payments = App\Models\Bank::get();
                             @endphp
                             <select class="form-select payment_method" data-width="100%" onclick="errorRemove(this);"
                                 onblur="errorRemove(this);">

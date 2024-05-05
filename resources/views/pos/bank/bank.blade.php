@@ -52,13 +52,13 @@
                 <div class="modal-body">
                     <form id="signupForm" class="bankForm row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Account Name</label>
+                            <label for="name" class="form-label">Account Name <span class="text-danger">*</span></label>
                             <input id="defaultconfig" class="form-control bank_name" maxlength="100" name="name"
                                 type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger bank_name_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Branch Name</label>
+                            <label for="name" class="form-label">Branch Name <span class="text-danger">*</span></label>
                             <input id="defaultconfig" class="form-control branch_name" maxlength="39" name="branch_name"
                                 type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger branch_name_error"></span>
@@ -66,20 +66,20 @@
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Manager Name/Owner Name</label>
                             <input id="defaultconfig" class="form-control manager_name" maxlength="39" name="manager_name"
-                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
-                            <span class="text-danger manager_name_error"></span>
+                                type="text">
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Phone Nnumber</label>
+                            <label for="name" class="form-label">Phone Nnumber <span
+                                    class="text-danger">*</span></label>
                             <input id="defaultconfig" class="form-control phone_number" maxlength="39" name="phone_number"
                                 type="tel" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger phone_number_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Account</label>
+                            <label for="name" class="form-label">Account <span class="text-danger">*</span></label>
                             <input id="defaultconfig" class="form-control account" maxlength="39" name="account"
                                 type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
-                            <span class="text-danger account"></span>
+                            <span class="text-danger account_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Email</label>
@@ -87,7 +87,8 @@
                                 type="email">
                         </div>
                         <div class="mb-3 col-md-12">
-                            <label for="name" class="form-label">Opening Balance</label>
+                            <label for="name" class="form-label">Opening Balance <span
+                                    class="text-danger">*</span></label>
                             <input id="defaultconfig" class="form-control opening_balance" maxlength="39"
                                 name="opening_balance" type="number" onkeyup="errorRemove(this);"
                                 onblur="errorRemove(this);">

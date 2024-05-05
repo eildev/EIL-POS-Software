@@ -131,7 +131,7 @@ class CRMController extends Controller
     }//
     public function CustomerlistFilterView(Request $request){
         // $customerList =  Customer::latest()->get();
-        // dd($request->startDate);
+        // dd($request->all());
         $customer = Customer::when($request->filterCustomer, function ($query) use ($request) {
             return $query->where('id', $request->filterCustomer);
         })

@@ -162,7 +162,7 @@
             <li class="nav-item">
                 <a href="{{ route('payment.method.add') }}" class="nav-link">
                     <i class="fa-solid fa-cash-register link-icon"></i>
-                    <span class="link-title">Payemnet Method</span>
+                    <span class="link-title">Payment Method</span>
                 </a>
             </li>
             <li class="nav-item">

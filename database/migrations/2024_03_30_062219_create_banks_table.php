@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('branch_name',150);
             $table->string('manager_name',150);
             $table->string('phone_number',20);
+            $table->string('account');
             $table->string('email',200)->nullable();
             $table->decimal('opening_balance', 12, 2)->default(0);
             $table->timestamps();

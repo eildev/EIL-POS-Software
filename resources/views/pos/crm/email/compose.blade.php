@@ -47,7 +47,7 @@
                     <label class="col-md-2 col-form-label">To:</label>
                     <div class="col-md-10">
                         @php
-                        $customer = App\Models\Customer::all();
+                        $customer = App\Models\Customer::whereNotNull('email')->where('email', '<>', '')->get();
                         @endphp
                         <form  id="myValidForm" method="POST" action="{{ route('customer.send.email') }}">
                             @csrf
@@ -57,7 +57,6 @@
                         @foreach ($customer as $customerEmail)
                             <option value="{{$customerEmail->email}}">{{$customerEmail->email}}</option>
                         @endforeach
-                        <option value="selectAll">Select All</option>
                     </select>
                     @error('recipients')
                         <div class="alert alert-danger">{{ $message }}</div>

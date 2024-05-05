@@ -114,7 +114,7 @@
                 <div class="collapse" id="crm">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="{{ route('product') }}" class="nav-link">Customize Customer</a>
+                            <a href="{{ route('customer.list.view') }}" class="nav-link">Customize Customer</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('email.To.Customer.Page') }}" class="nav-link">Email Marketing</a>

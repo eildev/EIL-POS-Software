@@ -18,10 +18,14 @@
                                 <div class="mb-3 w-100">
                                     {{-- <label class="form-label">Amount<span class="text-danger">*</span></label> --}}
                                     <select class="transaction_customer_name is-valid js-example-basic-single form-control filter-category @error('transaction_customer_id') is-invalid @enderror" name="transaction_customer_id" aria-invalid="false" width="100">
-                                        <option>Select Customer</option>
-                                        @foreach ($customer as $customers)
-                                        <option value="{{$customers->id}}">{{{$customers->name}}}</option>
-                                        @endforeach
+                                        <option>Did not purchase</option>
+                                        <option value="1">1 Month ago</option>
+                                        <option value="2">2 Month ago</option>
+                                        <option value="3">3 Month ago</option>
+                                        <option value="4">4 Month ago</option>
+                                        <option value="5">5 Month ago</option>
+                                        <option value="6">6 Month ago</option>
+                                        <option value="12">1 Year ago</option>
                                     </select>
                                 </div>
                             </div>

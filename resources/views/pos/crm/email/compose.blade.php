@@ -24,65 +24,12 @@
                 </div>
               <div class="email-aside-nav collapse">
                 <ul class="nav flex-column">
-<<<<<<< HEAD
-=======
-
->>>>>>> 6f10b5a660bfb1fc2effa472c8e973e12a28fca6
                   <li class="nav-item active">
                     <a class="nav-link d-flex align-items-center" href="#">
                       <i data-feather="mail" class="icon-lg me-2"></i>
                       Sent Mail
                     </a>
                   </li>
-<<<<<<< HEAD
-=======
-                  {{-- <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center" href="#">
-                      <i data-feather="briefcase" class="icon-lg me-2"></i>
-                      Important
-                      <span class="badge bg-secondary fw-bolder ms-auto">4
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center" href="#">
-                      <i data-feather="file" class="icon-lg me-2"></i>
-                      Drafts
-                    </a>
-                  </li> --}}
-                  {{-- <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center" href="#">
-                      <i data-feather="star" class="icon-lg me-2"></i>
-                      Tags
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center" href="#">
-                      <i data-feather="trash" class="icon-lg me-2"></i>
-                      Trash
-                    </a>
-                  </li>
-                </ul>
-                <p class="text-muted tx-12 fw-bolder text-uppercase mb-2 mt-4">Labels</p>
-                <ul class="nav flex-column">
-                  <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center" href="#">
-                      <i data-feather="tag" class="text-warning icon-lg me-2"></i>
-                      Important
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center" href="#">
-                    <i data-feather="tag" class="text-primary icon-lg me-2"></i>
-                    Business
-                  </a>
-                  </li> --}}
-                  {{-- <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center" href="#">
-                      <i data-feather="tag" class="text-info icon-lg me-2"></i>
-                      Inspiration
-                    </a>
-                  </li> --}}
->>>>>>> 6f10b5a660bfb1fc2effa472c8e973e12a28fca6
                 </ul>
               </div>
               </div>
@@ -94,60 +41,6 @@
                   New message
                 </div>
               </div>
-<<<<<<< HEAD
-              <form action="{{route('email.To.Customer.Send')}}" method="POST">
-                    @csrf
-                    <div class="p-3 pb-0">
-                        <div class="to">
-                        <div class="row mb-3">
-                            <label class="col-md-2 col-form-label">To:</label>
-                            <div class="col-md-10">
-                            <select name="mails[]" class="compose-multiple-select form-select" multiple="multiple">
-                                <option value="majid.bd905@gmail.com">majid.bd905@gmail.com</option>
-                                <option value="abm.bd905@gmail.com">abm.bd905@gmail.com</option>
-                                <option value="eclipseintellitech@gmail.com">eclipseintellitech@gmail.com</option>
-                            </select>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="to cc">
-                        <div class="row mb-3">
-                            <label class="col-md-2 col-form-label">Cc</label>
-                            <div class="col-md-10">
-                            <select class="compose-multiple-select form-select" multiple="multiple">
-                                <option value="Alabama">Alabama</option>
-                                <option value="Alaska" selected="selected">Alaska</option>
-                                <option value="Melbourne">Melbourne</option>
-                                <option value="Victoria" selected="selected">Victoria</option>
-                                <option value="Newyork">Newyork</option>
-                            </select>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="subject">
-                        <div class="row mb-3">
-                            <label class="col-md-2 col-form-label">Subject</label>
-                            <div class="col-md-10">
-                            <input name="subject" class="form-control" type="text">
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="px-3">
-                        <div class="col-md-12">
-                        <div class="mb-3">
-                            <label class="form-label visually-hidden" for="easyMdeEditor">Descriptions </label>
-                                            <textarea name="message" class="form-control" name="easymde" id="easyMdeEditor" rows="5"></textarea>
-                        </div>
-                        </div>
-                        <div>
-                        <div class="col-md-12">
-                            <button class="btn btn-primary me-1 mb-1" type="submit">Send</button>
-                        </div>
-                        </div>
-                    </div>
-              </form>
-=======
               <div class="p-3 pb-0">
                 <div class="to">
                   <div class="row mb-3 form-valid-groups">
@@ -217,7 +110,7 @@
                 </div>
             </form>
               </div>
->>>>>>> 6f10b5a660bfb1fc2effa472c8e973e12a28fca6
+
             </div>
           </div>
         </div>
@@ -236,8 +129,6 @@
             }
         });
     });
-
-    ///
 
 </script>
 @endsection

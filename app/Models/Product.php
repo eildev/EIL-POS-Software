@@ -30,4 +30,5 @@ class Product extends Model
     {
         return $this->belongsTo(Psize::class, 'size_id', 'id');
     }
+
 }

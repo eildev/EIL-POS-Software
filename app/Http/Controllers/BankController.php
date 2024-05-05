@@ -15,6 +15,7 @@ class BankController extends Controller
     }
     public function index()
     {
+
         return view('pos.bank.bank');
     }
     public function store(Request $request)
@@ -25,6 +26,7 @@ class BankController extends Controller
             'branch_name' => 'required|max:149',
             'manager_name' => 'required|max:149',
             'phone_number' => 'required|max:19',
+            'account' => 'required',
             'opening_balance' => 'required',
         ]);
 
@@ -34,6 +36,7 @@ class BankController extends Controller
             $bank->branch_name = $request->branch_name;
             $bank->manager_name = $request->manager_name;
             $bank->phone_number = $request->phone_number;
+            $bank->account = $request->account;
             $bank->email = $request->email;
             $bank->opening_balance = $request->opening_balance;
             $bank->save();
@@ -80,6 +83,7 @@ class BankController extends Controller
             'branch_name' => 'required|max:149',
             'manager_name' => 'required|max:149',
             'phone_number' => 'required|max:19',
+            'account' => 'required',
             'opening_balance' => 'required',
         ]);
         if ($validator->passes()) {
@@ -88,6 +92,7 @@ class BankController extends Controller
             $bank->branch_name = $request->branch_name;
             $bank->manager_name = $request->manager_name;
             $bank->phone_number = $request->phone_number;
+            $bank->account = $request->account;
             $bank->email = $request->email;
             $bank->opening_balance = $request->opening_balance;
             $bank->save();

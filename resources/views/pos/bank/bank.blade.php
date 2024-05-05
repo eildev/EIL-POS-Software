@@ -20,10 +20,11 @@
                             <thead>
                                 <tr>
                                     <th>SN</th>
-                                    <th>Name</th>
+                                    <th>Account Name</th>
                                     <th>Branch Name</th>
-                                    <th>Manager Name</th>
+                                    <th>Manager/Owner Name</th>
                                     <th>Phone Number</th>
+                                    <th>Account</th>
                                     <th>Email</th>
                                     <th>Opening Balance</th>
                                     <th>Actions</th>
@@ -51,7 +52,7 @@
                 <div class="modal-body">
                     <form id="signupForm" class="bankForm row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Bank Name</label>
+                            <label for="name" class="form-label">Account Name</label>
                             <input id="defaultconfig" class="form-control bank_name" maxlength="100" name="name"
                                 type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger bank_name_error"></span>
@@ -63,7 +64,7 @@
                             <span class="text-danger branch_name_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Manager Name</label>
+                            <label for="name" class="form-label">Manager Name/Owner Name</label>
                             <input id="defaultconfig" class="form-control manager_name" maxlength="39" name="manager_name"
                                 type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger manager_name_error"></span>
@@ -75,11 +76,17 @@
                             <span class="text-danger phone_number_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Account</label>
+                            <input id="defaultconfig" class="form-control account" maxlength="39" name="account"
+                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
+                            <span class="text-danger account"></span>
+                        </div>
+                        <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Email</label>
                             <input id="defaultconfig" class="form-control email" maxlength="39" name="email"
                                 type="email">
                         </div>
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-12">
                             <label for="name" class="form-label">Opening Balance</label>
                             <input id="defaultconfig" class="form-control opening_balance" maxlength="39"
                                 name="opening_balance" type="number" onkeyup="errorRemove(this);"
@@ -108,7 +115,7 @@
                 <div class="modal-body">
                     <form id="signupForm" class="editBankForm row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Bank Name</label>
+                            <label for="name" class="form-label">Account Name</label>
                             <input id="defaultconfig" class="form-control edit_bank_name" maxlength="100" name="name"
                                 type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger bank_name_error"></span>
@@ -121,7 +128,7 @@
                             <span class="text-danger edit_branch_name_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Manager Name</label>
+                            <label for="name" class="form-label">Manager Name/Owner Name</label>
                             <input id="defaultconfig" class="form-control edit_manager_name" maxlength="39"
                                 name="manager_name" type="text" onkeyup="errorRemove(this);"
                                 onblur="errorRemove(this);">
@@ -135,11 +142,17 @@
                             <span class="text-danger edit_phone_number_error"></span>
                         </div>
                         <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Account</label>
+                            <input id="defaultconfig" class="form-control edit_account" maxlength="39" name="account"
+                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
+                            <span class="text-danger edit_account"></span>
+                        </div>
+                        <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Email</label>
                             <input id="defaultconfig" class="form-control edit_email" maxlength="39" name="email"
                                 type="email">
                         </div>
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-12">
                             <label for="name" class="form-label">Opening Balance</label>
                             <input id="defaultconfig" class="form-control edit_opening_balance" maxlength="39"
                                 name="opening_balance" type="number" onkeyup="errorRemove(this);"
@@ -157,7 +170,7 @@
     </div>
 
     <script>
-        // error remove 
+        // error remove
         function errorRemove(element) {
             if (element.value != '') {
                 $(element).siblings('span').hide();
@@ -165,7 +178,7 @@
             }
         }
         $(document).ready(function() {
-            // show error 
+            // show error
             function showError(name, message) {
                 $(name).css('border-color', 'red'); // Highlight input with red border
                 $(name).focus(); // Set focus to the input field
@@ -212,6 +225,9 @@
                             if (res.error.phone_number) {
                                 showError('.phone_number', res.error.phone_number);
                             }
+                            if (res.error.account) {
+                                showError('.account', res.error.account);
+                            }
                             if (res.error.opening_balance) {
                                 showError('.opening_balance', res.error.opening_balance);
                             }
@@ -249,6 +265,9 @@
                                 ${bank.phone_number ?? 0 }
                             </td>
                             <td>
+                                ${bank.account ?? 0 }
+                            </td>
+                            <td>
                                 ${bank.email ?? "" }
                             </td>
                             <td>
@@ -283,7 +302,7 @@
             }
             bankView();
 
-            // edit Unit 
+            // edit Unit
             $(document).on('click', '.bank_edit', function(e) {
                 e.preventDefault();
                 // console.log('0k');
@@ -302,6 +321,7 @@
                             $('.edit_branch_name').val(res.bank.branch_name);
                             $('.edit_manager_name').val(res.bank.manager_name);
                             $('.edit_phone_number').val(res.bank.phone_number);
+                            $('.edit_account').val(res.bank.account);
                             $('.edit_email').val(res.bank.email);
                             $('.edit_opening_balance').val(res.bank.opening_balance);
                             $('.update_bank').val(res.bank.id);
@@ -318,7 +338,7 @@
                 });
             })
 
-            // update bank 
+            // update bank
             $('.update_bank').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -358,6 +378,9 @@
                             if (res.error.manager_name) {
                                 showError('.edit_manager_name', res.error.manager_name);
                             }
+                            if (res.error.account) {
+                                showError('.edit_account', res.error.edit_account);
+                            }
                             if (res.error.phone_number) {
                                 showError('.edit_phone_number', res.error.phone_number);
                             }
@@ -369,7 +392,7 @@
                 });
             })
 
-            // bank Delete 
+            // bank Delete
             $(document).on('click', '.bank_delete', function(e) {
                 // $('.bank_delete').click(function(e) {
                 e.preventDefault();

@@ -108,4 +108,19 @@ class CRMController extends Controller
             'data' => $smsCat,
         ]);
     }
+    public function updateSmsCat(Request $request, $id)
+    {
+        dd($id);
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|max:255',
+        // ]);
+        $smsCat = SmsCategory::findOrFail($id);
+        $smsCat = $request->name;
+        $smsCat->update();
+
+        return response()->json([
+            'status' => 200,
+            'message' => "Successfully Updated"
+        ]);
+    }
 }

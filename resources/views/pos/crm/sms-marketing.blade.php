@@ -19,6 +19,46 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <h4>Choose Customer</h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" class="form-check-input select_all" name="check"
+                                                id="">
+                                            Select All
+                                        </th>
+                                        <th>
+                                            Customer Name
+                                        </th>
+                                        <th>
+                                            Phone
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="showCustomer">
+                                    @php
+                                        $customers = App\Models\Customer::get();
+                                    @endphp
+                                    @forelse ($customers as $customer)
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="form-check-input" name="check"
+                                                    id="">
+                                            </td>
+                                            <td>
+                                                {{ $customer->name }}
+                                            </td>
+                                            <td>
+                                                {{ $customer->phone }}
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="3" class="text-center"> no data found</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
                         </div>
                         <div class="col-lg-6">
                             <h4>Send SMS</h4>
@@ -241,15 +281,88 @@
                 let id = this.getAttribute('data-id');
                 // alert(id);
                 let row = $(this).closest('tr');
+                // Hide relevant buttons within all rows
+                $('.category_delete').show();
+                $('.category_edit').show();
+                $('.category_update').hide();
+
+                // Disable editing for all input fields
+                $('.cat_name_input').attr('readonly', true).removeClass('form-control');
 
                 row.find('.category_delete').hide();
                 row.find('.category_edit').hide();
                 row.find('.category_update').show();
                 row.find('.cat_name_input').removeAttr('readonly').addClass('form-control').removeClass(
                     'catUpdateInput').focus();
-
-
             })
+
+            // update category 
+            $(document).on('click', '.category_update', function(e) {
+                e.preventDefault();
+                let id = this.getAttribute('data-id');
+                let name = $(this).closest('tr').find('.cat_name_input').val();
+                // alert(name);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: `/sms/category/update/${id}`,
+                    type: 'POST',
+                    data: {
+                        name: name
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        if (res.status == 200) {
+                            console.log(res);
+                            // $('#edit').modal('hide');
+                            // $('.categoryFormEdit')[0].reset();
+                            // categoryView();
+                            // Swal.fire({
+                            //     position: "top-end",
+                            //     icon: "success",
+                            //     title: res.message,
+                            //     showConfirmButton: false,
+                            //     timer: 1500
+                            // });
+                        } else {
+                            console.log(res);
+                            // showError('.edit_category_name', res.error.name)
+                            // $('.edit_category_name').css('border-color', 'red');
+                            // $('.edit_category_name').focus();
+                            // $('.edit_category_name_error').show();
+                            // $('.edit_category_name_error').text(res.error.name);
+                        }
+                    }
+                });
+            })
+
+
+            $('input[name="check"]').change(function() {
+                // Initialize an empty array to store phone numbers
+                var phoneNumbers = [];
+                // Loop through all checked checkboxes
+                $('input[name="check"]:checked').each(function() {
+                    // Get the phone number from the corresponding row
+                    var phoneNumber = $(this).closest('tr').find('td:eq(2)').text();
+                    // Add the phone number to the array
+                    phoneNumbers.push(phoneNumber.trim());
+                });
+                // Update the number field with the phone numbers joined by comma
+                $('textarea[name="number"]').val(phoneNumbers.join(','));
+            });
+
+            // Click event for Select All checkbox
+            $('.select_all').click(function() {
+                // Toggle all checkboxes based on the Select All checkbox's status
+                $('input[name="check"]').prop('checked', $(this).prop('checked')).change();
+            });
+
+
+
         });
     </script>
 @endsection

@@ -24,12 +24,65 @@
                 </div>
               <div class="email-aside-nav collapse">
                 <ul class="nav flex-column">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6f10b5a660bfb1fc2effa472c8e973e12a28fca6
                   <li class="nav-item active">
                     <a class="nav-link d-flex align-items-center" href="#">
                       <i data-feather="mail" class="icon-lg me-2"></i>
                       Sent Mail
                     </a>
                   </li>
+<<<<<<< HEAD
+=======
+                  {{-- <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="#">
+                      <i data-feather="briefcase" class="icon-lg me-2"></i>
+                      Important
+                      <span class="badge bg-secondary fw-bolder ms-auto">4
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="#">
+                      <i data-feather="file" class="icon-lg me-2"></i>
+                      Drafts
+                    </a>
+                  </li> --}}
+                  {{-- <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="#">
+                      <i data-feather="star" class="icon-lg me-2"></i>
+                      Tags
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="#">
+                      <i data-feather="trash" class="icon-lg me-2"></i>
+                      Trash
+                    </a>
+                  </li>
+                </ul>
+                <p class="text-muted tx-12 fw-bolder text-uppercase mb-2 mt-4">Labels</p>
+                <ul class="nav flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="#">
+                      <i data-feather="tag" class="text-warning icon-lg me-2"></i>
+                      Important
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="#">
+                    <i data-feather="tag" class="text-primary icon-lg me-2"></i>
+                    Business
+                  </a>
+                  </li> --}}
+                  {{-- <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="#">
+                      <i data-feather="tag" class="text-info icon-lg me-2"></i>
+                      Inspiration
+                    </a>
+                  </li> --}}
+>>>>>>> 6f10b5a660bfb1fc2effa472c8e973e12a28fca6
                 </ul>
               </div>
               </div>
@@ -41,6 +94,7 @@
                   New message
                 </div>
               </div>
+<<<<<<< HEAD
               <form action="{{route('email.To.Customer.Send')}}" method="POST">
                     @csrf
                     <div class="p-3 pb-0">
@@ -93,11 +147,97 @@
                         </div>
                     </div>
               </form>
+=======
+              <div class="p-3 pb-0">
+                <div class="to">
+                  <div class="row mb-3 form-valid-groups">
+                    <label class="col-md-2 col-form-label">To:</label>
+                    <div class="col-md-10">
+                        @php
+                        $customer = App\Models\Customer::all();
+                        @endphp
+                        <form  id="myValidForm" method="POST" action="{{ route('customer.send.email') }}">
+                            @csrf
+                      <select id="customerEmailSelect" name="recipients[]" class="compose-multiple-select form-select @error('recipients') is-invalid @enderror" multiple="multiple">
+
+                        {{-- <option selected disabled>Select Mail</option> --}}
+                        @foreach ($customer as $customerEmail)
+                            <option value="{{$customerEmail->email}}">{{$customerEmail->email}}</option>
+                        @endforeach
+                        <option value="selectAll">Select All</option>
+                    </select>
+                    @error('recipients')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    </div>
+                  </div>
+                </div>
+                <div class="to cc">
+                  <div class="row mb-3 form-valid-groups">
+                    <label class="col-md-2 col-form-label">Cc</label>
+                    <div class="col-md-10" >
+                        {{-- <input id="tags" class="form-control  @error('cc_recipients') is-invalid @enderror" name="cc_recipients[]" style="color: rgb(102, 102, 102); width: 76.6667px;"> --}}
+                      <input multiple="multiple" class="form-control @error('cc_recipients') is-invalid @enderror" type="text" name="cc_recipients[]">
+
+
+                    </div>
+                    @error('cc_recipients')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                     @enderror
+                  </div>
+                </div>
+                <div class="subject">
+                  <div class="row mb-3 form-valid-groups">
+                    <label class="col-md-2 col-form-label" >Subject</label>
+                    <div class="col-md-10">
+                      <input class="form-control @error('subject') is-invalid @enderror" name="subject" type="text">
+                      @error('subject')
+                      <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="px-3 form-valid-groups">
+                <div class="col-md-12 ">
+                  <div class="mb-3">
+                    <label class="form-label visually-hidden" for="easyMdeEditor">Descriptions </label>
+                    <textarea class="form-control @error('subject') is-invalid @enderror" name="message" id="easyMdeEditor" rows="5"></textarea>
+                  </div>
+                  @error('message')
+                  <div class="alert alert-danger">{{ $message }}</div>
+                     @enderror
+                </div>
+                <div>
+                  <div class="col-md-12">
+                    <button class="btn btn-primary me-1 mb-1" type="submit"> Send</button>
+                    <button class="btn btn-secondary me-1 mb-1" type="button"> Cancel</button>
+                  </div>
+                </div>
+            </form>
+              </div>
+>>>>>>> 6f10b5a660bfb1fc2effa472c8e973e12a28fca6
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('customerEmailSelect').addEventListener('change', function() {
+            var selectAllOption = document.querySelector('#customerEmailSelect option[value="selectAll"]');
+            if (selectAllOption.selected) {
+                var options = document.querySelectorAll('#customerEmailSelect option:not([disabled]):not([value="selectAll"])');
+                for (var i = 0; i < options.length; i++) {
+                    options[i].selected = true;
+                }
+            }
+        });
+    });
 
+    ///
+
+</script>
 @endsection

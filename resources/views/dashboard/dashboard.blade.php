@@ -129,7 +129,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-12 col-xl-12">
-                                <h3 class="mb-2">{{ $totalInvoiceToday }}<span
+                                <h3 class="mb-2">  {{ $totalInvoiceToday }}<span
                                         style="font-size: 15px; color:white"> ({{ $todaySaleItemsToday }})</span>
                                 </h3>
                                 <div class="d-flex align-items-baseline">
@@ -194,7 +194,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-12 col-xl-12">
-                                <h3 class="mb-2">{{$todayInvoiceProductTotal}} <span style="font-size: 15px; color:white">({{$todayInvoiceProductAmount}})</span></h3>
+                                <h3 class="mb-2">{{$todayInvoiceProductTotal}} <span style="font-size: 15px; color:white">( ৳ {{$todayInvoiceProductAmount}})</span></h3>
                                 <div class="d-flex align-items-baseline">
                                     {{-- <p class="text-white">
                                         <span>+3.3%</span>
@@ -220,30 +220,15 @@
                                     <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                             data-feather="eye" class="icon-sm me-2"></i> <span
                                             class="">View</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="edit-2" class="icon-sm me-2"></i> <span
-                                            class="">Edit</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="trash" class="icon-sm me-2"></i> <span
-                                            class="">Delete</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="printer" class="icon-sm me-2"></i> <span
-                                            class="">Print</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="download" class="icon-sm me-2"></i> <span
-                                            class="">Download</span></a>
+
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-12 col-xl-12">
-                                <h3 class="mb-2">{{ $todayInvoiceAmount }}<span
-                                        style="font-size: 15px; color:white"> ({{ $todayProfit }})</span></h3>
+                                <h3 class="mb-2"> ৳ {{ $todayInvoiceAmount }}<span
+                                        style="font-size: 15px; color:white"> (৳{{ $todayProfit }})</span></h3>
                                 <div class="d-flex align-items-baseline">
-                                    <p class="text-white">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -269,7 +254,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-12 col-xl-12">
-                                <h3 class="mb-2">{{$todayExpenseAmount}}<span style="font-size: 15px; color:white"></span></h3>
+                                <h3 class="mb-2"> ৳ {{$todayExpenseAmount}}<span style="font-size: 15px; color:white"></span></h3>
                                 <div class="d-flex align-items-baseline">
                                     {{-- <p class="text-white">
                                         <span>+3.3%</span>
@@ -332,7 +317,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-12 col-xl-12">
-                                <h3 class="mb-2">{{$saleProfitAmount}}</h3>
+                                <h3 class="mb-2"> ৳ {{$saleProfitAmount}}</h3>
                             </div>
                         </div>
                     </div>
@@ -363,18 +348,7 @@
                                         <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                                 data-feather="eye" class="icon-sm me-2"></i> <span
                                                 class="">View</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="edit-2" class="icon-sm me-2"></i> <span
-                                                class="">Edit</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="trash" class="icon-sm me-2"></i> <span
-                                                class="">Delete</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="printer" class="icon-sm me-2"></i> <span
-                                                class="">Print</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="download" class="icon-sm me-2"></i> <span
-                                                class="">Download</span></a>
+
                                     </div>
                                 </div>
                             </div>
@@ -384,10 +358,7 @@
                                             style="font-size: 15px; color:#6571ff"> ({{ $totalSaleItems }})</span>
                                     </h3>
                                     <div class="d-flex align-items-baseline">
-                                        <p class="text-success">
-                                            <span>+3.3%</span>
-                                            <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                        </p>
+
                                     </div>
                                 </div>
                             </div>
@@ -408,18 +379,7 @@
                                         <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                                 data-feather="eye" class="icon-sm me-2"></i> <span
                                                 class="">View</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="edit-2" class="icon-sm me-2"></i> <span
-                                                class="">Edit</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="trash" class="icon-sm me-2"></i> <span
-                                                class="">Delete</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="printer" class="icon-sm me-2"></i> <span
-                                                class="">Print</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="download" class="icon-sm me-2"></i> <span
-                                                class="">Download</span></a>
+
                                     </div>
                                 </div>
                             </div>
@@ -428,10 +388,7 @@
                                     <h3 class="mb-2">{{ $totalPurchase->count() }}<span
                                             style="font-size: 15px; color:#6571ff"> ({{ $totalPurchaseItems }})</span></h3>
                                     <div class="d-flex align-items-baseline">
-                                        <p class="text-success">
-                                            <span>+3.3%</span>
-                                            <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                        </p>
+
                                     </div>
                                 </div>
                             </div>
@@ -452,29 +409,15 @@
                                         <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                                 data-feather="eye" class="icon-sm me-2"></i> <span
                                                 class="">View</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="edit-2" class="icon-sm me-2"></i> <span
-                                                class="">Edit</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="trash" class="icon-sm me-2"></i> <span
-                                                class="">Delete</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="printer" class="icon-sm me-2"></i> <span
-                                                class="">Print</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="download" class="icon-sm me-2"></i> <span
-                                                class="">Download</span></a>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2">{{$totalInvoiceProductTotal}} <span style="font-size: 15px; color:#6571ff">({{$totalInvoiceProductAmount}})</span></h3>
+                                    <h3 class="mb-2">{{$totalInvoiceProductTotal}} <span style="font-size: 15px; color:#6571ff">( ৳{{$totalInvoiceProductAmount}})</span></h3>
                                     <div class="d-flex align-items-baseline">
-                                        <p class="text-success">
-                                            <span>+3.3%</span>
-                                            <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                        </p>
+
                                     </div>
                                 </div>
                             </div>
@@ -512,13 +455,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2">{{ $totalInvoiceAmount }}<span
-                                            style="font-size: 15px; color:#6571ff"> ({{ $profit }})</span></h3>
+                                    <h3 class="mb-2"> ৳ {{ $totalInvoiceAmount }}<span
+                                            style="font-size: 15px; color:#6571ff"> ( ৳{{ $profit }})</span></h3>
                                     <div class="d-flex align-items-baseline">
-                                        <p class="text-success">
-                                            <span>+3.3%</span>
-                                            <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                        </p>
+
                                     </div>
                                 </div>
                             </div>
@@ -539,29 +479,15 @@
                                         <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                                 data-feather="eye" class="icon-sm me-2"></i> <span
                                                 class="">View</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="edit-2" class="icon-sm me-2"></i> <span
-                                                class="">Edit</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="trash" class="icon-sm me-2"></i> <span
-                                                class="">Delete</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="printer" class="icon-sm me-2"></i> <span
-                                                class="">Print</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="download" class="icon-sm me-2"></i> <span
-                                                class="">Download</span></a>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2">{{$totalExpenseAmount}}<span style="font-size: 15px; color:#6571ff"></span></h3>
+                                    <h3 class="mb-2">  ৳ {{$totalExpenseAmount}}<span style="font-size: 15px; color:#6571ff"></span></h3>
                                     <div class="d-flex align-items-baseline">
-                                        <p class="text-success">
-                                            <span>+3.3%</span>
-                                            <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                        </p>
+
                                     </div>
                                 </div>
                             </div>
@@ -582,18 +508,7 @@
                                         <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                                 data-feather="eye" class="icon-sm me-2"></i> <span
                                                 class="">View</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="edit-2" class="icon-sm me-2"></i> <span
-                                                class="">Edit</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="trash" class="icon-sm me-2"></i> <span
-                                                class="">Delete</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="printer" class="icon-sm me-2"></i> <span
-                                                class="">Print</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="download" class="icon-sm me-2"></i> <span
-                                                class="">Download</span></a>
+
                                     </div>
                                 </div>
                             </div>
@@ -601,10 +516,7 @@
                                 <div class="col-12 col-md-12 col-xl-12">
                                     <h3 class="mb-2">{{$totalCustomer->count()}}</h3>
                                     <div class="d-flex align-items-baseline">
-                                        <p class="text-success">
-                                            <span>+3.3%</span>
-                                            <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                        </p>
+
                                     </div>
                                 </div>
                             </div>
@@ -625,29 +537,15 @@
                                         <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                                 data-feather="eye" class="icon-sm me-2"></i> <span
                                                 class="">View</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="edit-2" class="icon-sm me-2"></i> <span
-                                                class="">Edit</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="trash" class="icon-sm me-2"></i> <span
-                                                class="">Delete</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="printer" class="icon-sm me-2"></i> <span
-                                                class="">Print</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="download" class="icon-sm me-2"></i> <span
-                                                class="">Download</span></a>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2">{{$totalSaleProfit}}</h3>
+                                    <h3 class="mb-2"> ৳ {{$totalSaleProfit}}</h3>
                                     <div class="d-flex align-items-baseline">
-                                        <p class="text-success">
-                                            <span>+3.3%</span>
-                                            <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                        </p>
+
                                     </div>
                                 </div>
                             </div>
@@ -678,18 +576,7 @@
                                     <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                             data-feather="eye" class="icon-sm me-2"></i> <span
                                             class="">View</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="edit-2" class="icon-sm me-2"></i> <span
-                                            class="">Edit</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="trash" class="icon-sm me-2"></i> <span
-                                            class="">Delete</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="printer" class="icon-sm me-2"></i> <span
-                                            class="">Print</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="download" class="icon-sm me-2"></i> <span
-                                            class="">Download</span></a>
+
                                 </div>
                             </div>
                         </div>
@@ -699,10 +586,7 @@
                                         style="font-size: 15px; color:#6571ff"> ({{ $todaySaleItemsMonth  }})</span>
                                 </h3>
                                 <div class="d-flex align-items-baseline">
-                                    <p class="text-success">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p>
+
                                 </div>
                             </div>
                         </div>
@@ -723,18 +607,6 @@
                                     <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                             data-feather="eye" class="icon-sm me-2"></i> <span
                                             class="">View</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="edit-2" class="icon-sm me-2"></i> <span
-                                            class="">Edit</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="trash" class="icon-sm me-2"></i> <span
-                                            class="">Delete</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="printer" class="icon-sm me-2"></i> <span
-                                            class="">Print</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="download" class="icon-sm me-2"></i> <span
-                                            class="">Download</span></a>
                                 </div>
                             </div>
                         </div>
@@ -743,10 +615,7 @@
                                 <h3 class="mb-2">{{ $MonthPurchaseToday }}<span
                                         style="font-size: 15px; color:#6571ff"> ({{ $MonthPurchaseItemsToday  }})</span></h3>
                                 <div class="d-flex align-items-baseline">
-                                    <p class="text-success">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p>
+
                                 </div>
                             </div>
                         </div>
@@ -767,29 +636,15 @@
                                     <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                             data-feather="eye" class="icon-sm me-2"></i> <span
                                             class="">View</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="edit-2" class="icon-sm me-2"></i> <span
-                                            class="">Edit</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="trash" class="icon-sm me-2"></i> <span
-                                            class="">Delete</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="printer" class="icon-sm me-2"></i> <span
-                                            class="">Print</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="download" class="icon-sm me-2"></i> <span
-                                            class="">Download</span></a>
+
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-12 col-xl-12">
-                                <h3 class="mb-2">{{$monthInvoiceProductTotal}} <span style="font-size: 15px; color:#6571ff">({{$monthInvoiceProductAmount}})</span></h3>
+                                <h3 class="mb-2">{{$monthInvoiceProductTotal}} <span style="font-size: 15px; color:#6571ff">(  ৳ {{$monthInvoiceProductAmount}})</span></h3>
                                 <div class="d-flex align-items-baseline">
-                                    <p class="text-success">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p>
+
                                 </div>
                             </div>
                         </div>
@@ -810,30 +665,16 @@
                                     <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                             data-feather="eye" class="icon-sm me-2"></i> <span
                                             class="">View</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="edit-2" class="icon-sm me-2"></i> <span
-                                            class="">Edit</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="trash" class="icon-sm me-2"></i> <span
-                                            class="">Delete</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="printer" class="icon-sm me-2"></i> <span
-                                            class="">Print</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="download" class="icon-sm me-2"></i> <span
-                                            class="">Download</span></a>
+
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-12 col-xl-12">
-                                <h3 class="mb-2">{{ $monthInvoiceAmount }}<span
-                                        style="font-size: 15px; color:#6571ff"> ({{ $monthProfit }})</span></h3>
+                                <h3 class="mb-2"> ৳{{ $monthInvoiceAmount }}<span
+                                        style="font-size: 15px; color:#6571ff"> (  ৳{{ $monthProfit }})</span></h3>
                                 <div class="d-flex align-items-baseline">
-                                    <p class="text-success">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p>
+
                                 </div>
                             </div>
                         </div>
@@ -854,29 +695,15 @@
                                     <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                             data-feather="eye" class="icon-sm me-2"></i> <span
                                             class="">View</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="edit-2" class="icon-sm me-2"></i> <span
-                                            class="">Edit</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="trash" class="icon-sm me-2"></i> <span
-                                            class="">Delete</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="printer" class="icon-sm me-2"></i> <span
-                                            class="">Print</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="download" class="icon-sm me-2"></i> <span
-                                            class="">Download</span></a>
+
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-12 col-xl-12">
-                                <h3 class="mb-2">{{$monthExpenseAmount}}<span style="font-size: 15px; color:#6571ff"></span></h3>
+                                <h3 class="mb-2">   ৳ {{$monthExpenseAmount}}<span style="font-size: 15px; color:#6571ff"></span></h3>
                                 <div class="d-flex align-items-baseline">
-                                    <p class="text-success">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p>
+
                                 </div>
                             </div>
                         </div>
@@ -897,18 +724,6 @@
                                     <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                             data-feather="eye" class="icon-sm me-2"></i> <span
                                             class="">View</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="edit-2" class="icon-sm me-2"></i> <span
-                                            class="">Edit</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="trash" class="icon-sm me-2"></i> <span
-                                            class="">Delete</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="printer" class="icon-sm me-2"></i> <span
-                                            class="">Print</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="download" class="icon-sm me-2"></i> <span
-                                            class="">Download</span></a>
                                 </div>
                             </div>
                         </div>
@@ -916,10 +731,7 @@
                             <div class="col-12 col-md-12 col-xl-12">
                                 <h3 class="mb-2">{{$monthCustomer->count()}}</h3>
                                 <div class="d-flex align-items-baseline">
-                                    <p class="text-success">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p>
+
                                 </div>
                             </div>
                         </div>
@@ -940,29 +752,15 @@
                                     <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
                                             data-feather="eye" class="icon-sm me-2"></i> <span
                                             class="">View</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="edit-2" class="icon-sm me-2"></i> <span
-                                            class="">Edit</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="trash" class="icon-sm me-2"></i> <span
-                                            class="">Delete</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="printer" class="icon-sm me-2"></i> <span
-                                            class="">Print</span></a>
-                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                            data-feather="download" class="icon-sm me-2"></i> <span
-                                            class="">Download</span></a>
+
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-12 col-xl-12">
-                                <h3 class="mb-2">{{$monthSaleProfitAmount}}</h3>
+                                <h3 class="mb-2"> ৳ {{$monthSaleProfitAmount}}</h3>
                                 <div class="d-flex align-items-baseline">
-                                    <p class="text-success">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p>
+
                                 </div>
                             </div>
                         </div>

@@ -27,7 +27,7 @@
                                     <th>Account</th>
                                     <th>Email</th>
                                     <th>Opening Balance</th>
-                                    <th>Actions</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody class="showData">

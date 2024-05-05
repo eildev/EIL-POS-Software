@@ -22,10 +22,10 @@
                                     </tr>
                                 </thead>
                                 <tbody class="showData">
-                                @if ($customerList->count() > 0)
-                                @foreach ($customerList as $key => $customer)
+                                @if ($customer->count() > 0)
+                                @foreach ($customer as $key => $customer)
                                     <tr>
-                                    {{-- <td>{{ $key + 1 }}</td> --}}
+                                    <td>{{ $key + 1 }}</td>
                                     <td>{{ $customer->name ?? ''}}</td>
                                     <td>{{ $customer->email ?? ''}}</td>
                                     <td>{{ $customer->phone ?? ''}}</td>

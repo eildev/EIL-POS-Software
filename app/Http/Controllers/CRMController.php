@@ -126,7 +126,20 @@ class CRMController extends Controller
     }//
     public function CustomerlistView(){
         $customer =  Customer::all();
-        $customerList =  Customer::latest()->get();
-        return view('pos.crm.customize_customer.customize_customer',compact('customer','customerList'));
+        // $customer =  Customer::latest()->get();
+        return view('pos.crm.customize_customer.customize_customer',compact('customer'));
+    }//
+    public function CustomerlistFilterView(Request $request){
+        // $customerList =  Customer::latest()->get();
+        // dd($request->startDate);
+        $customer = Customer::when($request->filterCustomer, function ($query) use ($request) {
+            return $query->where('id', $request->filterCustomer);
+        })
+        ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+            return $query->whereBetween('created_at', [$request->startDate, $request->endDate]);
+        })
+        ->get();
+
+        return view('pos.crm.customize_customer.customize_customer-table',compact('customer'))->render();
     }
 }

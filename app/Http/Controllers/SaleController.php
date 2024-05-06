@@ -147,6 +147,7 @@ class SaleController extends Controller
             $accountTransaction->purpose =  'receive';
             $accountTransaction->account_id =  $request->payment_method;
             $accountTransaction->credit = $request->paid;
+            // $accountTransaction->balance = $accountTransaction->balance + $request->paid;
             $accountTransaction->save();
 
             $transaction = Transaction::where('customer_id', $request->customer_id)->first();

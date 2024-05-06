@@ -13,10 +13,11 @@
                                 <tr>
                                     <th>SN</th>
                                     <th>Account</th>
-                                    <th>Branch</th>
+                                    <th>Branch Name</th>
                                     <th>Purpose</th>
                                     <th>Debit</th>
                                     <th>Credit</th>
+                                    <th>Balance</th>
                                     <th>Note</th>
                                 </tr>
                             </thead>
@@ -25,18 +26,20 @@
                             @foreach ($accountTransaction as $key => $acountData)
                                 <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $acountData->account_id ?? ''}}</td>
-                                <td>{{ $acountData->branch_id ?? ''}}</td>
+                                <td>{{ $acountData['bank']['name'] ?? ''}}</td>
+                                <td>{{ $acountData['branch']['name'] ?? ''}}</td>
                                 <td>{{ $acountData->purpose ?? ''}}</td>
                                 <td>{{ $acountData->debit ?? ''}} TK</td>
                                 <td>{{ $acountData->credit ?? ''}}TK</td>
-                                <td>  @php
+                                <td>{{ $acountData->balance ?? ''}}TK</td>
+                                <td> @php
                                     $text = $acountData->note ?? '';
                                     $chunks = str_split($text, 40);
-                                @endphp
-                                      @foreach ($chunks as $chunk)
+                                    @endphp
+                                 @foreach ($chunks as $chunk)
                                       {{ $chunk }}<br>
-                                  @endforeach</td>
+                                  @endforeach
+                                  </td>
                             </tr>
                         @endforeach
                     @else

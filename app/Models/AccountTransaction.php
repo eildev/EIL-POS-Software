@@ -23,6 +23,12 @@ class AccountTransaction extends Model
             // Update the current balance
             $transaction->balance = $lastBalance + $transaction->credit - $transaction->debit;
         });
-    }
 
+    }
+    public function bank(){
+            return $this->belongsTo(Bank::class,'account_id','id');
+    }
+    public function branch(){
+            return $this->belongsTo(Branch::class,'branch_id','id');
+    }
 }

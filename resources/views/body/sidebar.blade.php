@@ -305,7 +305,7 @@
                                 Account Transaction
                             </a>
                         </li>
-                      
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('stock.report') }}" role="button"
                                 aria-controls="general-pages">

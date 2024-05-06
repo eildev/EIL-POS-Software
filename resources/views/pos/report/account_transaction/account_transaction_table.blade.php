@@ -1,11 +1,7 @@
-@extends('master')
-@section('admin')
-
 <div class="row">
 <div class="col-md-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                <h6 class="card-title text-info">Account Transaction List</h6>
+            <
+
 
                     <div id="" class="table-responsive">
                         <table id="dataTableExample" class="table">
@@ -54,10 +50,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
+
         </div>
 </div>
-@endsection
-
-

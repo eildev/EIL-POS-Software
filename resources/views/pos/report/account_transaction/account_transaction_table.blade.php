@@ -1,8 +1,5 @@
 <div class="row">
 <div class="col-md-12 grid-margin stretch-card">
-            <
-
-
                     <div id="" class="table-responsive">
                         <table id="dataTableExample" class="table">
                             <thead>
@@ -46,10 +43,8 @@
                             </td>
                         </tr>
                        @endif
-
                             </tbody>
                         </table>
                     </div>
-
         </div>
 </div>

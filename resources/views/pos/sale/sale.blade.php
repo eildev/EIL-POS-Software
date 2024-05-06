@@ -27,10 +27,17 @@
 
                         <div class="mb-3 col-md-6">
                             <label for="date" class="form-label">Date</label>
-                            <div class="input-group flatpickr" id="flatpickr-date">
+                            {{-- <div class="input-group flatpickr" id="flatpickr-date">
                                 <input type="date" class="form-control purchase_date" placeholder="" data-input>
                                 <span class="input-group-text input-group-addon" data-toggle><i
                                         data-feather="calendar"></i></span>
+                            </div> --}}
+                            <div class="input-group flatpickr me-2 mb-2 mb-md-0" id="dashboardDate">
+                                <span class="input-group-text input-group-addon bg-transparent border-primary"
+                                    data-toggle><i data-feather="calendar" class="text-primary"></i></span>
+                                <input type="text" name="date"
+                                    class="form-control bg-transparent border-primary purchase_date"
+                                    placeholder="Select date" data-input>
                             </div>
                             <span class="text-danger purchase_date_error"></span>
                         </div>
@@ -339,8 +346,8 @@
 
         $(document).ready(function() {
             $('.barcode_input').focus();
-            var currentDate = new Date().toISOString().split('T')[0];
-            $('.purchase_date').val(currentDate);
+            // var currentDate = new Date().toISOString().split('T')[0];
+            // $('.purchase_date').val(currentDate);
             // show error 
             function showError(name, message) {
                 $(name).css('border-color', 'red');
@@ -619,6 +626,7 @@
                 // alert('ok');
                 let customer_id = $('.select-customer').val();
                 let sale_date = $('.purchase_date').val();
+                let formattedSaleDate = moment(sale_date, 'DD-MMM-YYYY').format('YYYY-MM-DD HH:mm:ss');
                 let quantity = totalQuantity;
                 let total_amount = parseFloat($('.total').val());
                 let discount = $('.promotion_id').val();
@@ -656,7 +664,7 @@
                 let allData = {
                     // for purchase table 
                     customer_id,
-                    sale_date,
+                    sale_date: formattedSaleDate,
                     quantity,
                     total_amount,
                     discount,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AccountTransaction;
 use App\Models\ActualPayment;
 use App\Models\Customer;
 use App\Models\Product;
@@ -139,6 +140,15 @@ class SaleController extends Controller
             $actualPayment->amount = $request->paid;
             $actualPayment->date = $request->sale_date;
             $actualPayment->save();
+
+
+            $accountTransaction = new AccountTransaction;
+            $accountTransaction->branch_id =  Auth::user()->branch_id;
+            $accountTransaction->purpose =  'receive';
+            $accountTransaction->account_id =  $request->payment_method;
+            $accountTransaction->credit = $request->paid;
+            // $accountTransaction->balance = $accountTransaction->balance + $request->paid;
+            $accountTransaction->save();
 
             $transaction = Transaction::where('customer_id', $request->customer_id)->first();
 

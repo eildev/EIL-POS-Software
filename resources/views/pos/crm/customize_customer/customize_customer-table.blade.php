@@ -18,7 +18,6 @@
                                         <th>Wallet Balance</th>
                                         <th>Total Receivable</th>
                                         <th>Total Payable</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody class="showData">
@@ -35,14 +34,6 @@
                                     <td>{{ $customer->wallet_balance ?? ''}}</td>
                                     <td>{{ $customer->total_receivable ?? ''}}</td>
                                     <td>{{ $customer->total_payable ?? ''}}</td>
-                                    <td>
-                                        <a href="" class="btn btn-sm btn-primary btn-icon">
-                                            <i data-feather="edit"></i>
-                                        </a>
-                                        <a href="" id="delete" class="btn btn-sm btn-danger btn-icon">
-                                            <i data-feather="trash-2"></i>
-                                        </a>
-                                    </td>
                                 </tr>
                             @endforeach
                         @else
@@ -50,8 +41,7 @@
                                 <td colspan="12">
                                     <div class="text-center text-warning mb-2">Data Not Found</div>
                                     <div class="text-center">
-                                        <a href="{{route('customer.add')}}" class="btn btn-primary">Add Customer<i
-                                                data-feather="plus"></i></a>
+                                       Data Not Found
                                     </div>
                                 </td>
                             </tr>

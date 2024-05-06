@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Customer;
 use App\Jobs\SendBulkEmails;
 use App\Models\Sms;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 
 class CRMController extends Controller
@@ -73,10 +74,8 @@ class CRMController extends Controller
                         // You may want to store additional information like API response or status
                     ]);
                 } catch (\Exception $e) {
-                    // Log or handle the error
-                    \Log::error('Failed to create SMS record: ' . $e->getMessage());
                     // Optionally, you can also add a flash message to inform the user about the error
-                    return back()->with('error', 'Failed to send SMS. Please try again later.');
+                    return back()->with('error', $e->getMessage());
                 }
             }
         }
@@ -185,16 +184,31 @@ class CRMController extends Controller
     } //
     public function CustomerlistFilterView(Request $request)
     {
-        // $customerList =  Customer::latest()->get();
-        // dd($request->all());
-        $customer = Customer::when($request->filterCustomer, function ($query) use ($request) {
-            return $query->where('id', $request->filterCustomer);
-        })
-            ->when($request->startDate && $request->endDate, function ($query) use ($request) {
-                return $query->whereBetween('created_at', [$request->startDate, $request->endDate]);
-            })
-            ->get();
 
+        if (is_numeric($request->filterCustomer)) {
+            $monthsToSubtract = intval($request->filterCustomer);
+            $oneMonthAgo = Carbon::now()->subMonths($monthsToSubtract);
+        } else {
+            // Handle the error or default case
+            $oneMonthAgo = Carbon::now();  // Default to current time or other appropriate default
+        }
+
+        $customerQuery = Customer::query();
+
+        // Check if the filter should not include customers who made a purchase after a specific date.
+        if ($request->filterCustomer != "Did not purchase") {
+            $customerQuery->whereDoesntHave('sales', function ($query1) use ($oneMonthAgo) {
+                $query1->where('created_at', '>', $oneMonthAgo);
+            });
+        }
+        // Apply a date range filter if both start and end dates are provided.
+        if ($request->start_date && $request->end_date) {
+            $customerQuery->whereDoesntHave('sales', function ($query1) use ($request) {
+                $query1->whereBetween('created_at', [$request->start_date, $request->end_date]);
+            });
+        }
+        // Execute the query
+        $customer = $customerQuery->get();
         return view('pos.crm.customize_customer.customize_customer-table', compact('customer'))->render();
     }
 }

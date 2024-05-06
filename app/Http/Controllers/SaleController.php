@@ -95,7 +95,7 @@ class SaleController extends Controller
             $sale->receivable = $request->change_amount;
             $sale->paid = $request->paid;
             $sale->due = $request->due;
-            $sale->returned = $request->due;
+            // $sale->returned = $request->due;
             $sale->final_receivable = $request->change_amount;
             $sale->payment_method = $request->payment_method;
             $sale->profit = $request->change_amount - $productCost;
@@ -107,19 +107,19 @@ class SaleController extends Controller
 
             $products = $request->products;
             foreach ($products as $product) {
+                $items2 = Product::findOrFail($product['product_id']);
                 $items = new SaleItem;
                 $items->sale_id = $saleId;
                 $items->product_id = $product['product_id']; // Access 'product_id' as an array key
                 $items->rate = $product['unit_price']; // Access 'unit_price' as an array key
                 $items->qty = $product['quantity'];
                 $items->sub_total = $product['unit_price'] * $product['quantity'];
-                $items->total_purchase_cost = $product['unit_price'] * $product['quantity'];
+                $items->total_purchase_cost = $items2->cost * $product['quantity'];
                 $items->save();
 
-                $items2 = Product::findOrFail($product['product_id']);
+
                 $items2->stock = $items2->stock - $product['quantity'];
                 $items2->total_sold = $items2->total_sold + $product['quantity'];
-
                 $items2->save();
             }
 

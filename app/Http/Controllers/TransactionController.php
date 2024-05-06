@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bank;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
-use App\Models\PaymentMethod;
 use App\Models\Supplier;
 use App\Models\Customer;
 use App\Models\Purchase;
 
 class TransactionController extends Controller
 {
-    public function TransactionAdd(){
-        $paymentMethod = PaymentMethod::all();
+    public function TransactionAdd()
+    {
+        $paymentMethod = Bank::all();
         $supplier = Supplier::latest()->get();
         $customer = Customer::latest()->get();
         $transaction = Transaction::latest()->get();
-        return view('pos.transaction.transaction_add',compact('paymentMethod','supplier','customer','transaction'));
-    }//
+        return view('pos.transaction.transaction_add', compact('paymentMethod', 'supplier', 'customer', 'transaction'));
+    } //
     // public function TransactionView(){
     //     return view('pos.transaction.transaction_view');
     // }
@@ -26,21 +27,21 @@ class TransactionController extends Controller
         $accountId = $request->input('id');
         $account_type = $request->input('account_type');
         //dd($accountId);
-        if($account_type == "supplier"){
+        if ($account_type == "supplier") {
             $info = Supplier::findOrFail($accountId);
-            $count = Purchase::where('supplier_id',$accountId)->where('due', '>' ,0)->count();
-        }
-        else{
+            $count = Purchase::where('supplier_id', $accountId)->where('due', '>', 0)->count();
+        } else {
             $info = Customer::findOrFail($accountId);
-            $count = Purchase::where('supplier_id',$accountId)->where('due', '>' ,0)->count();
+            $count = Purchase::where('supplier_id', $accountId)->where('due', '>', 0)->count();
         }
         return response()->json([
-            "info" =>$info,
+            "info" => $info,
             "count" => $count
         ]);
-    }// End function
-    public function TransactionStore(Request $request){
-        if($request->account_type == 'supplier') {
+    } // End function
+    public function TransactionStore(Request $request)
+    {
+        if ($request->account_type == 'supplier') {
             $supplier = Supplier::findOrFail($request->account_id);
             $currentBalance = $supplier->wallet_balance;
             $newBalance = $currentBalance ?? 0 + $request->amount;
@@ -77,17 +78,19 @@ class TransactionController extends Controller
             'message' => 'Transaction Payment Successfully',
             'alert-type' => 'info'
         ];
-        return redirect()->back()->with($notification );
-    }//
-    public function TransactionDelete($id){
+        return redirect()->back()->with($notification);
+    } //
+    public function TransactionDelete($id)
+    {
         Transaction::find($id)->delete();
         $notification = [
-           'message' => 'Transaction Deleted Successfully',
+            'message' => 'Transaction Deleted Successfully',
             'alert-type' => 'info'
         ];
-        return redirect()->back()->with($notification );
-    }//
-    public function TransactionFilterView(Request $request){
+        return redirect()->back()->with($notification);
+    } //
+    public function TransactionFilterView(Request $request)
+    {
         // $customerName="";
         // $suplyerName="";
         // if($request->filterCustomer == 'Select Customer'){
@@ -99,19 +102,18 @@ class TransactionController extends Controller
         $transaction = Transaction::when($request->filterCustomer != 'Select Customer', function ($query) use ($request) {
             return $query->where('customer_id', $request->filterCustomer);
         })
-        ->when($request->filterSupplier != 'Select Supplier', function ($query) use ($request) {
-            return $query->where('supplier_id', $request->filterSupplier);
-        })
-        ->when($request->startDate && $request->endDate, function ($query) use ($request) {
-            return $query->whereBetween('date', [$request->startDate, $request->endDate]);
-        })
-        ->get();
+            ->when($request->filterSupplier != 'Select Supplier', function ($query) use ($request) {
+                return $query->where('supplier_id', $request->filterSupplier);
+            })
+            ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+                return $query->whereBetween('date', [$request->startDate, $request->endDate]);
+            })
+            ->get();
         return view('pos.transaction.transaction-filter-rander-table', compact('transaction'))->render();
-
     }
-    public function TransactionInvoiceReceipt($id){
+    public function TransactionInvoiceReceipt($id)
+    {
         $transaction = Transaction::findOrFail($id);
-        return view('pos.transaction.invoice',compact('transaction'));
+        return view('pos.transaction.invoice', compact('transaction'));
     }
-
 }

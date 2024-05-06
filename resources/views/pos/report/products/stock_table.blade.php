@@ -1,5 +1,6 @@
 @if ($products->count() > 0)
     @foreach ($products as $index => $data)
+        {{-- @dd($data->damage); --}}
         <tr>
             <td class="id">{{ $index + 1 }}</td>
             <td>
@@ -25,6 +26,8 @@
                 $totalsaleQuantity = $saleItems->sum('qty');
                 $totalCost = $data->cost * $totalsaleQuantity;
                 $totalProfit = $totalSalePrice - $totalCost;
+
+                $totalDamage = $data->damage->sum('qty');
             @endphp
             <td>
                 {{ $totalPurchase ?? 0 }} {{ $data->unit->name }}
@@ -35,8 +38,9 @@
                 {{ $data->total_sold ?? 0 }} {{ $data->unit->name }}
             </td>
 
+            {{-- damage  --}}
             <td>
-                ৳ {{ $data->price ?? 0 }}
+                {{ $totalDamage ?? 0 }} {{ $data->unit->name }}
             </td>
             <td>
                 ৳ {{ $data->price ?? 0 }}

@@ -15,9 +15,9 @@ class DamageController extends Controller
 {
 
     private $damage_repo;
-    public function __construct(DamageInterface $damage_interface){
+    public function __construct(DamageInterface $damage_interface)
+    {
         $this->damage_repo = $damage_interface;
-
     }
 
     /**
@@ -26,7 +26,6 @@ class DamageController extends Controller
     public function index()
     {
         return view('pos.damage.index');
-
     }
 
     public function store(Request $request)
@@ -55,15 +54,12 @@ class DamageController extends Controller
             $product_qty = Product::findOrFail($request->product_id);
             $product_qty->stock = $product_qty->stock - $request->pc;
             $product_qty->save();
-
-
-
         }
         $notification = array(
-            'message' =>'Damage Add Successfully',
-             'alert-type'=> 'info'
-         );
-         return redirect()->back()->with($notification);
+            'message' => 'Damage Add Successfully',
+            'alert-type' => 'info'
+        );
+        return redirect()->back()->with($notification);
     }
 
 

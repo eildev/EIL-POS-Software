@@ -350,6 +350,7 @@ Route::middleware('auth')->group(function () {
             Route::post('category', 'storeSmsCat')->name('sms.category.store');
             Route::get('category/view', 'viewSmsCat')->name('sms.category.view');
             Route::post('category/update/{id}', 'updateSmsCat')->name('sms.category.update');
+            Route::get('category/delete/{id}', 'deleteSmsCat')->name('sms.category.delete');
         });
         //Customize Customer CRM
         Route::group(['prefix' => 'custimize-customer'], function () {
@@ -362,7 +363,6 @@ Route::middleware('auth')->group(function () {
     Route::controller(CustomeMailControler::class)->group(function () {
         Route::post('/customer-send-email', 'CustomerSendEmail')->name('customer.send.email');
     });
-
 });
 
 require __DIR__ . '/auth.php';

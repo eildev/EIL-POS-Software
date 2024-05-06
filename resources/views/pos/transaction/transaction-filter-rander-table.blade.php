@@ -9,7 +9,7 @@
                         <tr>
                             <th>SN</th>
                             <th>Details</th>
-                            <th>Transaction Date</th>
+                            <th>Transaction Date & Time</th>
                             <th>Amount</th>
                             <th>Transaction Type</th>
                             <th>Trans. Method</th>
@@ -27,7 +27,7 @@
                         @elseif ($trans->supplier_id  != NULL)
                         <td>Supplier <br> Name: {{$trans['supplier']['name']}} <br> Phone: {{$trans['supplier']['phone']}}</td>
                         @endif
-                        <td>{{$trans->date}}</td>
+                        <td>{{$trans->date}} <Span style="color:brown">Time</Span> {{ date('h:i A', strtotime($trans->created_at)) }}</td>
                         <td>{{$trans->debit}}</td>
                         <td>
                             @if($trans->payment_type  == 'pay' )

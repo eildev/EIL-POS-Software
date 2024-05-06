@@ -165,6 +165,7 @@
                     <span class="link-title">Payment Method</span>
                 </a>
             </li>
+
             <li class="nav-item">
                 <a href="{{ route('transaction.add') }}" class="nav-link">
                     <i class="fa-solid fa-receipt link-icon"></i>
@@ -298,6 +299,13 @@
                                 Bank Report
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('account.transaction.view') }}" role="button"
+                                aria-controls="general-pages">
+                                Account Transaction
+                            </a>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('stock.report') }}" role="button"
                                 aria-controls="general-pages">

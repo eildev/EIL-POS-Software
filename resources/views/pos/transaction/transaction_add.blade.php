@@ -8,7 +8,7 @@
 .nav.nav-tabs .nav-item .nav-link {
     border-color: #090c0f #030406 #1a1d1f;
     color: #000;
-    background-color: #f8f9fa;
+    background-color: #6571ff;
     cursor: pointer;
 }
 </style>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bank;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use App\Models\AccountTransaction;
 use App\Models\Supplier;
 use App\Models\Customer;
 use App\Models\Purchase;
@@ -116,4 +117,6 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
         return view('pos.transaction.invoice', compact('transaction'));
     }
+
+
 }

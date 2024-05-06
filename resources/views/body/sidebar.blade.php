@@ -166,6 +166,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="{{ route('account.transaction.view') }}" class="nav-link">
+                    <i class="fa-solid fa-receipt link-icon"></i>
+                    <span class="link-title">Account Transaction</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('transaction.add') }}" class="nav-link">
                     <i class="fa-solid fa-receipt link-icon"></i>
                     <span class="link-title">Transaction</span>

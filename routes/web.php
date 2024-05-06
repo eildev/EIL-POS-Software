@@ -265,6 +265,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/transaction/filter/rander', 'TransactionFilterView')->name('transaction.filter.view');
         ////////Invoice///////////
         Route::get('/transaction/invoice/receipt/{id}', 'TransactionInvoiceReceipt')->name('transaction.invoice.receipt');
+        ////////////////Account Transaction Route /////////////
+        Route::get('/account/transaction/view', 'AccountTransactionView')->name('account.transaction.view');
     });
     // pos setting related route
     Route::controller(PosSettingsController::class)->group(function () {

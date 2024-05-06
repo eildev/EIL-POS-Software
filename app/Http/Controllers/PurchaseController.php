@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AccountTransaction;
 use App\Models\ActualPayment;
 use App\Models\Product;
 use App\Models\Purchase;
@@ -74,6 +75,13 @@ class PurchaseController extends Controller
             $actualPayment->amount = $request->paid;
             $actualPayment->date = $request->purchse_date;
             $actualPayment->save();
+
+            $accountTransaction = new AccountTransaction;
+            $accountTransaction->branch_id =  Auth::user()->branch_id;
+            $accountTransaction->purpose =  'pay';
+            $accountTransaction->account_id =  $request->payment_method;
+            $accountTransaction->debit = $request->paid;
+            $accountTransaction->save();
 
             $transaction = Transaction::where('supplier_id', $request->supplier_id)->first();
 

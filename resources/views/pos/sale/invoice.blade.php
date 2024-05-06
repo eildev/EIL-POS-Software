@@ -159,7 +159,16 @@
                         <a href="javascript:;" class="btn btn-outline-primary float-end mt-4" onclick="window.print();"><i
                                 data-feather="printer" class="me-2 icon-md"></i>Print</a>
                     </div>
+
                 </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="w-100 mx-auto btn_group">
+                <a href="{{ route('sale.view') }}" class="btn btn-primary  mt-4 ms-2"><i
+                        class="fa-solid fa-arrow-rotate-left me-2"></i>Manage Sale</a>
+                <a href="{{ route('sale') }}" class="btn btn-outline-primary mt-4"><i data-feather="plus-circle"
+                        class="me-2 icon-md"></i>Sale</a>
             </div>
         </div>
     </div>

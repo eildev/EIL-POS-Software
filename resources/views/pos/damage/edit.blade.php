@@ -26,7 +26,7 @@
                                     @if ($products->count() > 0)
                                         <option selected disabled>Select Damaged Product</option>
                                         @foreach ($products as $product)
-                                            <option value="{{ $product->id }}">{{ $product->name.$product->unit->name}}</option>
+                                            <option value="{{ $product->id }}" {{$damage_info->product_id == $product->id ? 'selected' : ''}}>{{ $product->name.$product->unit->name}}</option>
 
                                         @endforeach
                                     @else
@@ -43,7 +43,7 @@
                                         <span class="text-primary" id="show_unit"></span>
                                     </label>
 
-                                    <input type="text" id="damageQty" name="pc" onkeyup="damage_qty(this);" class="form-control" placeholder="0" disabled autocomplete="off">
+                                    <input type="text" value="{{$damage_info->qty}}" id="damageQty" name="pc" onkeyup="damage_qty(this);" class="form-control" placeholder="0" disabled autocomplete="off" value="">
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -54,7 +54,7 @@
                                             data-toggle><i data-feather="calendar" class="text-primary"></i></span>
                                         <input type="text" name="date"
                                             class="form-control bg-transparent border-primary" placeholder="Select date"
-                                            data-input>
+                                            data-input value="{{$damage_info->date}}">
                                     </div>
                                     {{-- <input type="date"  class="form-control" placeholder="Enter Date"> --}}
                                 </div>

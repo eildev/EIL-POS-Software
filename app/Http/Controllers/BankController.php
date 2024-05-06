@@ -10,7 +10,8 @@ use Validator;
 class BankController extends Controller
 {
     private $bankrepo;
-    public function __construct(BankInterface $bankInterface){
+    public function __construct(BankInterface $bankInterface)
+    {
         $this->bankrepo = $bankInterface;
     }
     public function index()
@@ -24,7 +25,6 @@ class BankController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:99',
             'branch_name' => 'required|max:149',
-            'manager_name' => 'required|max:149',
             'phone_number' => 'required|max:19',
             'account' => 'required',
             'opening_balance' => 'required',
@@ -81,7 +81,6 @@ class BankController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:99',
             'branch_name' => 'required|max:149',
-            'manager_name' => 'required|max:149',
             'phone_number' => 'required|max:19',
             'account' => 'required',
             'opening_balance' => 'required',

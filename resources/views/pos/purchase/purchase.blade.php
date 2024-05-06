@@ -270,7 +270,7 @@
                             <label for="name" class="form-label">Transaction Method <span
                                     class="text-danger">*</span></label>
                             @php
-                                $payments = App\Models\PaymentMethod::get();
+                                $payments = App\Models\Bank::get();
                             @endphp
                             <select class="form-select payment_method" data-width="100%" onclick="errorRemove(this);"
                                 onblur="errorRemove(this);">

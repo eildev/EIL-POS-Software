@@ -170,7 +170,7 @@
                             <label for="name" class="form-label">Transaction Account<span
                                     class="text-danger">*</span></label>
                             @php
-                                $payments = App\Models\PaymentMethod::all();
+                                $payments = App\Models\Bank::all();
                             @endphp
                             <select class="form-select transaction_account" data-width="100%" name="transaction_account"
                                 onclick="errorRemove(this);" onblur="errorRemove(this);">

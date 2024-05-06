@@ -69,7 +69,7 @@
                         <div class="col-md-6 mb-3">
                             <div class="justify-content-left">
                                 <button class="btn btn-sm bg-info text-dark mr-2" id="acoountFilter">Filter</button>
-                                <button class="btn btn-sm bg-primary text-dark" id="reset">Reset</button>
+                                <button onclick="window.location.reload();" class="btn btn-sm bg-primary text-dark" id="reset">Reset</button>
                             </div>
                         </div>
                         <div class="col-md-6 ">

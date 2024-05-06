@@ -22,13 +22,13 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     @if ($trans->customer_id != null)
-                                        <td> Customer <br> Name: {{ $trans['customer']['name'] }} <br> Phone:
-                                            {{ $trans['customer']['phone'] }}</td>
+                                        <td> Customer <br> Name: {{ $trans['customer']['name'] ?? '' }} <br> Phone:
+                                            {{ $trans['customer']['phone'] ?? '' }}</td>
                                     @elseif ($trans->supplier_id != null)
-                                        <td>Supplier <br> Name: {{ $trans['supplier']['name'] }} <br> Phone:
-                                            {{ $trans['supplier']['phone'] }}</td>
+                                        <td>Supplier <br> Name: {{ $trans['supplier']['name'] ?? '' }} <br> Phone:
+                                            {{ $trans['supplier']['phone'] ?? '' }}</td>
                                     @endif
-                                    <td>{{ $trans->date }} <Span style="color:brown">Time</Span>
+                                    <td>{{ $trans->date }} <Span style="color:brown">:</Span>
                                         {{ date('h:i A', strtotime($trans->created_at)) }}</td>
                                     <td>{{ $trans->debit }}</td>
                                     <td>
@@ -37,7 +37,7 @@
                                         @else
                                             <span>Cash Received</span>
                                         @endif
-                                    <td>{{ $trans['paymentMethod']['name'] }}</td>
+                                    <td>{{ $trans['paymentMethod']['name'] ?? '' }}</td>
                                     <td class="note_short"> @php
                                         $note = $trans->note;
                                         $noteChunks = str_split($note, 20);

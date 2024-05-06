@@ -232,7 +232,7 @@
                             <td>
                                 ${supplier.total_payable ?? 0 }
                             </td>
-                            <td style="color: ${supplier.wallet_balance > 0 ? 'red' : 'green'};">
+                            <td style="color: ${supplier.wallet_balance < 0 ? 'red' : 'green'};">
                                 ${supplier.wallet_balance ?? 0}
                             </td>
                             <td>

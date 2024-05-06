@@ -370,9 +370,9 @@
                                 <tr>
                                     <th></th>
                                     <th></th>
-                                    <th>Qty : {{ $totalQty }}</th>
-                                    <th>Total : {{ $totalNoSale }}</th>
-                                    <th>Total : {{ $totalSaleAmount }}Tk</th>
+                                    <th>Qty : {{ $totalQty ?? 0 }}</th>
+                                    <th>Total : {{ $totalNoSale ?? 0 }}</th>
+                                    <th>Total : {{ $totalSaleAmount ?? 0 }}Tk</th>
                                 </tr>
                             </tfoot>
                             </tbody>
@@ -428,7 +428,7 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                    <th><strong>Total : {{ $totalAmount }} Tk</strong></th>
+                                    <th><strong>Total : {{ $totalAmount ?? 0 }} Tk</strong></th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -439,121 +439,121 @@
         </div>
     </div>
 
-<div class="row">
-  <!---Pay to Supplier Start -->
-    <div class="col-md-6 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title text-info">Pay to Supplier</h6>
+    <div class="row">
+        <!---Pay to Supplier Start -->
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title text-info">Pay to Supplier</h6>
 
-                <div id="" class="table-responsive">
-                    <table id="dataTableExample"class="table">
-                        <thead>
-                            <tr>
-                                <th>SN#</th>
-                                <th>Supplier Name</th>
-                                <th>Payment Date</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody class="showData">
+                    <div id="" class="table-responsive">
+                        <table id="dataTableExample"class="table">
+                            <thead>
+                                <tr>
+                                    <th>SN#</th>
+                                    <th>Supplier Name</th>
+                                    <th>Payment Date</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody class="showData">
 
-                            @if ($supplier->count() > 0)
-                                @php
-                                    $num = 0;
-                                    $totalSupplierAmount = 0;
-                                @endphp
-                                @foreach ($supplier as $key => $supplierData)
+                                @if ($supplier->count() > 0)
+                                    @php
+                                        $num = 0;
+                                        $totalSupplierAmount = 0;
+                                    @endphp
+                                    @foreach ($supplier as $key => $supplierData)
+                                        <tr>
+                                            <td>{{ $num++ }}</td>
+                                            <td>{{ $supplierData['supplier']['name'] ?? '' }}</td>
+                                            <td>{{ $supplierData->date ?? '' }}</td>
+                                            <td>{{ $supplierData->debit ?? '' }} <span>TK</span></td>
+                                            <?php
+                                            $totalSupplierAmount += isset($supplierData->debit) ? $supplierData->debit : 0;
+                                            ?>
+                                        </tr>
+                                    @endforeach
+                                @else
                                     <tr>
-                                        <td>{{ $num++ }}</td>
-                                        <td>{{ $supplierData['supplier']['name'] ?? '' }}</td>
-                                        <td>{{ $supplierData->date ?? '' }}</td>
-                                        <td>{{ $supplierData->debit ?? '' }}  <span>TK</span></td>
-                                        <?php
-                                        $totalSupplierAmount += isset( $supplierData->debit) ? $supplierData->debit : 0;
-                                        ?>
+                                        <td colspan="12">
+                                            <div class="text-center text-warning mb-2">Data Not Found</div>
+                                        </td>
                                     </tr>
-                                @endforeach
-                            @else
+                                @endif
+                            <tfoot>
                                 <tr>
-                                    <td colspan="12">
-                                        <div class="text-center text-warning mb-2">Data Not Found</div>
-                                    </td>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Total : {{ $totalSupplierAmount ?? 0 }}Tk</th>
                                 </tr>
-                            @endif
-                        <tfoot>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th>Total : {{ $totalSupplierAmount }}Tk</th>
-                            </tr>
-                        </tfoot>
-                        </tbody>
-                    </table>
+                            </tfoot>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-<!---Pay to Supplier End -->
-    <div class="col-md-6 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="card-title text-info">Receive from Customer</h6>
+        <!---Pay to Supplier End -->
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title text-info">Receive from Customer</h6>
 
-                <div id="" class="table-responsive">
-                    <table id="dataTableExample3" class="table">
-                        <thead>
-                            <tr>
-                                <th>SN#</th>
-                                <th>Customer Name</th>
-                                <th>Payment Date</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody class="showData">
-                            @if ($customer->count() > 0)
-                                @php
-                                    $num = 0;
-                                @endphp
-                                <?php
-                                $customerTotalPayment = 0;
-                                ?>
-                                @foreach ($customer as $key => $customerData)
+                    <div id="" class="table-responsive">
+                        <table id="dataTableExample3" class="table">
+                            <thead>
                                 <tr>
-                                    <td>{{ $num++ }}</td>
-                                    <td>{{ $customerData['customer']['name'] ?? '' }}</td>
-                                    <td>{{ $customerData->date ?? '' }}</td>
-                                    <td>{{ $customerData->debit ?? '' }} <span>TK</span></td>
+                                    <th>SN#</th>
+                                    <th>Customer Name</th>
+                                    <th>Payment Date</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody class="showData">
+                                @if ($customer->count() > 0)
+                                    @php
+                                        $num = 0;
+                                    @endphp
                                     <?php
-                                    $customerTotalPayment += isset(  $customerData->debit ) ?  $customerData->debit : 0;
+                                    $customerTotalPayment = 0;
                                     ?>
-                                </tr>
-                            @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="12">
-                                        <div class="text-center text-warning mb-2">Data Not Found</div>
-                                    </td>
-                                </tr>
-                            @endif
+                                    @foreach ($customer as $key => $customerData)
+                                        <tr>
+                                            <td>{{ $num++ }}</td>
+                                            <td>{{ $customerData['customer']['name'] ?? '' }}</td>
+                                            <td>{{ $customerData->date ?? '' }}</td>
+                                            <td>{{ $customerData->debit ?? '' }} <span>TK</span></td>
+                                            <?php
+                                            $customerTotalPayment += isset($customerData->debit) ? $customerData->debit : 0;
+                                            ?>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="12">
+                                            <div class="text-center text-warning mb-2">Data Not Found</div>
+                                        </td>
+                                    </tr>
+                                @endif
 
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th><strong>Total : {{ $customerTotalPayment }} Tk</strong></th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th><strong>Total : {{ $customerTotalPayment ?? 0 }} Tk</strong></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
+            <!--//Top Sale Product End// --->
         </div>
-        <!--//Top Sale Product End// --->
     </div>
-</div>
 
 
 @endsection

@@ -24,6 +24,7 @@
                                     <th>Phone</th>
                                     <th>Total Receivable</th>
                                     <th>Total Payable</th>
+                                    <th>Due</th>
                                     <th>Wallet Balance</th>
                                     <th>Actions</th>
                                 </tr>
@@ -232,7 +233,10 @@
                             <td>
                                 ${supplier.total_payable ?? 0 }
                             </td>
-                            <td style="color: ${supplier.wallet_balance > 0 ? 'red' : 'green'};">
+                            <td>
+                                ${supplier.total_receivable - supplier.total_payable ?? 0 }
+                            </td>
+                            <td style="color: ${supplier.wallet_balance < 0 ? 'red' : 'green'};">
                                 ${supplier.wallet_balance ?? 0}
                             </td>
                             <td>

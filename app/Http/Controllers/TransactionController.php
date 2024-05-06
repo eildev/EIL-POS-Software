@@ -117,9 +117,6 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
         return view('pos.transaction.invoice', compact('transaction'));
     }
-    ////////////////Account Transaction Method  //////////////
-    public function AccountTransactionView(){
-        $accountTransaction = AccountTransaction::latest()->get();
-        return view('pos.transaction.account_transaction_view',compact('accountTransaction'));
-    }
+
+
 }

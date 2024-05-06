@@ -205,6 +205,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/purchase/invoice/{id}', 'invoice')->name('purchase.invoice');
         Route::get('/purchase/filter', 'filter')->name('purchase.filter');
         Route::post('/transaction/edit-amount/{id}', 'editTransaction')->name('purchase.edit.transaction');
+        Route::get('/purchase/find/{id}', 'find')->name('purchase.find');
     });
     // damage related route
     Route::controller(DamageController::class)->group(function () {
@@ -267,8 +268,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/transaction/filter/rander', 'TransactionFilterView')->name('transaction.filter.view');
         ////////Invoice///////////
         Route::get('/transaction/invoice/receipt/{id}', 'TransactionInvoiceReceipt')->name('transaction.invoice.receipt');
-        ////////////////Account Transaction Route /////////////
-        Route::get('/account/transaction/view', 'AccountTransactionView')->name('account.transaction.view');
+
     });
     // pos setting related route
     Route::controller(PosSettingsController::class)->group(function () {
@@ -340,6 +340,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/report/purchase', 'purchaseReport')->name('purchase.report');
             Route::get('/purchese/product/filter', 'PurchaseProductFilter')->name('purches.product.filter.view');
             Route::get('/purchese/details/invoice/{id}', 'PurchaseDetailsInvoice')->name('purchse.details.invoice');
+                ////////////////Account Transaction Route /////////////
+        Route::get('/account/transaction/view', 'AccountTransactionView')->name('account.transaction.view');
+        Route::get('/account/transaction/filter', 'AccountTransactionFilter')->name('account.transaction.ledger.filter');
         });
     });
     // Report related routes

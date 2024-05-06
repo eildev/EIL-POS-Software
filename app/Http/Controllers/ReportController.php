@@ -12,6 +12,7 @@ use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Models\Sale;
 use Illuminate\Http\Request;
+use App\Models\AccountTransaction;
 use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
@@ -197,5 +198,22 @@ class ReportController extends Controller
     {
         $products = Product::where('branch_id', Auth::user()->branch_id)->get();
         return view('pos.report.products.stock', compact('products'));
+    }//
+
+ ////////////////Account Transaction Method  //////////////
+    public function AccountTransactionView(){
+        $accountTransaction = AccountTransaction::latest()->get();
+        return view('pos.report.account_transaction.account_transaction_ledger',compact('accountTransaction'));
+    }
+    public function AccountTransactionFilter(Request $request){
+       // dd($request->all());
+       $accountTransaction = AccountTransaction::when($request->accountId, function ($query) use ($request) {
+        return $query->where('account_id', $request->accountId);
+    })
+    ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+        return $query->whereBetween('created_at', [$request->startDate, $request->endDate]);
+    })
+    ->get();
+    return view('pos.report.account_transaction.account_transaction_table',compact('accountTransaction'))->render();
     }
 }

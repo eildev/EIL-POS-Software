@@ -675,7 +675,7 @@
                 let grand_total = parseFloat($('.grandTotal').text());
                 let discount_amount = sub_total - total_amount;
                 let paid = $('.total_payable').val();
-                let due = grand_total - paid;
+                let due = paid - grand_total;
                 let carrying_cost = $('.carrying_cost').val();
                 let note = $('.note').val();
                 let payment_method = $('.payment_method').val();

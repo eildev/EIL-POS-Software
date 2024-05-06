@@ -123,7 +123,7 @@ class PurchaseController extends Controller
             $supplier = Supplier::findOrFail($request->supplier_id);
             $supplier->total_receivable = $supplier->total_receivable + $request->grand_total;
             $supplier->total_payable = $supplier->total_payable + $request->paid;
-            $supplier->wallet_balance = $supplier->wallet_balance + ($request->grand_total - $request->paid);;
+            // $supplier->wallet_balance = $supplier->wallet_balance + ($request->grand_total - $request->paid);
             $supplier->save();
 
 
@@ -235,6 +235,7 @@ class PurchaseController extends Controller
     // transaction edit
     public function editTransaction(Request $request, $id)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             "transaction_account" => 'required',
             "amount" => 'required',
@@ -242,13 +243,13 @@ class PurchaseController extends Controller
         if ($validator->passes()) {
 
             $purchase = Purchase::findOrFail($id);
-            $purchase->paid = $purchase->paid + $request->amount;
+            $purchase->paid = $purchase->paid - $request->amount;
             $purchase->due = $purchase->due - $request->amount;
             $purchase->save();
 
             $supplier = Supplier::findOrFail($purchase->supplier_id);
-            $supplier->total_payable = $supplier->total_payable + $request->amount;
-            $supplier->wallet_balance = $supplier->wallet_balance - $request->amount;
+            $supplier->total_payable = $supplier->total_payable - $request->amount;
+            // $supplier->wallet_balance = $supplier->wallet_balance - $request->amount;
             $supplier->save();
 
             // account Transaction crud 
@@ -257,7 +258,6 @@ class PurchaseController extends Controller
             $accountTransaction->purpose =  'pay';
             $accountTransaction->account_id =  $request->transaction_account;
             $accountTransaction->debit = $request->amount;
-            // $accountTransaction->balance = $accountTransaction->balance - $request->amount;
             $accountTransaction->save();
 
             $transaction = new Transaction;

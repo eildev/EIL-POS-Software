@@ -204,6 +204,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/purchase/destroy/{id}', 'destroy')->name('purchase.destroy');
         Route::get('/purchase/invoice/{id}', 'invoice')->name('purchase.invoice');
         Route::get('/purchase/filter', 'filter')->name('purchase.filter');
+        Route::post('/transaction/edit-amount/{id}', 'editTransaction')->name('purchase.edit.transaction');
     });
     // damage related route
     Route::controller(damageController::class)->group(function () {

@@ -49,7 +49,7 @@
                         @endphp
                         <div class="col-md-3">
                             <div class=" input-group flatpickr" id="flatpickr-date">
-                                <select class="filter_product_name js-example-basic-single form-select product_select" data-width="100%">
+                                <select  class="filter_product_name js-example-basic-single form-select product_select" data-width="100%">
                                     @if ($products->count() > 0)
                                         <option selected disabled>Select Product</option>
                                         @foreach ($products as $product)
@@ -66,7 +66,7 @@
                         @endphp
                         <div class="col-md-3">
                             <div class=" input-group flatpickr" id="flatpickr-date">
-                                <select class="filter_product_name js-example-basic-single form-select product_select" data-width="100%">
+                                <select class="filter_branch js-example-basic-single form-select product_select" data-width="100%">
                                     @if ($all_branch->count() > 0)
                                         <option selected disabled>Select Branch</option>
                                         @foreach ($all_branch as $branch)
@@ -118,6 +118,7 @@ document.querySelector('#purchesfilter').addEventListener('click', function(e) {
         let endDatePurches = document.querySelector('.end-date-purches').value;
         //  alert(endDatePurches);
         let filterProduct = document.querySelector('.filter_product_name').value;
+        let branchId = document.querySelector('.filter_branch').value;
         // alert(filterProduct);
         $.ajax({
             url: "{{ route('damage.product.filter.view') }}",
@@ -126,6 +127,7 @@ document.querySelector('#purchesfilter').addEventListener('click', function(e) {
                 startDatePurches,
                 endDatePurches,
                 filterProduct,
+                branchId
             },
             success: function(res) {
                 jQuery('#purchase-filter-table').html(res);

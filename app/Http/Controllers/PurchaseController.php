@@ -240,8 +240,13 @@ class PurchaseController extends Controller
             "transaction_account" => 'required',
             "amount" => 'required',
         ]);
+        $validator->after(function ($validator) use ($id, $request) {
+            $purchase = Purchase::findOrFail($id);
+            if ($request->amount > $purchase->due) {
+                $validator->errors()->add('amount', 'The amount cannot be greater than the due amount.');
+            }
+        });
         if ($validator->passes()) {
-
             // purchase related crud 
             $purchase = Purchase::findOrFail($id);
             $purchase->paid = $purchase->paid - $request->amount;
@@ -284,7 +289,7 @@ class PurchaseController extends Controller
         } else {
             return response()->json([
                 'status' => 500,
-                'error' => $validator->message()
+                'error' => $validator->errors()
             ]);
         }
     }

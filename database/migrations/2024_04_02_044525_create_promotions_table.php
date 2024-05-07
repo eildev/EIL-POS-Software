@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('end_date');
             $table->enum('discount_type', ['percentage', 'fixed_amount']);
             $table->integer('discount_value');
-            $table->integer('status')->default(0);
+            $table->enum('status', ['active', 'expired', 'inactive'])->default('active');
             $table->timestamps();
         });
     }

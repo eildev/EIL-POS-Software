@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('Promotion_id')->unsigned();
             $table->foreign('Promotion_id')->references('id')->on('promotions')->onDelete('cascade');
-            $table->unsignedBigInteger('Product_id')->unsigned();
-            $table->foreign('Product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->integer('additional_conditions')->nullable();
+            $table->enum('promotion_type', ['wholesale', 'products', 'customers', 'branch']);
+            $table->text('logic');
+            $table->bigInteger('additional_conditions')->nullable();
             $table->timestamps();
         });
     }

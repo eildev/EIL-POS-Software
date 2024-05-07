@@ -1,6 +1,5 @@
 <div class="row">
     <div class="col-md-12 ">
-        <h6>Employee Salary List</h6><br>
         <div id="" class="table-responsive">
             <table id="dataTableExample" class="table w-100">
                 <thead>

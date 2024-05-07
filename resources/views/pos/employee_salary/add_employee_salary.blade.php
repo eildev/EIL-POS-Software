@@ -48,6 +48,7 @@
 						<div class="mb-3">
 							<label class="form-label">Salary Amount<span class="text-danger">*</span></label>
 							<input type="number" class="form-control" name="debit"  placeholder="0.00">
+                            <span>Note: Avanced Amount:0</span>
 						</div>
 					</div><!-- Col -->
 					<div class="col-sm-12 form-valid-groups">

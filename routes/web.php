@@ -347,9 +347,12 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/purchese/product/filter', 'PurchaseProductFilter')->name('purches.product.filter.view');
             Route::get('/purchese/details/invoice/{id}', 'PurchaseDetailsInvoice')->name('purchse.details.invoice');
-                ////////////////Account Transaction Route /////////////
+                //////////////Account Transaction Route /////////////
         Route::get('/account/transaction/view', 'AccountTransactionView')->name('account.transaction.view');
         Route::get('/account/transaction/filter', 'AccountTransactionFilter')->name('account.transaction.ledger.filter');
+         //////////////Expense Report Route /////////////
+        Route::get('/expense/report/view', 'ExpenseReport')->name('expense.report.view');
+        Route::get('/expense/expense/filter', 'ExpenseReportFilter')->name('expense.report.filter');
         });
     });
     // Report related routes

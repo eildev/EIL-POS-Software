@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 class CustomerSendEmail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $data;
+    private $data;
     /**
      * Create a new message instance.
      */
@@ -28,8 +28,7 @@ class CustomerSendEmail extends Mailable
     public function build()
     {
         $data = $this->data;
-
-      return $this->subject($this->subject)->view('pos.crm.email.customer_mail_message',compact('data'));
+        return $this->subject('This is Subject')->view('pos.crm.email.customer_mail_message',compact('data'));
     }
     // public function envelope(): Envelope
     // {
@@ -52,8 +51,8 @@ class CustomerSendEmail extends Mailable
      *
      * @return array<int, \Illuminate\Mail\Mailables\Attachment>
      */
-    public function attachments(): array
-    {
-        return [];
-    }
+    // public function attachments(): array
+    // {
+    //     return [];
+    // }
 }

@@ -31,7 +31,7 @@ $mode = App\models\PosSetting::all()->first();
                                 <!-- Label for the image -->
                                 <label class="form-label">Current Logo</label>
                                 <!-- Image -->
-                                <img src="{{ asset($allData->logo) }}" height="auto" width="400" alt="logo">
+                                <img src="{{ asset($allData->logo) }}" height="auto" width="250" alt="logo">
                             </div>
                         </div>
 

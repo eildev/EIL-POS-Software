@@ -34,7 +34,7 @@ return new class extends Migration
             $table->decimal('change_amount', 12, 2)->nullable();
             // $table->string('delivery_cost')->nullable(); //user input
             $table->decimal('actual_discount', 12, 2)->default(0); //calculated discount
-            $table->integer('tax')->nullable; //calculated tax
+            $table->integer('tax')->nullable(); //calculated tax
             $table->decimal('receivable', 12, 2)->nullable(); //receivable after discount
 
             // Update on payment create/delete

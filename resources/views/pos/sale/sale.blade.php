@@ -43,7 +43,7 @@
                         </div>
                         <div class="mb-3 col-md-6">
                             @php
-                                $products = App\Models\Product::get();
+                                $products = App\Models\Product::where('stock', '>', 0)->get();
                             @endphp
                             <label for="ageSelect" class="form-label">Product</label>
                             <select class="js-example-basic-single form-select product_select" data-width="100%"
@@ -51,7 +51,9 @@
                                 @if ($products->count() > 0)
                                     <option selected disabled>Select Product</option>
                                     @foreach ($products as $product)
-                                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                        <option value="{{ $product->id }}">{{ $product->name }} ({{ $product->stock }}
+                                            {{ $product->unit->name }} Available )
+                                        </option>
                                     @endforeach
                                 @else
                                     <option selected disabled>Please Add Product</option>
@@ -365,8 +367,6 @@
                         // console.log(customers);
                         $('.select-customer').empty();
                         if (customers.length > 0) {
-                            $('.select-customer').html(
-                                `<option selected disabled>Select a Customer</option>`);
                             $.each(customers, function(index, customer) {
                                 $('.select-customer').append(
                                     `<option value="${customer.id}">${customer.name}(${customer.phone})</option>`
@@ -543,12 +543,27 @@
                 let id = $(this).attr("product-id")
                 let quantity = $(this).val();
                 quantity = parseInt(quantity);
-                let productPrice = $('.product_price' + id).val();
-                productPrice = parseFloat(productPrice);
                 let subTotal = $('.product_subtotal' + id);
-                let subTotalPrice = parseFloat(quantity * productPrice).toFixed(2);
-                subTotal.val(subTotalPrice);
-                updateGrandTotal();
+                $.ajax({
+                    url: `/product/find-qty/${id}`,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function(res) {
+                        let stock = res.product.stock;
+                        let productPrice = res.product.price;
+                        if (quantity > stock) {
+                            $('.quantity').val(stock);
+                            subTotal.val(parseFloat(stock * productPrice).toFixed(2));
+                            updateGrandTotal();
+                            toastr.warning('Not enough stock');
+                        } else {
+                            subTotal.val(parseFloat(quantity * productPrice).toFixed(2));
+                            updateGrandTotal();
+                        }
+
+                    }
+                })
+
             })
 
             // discount 
@@ -591,12 +606,20 @@
             })
 
             // total_payable
-            $('.total_payable').keyup(function(e) {
+            $('.total_payable').blur(function(e) {
                 let grandTotal = parseFloat($('.grandTotal').text());
                 let value = parseFloat($(this).val());
 
-                totalDue();
-                $('.total_payable_amount').text(value);
+                if (value > grandTotal) {
+                    $(this).val(grandTotal);
+                    totalDue();
+                    $('.total_payable_amount').text(value);
+                    toastr.warning('Over Payment Not Allowed');
+                } else {
+                    totalDue();
+                    $('.total_payable_amount').text(value);
+                }
+
             })
 
             // due 

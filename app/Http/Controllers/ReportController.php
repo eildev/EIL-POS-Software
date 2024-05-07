@@ -216,4 +216,16 @@ class ReportController extends Controller
     ->get();
     return view('pos.report.account_transaction.account_transaction_table',compact('accountTransaction'))->render();
     }
+    //////////////////Rexpense Report MEthod //////////////
+    public function ExpenseReport(){
+        $expense = Expense::latest()->get();
+        return view('pos.report.expense.expense',compact('expense'));
+    }//
+    public function ExpenseReportFilter(Request $request){
+        //dd($request->all());
+       $expense = Expense::when($request->startDate && $request->endDate, function ($query) use ($request) {
+        return $query->whereBetween('expense_date', [$request->startDate, $request->endDate]);
+    })->get();
+    return view('pos.report.expense.expense-table', compact('expense'))->render();
+    }
 }

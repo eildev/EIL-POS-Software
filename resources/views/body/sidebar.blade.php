@@ -305,6 +305,12 @@
                                 Account Transaction
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('expense.report.view') }}" role="button"
+                                aria-controls="general-pages">
+                                Expense Report
+                            </a>
+                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('stock.report') }}" role="button"

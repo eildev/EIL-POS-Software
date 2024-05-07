@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\PromotionDetails;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -136,9 +137,18 @@ class ProductsController extends Controller
     public function find($id)
     {
         $product = Product::findOrFail($id);
-        return response()->json([
-            'status' => '200',
-            'data' => $product
-        ]);
+        $promotionDetails = PromotionDetails::where('Product_id', $product->id)->latest()->first();
+        if ($promotionDetails) {
+            return response()->json([
+                'status' => '200',
+                'data' => $product,
+                'promotion' => $promotionDetails
+            ]);
+        } else {
+            return response()->json([
+                'status' => '200',
+                'data' => $product
+            ]);
+        }
     }
 }

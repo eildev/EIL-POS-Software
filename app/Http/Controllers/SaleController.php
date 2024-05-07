@@ -269,8 +269,15 @@ class SaleController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "transaction_account" => 'required',
-            "amount" => 'required',
+            "amount" => 'required|',
         ]);
+
+        $validator->after(function ($validator) use ($id, $request) {
+            $sale = Sale::findOrFail($id);
+            if ($request->amount > $sale->due) {
+                $validator->errors()->add('amount', 'The amount cannot be greater than the due amount.');
+            }
+        });
         if ($validator->passes()) {
             $sales = Sale::all();
             $sale = Sale::findOrFail($id);
@@ -312,7 +319,7 @@ class SaleController extends Controller
         } else {
             return response()->json([
                 'status' => 500,
-                'error' => $validator->message()
+                'error' => $validator->errors()
             ]);
         }
     }

@@ -28,8 +28,8 @@ class CustomeMailControler extends Controller
          //     }
             // dd($recipients);
             foreach ($recipients as $recipient) {
-                // Mail::to($recipient)->send(new CustomerSendEmail($data));
-                Mail::to($recipient)->queue(new CustomerSendEmail($data));
+                Mail::to($recipient)->send(new CustomerSendEmail($data));
+                // Mail::to($recipient)->queue(new CustomerSendEmail($data));
             }
 
         $notification = array(

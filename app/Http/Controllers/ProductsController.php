@@ -37,7 +37,7 @@ class ProductsController extends Controller
             $product->details  =  $request->details;
             $product->color  =  $request->color;
             $product->unit_id  =  $request->unit_id;
-            if ($request->size_id) {
+            if ($request->size_id !== 'Please add Size') {
                 $product->size_id  =  $request->size_id;
             }
             if ($request->stock) {

@@ -233,11 +233,19 @@
                             <td>
                                 ${supplier.total_payable ?? 0 }
                             </td>
-                            <td>
-                                ${supplier.total_receivable - supplier.total_payable ?? 0 }
+                            <td >
+                                <span style="color:
+                                    ${supplier.total_receivable - supplier.total_payable > 0 ? 'red' : ''};
+                                ">
+                                    ${supplier.total_receivable - supplier.total_payable > 0 ? supplier.total_receivable - supplier.total_payable : 0}
+                                </span>
                             </td>
-                            <td style="color: ${supplier.wallet_balance < 0 ? 'red' : 'green'};">
-                                ${supplier.wallet_balance ?? 0}
+                            <td >
+                                <span>
+                                    ${supplier.wallet_balance > 0 ? `${supplier.wallet_balance} <br/> সাপ্লায়ার আপানার <br/> থেকে পাবে` : ''}
+                                    ${supplier.wallet_balance < 0 ? `${supplier.wallet_balance} <br/> আপনি সাপ্লায়ার <br/> থেকে পাবেন` : ''}
+                                    ${supplier.wallet_balance == 0 ? `${supplier.wallet_balance}` : ''}
+                                </span>
                             </td>
                             <td>
                                 <a href="#" class="btn btn-primary btn-icon supplier_edit" data-id=${supplier.id} data-bs-toggle="modal" data-bs-target="#edit">

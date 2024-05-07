@@ -21,8 +21,7 @@
                 ৳ {{ $data->paid ?? 0 }}
             </td>
             <td>
-                {{-- @dd($data->due); --}}
-                @if ($data->due < 0)
+                @if ($data->due > 0)
                     <span class="text-danger">৳ {{ $data->due ?? 0 }}</span>
                 @else
                     ৳ {{ $data->due ?? 0 }}
@@ -40,7 +39,7 @@
                                 class="fa-solid fa-file-invoice me-2"></i> Invoice</a>
                         <a class="dropdown-item " href="{{ route('purchase.view.details', $data->id) }}"><i
                                 class="fa-solid fa-eye me-2"></i> Show</a>
-                        @if ($data->due < 0)
+                        @if ($data->due > 0)
                             <a class="dropdown-item add_payment" href="#" data-bs-toggle="modal"
                                 data-bs-target="#paymentModal" data-id="{{ $data->id }}"><i
                                     class="fa-solid fa-credit-card me-2"></i> Payment</a>

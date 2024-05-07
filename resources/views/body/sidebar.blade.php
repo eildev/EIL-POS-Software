@@ -311,6 +311,12 @@
                                 Expense Report
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('employee.salary.report.view') }}" role="button"
+                                aria-controls="general-pages">
+                                Employee Salary Report
+                            </a>
+                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('stock.report') }}" role="button"

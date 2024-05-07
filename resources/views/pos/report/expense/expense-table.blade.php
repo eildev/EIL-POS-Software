@@ -6,7 +6,7 @@
                 <thead>
                     <tr>
                         <th>SN</th>
-                        <th>Bank Name</th>
+                        <th>Account Name</th>
                         <th>Expense Date</th>
                         <th>Category</th>
                         <th>Purpose</th>

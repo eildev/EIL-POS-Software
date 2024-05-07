@@ -353,6 +353,9 @@ Route::middleware('auth')->group(function () {
          //////////////Expense Report Route /////////////
         Route::get('/expense/report/view', 'ExpenseReport')->name('expense.report.view');
         Route::get('/expense/expense/filter', 'ExpenseReportFilter')->name('expense.report.filter');
+        //////////////Employee Salary Report /////////////
+        Route::get('/employee/salary/report/view', 'EmployeeSalaryReport')->name('employee.salary.report.view');
+        Route::get('/employee/salary/filter', 'EmployeeSalaryReportFilter')->name('employee.salary.report.filter');
         });
     });
     // Report related routes

@@ -11,6 +11,7 @@ use App\Models\Transaction;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Models\Sale;
+use App\Models\Employee;
 use App\Models\Damage;
 use Illuminate\Http\Request;
 use App\Models\AccountTransaction;
@@ -266,5 +267,21 @@ class ReportController extends Controller
         return $query->whereBetween('expense_date', [$request->startDate, $request->endDate]);
     })->get();
     return view('pos.report.expense.expense-table', compact('expense'))->render();
+    }
+    //////////////////Employee Salary Report MEthod //////////////
+    public function EmployeeSalaryReport(){
+        $employeeSalary = EmployeeSalary::all();
+        return view('pos.report.employee_salary.employee_salary',compact('employeeSalary'));
+    }//
+    public function EmployeeSalaryReportFilter(Request $request){
+
+    $employeeSalary = EmployeeSalary::when($request->salaryId, function ($query) use ($request) {
+        return $query->where('employee_id', $request->salaryId);
+    })
+    ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+        return $query->whereBetween('date', [$request->startDate, $request->endDate]);
+    })
+    ->get();
+    return view('pos.report.employee_salary.employee_salary-table', compact('employeeSalary'))->render();
     }
 }

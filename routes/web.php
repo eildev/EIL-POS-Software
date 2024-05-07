@@ -23,7 +23,7 @@ use App\Http\Controllers\PosSettingsController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\EmployeeSalaryController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\damageController;
+use App\Http\Controllers\DamageController;
 use App\Http\Controllers\CustomeMailControler;
 use Illuminate\Support\Facades\Route;
 
@@ -208,11 +208,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/purchase/find/{id}', 'find')->name('purchase.find');
     });
     // damage related route
-    Route::controller(damageController::class)->group(function () {
+    Route::controller(DamageController::class)->group(function () {
         Route::get('/damage', 'index')->name('damage');
         Route::post('/damage/store', 'store')->name('damage.store');
         Route::get('/damage/view', 'view')->name('damage.view');
-        // Route::get('/damage/edit/{id}', 'edit')->name('damage.edit');
+        Route::get('/damage/show_quantity/{id}', 'ShowQuantity')->name('damage.show.quantity');
+        Route::get('/damage/edit/{id}', 'edit')->name('damage.edit');
         // Route::post('/damage/update/{id}', 'update')->name('damage.update');
         // Route::get('/damage/destroy/{id}', 'destroy')->name('damage.destroy');
         // Route::get('/damage/invoice/{id}', 'invoice')->name('damage.invoice');

@@ -305,11 +305,29 @@
                                 Account Transaction
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('expense.report.view') }}" role="button"
+                                aria-controls="general-pages">
+                                Expense Report
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('employee.salary.report.view') }}" role="button"
+                                aria-controls="general-pages">
+                                Employee Salary Report
+                            </a>
+                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('stock.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Stock Report
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('damage.report') }}" role="button"
+                                aria-controls="general-pages">
+                                Damage Report
                             </a>
                         </li>
 

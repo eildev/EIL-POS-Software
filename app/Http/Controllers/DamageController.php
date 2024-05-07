@@ -39,19 +39,22 @@ class DamageController extends Controller
         ]);
 
         if ($validator->passes()) {
-            // $data = $request->all();
+            $data = $request->all();
 
             // $this->damage_repo->create($data);
-            // @dd($request);
+            // @dd($data);
+            $product_qty = Product::findOrFail($request->product_id);
+            $stock = $product_qty->stock;
             $damage = new Damage;
             $damage->product_id = $request->product_id;
             $damage->qty = $request->pc;
             $damage->branch_id = Auth::user()->branch_id;
-            $damage->date = $request->date;
+            $formattedDate = date('Y-m-d H:i:s', strtotime($request->date));
+            $damage->date = $formattedDate;
             $damage->note = $request->note;
             $damage->save();
 
-            $product_qty = Product::findOrFail($request->product_id);
+
             $product_qty->stock = $product_qty->stock - $request->pc;
             $product_qty->save();
         }
@@ -73,9 +76,21 @@ class DamageController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function ShowQuantity($id)
     {
-        //
+        $show_qty = Product::with('unit')->findOrFail($id);
+        return response()->json([
+
+            'all_data' => $show_qty,
+            'unit' => $show_qty->unit
+        ]);
+        // @dd($show_qty);
+    }
+    public function edit($id)
+    {
+        $damage_info = Damage::findOrFail($id);
+
+        return view('pos.damage.edit', compact('damage_info'));
     }
 
     /**

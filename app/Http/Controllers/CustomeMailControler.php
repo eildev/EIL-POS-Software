@@ -26,7 +26,6 @@ class CustomeMailControler extends Controller
          //     foreach ($recipients as $recipient) {
          //         Mail::to($recipient)->cc($ccRecipients)->send(new CustomerSendEmail($data));
          //     }
-
             // dd($recipients);
             foreach ($recipients as $recipient) {
                 Mail::to($recipient)->send(new CustomerSendEmail($data));

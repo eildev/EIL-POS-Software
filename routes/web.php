@@ -268,7 +268,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/transaction/filter/rander', 'TransactionFilterView')->name('transaction.filter.view');
         ////////Invoice///////////
         Route::get('/transaction/invoice/receipt/{id}', 'TransactionInvoiceReceipt')->name('transaction.invoice.receipt');
-
     });
     // pos setting related route
     Route::controller(PosSettingsController::class)->group(function () {
@@ -296,6 +295,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/sale/invoice/{id}', 'invoice')->name('sale.invoice');
         Route::get('/sale/filter', 'filter')->name('sale.filter');
         Route::get('/sale/find/{id}', 'find')->name('sale.find');
+        Route::get('/product/find-qty/{id}', 'findQty')->name('product.find.qty');
         Route::post('/sale/transaction/{id}', 'saleTransaction')->name('sale.transaction');
     });
     // Transaction related route(n)
@@ -347,15 +347,15 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/purchese/product/filter', 'PurchaseProductFilter')->name('purches.product.filter.view');
             Route::get('/purchese/details/invoice/{id}', 'PurchaseDetailsInvoice')->name('purchse.details.invoice');
-                //////////////Account Transaction Route /////////////
-        Route::get('/account/transaction/view', 'AccountTransactionView')->name('account.transaction.view');
-        Route::get('/account/transaction/filter', 'AccountTransactionFilter')->name('account.transaction.ledger.filter');
-         //////////////Expense Report Route /////////////
-        Route::get('/expense/report/view', 'ExpenseReport')->name('expense.report.view');
-        Route::get('/expense/expense/filter', 'ExpenseReportFilter')->name('expense.report.filter');
-        //////////////Employee Salary Report /////////////
-        Route::get('/employee/salary/report/view', 'EmployeeSalaryReport')->name('employee.salary.report.view');
-        Route::get('/employee/salary/filter', 'EmployeeSalaryReportFilter')->name('employee.salary.report.filter');
+            //////////////Account Transaction Route /////////////
+            Route::get('/account/transaction/view', 'AccountTransactionView')->name('account.transaction.view');
+            Route::get('/account/transaction/filter', 'AccountTransactionFilter')->name('account.transaction.ledger.filter');
+            //////////////Expense Report Route /////////////
+            Route::get('/expense/report/view', 'ExpenseReport')->name('expense.report.view');
+            Route::get('/expense/expense/filter', 'ExpenseReportFilter')->name('expense.report.filter');
+            //////////////Employee Salary Report /////////////
+            Route::get('/employee/salary/report/view', 'EmployeeSalaryReport')->name('employee.salary.report.view');
+            Route::get('/employee/salary/filter', 'EmployeeSalaryReportFilter')->name('employee.salary.report.filter');
         });
     });
     // Report related routes

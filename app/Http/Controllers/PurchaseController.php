@@ -83,7 +83,7 @@ class PurchaseController extends Controller
             // account Transaction crud 
             $accountTransaction = new AccountTransaction;
             $accountTransaction->branch_id =  Auth::user()->branch_id;
-            $accountTransaction->purpose =  'pay';
+            $accountTransaction->purpose =  'Deposit';
             $accountTransaction->account_id =  $request->payment_method;
             $accountTransaction->debit = $request->paid;
             // $accountTransaction->balance = $accountTransaction->balance - $request->paid;
@@ -123,7 +123,7 @@ class PurchaseController extends Controller
             $supplier = Supplier::findOrFail($request->supplier_id);
             $supplier->total_receivable = $supplier->total_receivable + $request->grand_total;
             $supplier->total_payable = $supplier->total_payable + $request->paid;
-            // $supplier->wallet_balance = $supplier->wallet_balance + ($request->grand_total - $request->paid);
+            $supplier->wallet_balance = $supplier->wallet_balance + ($request->grand_total - $request->paid);
             $supplier->save();
 
 
@@ -242,31 +242,34 @@ class PurchaseController extends Controller
         ]);
         if ($validator->passes()) {
 
+            // purchase related crud 
             $purchase = Purchase::findOrFail($id);
             $purchase->paid = $purchase->paid - $request->amount;
             $purchase->due = $purchase->due - $request->amount;
             $purchase->save();
 
+            // supplier related CRUD 
             $supplier = Supplier::findOrFail($purchase->supplier_id);
             $supplier->total_payable = $supplier->total_payable - $request->amount;
-            // $supplier->wallet_balance = $supplier->wallet_balance - $request->amount;
+            $supplier->wallet_balance = $supplier->wallet_balance - $request->amount;
             $supplier->save();
 
             // account Transaction crud 
             $accountTransaction = new AccountTransaction;
             $accountTransaction->branch_id =  Auth::user()->branch_id;
-            $accountTransaction->purpose =  'pay';
+            $accountTransaction->purpose =  'Deposit';
             $accountTransaction->account_id =  $request->transaction_account;
             $accountTransaction->debit = $request->amount;
             $accountTransaction->save();
 
+            // transaction related CRUD 
             $transaction = new Transaction;
             $transaction->date = $request->payment_date;
             $transaction->payment_type = 'pay';
             $transaction->particulars = 'Purchase#' . $id;
             $transaction->supplier_id = $supplier->id;
             $transaction->debit = $transaction->debit + $request->amount;
-            $transaction->balance = $transaction->balance + $request->amount;
+            $transaction->balance = $transaction->balance - $request->amount;
             $transaction->payment_method = $request->transaction_account;
             $transaction->save();
 

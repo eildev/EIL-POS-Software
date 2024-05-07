@@ -447,7 +447,7 @@
                     <h6 class="card-title text-info">Pay to Supplier</h6>
 
                     <div id="" class="table-responsive">
-                        <table id="dataTableExample"class="table">
+                        <table id="dataTableExample1"class="table">
                             <thead>
                                 <tr>
                                     <th>SN#</th>
@@ -502,7 +502,7 @@
                     <h6 class="card-title text-info">Receive from Customer</h6>
 
                     <div id="" class="table-responsive">
-                        <table id="dataTableExample3" class="table">
+                        <table id="dataTableExample4" class="table">
                             <thead>
                                 <tr>
                                     <th>SN#</th>

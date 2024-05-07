@@ -312,6 +312,12 @@
                                 Stock Report
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('damage.report') }}" role="button"
+                                aria-controls="general-pages">
+                                Damage Report
+                            </a>
+                        </li>
 
                     </ul>
                 </div>

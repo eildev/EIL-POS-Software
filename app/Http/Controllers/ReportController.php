@@ -11,6 +11,7 @@ use App\Models\Transaction;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Models\Sale;
+use App\Models\Damage;
 use Illuminate\Http\Request;
 use App\Models\AccountTransaction;
 use Illuminate\Support\Facades\Auth;
@@ -100,13 +101,15 @@ class ReportController extends Controller
         // dd($products);
         return view('pos.report.products.top_products', compact('products'));
     }
-    // purchase Report report function
-    // purchase Report report function
+
+
+    // purchase Report function
     public function purchaseReport()
     {
         $purchaseItem = PurchaseItem::all();
         return view('pos.report.purchase.purchase', compact('purchaseItem'));
     }
+
     public function PurchaseProductFilter(Request $request)
     {
 
@@ -135,6 +138,42 @@ class ReportController extends Controller
     // {
     //     return view('pos.report.purchase.purchase');
     // }
+
+
+
+    //damage reports starting
+
+    public function damageReport()
+    {
+        $damageItem = Damage::all();
+        // @dd($damageItem);
+        return view('pos.report.damages.damage', compact('damageItem'));
+    }
+
+    public function DamageProductFilter(Request $request)
+    {
+
+        $damageItem = Damage::when($request->filterProduct, function ($query) use ($request) {
+            return $query->where('product_id', $request->filterProduct);
+        })
+
+            ->when($request->startDatePurches && $request->endDatePurches, function ($query) use ($request) {
+                $query->whereHas('Purchas', function ($query) use ($request) {
+                    return $query->whereBetween('purchse_date', [$request->startDatePurches, $request->endDatePurches]);
+                });
+            })
+            // ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+            //     return $query->whereBetween('purchse_date', [$request->startDate, $request->endDate]);
+            // })
+            ->get();
+        return view('pos.report.damages.damage-filter-table', compact('damageItem'))->render();
+    } //
+
+    //damage reports endpoint
+
+
+
+
     // customer Ledger report function
     public function customerLedger()
     {

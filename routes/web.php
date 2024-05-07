@@ -338,6 +338,13 @@ Route::middleware('auth')->group(function () {
             Route::get('stock', 'stockReport')->name('stock.report');
             //
             Route::get('/report/purchase', 'purchaseReport')->name('purchase.report');
+
+
+            Route::get('/report/damage', 'damageReport')->name('damage.report');
+            Route::get('/damage/product/filter', 'DamageProductFilter')->name('damage.product.filter.view');
+
+
+
             Route::get('/purchese/product/filter', 'PurchaseProductFilter')->name('purches.product.filter.view');
             Route::get('/purchese/details/invoice/{id}', 'PurchaseDetailsInvoice')->name('purchse.details.invoice');
                 ////////////////Account Transaction Route /////////////

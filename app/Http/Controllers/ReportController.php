@@ -162,7 +162,7 @@ class ReportController extends Controller
         ->when($request->branchId !="Select Branch", function ($query) use ($request) {
             return $query->where('branch_id',$request->branchId);
         })
-        ->get();
+            ->get();
         return view('pos.report.damages.damage-filter-table', compact('damageItem'))->render();
     } //
 
@@ -244,15 +244,15 @@ class ReportController extends Controller
     public function AccountTransactionFilter(Request $request){
        // dd($request->all());
        $accountTransaction = AccountTransaction::when($request->accountId, function ($query) use ($request) {
-            return $query->where('account_id', $request->accountId);
-        })
-        ->when($request->startDate && $request->endDate, function ($query) use ($request) {
-            return $query->whereBetween('created_at', [$request->startDate, $request->endDate]);
-        })
-        ->get();
-        return view('pos.report.account_transaction.account_transaction_table',compact('accountTransaction'))->render();
+        return $query->where('account_id', $request->accountId);
+    })
+    ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+        return $query->whereBetween('created_at', [$request->startDate, $request->endDate]);
+    })
+    ->get();
+    return view('pos.report.account_transaction.account_transaction_table',compact('accountTransaction'))->render();
     }
-    //////////////////Rexpense Report MEthod //////////////
+    //////////////////Expense Report Method //////////////
     public function ExpenseReport(){
         $expense = Expense::latest()->get();
         return view('pos.report.expense.expense',compact('expense'));

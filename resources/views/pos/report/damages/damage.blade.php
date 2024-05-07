@@ -109,32 +109,34 @@
     <div id="purchase-filter-table">
         @include('pos.report.damages.damage-filter-table')
     </div>
-        <script>
-            $(document).ready(function (){
 
-document.querySelector('#purchesfilter').addEventListener('click', function(e) {
-    e.preventDefault();
-         let startDatePurches = document.querySelector('.start-date-purches').value;
-        let endDatePurches = document.querySelector('.end-date-purches').value;
-        //  alert(endDatePurches);
-        let filterProduct = document.querySelector('.filter_product_name').value;
-        let branchId = document.querySelector('.filter_branch').value;
-        // alert(filterProduct);
-        $.ajax({
-            url: "{{ route('damage.product.filter.view') }}",
-            method: 'GET',
-            data: {
-                startDatePurches,
-                endDatePurches,
-                filterProduct,
-                branchId
-            },
-            success: function(res) {
-                jQuery('#purchase-filter-table').html(res);
-            }
-        });
+<script>
+    $(document).ready(function (){
+
+        document.querySelector('#purchesfilter').addEventListener('click', function(e) {
+            e.preventDefault();
+                let startDatePurches = document.querySelector('.start-date-purches').value;
+                let endDatePurches = document.querySelector('.end-date-purches').value;
+                //  alert(endDatePurches);
+                let filterProduct = document.querySelector('.filter_product_name').value;
+                let branchId = document.querySelector('.filter_branch').value;
+                // alert(filterProduct);
+                $.ajax({
+                    url: "{{ route('damage.product.filter.view') }}",
+                    method: 'GET',
+                    data: {
+                        startDatePurches,
+                        endDatePurches,
+                        filterProduct,
+                        branchId
+                    },
+                    success: function(res) {
+                        jQuery('#purchase-filter-table').html(res);
+                    }
+                });
+            });
     });
-    });
+
     $('.print-btn').click(function() {
             // Remove the id attribute from the table
             $('#dataTableExample').removeAttr('id');
@@ -142,8 +144,8 @@ document.querySelector('#purchesfilter').addEventListener('click', function(e) {
             // Trigger the print function
             window.print();
 
-        });
-        </script>
+    });
+</script>
 <style>
     @media print {
 
@@ -182,6 +184,5 @@ document.querySelector('#purchesfilter').addEventListener('click', function(e) {
 
         }
     }
-
 </style>
 @endsection

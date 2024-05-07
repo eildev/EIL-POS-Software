@@ -15,6 +15,9 @@
                     </tr>
                 </thead>
                 <tbody class="showData">
+                <?php
+                $expenseTotalAmount = 0;
+                ?>
                 @if ($expense->count() > 0)
                 @foreach ($expense as $key => $expenseData)
                     <tr>
@@ -23,9 +26,7 @@
                     <td>{{$expenseData->expense_date}}</td>
                     <td>{{ $expenseData['expenseCat']['name'] ?? ''}}</td>
                     <td>{{$expenseData->purpose}}</td>
-                    <?php
-                    $expenseTotalAmount = 0;
-                    ?>
+
                     <td>{{ $expenseData->amount ?? '0'}} TK</td>
                     <?php
                     $expenseTotalAmount += isset(  $expenseData->amount ) ? $expenseData->amount : 0;
@@ -55,7 +56,7 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th><strong>Total :{{ $expenseTotalAmount }}  Tk</strong></th>
+                        <th><strong>Total :{{ $expenseTotalAmount ?? '0' }}  Tk</strong></th>
                     </tr>
                 </tfoot>
             </table>

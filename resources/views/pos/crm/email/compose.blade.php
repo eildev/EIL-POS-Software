@@ -49,51 +49,51 @@
                         @php
                         $customer = App\Models\Customer::whereNotNull('email')->where('email', '<>', '')->get();
                         @endphp
-                        <form  id="myValidForm" method="POST" action="{{ route('customer.send.email') }}">
+                <form  id="myValidForm" method="POST" action="{{ route('customer.send.email') }}">
                             @csrf
-                      <select id="customerEmailSelect" name="recipients[]" class="compose-multiple-select form-select @error('recipients') is-invalid @enderror" multiple="multiple">
+                            <select id="customerEmailSelect" name="recipients[]" class="compose-multiple-select form-select @error('recipients') is-invalid @enderror" multiple="multiple">
 
-                        {{-- <option selected disabled>Select Mail</option> --}}
-                        @foreach ($customer as $customerEmail)
-                            <option value="{{$customerEmail->email}}">{{$customerEmail->email}}</option>
-                        @endforeach
-                    </select>
-                    @error('recipients')
+                                {{-- <option selected disabled>Select Mail</option> --}}
+                                @foreach ($customer as $customerEmail)
+                                    <option value="{{$customerEmail->email}}">{{$customerEmail->email}}</option>
+                                @endforeach
+                            </select>
+                            @error('recipients')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    </div>
+                    <div class="subject">
+                    <div class="row mb-3 form-valid-groups">
+                        <label class="col-md-2 col-form-label" >Subject</label>
+                        <div class="col-md-10">
+                        <input class="form-control @error('subject') is-invalid @enderror" name="subject" type="text">
+                        @error('subject')
                         <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                    </div>
-                  </div>
-                </div>
-                <div class="subject">
-                  <div class="row mb-3 form-valid-groups">
-                    <label class="col-md-2 col-form-label" >Subject</label>
-                    <div class="col-md-10">
-                      <input class="form-control @error('subject') is-invalid @enderror" name="subject" type="text">
-                      @error('subject')
-                      <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+                            @enderror
+                        </div>
 
-                  </div>
+                    </div>
+                    </div>
                 </div>
-              </div>
-              <div class="px-3 form-valid-groups">
-                <div class="col-md-12 ">
-                  <div class="mb-3">
-                    <label class="form-label visually-hidden" for="easyMdeEditor">Descriptions </label>
-                    <textarea class="form-control @error('subject') is-invalid @enderror" name="message" id="easyMdeEditor" rows="5"></textarea>
-                  </div>
-                  @error('message')
-                  <div class="alert alert-danger">{{ $message }}</div>
-                     @enderror
-                </div>
-                <div>
-                  <div class="col-md-12">
-                    <button class="btn btn-primary me-1 mb-1" type="submit"> Send</button>
-                    <button class="btn btn-secondary me-1 mb-1" type="button"> Cancel</button>
-                  </div>
-                </div>
-            </form>
+                    <div class="px-3 form-valid-groups">
+                        <div class="col-md-12 ">
+                        <div class="mb-3">
+                            <label class="form-label visually-hidden" for="easyMdeEditor">Descriptions </label>
+                            <textarea class="form-control @error('subject') is-invalid @enderror" name="message" id="easyMdeEditor" rows="5"></textarea>
+                        </div>
+                        @error('message')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div>
+                        <div class="col-md-12">
+                            <button class="btn btn-primary me-1 mb-1" type="submit"> Send</button>
+                            <button class="btn btn-secondary me-1 mb-1" type="button"> Cancel</button>
+                        </div>
+                    </div>
+                </form>
               </div>
 
             </div>

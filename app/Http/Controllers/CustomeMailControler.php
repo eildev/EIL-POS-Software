@@ -10,17 +10,17 @@ class CustomeMailControler extends Controller
 {
     public function CustomerSendEmail(Request $request)
     {
-        $request->validate([
-            'subject' => 'required',
-            'message' => 'required',
-            'recipients' => 'required',
+        // $request->validate([
+        //     'subject' => 'required',
+        //     'message' => 'required',
+        //     'recipients' => 'required',
 
-        ]);
+        // ]);
         $data = [
             'subject' => $request->subject,
             'message' => $request->message,
         ];
-        $recipients = $request->input('recipients');
+        $recipients = $request->recipients;
         // $ccRecipients = $request->input('cc_recipients');
 
          //     foreach ($recipients as $recipient) {
@@ -29,7 +29,8 @@ class CustomeMailControler extends Controller
 
             // dd($recipients);
             foreach ($recipients as $recipient) {
-                Mail::to($recipient)->send(new CustomerSendEmail($data));
+                // Mail::to($recipient)->send(new CustomerSendEmail($data));
+                Mail::to($recipient)->queue(new CustomerSendEmail($data));
             }
 
         $notification = array(

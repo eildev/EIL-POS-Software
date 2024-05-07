@@ -55,7 +55,11 @@
                 {{ $totalSale - $totalCost }}
             </td>
             <td>
-                paid
+                @if ($data->due < 0)
+                    <span class="text-primary">Paid</span>
+                @else
+                    <span class="text-secondary">Unpaid</span>
+                @endif
             </td>
             <td class="id">
                 <div class="dropdown">

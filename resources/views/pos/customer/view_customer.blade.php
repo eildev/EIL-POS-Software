@@ -22,10 +22,11 @@
                                     <th>Phone</th>
                                     <th>Opening Receivable</th>
                                     <th>Opening Payable</th>
-                                    <th>Wallet Balance</th>
+
                                     <th>Total Receivable</th>
                                     <th>Total Payable</th>
                                     <th>Due</th>
+                                    <th>Wallet Balance</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -38,10 +39,35 @@
                                             <td>{{ $customer->phone ?? '' }}</td>
                                             <td>{{ $customer->opening_receivable ?? 0 }}</td>
                                             <td>{{ $customer->opening_payable ?? 0 }}</td>
-                                            <td>{{ $customer->wallet_balance ?? 0 }}</td>
                                             <td>{{ $customer->total_receivable ?? 0 }}</td>
                                             <td>{{ $customer->total_payable ?? 0 }}</td>
-                                            <td>{{ $customer->sales->sum('due') ?? 0 }}</td>
+                                            <td>
+                                                @if ($customer->sales->sum('due') > 0)
+                                                    <span class="text-danger">৳
+                                                        {{ $customer->sales->sum('due') ?? 0 }}</span>
+                                                @else
+                                                    <span>৳ 0</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($customer->wallet_balance > 0)
+                                                    <span>
+                                                        {{ $customer->wallet_balance ?? 0 }}
+                                                        <br>
+                                                        আপনি কাস্টমার <br> থেকে পাবেন।
+                                                    </span>
+                                                @elseif ($customer->wallet_balance < 0)
+                                                    <span>
+                                                        {{ $customer->wallet_balance ?? 0 }}
+                                                        <br>
+                                                        আপনার থেকে <br> কাস্টমার পাবেন।
+                                                    </span>
+                                                @else
+                                                    <span>
+                                                        {{ $customer->wallet_balance ?? 0 }}
+                                                    </span>
+                                                @endif
+                                            </td>
                                             <td>
                                                 <a href="{{ route('customer.edit', $customer->id) }}"
                                                     class="btn btn-sm btn-primary btn-icon">

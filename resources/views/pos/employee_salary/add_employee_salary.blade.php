@@ -160,7 +160,6 @@
                         $('#employeeSalary').text( "*");
                         $('#advancedSalary').text( "Note: Avanced Amount: ৳ " + 0 );
                     }
-
                 },
             });
         }

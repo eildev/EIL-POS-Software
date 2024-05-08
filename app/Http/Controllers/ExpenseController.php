@@ -37,7 +37,11 @@ class ExpenseController extends Controller
     public function ExpenseStore(Request $request)
     {
         $request->validate([
+            'purpose' => 'required',
+            'amount' => 'required',
+            'spender' => 'required',
             'expense_category_id' => 'required',
+            'expense_date' => 'required',
         ]);
         $expense = new Expense;
         $expense->branch_id =  Auth::user()->branch_id;
@@ -55,17 +59,20 @@ class ExpenseController extends Controller
         ];
         return redirect()->route('expense.view')->with($notification);
     } //
+
     public function ExpenseView()
     {
         $expenseCat = ExpenseCategory::latest()->get();
+        $bank = Bank::latest()->get();
+        $expenseCategory = ExpenseCategory::latest()->get();
         // $expenseCategory  = ExpenseCategory::latest()->get();
         $expense = Expense::latest()->get();
-        return view('pos.expense.view_expense', compact('expense', 'expenseCat'));
+        return view('pos.expense.view_expense', compact('expense', 'expenseCat','bank','expenseCategory'));
     } //
 
     public function ExpenseEdit($id)
     {
-        $expense = Expense::find($id);
+        $expense = Expense::findOrFail($id);
         $bank = Bank::latest()->get();
         $expenseCategory = ExpenseCategory::latest()->get();
         return view('pos.expense.edit_expense', compact('expense', 'expenseCategory', 'bank'));
@@ -101,7 +108,7 @@ class ExpenseController extends Controller
     } //
     public function ExpenseCategoryDelete($id)
     {
-        $expenseCategory = ExpenseCategory::find($id);
+        $expenseCategory = ExpenseCategory::findOrFail($id);
         $expenseCategory->delete();
         $notification = [
             'message' => 'Expense Category Deleted Successfully',
@@ -137,17 +144,13 @@ class ExpenseController extends Controller
             'message' => 'Expense Category updated successfully',
         ]);
     }//
-    ///Expense Filter view
+    ///Expense Filter view //
     public function ExpenseFilterView(Request $request){
         $expenseCat = ExpenseCategory::latest()->get();
         // $expenseCategory  = ExpenseCategory::latest()->get();
-        $expense = Expense::when($request->filterCtegory, function ($query) use ($request) {
-            return $query->where('expense_category_id', $request->filterCtegory);
-        })
-        ->when($request->fromDate && $request->toDate, function ($query) use ($request) {
-            return $query->whereBetween('expense_date', [$request->fromDate, $request->toDate]);
-        })
-        ->get();
+        $expense =  Expense::when($request->startDate && $request->endDate, function ($query) use ($request) {
+            return $query->whereBetween('expense_date', [$request->startDate, $request->endDate]);
+        })->get();
 
         return view('pos.expense.expense-filter-rander-table', compact('expense', 'expenseCat'))->render();
     }

@@ -180,7 +180,7 @@ public function EmployeeSalaryAdvancedDelete($id){
 }
 //Dependancy
     public function BranchAjax($branch_id){
-        $branch =EmployeeSalary::where('branch_id',$branch_id)->orderBy('branch_name','ASC')->get();
+        $branch =Employee::where('branch_id',$branch_id)->get();
           return  json_encode($branch);
     }//
 }

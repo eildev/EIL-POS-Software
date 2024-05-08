@@ -20,7 +20,7 @@
 						<div class="mb-3 form-valid-groups">
 							<label class="form-label">Select Branch <span class="text-danger">*</span></label>
                             <select class="form-select mb-3"  name="branch_id">
-                                <option selected="" disabled>Select Branch</option>
+                                <option selected="" value="">Select Branch</option>
                                 @foreach ($branch as $branchs)
                                 <option value="{{$branchs ->id}}">{{$branchs->name}}</option>
                                 @endforeach
@@ -31,10 +31,9 @@
 						<div class="mb-3 form-valid-groups">
 							<label class="form-label">Select Employee Name<span class="text-danger">*</span></label>
 							<select class="form-select mb-3" name="employee_id">
-                                <option selected="" disabled>Select Employee Name</option>
-                                @foreach ($employees as $employee)
-                                <option value="{{$employee->id}}">{{$employee->full_name}}({{$employee->salary}} Tk) </option>
-                                @endforeach
+                                {{-- <option selected="" disabled>Select Employee Name</option> --}}
+                                <option ></option>
+
                             </select>
 						</div>
 					</div>
@@ -111,6 +110,31 @@
             },
         });
     });
+//Dropdown js
+
+	$(document).ready(function(){
+		$('select[name="branch_id"]').on('change',function(){
+			var branch_id = $(this).val();
+			if(branch_id){
+				$.ajax({
+					url:"{{('/employee/branch')}}/"+branch_id,
+					type:"GET",
+					dataType:'json',
+					success:function(data){
+						$('select[name = "employee_id"]').html('');
+						var d = $('select[name= "employee_id"]').empty();
+						$.each(data,function(key,value){
+							$('select[name= "employee_id"]').append(
+								'<option value="'+value.id+'">'+value.full_name+ " (" + value.salary+")"+  '</option>')
+						});
+					},
+				});
+			}
+			else{
+				alert('Danger');
+			}
+		});
+	});
 
 </script>
 @endsection

@@ -109,12 +109,12 @@
     <div class="col-12 col-xl-12 stretch-card">
 
         <div class="row flex-grow-1">
-            <h3 class="my-3">Today Summery</h3>
+            <h3 class="my-3">Today Summary</h3>
             <div class="col-md-3 grid-margin stretch-card">
-                <div class="card" style="background-color: #465161 !important ;color:white" >
+                <div class="card" style="" >
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-baseline">
-                            <h6 class="card-title mb-0">Today Invoice</h6>
+                            <h6 class="card-title mb-0">Invoice</h6>
                             <div class="dropdown mb-2">
                                 <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
@@ -144,10 +144,10 @@
                 </div>
             </div>
             <div class="col-md-3 grid-margin stretch-card">
-                <div class="card" style="background-color: #f96197 !important ;color:white" >
+                <div class="card" style="" >
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-baseline">
-                            <h6 class="card-title mb-0">Today Purchase</h6>
+                            <h6 class="card-title mb-0">Purchase</h6>
                             <div class="dropdown mb-2">
                                 <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
@@ -176,10 +176,10 @@
                 </div>
             </div>
             <div class="col-md-3 grid-margin stretch-card">
-                <div class="card" style="background-color: #f96868!important ;color:white">
+                <div class="card" style="">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-baseline">
-                            <h6 class="card-title mb-0">Today invoice product</h6>
+                            <h6 class="card-title mb-0">invoice product</h6>
                             <div class="dropdown mb-2">
                                 <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -207,10 +207,10 @@
                 </div>
             </div>
             <div class="col-md-3 grid-margin stretch-card">
-                <div class="card" style="background-color:#48b0f7!important ;color:white">
+                <div class="card" style="">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-baseline">
-                            <h6 class="card-title mb-0">Today invoice amount</h6>
+                            <h6 class="card-title mb-0">invoice amount</h6>
                             <div class="dropdown mb-2">
                                 <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -236,10 +236,10 @@
                 </div>
             </div>
             <div class="col-md-3 grid-margin stretch-card">
-                <div class="card" style="background-color:#33cabb !important ;color:white">
+                <div class="card" style="">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-baseline">
-                            <h6 class="card-title mb-0">Today Expenses</h6>
+                            <h6 class="card-title mb-0">Expenses</h6>
                             <div class="dropdown mb-2">
                                 <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -267,10 +267,10 @@
                 </div>
             </div>
             <div class="col-md-3 grid-margin stretch-card">
-                <div class="card" style="background-color:#8d6658 !important ;color:white">
+                <div class="card" style="">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-baseline">
-                            <h6 class="card-title mb-0">Today customer</h6>
+                            <h6 class="card-title mb-0"> customer</h6>
                             <div class="dropdown mb-2">
                                 <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -299,10 +299,10 @@
                 </div>
             </div>
             <div class="col-md-3 grid-margin stretch-card">
-                <div class="card" style="background-color:#15c377 !important ;color:white">
+                <div class="card" style="">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-baseline">
-                            <h6 class="card-title mb-0">Today Sale Profit</h6>
+                            <h6 class="card-title mb-0">Sale Profit</h6>
                             <div class="dropdown mb-2">
                                 <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">

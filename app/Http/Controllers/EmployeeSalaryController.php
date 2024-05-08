@@ -178,4 +178,9 @@ public function EmployeeSalaryAdvancedDelete($id){
     );
     return redirect()->route('employee.salary.advanced.view')->with($notification);
 }
+//Dependancy
+    public function BranchAjax($branch_id){
+        $branch =EmployeeSalary::where('branch_id',$branch_id)->orderBy('branch_name','ASC')->get();
+          return  json_encode($branch);
+    }//
 }

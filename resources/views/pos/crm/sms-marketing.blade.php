@@ -255,14 +255,7 @@
                         // console.log(res);
                         if (res.status == 200) {
                             $('.smsCategoryForm')[0].reset();
-                            categoryView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             // console.log(res);
                             showError('.category_name', res.error.name);

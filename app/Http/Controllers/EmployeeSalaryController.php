@@ -192,10 +192,18 @@ public function EmployeeSalaryAdvancedDelete($id){
         $branch =Employee::where('branch_id',$branch_id)->get();
           return  json_encode($branch);
     }//
-    public function getEmployeeInfo(Request $request, $employee_id){
-        $employee = EmployeeSalary::findOrFail($employee_id);
-        // dd($employee);
-        return response()->json($employee);
+    public function getEmployeeInfo(Request $request,$employee_id){
+        $requestMonth = Carbon::createFromFormat('Y-m-d', $request->date)->format('m');
+        $requestYear = Carbon::createFromFormat('Y-m-d', $request->date)->format('Y');
+        // Get the first and last day of the month
+        $firstDayOfMonth = Carbon::create($requestYear, $requestMonth, 1)->startOfMonth();
+        $lastDayOfMonth = Carbon::create($requestYear, $requestMonth, 1)->endOfMonth();
+        $employee = EmployeeSalary::where('employee_id',$employee_id)
+        ->whereBetween('date', [$firstDayOfMonth, $lastDayOfMonth])
+        ->latest()->first();
+        return response()->json([
+            'data' => $employee
+        ]);
 
     }
 }

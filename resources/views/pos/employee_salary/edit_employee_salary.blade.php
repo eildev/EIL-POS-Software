@@ -37,8 +37,8 @@
 					</div><!-- Col -->
 					<div class="col-sm-6 form-valid-groups">
 						<div class="mb-3">
-							<label class="form-label">Payemnt Salary Amount (Due Amount {{$employeeSalary->balance}} Tk)<span class="text-danger">*</span></label>
-							<input type="number" value="{{$employeeSalary->balance}}"  class="form-control" name="debit"  placeholder="0.00">
+							<label class="form-label">Payemnt Salary Amount (Paid: {{$employeeSalary->debit}} Tk)(Due Amount {{$employeeSalary->creadit -$employeeSalary->debit}} Tk)<span class="text-danger">*</span></label>
+							<input type="number" value="{{$employeeSalary->creadit -$employeeSalary->debit}}"  class="form-control" name="debit"  placeholder="0.00">
 						</div>
 					</div><!-- Col -->
 					<div class="col-sm-12 form-valid-groups">

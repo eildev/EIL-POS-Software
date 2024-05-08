@@ -22,7 +22,15 @@ class ReportController extends Controller
     // today report function
     public function todayReport()
     {
-        return view('pos.report.today.today');
+        $sale = Sale::where('branch_id', Auth::user()->branch_id)->get();
+        $saleAmount = $sale->sum('receivable');
+        $purchase = Purchase::where('branch_id', Auth::user()->branch_id)->get();
+        $purchaseAmount = $purchase->sum('grand_total');
+        $expense = Expense::where('branch_id', Auth::user()->branch_id)->get();
+        $expenseAmount = $expense->sum('amount');
+        $salary = EmployeeSalary::where('branch_id', Auth::user()->branch_id)->get();
+        $totalSalary = $salary->sum('debit');
+        return view('pos.report.today.today', compact('saleAmount', 'purchaseAmount', 'expenseAmount', 'totalSalary', 'expense'));
     }
     // summary report function
     public function summaryReport()

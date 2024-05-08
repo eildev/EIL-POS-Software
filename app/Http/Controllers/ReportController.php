@@ -22,6 +22,32 @@ class ReportController extends Controller
     // today report function
     public function todayReport()
     {
+        $todayDate = now()->toDateString();
+        //Today Invoice
+        $saleItemsForDate = App\Models\SaleItem::whereDate('created_at', $todayDate);
+        $todaySaleItemsToday = $saleItemsForDate->sum('qty');
+        $totalInvoiceToday = App\Models\Sale::whereDate('sale_date', $todayDate)->count();
+
+        //Today Purchase
+        $todayPurchaseItems = App\Models\PurchaseItem::whereDate('created_at', $todayDate);
+        $todayPurchaseItemsToday = $todayPurchaseItems->sum('quantity');
+        $todayPurchaseToday = App\Models\Purchase::whereDate('purchse_date', $todayDate)->count();
+        //Today invoice product
+        $todayInvoiceProductItems = App\Models\Sale::whereDate('sale_date', $todayDate);
+        $todayInvoiceProductTotal = $todayInvoiceProductItems->sum('quantity');
+        $todayInvoiceProductAmount = $todayInvoiceProductItems->sum('final_receivable');
+        //today invoice amount
+        $totalInvoiceTodaySum = App\Models\Sale::whereDate('sale_date', $todayDate);
+        $todayInvoiceAmount = $totalInvoiceTodaySum->sum('receivable');
+        $todayProfit = $totalInvoiceTodaySum->sum('profit');
+        //today expenses
+        $todayExpenseDate = App\Models\Expense::whereDate('expense_date', $todayDate);
+        $todayExpenseAmount = $todayExpenseDate->sum('amount');
+        //Today Customer
+        $todayCustomer = App\Models\Customer::whereDate('created_at', $todayDate);
+        //Sale Profit
+        $saleProfitAmount = $totalInvoiceTodaySum->sum('profit');
+
         $sale = Sale::where('branch_id', Auth::user()->branch_id)->get();
         $saleAmount = $sale->sum('receivable');
         $purchase = Purchase::where('branch_id', Auth::user()->branch_id)->get();

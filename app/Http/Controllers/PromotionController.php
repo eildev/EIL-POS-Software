@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\Promotion;
 use App\Models\Product;
 use App\Models\PromotionDetails;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Validator;
 
 class PromotionController extends Controller
 {
@@ -89,17 +93,32 @@ class PromotionController extends Controller
     } //
     public function PromotionDetailsStore(Request $request)
     {
-        PromotionDetails::insert([
-            'promotion_id' => $request->promotion_id,
-            'Product_id' => $request->Product_id,
-            'additional_conditions' => $request->additional_conditions,
-            'created_at' =>  Carbon::now(),
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'Promotion_id' => 'required',
+            'promotion_type' => 'required',
         ]);
-        $notification = [
-            'message' => 'Promotion Details Added Successfully',
-            'alert-type' => 'info'
-        ];
-        return redirect()->route('promotion.details.view')->with($notification);
+
+        if ($validator->passes()) {
+            // dd($request->all());
+            $promotionalDetails =  new PromotionDetails;
+            $promotionalDetails->Promotion_id = $request->promotion_id;
+            $promotionalDetails->promotion_type = $request->promotion_type;
+            $promotionalDetails->logic = $request->logic;
+            $promotionalDetails->additional_conditions = $request->additional_conditions;
+            $promotionalDetails->created_at =  Carbon::now();
+            $promotionalDetails->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Promotion Details Added Successfully'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'errors' => $validator->message()
+            ]);
+        }
     } //End Method
     public function PromotionDetailsView()
     {
@@ -135,5 +154,48 @@ class PromotionController extends Controller
             'alert-type' => 'info'
         ];
         return redirect()->route('promotion.details.view')->with($notification);
+    }
+
+    public function PromotionDetailsFind(Request $request)
+    {
+        $type = $request->type;
+
+        if ($type) {
+            if ($type == 'wholesale') {
+                $wholesale = Product::where('branch_id', Auth::user()->branch_id)->where('stock', ">", 0)->get();
+                return response()->json([
+                    "status" => 200,
+                    'wholesale' => $wholesale
+                ]);
+            } else if ($type == 'products') {
+                $products = Product::where('branch_id', Auth::user()->branch_id)->where('stock', ">", 0)->get();
+                return response()->json([
+                    "status" => 200,
+                    'products' => $products
+                ]);
+            } else if ($type == 'customers') {
+                $customers = Customer::where('branch_id', Auth::user()->branch_id)->get();
+                return response()->json([
+                    "status" => 200,
+                    'customers' => $customers
+                ]);
+            } else if ($type == 'branch') {
+                $branch = Branch::get();
+                return response()->json([
+                    "status" => 200,
+                    'branch' => $branch
+                ]);
+            } else {
+                return response()->json([
+                    "status" => 200,
+                    'message' => "Data not found",
+                ]);
+            }
+        } else {
+            return response()->json([
+                "status" => 500,
+                'message' => "Data not found",
+            ]);
+        }
     }
 }

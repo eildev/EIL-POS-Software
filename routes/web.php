@@ -218,7 +218,7 @@ Route::middleware('auth')->group(function () {
         // Route::get('/damage/destroy/{id}', 'destroy')->name('damage.destroy');
         // Route::get('/damage/invoice/{id}', 'invoice')->name('damage.invoice');
     });
-    // Promotion  related route(n)
+    // Promotion related route(n)
     Route::controller(PromotionController::class)->group(function () {
         Route::get('/promotion/add', 'PromotionAdd')->name('promotion.add');
         Route::post('/promotion/store', 'PromotionStore')->name('promotion.store');
@@ -227,15 +227,15 @@ Route::middleware('auth')->group(function () {
         Route::post('/promotion/update/{id}', 'PromotionUpdate')->name('promotion.update');
         Route::get('/promotion/delete/{id}', 'PromotionDelete')->name('promotion.delete');
         Route::get('/promotion/find/{id}', 'find')->name('promotion.find');
-    });
-    // Promotion Details related route(n)
-    Route::controller(PromotionController::class)->group(function () {
+
+        // Promotion Details related route(n)
         Route::get('/promotion/details/add', 'PromotionDetailsAdd')->name('promotion.details.add');
         Route::post('/promotion/details/store', 'PromotionDetailsStore')->name('promotion.details.store');
         Route::get('/promotion/details/view', 'PromotionDetailsView')->name('promotion.details.view');
         Route::get('/promotion/details/edit/{id}', 'PromotionDetailsEdit')->name('promotion.details.edit');
         Route::post('/promotion/details/update/{id}', 'PromotionDetailsUpdate')->name('promotion.details.update');
         Route::get('/promotion/details/delete/{id}', 'PromotionDetailsDelete')->name('promotion.details.delete');
+        Route::get('/promotion/details/find', 'PromotionDetailsFind')->name('promotion.details.find');
     });
     // Tax related route(n)
     Route::controller(TaxController::class)->group(function () {

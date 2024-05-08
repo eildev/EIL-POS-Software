@@ -16,11 +16,17 @@
 				@csrf
 				<div class="row">
 					<!-- Col -->
+                    <div class="col-sm-6 form-valid-groups">
+						<div class="mb-3" id="flatpickr-date">
+							<label class="form-label">Salary Date<span class="text-danger">*</span></label>
+                            <input type="text" name="date" class="form-control start-date" placeholder="Date" data-input>
+						</div>
+					</div><!-- Col -->
 					<div class="col-sm-6">
 						<div class="mb-3 form-valid-groups">
 							<label class="form-label">Select Branch <span class="text-danger">*</span></label>
                             <select class="form-select mb-3"  name="branch_id">
-                                <option selected="" disabled>Select Branch</option>
+                                <option selected="" value="">Select Branch</option>
                                 @foreach ($branch as $branchs)
                                 <option value="{{$branchs ->id}}">{{$branchs->name}}</option>
                                 @endforeach
@@ -31,24 +37,18 @@
 						<div class="mb-3 form-valid-groups">
 							<label class="form-label">Select Employee Name<span class="text-danger">*</span></label>
 							<select class="form-select mb-3" name="employee_id">
-                                <option selected="" disabled>Select Employee Name</option>
-                                @foreach ($employees as $employee)
-                                <option value="{{$employee->id}}">{{$employee->full_name}}({{$employee->salary}} Tk) </option>
-                                @endforeach
+                                {{-- <option selected="" disabled>Select Employee Name</option> --}}
+                                <option ></option>
+
                             </select>
 						</div>
 					</div>
-					<div class="col-sm-6 form-valid-groups">
-						<div class="mb-3" id="flatpickr-date">
-							<label class="form-label">Salary Date<span class="text-danger">*</span></label>
-                            <input type="text" name="date" class="form-control" placeholder="Date" data-input>
-						</div>
-					</div><!-- Col -->
+
 					<div class="col-sm-6 form-valid-groups">
 						<div class="mb-3">
-							<label class="form-label">Salary Amount<span class="text-danger">*</span></label>
+							<label class="form-label">Salary Amount <span id="employeeSalary"></span></label>
 							<input type="number" class="form-control" name="debit"  placeholder="0.00">
-                            <span>Note: Avanced Amount:0</span>
+                            <span id="advancedSalary">Note: Avanced Amount:0</span>
 						</div>
 					</div><!-- Col -->
 					<div class="col-sm-12 form-valid-groups">
@@ -111,6 +111,61 @@
             },
         });
     });
+//Dropdown js
+
+	$(document).ready(function(){
+		$('select[name="branch_id"]').on('change',function(){
+			var branch_id = $(this).val();
+			if(branch_id){
+				$.ajax({
+					url:"{{('/employee/branch')}}/"+branch_id,
+					type:"GET",
+					dataType:'json',
+					success:function(data){
+						$('select[name = "employee_id"]').html('');
+						var d = $('select[name= "employee_id"]').empty();
+						$.each(data,function(key,value){
+							$('select[name= "employee_id"]').append(
+								'<option value="'+value.id+'">'+value.full_name+ " (" + value.salary+")"+  '</option>')
+						});
+					},
+				});
+			}
+			else{
+				alert('Danger');
+			}
+		});
+        //
+        $('select[name="employee_id"]').on('change', function(){
+        var employee_id = $(this).val();
+        let date = document.querySelector('.start-date').value;
+        if(employee_id){
+            // AJAX request to fetch additional information about the selected employee
+            $.ajax({
+                url: "{{('/employee/info')}}/"+employee_id,
+                type: "GET",
+                dataType: 'json',
+                data: {
+                    date
+                },
+                success: function(employee){
+                    // console.log()
+                    if(employee.data !== null){
+                        $('#employeeSalary').text( "Due: ৳ "+(employee.data.creadit - employee.data.debit));
+                        if(employee.data.creadit != employee.data.debit) {
+                            $('#advancedSalary').text( "Note: Avanced Amount: ৳ " + employee.data.debit);
+                        }
+                    }
+                    else{
+                        $('#employeeSalary').text( "*");
+                        $('#advancedSalary').text( "Note: Avanced Amount: ৳ " + 0 );
+                    }
+
+                },
+            });
+        }
+    });
+	});
 
 </script>
 @endsection

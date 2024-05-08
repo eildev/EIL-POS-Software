@@ -16,7 +16,6 @@ class CustomeMailControler extends Controller
             'subject' => 'required',
             'message' => 'required',
             'recipients' => 'required',
-
         ]);
         $data = [
             'subject' => $request->subject,

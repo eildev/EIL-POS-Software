@@ -30,7 +30,13 @@ public function EmployeeSalaryStore(Request $request){
         ->first();
         // dd($employeeSalary->balance."Re".(float) $request->debit);
         $debit = (float) $request->debit;
-        $now_balance=(float) $employeeSalary->balance - $debit;
+        // dd($employeeSalary->balance);
+        $now_balance=0;
+        if ($employeeSalary) {
+            $now_balance=(float) $employeeSalary->balance ?? 0 - $debit;
+        } else {
+            $now_balance=(float) $request->debit;
+        }
     if (!empty($employeeSalary) && (float) $employeeSalary->balance < $debit) {
         $notification = [
             'error' =>'Salary for this employee and branch has already been inserted to to this month you can update your employee Salaries',

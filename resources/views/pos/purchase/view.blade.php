@@ -358,6 +358,9 @@
                             if (res.error.paid) {
                                 showError('.amount', res.error.paid);
                             }
+                            if (res.error.amount) {
+                                showError('.amount', res.error.amount);
+                            }
                             if (res.error.payment_method) {
                                 showError('.transaction_account', res.error.payment_method);
                             }

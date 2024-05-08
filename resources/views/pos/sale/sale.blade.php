@@ -95,6 +95,7 @@
                                     <th>Product</th>
                                     <th>Price</th>
                                     <th>Qty</th>
+                                    <th>Discount</th>
                                     <th>Sub Total</th>
                                     <th>
                                         <i class="fa-solid fa-trash-can"></i>
@@ -280,7 +281,6 @@
                             <select class="form-select payment_method" data-width="100%" onclick="errorRemove(this);"
                                 onblur="errorRemove(this);">
                                 @if ($payments->count() > 0)
-                                    <option selected disabled>Select Payment Method</option>
                                     @foreach ($payments as $payemnt)
                                         <option value="{{ $payemnt->id }}">
                                             {{ $payemnt->name }}
@@ -458,6 +458,8 @@
                         dataType: 'JSON',
                         success: function(res) {
                             const product = res.data;
+                            const promotion = res.promotion;
+                            // console.log(promotion);
                             $('.showData').append(
                                 `<tr class="data_row${product.id}">
                                     <td>
@@ -472,6 +474,9 @@
                                     </td>
                                     <td>
                                         <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="1" />
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control product_discount${product.id} border-0"  name="product_discount[]" readonly value="${promotion?.additional_conditions ?? 0}" />
                                     </td>
                                     <td>
                                         <input type="number" class="form-control product_subtotal${product.id} border-0 "  name="total_price[]" readonly value="${product.price ?? 0}" />

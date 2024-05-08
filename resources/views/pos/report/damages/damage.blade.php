@@ -105,12 +105,33 @@
             </div>
         </div>
     </div>
+    <button onclick="printIframe()">Print Page</button>
+    @php
+        $data = "Majid";
+    @endphp
+    <iframe id="iframeToPrint" style="display:none;" src="{{ route('damage.report.print',$data) }}" width="100%" height="600"></iframe>
+    <style>
+        iframe {
+            border: none; /* Removes border */
+        }
+        /* Any additional styling goes here */
+    </style>
 
     <div id="purchase-filter-table">
         @include('pos.report.damages.damage-filter-table')
     </div>
 
 <script>
+            function printIframe() {
+                var iframe = document.getElementById('iframeToPrint');
+                iframe.style.display = "block"; // Make the iframe visible
+
+                iframe.onload = function() {
+                    iframe.contentWindow.focus(); // Focus on the iframe
+                    iframe.contentWindow.print(); // Print its content
+                    iframe.style.display = "none"; // Optionally hide iframe after printing
+                };
+            }
     $(document).ready(function (){
 
         document.querySelector('#purchesfilter').addEventListener('click', function(e) {

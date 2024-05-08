@@ -61,6 +61,9 @@ class ReportController extends Controller
             ->get();
         return view('pos.report.customer.customer_due', compact('customer'));
     }
+    function damageReportPrint($data){
+        return view('pos.report.damages.print', compact('data'));
+    }
     // customer due filter function
     public function customerDueFilter(Request $request)
     {

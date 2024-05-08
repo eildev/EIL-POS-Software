@@ -6,6 +6,9 @@ use App\Models\Employee;
 use App\Models\Branch;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+
+use function Laravel\Prompts\alert;
+
 class EmployeeSalaryController extends Controller
 {
 public function EmployeeSalaryAdd(Request $request){
@@ -18,41 +21,58 @@ public function EmployeeSalaryAdd(Request $request){
     return view('pos.employee_salary.add_employee_salary',compact('employees','branch'));
 }//
 public function EmployeeSalaryStore(Request $request){
-    $requestMonth = Carbon::createFromFormat('Y-m-d', $request->date)->format('m');
-    $requestYear = Carbon::createFromFormat('Y-m-d', $request->date)->format('Y');
+        $requestMonth = Carbon::createFromFormat('Y-m-d', $request->date)->format('m');
+        $requestYear = Carbon::createFromFormat('Y-m-d', $request->date)->format('Y');
+        // Get the first and last day of the month
+        $firstDayOfMonth = Carbon::create($requestYear, $requestMonth, 1)->startOfMonth();
+        $lastDayOfMonth = Carbon::create($requestYear, $requestMonth, 1)->endOfMonth();
+        $employeeSalary = EmployeeSalary::where('employee_id', $request->employee_id)
+        ->where('branch_id', $request->branch_id)
+        // ->where('date', $request->date)
+        ->whereBetween('date', [$firstDayOfMonth, $lastDayOfMonth])
+        ->first();
+        // dd($employeeSalary->balance."Re".(float) $request->debit);
+        $debit = (float) $request->debit;
+        // dd($employeeSalary->balance);
+        $now_balance=0;
+        if ($employeeSalary) {
+            $now_balance=(float) $employeeSalary->creadit  - $debit;
+        } else {
+            $now_balance=(float) $request->debit;
+        }
+    if (!empty($employeeSalary) && (float) $employeeSalary->balance < $debit) {
+        $notification = [
+            'error' =>'Salary for this employee and branch has already been inserted to to this month you can update your employee Salaries',
+            'alert-type'=> 'error'
+        ];
+        return back()->with($notification);
 
-    // Get the first and last day of the month
-    $firstDayOfMonth = Carbon::create($requestYear, $requestMonth, 1)->startOfMonth();
-    $lastDayOfMonth = Carbon::create($requestYear, $requestMonth, 1)->endOfMonth();
-    $employeeSalary = EmployeeSalary::where('employee_id', $request->employee_id)
-    ->where('branch_id', $request->branch_id)
-    // ->where('date', $request->date)
-    ->whereBetween('date', [$firstDayOfMonth, $lastDayOfMonth])
-    ->first();
- if ($employeeSalary) {
-    $notification = [
-        'error' =>'Salary for this employee and branch has already been inserted to to this month you can update your employee Salaries',
-        'alert-type'=> 'error'
-    ];
-    return redirect()->route('employee.salary.view')->with($notification);
+    }
+    if ($employeeSalary) {
+        $notification = [
+            'error' =>'Salary for this employee and branch has already been inserted to to this month you can update your employee Salaries',
+            'alert-type'=> 'error'
+        ];
+        return back()->with($notification);
 
- } else {
-    $employeeSalary = new EmployeeSalary;
-    $employeeSalary->employee_id =  $request->employee_id;
-    $employeeSalary->branch_id =  $request->branch_id;
-    $requiestDebit=  $employeeSalary->debit =  $request->debit;
-    $employeeSalary->date =  $request->date;
-    $employee = Employee::findOrFail( $request->employee_id);
-    $employeeSalary->creadit = $employee->salary;
-    $employeeSalary->balance = $employee->salary - $requiestDebit;
-    $employeeSalary->note =  $request->note;
-    $employeeSalary->save();
-    $notification = array(
-        'message' =>'Employee Salary Send Successfully',
-         'alert-type'=> 'info'
-     );
-    return redirect()->route('employee.salary.view')->with($notification);
-}
+    }
+     else {
+        $employeeSalary = new EmployeeSalary;
+        $employeeSalary->employee_id =  $request->employee_id;
+        $employeeSalary->branch_id =  $request->branch_id;
+        $requiestDebit=  $employeeSalary->debit =  $request->debit;
+        $employeeSalary->date =  $request->date;
+        $employee = Employee::findOrFail( $request->employee_id);
+        $employeeSalary->creadit = $employee->salary;
+        $employeeSalary->balance = $now_balance;
+        $employeeSalary->note =  $request->note;
+        $employeeSalary->save();
+        $notification = array(
+            'message' =>'Employee Salary Send Successfully',
+            'alert-type'=> 'info'
+        );
+        return redirect()->route('employee.salary.view')->with($notification);
+    }
 }
 //
 public function EmployeeSalaryView(){
@@ -167,4 +187,15 @@ public function EmployeeSalaryAdvancedDelete($id){
     );
     return redirect()->route('employee.salary.advanced.view')->with($notification);
 }
+//Dependancy
+    public function BranchAjax($branch_id){
+        $branch =Employee::where('branch_id',$branch_id)->get();
+          return  json_encode($branch);
+    }//
+    public function getEmployeeInfo(Request $request, $employee_id){
+        $employee = EmployeeSalary::findOrFail($employee_id);
+        // dd($employee);
+        return response()->json($employee);
+
+    }
 }

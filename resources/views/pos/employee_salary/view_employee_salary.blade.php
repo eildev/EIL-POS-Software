@@ -37,7 +37,7 @@
                                 <td>{{ $employeSalarys['branch']['name'] ?? ''}}</td>
                                 <td>{{ \Carbon\Carbon::parse($employeSalarys->date)->format('d F Y')   ?? ''}}</td>
                                 <td>{{ $employeSalarys->debit ?? ''}}</td>
-                                <td>{{ $employeSalarys->balance ?? ''}}</td>
+                                <td>{{ $employeSalarys->creadit - $employeSalarys->debit ?? ''}}</td>
                                 <td>
                                     @php
                                     $note = $employeSalarys->note;

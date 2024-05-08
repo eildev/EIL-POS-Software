@@ -45,9 +45,9 @@
 					</div><!-- Col -->
 					<div class="col-sm-6 form-valid-groups">
 						<div class="mb-3">
-							<label class="form-label">Salary Amount<span class="text-danger">*</span></label>
+							<label class="form-label">Salary Amount <span id="employeeSalary"></span></label>
 							<input type="number" class="form-control" name="debit"  placeholder="0.00">
-                            <span>Note: Avanced Amount:0</span>
+                            <span id="advancedSalary">Note: Avanced Amount:0</span>
 						</div>
 					</div><!-- Col -->
 					<div class="col-sm-12 form-valid-groups">
@@ -134,6 +134,29 @@
 				alert('Danger');
 			}
 		});
+        //
+        $('select[name="employee_id"]').on('change', function(){
+        var employee_id = $(this).val();
+        if(employee_id){
+            // AJAX request to fetch additional information about the selected employee
+            $.ajax({
+                url: "{{('/employee/info')}}/"+employee_id,
+                type: "GET",
+                dataType: 'json',
+                success: function(employee){
+
+                    $('#employeeSalary').text( "Due: ৳ "+(employee.creadit - employee.debit));
+                    if(employee.creadit != employee.debit) {
+
+                        $('#advancedSalary').text( "Note: Avanced Amount: ৳ " + employee.debit);
+                    } else {
+                        // Clear the content if credit is equal to debit
+                        $('#advancedSalary').text( "Note: Avanced Amount: ৳ " + 0 );
+                    }
+                },
+            });
+        }
+    });
 	});
 
 </script>

@@ -6,6 +6,9 @@ use App\Models\Employee;
 use App\Models\Branch;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+
+use function Laravel\Prompts\alert;
+
 class EmployeeSalaryController extends Controller
 {
 public function EmployeeSalaryAdd(Request $request){
@@ -33,7 +36,7 @@ public function EmployeeSalaryStore(Request $request){
         // dd($employeeSalary->balance);
         $now_balance=0;
         if ($employeeSalary) {
-            $now_balance=(float) $employeeSalary->balance ?? 0 - $debit;
+            $now_balance=(float) $employeeSalary->creadit  - $debit;
         } else {
             $now_balance=(float) $request->debit;
         }
@@ -189,4 +192,10 @@ public function EmployeeSalaryAdvancedDelete($id){
         $branch =Employee::where('branch_id',$branch_id)->get();
           return  json_encode($branch);
     }//
+    public function getEmployeeInfo(Request $request, $employee_id){
+        $employee = EmployeeSalary::findOrFail($employee_id);
+        // dd($employee);
+        return response()->json($employee);
+
+    }
 }

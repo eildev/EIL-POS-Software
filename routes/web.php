@@ -307,6 +307,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/employee/salary/update/{id}', 'EmployeeSalaryUpdate')->name('employee.salary.update');
         Route::get('/employee/salary/delete/{id}', 'EmployeeSalaryDelete')->name('employee.salary.delete');
         Route::get('/employee/branch/{branch_id}' ,'BranchAjax');//dependency
+        Route::get('/employee/info/{employee_id}', 'getEmployeeInfo');
         /////////////////Employ Salary Advanced ////////////
         Route::get('/advanced/employee/salary/add', 'EmployeeSalaryAdvancedAdd')->name('advanced.employee.salary.add');
         Route::post('/advanced/employee/salary/store', 'EmployeeSalaryAdvancedStore')->name('advanced.employee.salary.store');

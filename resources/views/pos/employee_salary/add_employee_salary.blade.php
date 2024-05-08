@@ -16,6 +16,12 @@
 				@csrf
 				<div class="row">
 					<!-- Col -->
+                    <div class="col-sm-6 form-valid-groups">
+						<div class="mb-3" id="flatpickr-date">
+							<label class="form-label">Salary Date<span class="text-danger">*</span></label>
+                            <input type="text" name="date" class="form-control start-date" placeholder="Date" data-input>
+						</div>
+					</div><!-- Col -->
 					<div class="col-sm-6">
 						<div class="mb-3 form-valid-groups">
 							<label class="form-label">Select Branch <span class="text-danger">*</span></label>
@@ -37,12 +43,7 @@
                             </select>
 						</div>
 					</div>
-					<div class="col-sm-6 form-valid-groups">
-						<div class="mb-3" id="flatpickr-date">
-							<label class="form-label">Salary Date<span class="text-danger">*</span></label>
-                            <input type="text" name="date" class="form-control" placeholder="Date" data-input>
-						</div>
-					</div><!-- Col -->
+
 					<div class="col-sm-6 form-valid-groups">
 						<div class="mb-3">
 							<label class="form-label">Salary Amount <span id="employeeSalary"></span></label>
@@ -137,22 +138,29 @@
         //
         $('select[name="employee_id"]').on('change', function(){
         var employee_id = $(this).val();
+        let date = document.querySelector('.start-date').value;
         if(employee_id){
             // AJAX request to fetch additional information about the selected employee
             $.ajax({
                 url: "{{('/employee/info')}}/"+employee_id,
                 type: "GET",
                 dataType: 'json',
+                data: {
+                    date
+                },
                 success: function(employee){
-
-                    $('#employeeSalary').text( "Due: ৳ "+(employee.creadit - employee.debit));
-                    if(employee.creadit != employee.debit) {
-
-                        $('#advancedSalary').text( "Note: Avanced Amount: ৳ " + employee.debit);
-                    } else {
-                        // Clear the content if credit is equal to debit
+                    // console.log()
+                    if(employee.data !== null){
+                        $('#employeeSalary').text( "Due: ৳ "+(employee.data.creadit - employee.data.debit));
+                        if(employee.data.creadit != employee.data.debit) {
+                            $('#advancedSalary').text( "Note: Avanced Amount: ৳ " + employee.data.debit);
+                        }
+                    }
+                    else{
+                        $('#employeeSalary').text( "*");
                         $('#advancedSalary').text( "Note: Avanced Amount: ৳ " + 0 );
                     }
+
                 },
             });
         }

@@ -110,6 +110,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                     <td>
                                         <div class="row align-items-center">
                                             <div class="col-md-4">
@@ -458,7 +459,7 @@
                         dataType: 'JSON',
                         success: function(res) {
                             const product = res.data;
-                            // const promotion = res.promotion;
+                            const promotion = res.promotion;
                             // console.log(promotion);
                             $('.showData').append(
                                 `<tr class="data_row${product.id}">
@@ -476,10 +477,23 @@
                                         <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="1" />
                                     </td>
                                     <td>
-                                        <input type="number" class="form-control product_discount${product.id} border-0"  name="product_discount[]" readonly value="0" />
+                                        ${promotion && promotion.discount_type ? 
+                                            promotion.discount_type == 'percentage' ? 
+                                            `<span class="discount_percentage${product.id}">${promotion.discount_value}</span>%` : 
+                                            `<span class="discount_amount${product.id}">${promotion.discount_value}</span>Tk` : 
+                                            (promotion ? `<span>00</span>` : `<span>00</span>`)
+                                        }
                                     </td>
                                     <td>
-                                        <input type="number" class="form-control product_subtotal${product.id} border-0 "  name="total_price[]" readonly value="${product.price ?? 0}" />
+                                        ${
+                                            promotion ? 
+                                            promotion.discount_type == 'percentage' ? 
+                                            `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - (product.price * promotion.discount_value / 100)}" />` 
+                                            : 
+                                            `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - promotion.discount_value}" />` 
+                                            : 
+                                            `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price}" />`
+                                        }
                                     </td>
                                     <td>
                                         <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
@@ -501,13 +515,49 @@
             function calculateTotal() {
                 let total = 0;
                 $('.quantity').each(function() {
-                    let productId = $(this).attr('product-id');
-                    let qty = parseFloat($(this).val());
-                    let price = parseFloat($('.product_price' + productId).val());
-                    total += qty * price;
+                    let $quantityInput = $(this); // Store the reference to $(this)
+                    let productId = $quantityInput.attr('product-id');
+
+                    $.ajax({
+                        url: '/product/find/' + productId,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        success: function(res) {
+                            const promotion = res.promotion;
+                            let qty = parseInt($quantityInput
+                                .val()); // Use the stored reference
+                            let price = parseFloat($('.product_price' + productId).val());
+                            // let product_subtotal = $('.product_subtotal' + productId);
+
+                            if (promotion) {
+                                if (promotion.discount_type == 'percentage') {
+                                    let discount_percentage = parseFloat($(
+                                        '.discount_percentage' +
+                                        productId).text());
+                                    // console.log(discount_percentage);
+                                    let disPrice = price - (price * discount_percentage) / 100;
+                                    $('.product_subtotal' + productId).val(disPrice * qty);
+                                    total += qty * disPrice;
+                                } else {
+                                    let discount_amount = parseFloat($('.discount_amount' +
+                                        productId).text());
+                                    // console.log(discount_percentage);
+                                    let disPrice = price - discount_amount;
+                                    // console.log(disPrice);
+                                    $('.product_subtotal' + productId).val(disPrice * qty);
+                                    total += qty * disPrice;
+                                }
+                            } else {
+                                $('.product_subtotal' + productId).val(qty * price);
+                                total += qty * price;
+                            }
+
+                            $('.total').val(total.toFixed(2));
+                        }
+                    });
                 });
-                $('.total').val(total.toFixed(2));
             }
+
 
             // grandTotalCalulate
             function calculateGrandTotal() {
@@ -558,11 +608,13 @@
                         let productPrice = res.product.price;
                         if (quantity > stock) {
                             $('.quantity').val(stock);
-                            subTotal.val(parseFloat(stock * productPrice).toFixed(2));
+                            // subTotal.val(parseFloat(stock * productPrice).toFixed(2));
+                            calculateTotal();
                             updateGrandTotal();
                             toastr.warning('Not enough stock');
                         } else {
-                            subTotal.val(parseFloat(quantity * productPrice).toFixed(2));
+                            // subTotal.val(parseFloat(quantity * productPrice).toFixed(2));
+                            calculateTotal();
                             updateGrandTotal();
                         }
 

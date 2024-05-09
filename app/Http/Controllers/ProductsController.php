@@ -136,12 +136,17 @@ class ProductsController extends Controller
     }
     public function find($id)
     {
+        $status = 'active';
         $product = Product::findOrFail($id);
-        // $promotionDetails = PromotionDetails::where('Product_id', $product->id)->latest()->first();
-        if ($product) {
+        $promotionDetails = PromotionDetails::whereHas('promotion', function ($query) use ($status) {
+            return $query->where('status', '=', $status);
+        })->where('promotion_type', 'products')->where('logic', 'like', '%' . $id . "%")->latest()->first();
+        // dd($promotionDetails->promotion);
+        if ($promotionDetails) {
             return response()->json([
                 'status' => '200',
                 'data' => $product,
+                'promotion' => $promotionDetails->promotion,
             ]);
         } else {
             return response()->json([

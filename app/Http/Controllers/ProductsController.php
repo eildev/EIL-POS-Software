@@ -137,12 +137,11 @@ class ProductsController extends Controller
     public function find($id)
     {
         $product = Product::findOrFail($id);
-        $promotionDetails = PromotionDetails::where('Product_id', $product->id)->latest()->first();
-        if ($promotionDetails) {
+        // $promotionDetails = PromotionDetails::where('Product_id', $product->id)->latest()->first();
+        if ($product) {
             return response()->json([
                 'status' => '200',
                 'data' => $product,
-                'promotion' => $promotionDetails
             ]);
         } else {
             return response()->json([

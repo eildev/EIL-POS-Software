@@ -458,7 +458,7 @@
                         dataType: 'JSON',
                         success: function(res) {
                             const product = res.data;
-                            const promotion = res.promotion;
+                            // const promotion = res.promotion;
                             // console.log(promotion);
                             $('.showData').append(
                                 `<tr class="data_row${product.id}">
@@ -476,7 +476,7 @@
                                         <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="1" />
                                     </td>
                                     <td>
-                                        <input type="number" class="form-control product_discount${product.id} border-0"  name="product_discount[]" readonly value="${promotion?.additional_conditions ?? 0}" />
+                                        <input type="number" class="form-control product_discount${product.id} border-0"  name="product_discount[]" readonly value="0" />
                                     </td>
                                     <td>
                                         <input type="number" class="form-control product_subtotal${product.id} border-0 "  name="total_price[]" readonly value="${product.price ?? 0}" />

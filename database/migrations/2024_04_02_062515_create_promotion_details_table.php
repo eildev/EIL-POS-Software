@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('promotion_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('Promotion_id')->unsigned();
-            $table->foreign('Promotion_id')->references('id')->on('promotions')->onDelete('cascade');
+            $table->unsignedBigInteger('promotion_id')->unsigned();
+            $table->foreign('promotion_id')->references('id')->on('promotions')->onDelete('cascade');
             $table->enum('promotion_type', ['wholesale', 'products', 'customers', 'branch']);
             $table->text('logic');
             $table->bigInteger('additional_conditions')->nullable();

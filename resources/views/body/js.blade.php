@@ -94,17 +94,82 @@
 <!-- End custom js for this page --->
 <script>
     $(document).ready(function() {
-        new DataTable('#example', {
+        $('#example').DataTable({
             columnDefs: [{
-                    "defaultContent": "-",
-                    "targets": "_all"
-                }],
+                "defaultContent": "-",
+                "targets": "_all"
+            }],
             dom: 'Bfrtip',
-    layout: {
-        topStart: {
-            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-        }
-    }
-});
+            buttons: [
+                {
+                    extend: 'copyHtml5',
+                    text: 'Copy',
+                    exportOptions: {
+                        header: true,
+                        columns: ':visible'
+                    },
+                    customize: function(data) {
+                        return 'Here is report list\n\n' + data + '\n\nThank you for using our service!';
+                    }
+                },
+                {
+                    extend: 'csvHtml5',
+                    text: 'CSV',
+                    exportOptions: {
+                        header: true,
+                        columns: ':visible'
+                    },
+                    customize: function(data) {
+                        return 'Here is report list\n\n' + data + '\n\nThank you for using our service!';
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: 'Excel',
+                    exportOptions: {
+                        header: true,
+                        columns: ':visible'
+                    },
+                    customize: function(xlsx) {
+                        return 'Here is report list\n\n' + xlsx + '\n\nThank you for using our service!';
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: 'PDF',
+                    exportOptions: {
+                        header: true,
+                        columns: ':visible'
+                    },
+                    customize: function(doc) {
+                        doc.content.unshift({
+                            text: 'Here is report list',
+                            fontSize: 14,
+                            alignment: 'center',
+                            margin: [0, 0, 0, 12]
+                        });
+                        doc.content.push({
+                            text: 'Thank you for using our service!',
+                            fontSize: 14,
+                            alignment: 'center',
+                            margin: [0, 12, 0, 0]
+                        });
+                        return doc;
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: 'Print',
+                    exportOptions: {
+                        header: true,
+                        columns: ':visible'
+                    },
+                    customize: function(win) {
+                        $(win.document.body).prepend('<h2>Here is report list</h2>');
+                        $(win.document.body).append('<p>Thank you for using our service!</p>');
+                    }
+                }
+            ]
+        });
     });
     </script>

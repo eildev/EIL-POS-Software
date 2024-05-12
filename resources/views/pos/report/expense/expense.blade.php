@@ -1,5 +1,6 @@
 @extends('master')
 @section('admin')
+
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
@@ -147,4 +148,6 @@
             });
         })
     </script>
+
+
 @endsection

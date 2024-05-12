@@ -218,7 +218,7 @@ Route::middleware('auth')->group(function () {
         // Route::get('/damage/destroy/{id}', 'destroy')->name('damage.destroy');
         // Route::get('/damage/invoice/{id}', 'invoice')->name('damage.invoice');
     });
-    // Promotion  related route(n)
+    // Promotion related route(n)
     Route::controller(PromotionController::class)->group(function () {
         Route::get('/promotion/add', 'PromotionAdd')->name('promotion.add');
         Route::post('/promotion/store', 'PromotionStore')->name('promotion.store');
@@ -227,15 +227,18 @@ Route::middleware('auth')->group(function () {
         Route::post('/promotion/update/{id}', 'PromotionUpdate')->name('promotion.update');
         Route::get('/promotion/delete/{id}', 'PromotionDelete')->name('promotion.delete');
         Route::get('/promotion/find/{id}', 'find')->name('promotion.find');
-    });
-    // Promotion Details related route(n)
-    Route::controller(PromotionController::class)->group(function () {
+
+        // Promotion Details related route(n)
         Route::get('/promotion/details/add', 'PromotionDetailsAdd')->name('promotion.details.add');
         Route::post('/promotion/details/store', 'PromotionDetailsStore')->name('promotion.details.store');
         Route::get('/promotion/details/view', 'PromotionDetailsView')->name('promotion.details.view');
         Route::get('/promotion/details/edit/{id}', 'PromotionDetailsEdit')->name('promotion.details.edit');
         Route::post('/promotion/details/update/{id}', 'PromotionDetailsUpdate')->name('promotion.details.update');
         Route::get('/promotion/details/delete/{id}', 'PromotionDetailsDelete')->name('promotion.details.delete');
+        Route::get('/promotion/details/find', 'PromotionDetailsFind')->name('promotion.details.find');
+        Route::get('/promotion/product', 'allProduct')->name('promotion.product');
+        Route::get('/promotion/customers', 'allCustomers')->name('promotion.customers');
+        Route::get('/promotion/branch', 'allBranch')->name('promotion.branch');
     });
     // Tax related route(n)
     Route::controller(TaxController::class)->group(function () {
@@ -306,7 +309,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/employee/salary/edit/{id}', 'EmployeeSalaryEdit')->name('employee.salary.edit');
         Route::post('/employee/salary/update/{id}', 'EmployeeSalaryUpdate')->name('employee.salary.update');
         Route::get('/employee/salary/delete/{id}', 'EmployeeSalaryDelete')->name('employee.salary.delete');
-        Route::get('/employee/branch/{branch_id}' ,'BranchAjax');//dependency
+        Route::get('/employee/branch/{branch_id}', 'BranchAjax'); //dependency
+        Route::get('/employee/info/{employee_id}', 'getEmployeeInfo');
         /////////////////Employ Salary Advanced ////////////
         Route::get('/advanced/employee/salary/add', 'EmployeeSalaryAdvancedAdd')->name('advanced.employee.salary.add');
         Route::post('/advanced/employee/salary/store', 'EmployeeSalaryAdvancedStore')->name('advanced.employee.salary.store');

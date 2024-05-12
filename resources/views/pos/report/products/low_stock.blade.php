@@ -107,7 +107,7 @@
                 <div class="card-body">
                     <h6 class="card-title">Low Stock Table</h6>
                     <div class="table-responsive">
-                        <table id="dataTableExample" class="table">
+                        <table id="example" class="table">
                             <thead>
                                 <tr>
                                     <th class="id">#</th>

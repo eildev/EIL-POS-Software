@@ -126,24 +126,14 @@
                                                 Discount :
                                             </div>
                                             <div class="col-md-8">
-                                                @php
+                                                {{-- @php
                                                     $promotions = App\Models\Promotion::get();
-                                                @endphp
-                                                <select class="js-example-basic-single form-select promotion_id"
-                                                    data-width="100%" onclick="errorRemove(this);"
-                                                    onblur="errorRemove(this);">
-                                                    @if ($promotions->count() > 0)
-                                                        <option selected disabled>Select Discount</option>
-                                                        @foreach ($promotions as $promotion)
-                                                            <option value="{{ $promotion->id }}">
-                                                                {{ $promotion->promotion_name }}
-                                                                ({{ $promotion->discount_value }} /
-                                                                {{ $promotion->discount_type }})
-                                                            </option>
-                                                        @endforeach
-                                                    @else
-                                                        <option selected disabled>Please Add Product</option>
-                                                    @endif
+                                                @endphp --}}
+                                                {{-- <input type="number" class="form-control discount_field border-0 " name="discount_field"
+                                                    readonly value="0.00" /> --}}
+                                                {{-- <span class="ms-3 discount_field">00</span> --}}
+                                                <select class="form-select discount_field" name="discount_field">
+
                                                 </select>
                                             </div>
                                         </div>
@@ -505,6 +495,7 @@
                             // Update SL numbers
                             updateSLNumbers();
                             updateGrandTotal();
+                            // calculateGrandTotal();
                         }
                     })
                 }
@@ -512,8 +503,10 @@
 
 
             // Function to recalculate total
+            let total = 0;
+
             function calculateTotal() {
-                let total = 0;
+                // let total = 0;
                 $('.quantity').each(function() {
                     let $quantityInput = $(this); // Store the reference to $(this)
                     let productId = $quantityInput.attr('product-id');
@@ -559,34 +552,74 @@
             }
 
 
-            // grandTotalCalulate
+            // // grandTotalCalulate
             function calculateGrandTotal() {
-                let id = $('.promotion_id').val();
-                let total = parseFloat($('.total').val());
+                let id = $('.select-customer').val();
+                // let total = parseFloat($('.total').val());
+                // console.log(id);
                 if (id) {
                     $.ajax({
-                        url: `/promotion/find/${id}`,
+                        url: `/sale/customer/${id}`,
                         type: 'GET',
                         dataType: 'JSON',
                         success: function(res) {
                             // console.log(res)
-                            const promotion = res.data;
+                            const promotions = res.promotions;
+                            // console.log(promotions);
+                            if (promotions) {
+                                $('.discount_field').html(
+                                    `<option selected disabled>Select a Discount</option>`);
+                                $.each(promotions, function(index, promotion) {
+                                    $('.discount_field').append(
+                                        `<option value="${promotion.id}">${promotion.promotion_name}(${promotion.discount_value} / ${promotion.discount_type})</option>`
+                                    );
+                                })
+                            } else {
+                                $('.grand_total').val(total);
+                                $('.discount_field').html(
+                                    `<option>No Discount</option>`
+                                );
+                            }
+                        }
+                    })
+                } else {
+                    $('.grand_total').val(total);
+                    $('.discount_field').html(
+                        `<option>No Discount</option>`
+                    );
+                }
+            }
+            calculateGrandTotal();
+            // let id = $('.select-customer').val();
+            // console.log(id);
+            $(document).on('change', '.discount_field', function() {
+                let id = $(this).val();
+                $.ajax({
+                    url: `/sale/promotions/${id}`,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function(res) {
+                        console.log(res)
+                        const promotion = res.promotions;
+                        if (promotion) {
                             if (promotion.discount_type == 'percentage') {
                                 let grandTotalAmount = parseFloat(total - ((total * promotion
                                     .discount_value) / 100)).toFixed(2);
                                 $('.grand_total').val(grandTotalAmount);
                             } else {
-                                let grandTotalAmount = parseFloat(total - promotion.discount_value)
+                                let grandTotalAmount = parseFloat(total - promotion
+                                        .discount_value)
                                     .toFixed(2);
                                 $('.grand_total').val(grandTotalAmount);
                             }
+                        } else {
+                            $('.grand_total').val(total);
                         }
-                    })
-                } else {
-                    $('.grand_total').val(total)
-                }
-            }
-            calculateGrandTotal();
+
+                    }
+                })
+            })
+
             // Function to update grand total when a product is added or deleted
             function updateGrandTotal() {
                 calculateTotal();
@@ -609,12 +642,10 @@
                         if (quantity > stock) {
                             $('.quantity').val(stock);
                             // subTotal.val(parseFloat(stock * productPrice).toFixed(2));
-                            calculateTotal();
                             updateGrandTotal();
                             toastr.warning('Not enough stock');
                         } else {
                             // subTotal.val(parseFloat(quantity * productPrice).toFixed(2));
-                            calculateTotal();
                             updateGrandTotal();
                         }
 
@@ -624,7 +655,8 @@
             })
 
             // discount 
-            $('.promotion_id').change(function() {
+            $(document).on('change', '.select-customer', function() {
+                // let id = $(this).val();
                 calculateGrandTotal();
             })
 

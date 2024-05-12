@@ -6,6 +6,8 @@ use App\Models\AccountTransaction;
 use App\Models\ActualPayment;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Promotion;
+use App\Models\PromotionDetails;
 use App\Models\Sale;
 use App\Models\SaleItem;
 use App\Models\Transaction;
@@ -331,6 +333,43 @@ class SaleController extends Controller
         return response()->json([
             'status' => 200,
             'product' => $product
+        ]);
+    }
+
+
+    public function saleCustomer($id)
+    {
+
+        $status = 'active';
+        $customer = Customer::findOrFail($id);
+        $promotionDetails = PromotionDetails::whereHas('promotion', function ($query) use ($status) {
+            return $query->where('status', '=', $status);
+        })->where('promotion_type', 'customers')->where('logic', 'like', '%' . $id . "%")->get();
+        $promotions = [];
+        foreach ($promotionDetails as $promo) {
+            $promotions[] = $promo->promotion;
+        }
+        // dd($promotion);
+        if ($promotions) {
+            return response()->json([
+                'status' => '200',
+                'data' => $customer,
+                'promotions' => $promotions,
+            ]);
+        } else {
+            return response()->json([
+                'status' => '200',
+                'data' => $customer
+            ]);
+        }
+    }
+
+    public function salePromotions($id)
+    {
+        $promotions = Promotion::findOrFail($id);
+        return response()->json([
+            'status' => '200',
+            'promotions' => $promotions
         ]);
     }
 }

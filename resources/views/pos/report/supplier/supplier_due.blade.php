@@ -60,11 +60,7 @@
                 <div class="card-body">
                     <h6 class="card-title">Supplier Due Table</h6>
                     <div class="table-responsive">
-<<<<<<< HEAD
-                        <table id="SuplyerdataTableExample" class="table">
-=======
                         <table id="example" class="table">
->>>>>>> 749d9bb85e8e028ec2a1cbb4ede340411ec392be
                             <thead>
                                 <tr>
                                     <th>Name</th>

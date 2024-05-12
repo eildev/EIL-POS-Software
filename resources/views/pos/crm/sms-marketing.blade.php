@@ -312,13 +312,7 @@
                             $('#smsCategoryModal').modal('hide');
                             $('.smsCategoryForm')[0].reset();
                             categoryView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             showError('.category_name', res.error.name);
                         }
@@ -345,20 +339,10 @@
                         if (res.status == 200) {
                             $('#smsCategoryModal').modal('hide');
                             categoryView();
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Deleted Successfully",
-                                icon: "success"
-                            });
+                            toastr.success("Deleted Successfully");
 
                         } else {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "warning",
-                                title: "File Delete Unsuccessful",
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.warning("something went wrong");
                         }
 
                     }

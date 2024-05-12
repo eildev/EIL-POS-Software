@@ -174,13 +174,7 @@
                             // alert('added successfully');
                             $('.categoryForm')[0].reset();
                             categoryView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             showError('.category_name', res.error.name);
                         }
@@ -296,13 +290,7 @@
                             $('#edit').modal('hide');
                             $('.categoryFormEdit')[0].reset();
                             categoryView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             showError('.edit_category_name', res.error.name)
                             // $('.edit_category_name').css('border-color', 'red');

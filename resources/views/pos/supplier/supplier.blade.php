@@ -185,13 +185,7 @@
                             $('#exampleModalLongScollable').modal('hide');
                             $('.supplierForm')[0].reset();
                             supplierView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             if (res.error.name) {
                                 showError('.supplier_name', res.error.name);
@@ -300,13 +294,7 @@
                             $('.edit_opening_payable').val(res.supplier.opening_payable);
                             $('.update_supplier').val(res.supplier.id);
                         } else {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "warning",
-                                title: "No Data Found",
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.warning("No Data Found");
                         }
                     }
                 });
@@ -335,13 +323,7 @@
                             $('#edit').modal('hide');
                             $('.editSupplierForm')[0].reset();
                             supplierView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             if (res.error.name) {
                                 showError('.edit_supplier_name', res.error.name);

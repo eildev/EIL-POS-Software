@@ -372,4 +372,25 @@ class SaleController extends Controller
             'promotions' => $promotions
         ]);
     }
+    public function findProductWithBarcode($id)
+    {
+        $products = Product::where('branch_id', Auth::user()->branch_id)->where('barcode', $id)->latest()->first();
+        $status = 'active';
+        $promotionDetails = PromotionDetails::whereHas('promotion', function ($query) use ($status) {
+            return $query->where('status', '=', $status);
+        })->where('promotion_type', 'products')->where('logic', 'like', '%' . $id . "%")->latest()->first();
+        // dd($promotionDetails->promotion);
+        if ($promotionDetails) {
+            return response()->json([
+                'status' => '200',
+                'data' => $products,
+                'promotion' => $promotionDetails->promotion,
+            ]);
+        } else {
+            return response()->json([
+                'status' => '200',
+                'data' => $products
+            ]);
+        }
+    }
 }

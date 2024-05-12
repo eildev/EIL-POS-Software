@@ -253,13 +253,7 @@
                             // console.log(res);
                             $('.productForm')[0].reset();
 
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                             window.location.href = "{{ route('product.view') }}";
                         } else {
                             // console.log(res.error);

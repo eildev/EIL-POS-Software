@@ -73,8 +73,8 @@
                     <form id="signupForm" class="editPaymentMethodForm">
                         <div class="mb-3">
                             <label for="name" class="form-label">Payment Method Name</label>
-                            <input id="defaultconfig" class="form-control edit_payment_method_name" maxlength="39" name="name"
-                                type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
+                            <input id="defaultconfig" class="form-control edit_payment_method_name" maxlength="39"
+                                name="name" type="text" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger edit_payment_method_name_error"></span>
                         </div>
                 </div>
@@ -123,13 +123,7 @@
                             $('#exampleModalLongScollable').modal('hide');
                             $('.paymentMethodForm')[0].reset();
                             paymentMethodView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             if (res.error.name) {
                                 showError('.payment_method_name', res.error.name);
@@ -138,10 +132,10 @@
                         }
                     }
                 });
-        });
+            });
 
 
-        //    show Payment Method
+            //    show Payment Method
             function paymentMethodView() {
                 $.ajax({
                     url: '/payment/method/view',
@@ -208,20 +202,14 @@
                             $('.edit_payment_method_name').val(res.paymentMethod.name);
                             $('.update_payment_method').val(res.paymentMethod.id);
                         } else {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "warning",
-                                title: "No Data Found",
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.warning("No Data Found");
                         }
                     }
                 });
             })
 
             //  update Payment Method
-             $('.update_payment_method').click(function(e) {
+            $('.update_payment_method').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
                 let id = $(this).val();
@@ -243,13 +231,7 @@
                             $('#edit').modal('hide');
                             $('.editPaymentMethodForm')[0].reset();
                             paymentMethodView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             if (res.error.name) {
                                 showError('.edit_payment_method_name', res.error.name);
@@ -262,51 +244,52 @@
             // Payment Method Delete
             $(document).on('click', '.payment_method_delete', function(e) {
                 $('.payment_method_delete').click(function(e) {
-                e.preventDefault();
-                let id = this.getAttribute('data-id');
+                    e.preventDefault();
+                    let id = this.getAttribute('data-id');
 
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to Delete this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                        $.ajax({
-                            url: `/payment/method/delete/${id}`,
-                            type: 'GET',
-                            success: function(data) {
-                                if (data.status == 200) {
-                                    Swal.fire({
-                                        title: "Deleted!",
-                                        text: "Your file has been deleted.",
-                                        icon: "success"
-                                    });
-                                    paymentMethodView();
-                                } else {
-                                    Swal.fire({
-                                        position: "top-end",
-                                        icon: "warning",
-                                        title: "Deleted Unsuccessful!",
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    });
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to Delete this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
                                 }
+                            });
+                            $.ajax({
+                                url: `/payment/method/delete/${id}`,
+                                type: 'GET',
+                                success: function(data) {
+                                    if (data.status == 200) {
+                                        Swal.fire({
+                                            title: "Deleted!",
+                                            text: "Your file has been deleted.",
+                                            icon: "success"
+                                        });
+                                        paymentMethodView();
+                                    } else {
+                                        Swal.fire({
+                                            position: "top-end",
+                                            icon: "warning",
+                                            title: "Deleted Unsuccessful!",
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        });
+                                    }
 
-                            }
-                        });
-                    }
-                });
-            })
+                                }
+                            });
+                        }
+                    });
+                })
+            });
         });
- });
     </script>
 @endsection

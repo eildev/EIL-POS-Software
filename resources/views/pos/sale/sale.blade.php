@@ -394,13 +394,7 @@
                             $('#customerModal').modal('hide');
                             $('.customerForm')[0].reset();
                             viewCustomer();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             // console.log(res);
                             if (res.error.name) {
@@ -436,6 +430,70 @@
                 });
             }
 
+            function showAddProduct(product, promotion) {
+                $('.showData').append(
+                    `<tr class="data_row${product.id}">
+                        <td></td>
+                    <td>
+                        <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
+                    </td>
+                    <td>
+                        <input type="hidden" class="product_id" name="product_id[]" readonly value="${product.id ?? 0}" />
+                        <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.price ?? 0}" />
+                    </td>
+                    <td>
+                        <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="1" />
+                    </td>
+                    <td>
+                        ${promotion && promotion.discount_type ? 
+                        promotion.discount_type == 'percentage' ? 
+                        `<span class="discount_percentage${product.id}">${promotion.discount_value}</span>%` : 
+                        `<span class="discount_amount${product.id}">${promotion.discount_value}</span>Tk` : 
+                        (promotion ? `<span>00</span>` : `<span>00</span>`)
+                        }
+                    </td>
+                    <td>
+                        ${
+                        promotion ? 
+                        promotion.discount_type == 'percentage' ? 
+                        `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - (product.price * promotion.discount_value / 100)}" />` 
+                        : 
+                        `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - promotion.discount_value}" />` 
+                        : 
+                        `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price}" />`
+                        }
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
+                    </td>
+                </tr>`
+                );
+            }
+
+
+            // // barcode product add 
+            // $('.barcode_input').change(function() {
+            //     let barcode = $(this).val();
+            //     // alert(barcode);
+            //     $.ajax({
+            //         url: '/product/barcode/find/' + barcode,
+            //         type: 'GET',
+            //         dataType: 'JSON',
+            //         success: function(res) {
+            //             const product = res.data;
+            //             const promotion = res.promotion;
+            //             // console.log(promotion);
+            //             showAddProduct(product, promotion);
+            //             // Update SL numbers
+            //             updateSLNumbers();
+            //             updateGrandTotal();
+            //             barcode = '';
+            //             // calculateGrandTotal();
+            //         }
+            //     })
+            // })
 
             // select product 
             $('.product_select').change(function() {
@@ -451,47 +509,7 @@
                             const product = res.data;
                             const promotion = res.promotion;
                             // console.log(promotion);
-                            $('.showData').append(
-                                `<tr class="data_row${product.id}">
-                                    <td>
-
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
-                                    </td>
-                                    <td>
-                                        <input type="hidden" class="product_id" name="product_id[]" readonly value="${product.id ?? 0}" />
-                                        <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.price ?? 0}" />
-                                    </td>
-                                    <td>
-                                        <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="1" />
-                                    </td>
-                                    <td>
-                                        ${promotion && promotion.discount_type ? 
-                                            promotion.discount_type == 'percentage' ? 
-                                            `<span class="discount_percentage${product.id}">${promotion.discount_value}</span>%` : 
-                                            `<span class="discount_amount${product.id}">${promotion.discount_value}</span>Tk` : 
-                                            (promotion ? `<span>00</span>` : `<span>00</span>`)
-                                        }
-                                    </td>
-                                    <td>
-                                        ${
-                                            promotion ? 
-                                            promotion.discount_type == 'percentage' ? 
-                                            `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - (product.price * promotion.discount_value / 100)}" />` 
-                                            : 
-                                            `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - promotion.discount_value}" />` 
-                                            : 
-                                            `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price}" />`
-                                        }
-                                    </td>
-                                    <td>
-                                        <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </a>
-                                    </td>
-                                </tr>`
-                            );
+                            showAddProduct(product, promotion);
                             // Update SL numbers
                             updateSLNumbers();
                             updateGrandTotal();

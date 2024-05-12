@@ -165,7 +165,7 @@
                         columns: ':visible'
                     },
                     customize: function(win) {
-                        $(win.document.body).prepend('<h2>Here is report list</h2>');
+                        $(win.document.body).prepend('<h4>{{ $siteTitle }}</h4>');
                         $(win.document.body).append('<p>Thank you for using our service!</p>');
                     }
                 }

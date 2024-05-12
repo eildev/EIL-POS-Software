@@ -16,6 +16,6 @@ class PromotionDetails extends Model
     }
     public function promotion()
     {
-        return $this->belongsTo(Promotion::class, 'Promotion_id', 'id');
+        return $this->belongsTo(Promotion::class, 'promotion_id', 'id');
     }
 }

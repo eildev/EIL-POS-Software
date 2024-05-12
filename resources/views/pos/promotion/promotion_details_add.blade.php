@@ -19,7 +19,7 @@
                                 <div class="mb-3 form-valid-groups">
                                     <label class="form-label">Promotion<span class="text-danger">*</span></label>
                                     <select class="form-select js-example-basic-single promotion_id" name="promotion_id"
-                                        aria-invalid="false">
+                                        aria-invalid="false" onclick="errorRemove(this);">
                                         <option selected="" disabled="">Select Promotion</option>
                                         @foreach ($promotions as $promotion)
                                             <option value="{{ $promotion->id }}">{{ $promotion->promotion_name }}</option>
@@ -32,7 +32,7 @@
                                 <div class="mb-3 form-valid-groups">
                                     <label class="form-label">Promotion Type<span class="text-danger">*</span></label>
                                     <select class="form-select js-example-basic-single promotion_type" name="promotion_type"
-                                        aria-invalid="false">
+                                        aria-invalid="false" onclick="errorRemove(this);" onblur="errorRemove(this);">
                                         <option selected="" disabled="">Select Promotion Type</option>
                                         <option value="wholesale">Wholesale</option>
                                         <option value="products">Products</option>
@@ -67,14 +67,22 @@
         </div>
     </div>
     <script>
-        // let promotion = document.querySelector('.promotion_type');
-        // console.log(promotion);
-        // promotion.addEventListener('click', function() {
-        //     console.log('Ok');
-        // })
+        // error remove 
+        function errorRemove(element) {
+            if (element.value != '') {
+                $(element).siblings('span').hide();
+                $(element).css('border-color', 'green');
+            }
+        }
 
 
         $(document).ready(function() {
+            // show error 
+            function showError(name, message) {
+                $(name).css('border-color', 'red');
+                $(name).focus();
+                $(`${name}_error`).show().text(message);
+            }
 
             $(document).on('change', '.promotion_type', function() {
                 let type = $(this).val();
@@ -224,64 +232,21 @@
                         logic
                     },
                     success: function(res) {
-                        console.log(res);
+                        // console.log(res);
                         if (res.status == 200) {
+                            window.location.href = "{{ route('promotion.details.view') }}";
                             toastr.success(res.message);
-                            // console.log(res);
                         } else {
-                            toastr.warning(res.message);
-                            // if (res.error.name) {
-                            //     showError('.customer_name', res.error.name);
-                            // }
-                            // if (res.error.phone) {
-                            //     showError('.phone', res.error.phone);
-                            // }
+                            // console.log(res.errors);
+                            if (res.errors.promotion_id) {
+                                showError('.promotion_id', res.errors.promotion_id);
+                            }
+                            if (res.errors.promotion_type) {
+                                showError('.promotion_type', res.errors.promotion_type);
+                            }
                         }
                     }
                 });
-            });
-
-
-
-
-            $('#myValidForm').validate({
-                rules: {
-                    promotion_id: {
-                        required: true,
-                    },
-                    Product_id: {
-                        required: true,
-                    },
-                    additional_conditions: {
-                        required: true,
-                    },
-
-
-                },
-                messages: {
-                    promotion_id: {
-                        required: 'Please Select Promotion',
-                    },
-                    Product_id: {
-                        required: 'Select Product',
-                    },
-                    additional_conditions: {
-                        required: '  Add Adition Conditions',
-                    },
-
-                },
-                errorElement: 'span',
-                errorPlacement: function(error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-valid-groups').append(error);
-                },
-                highlight: function(element, errorClass, validClass) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function(element, errorClass, validClass) {
-                    $(element).removeClass('is-invalid');
-                    $(element).addClass('is-valid');
-                },
             });
         });
     </script>

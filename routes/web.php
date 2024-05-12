@@ -346,7 +346,7 @@ Route::middleware('auth')->group(function () {
             //
             Route::get('/report/purchase', 'purchaseReport')->name('purchase.report');
             Route::get('/report/damage', 'damageReport')->name('damage.report');
-            Route::get('/report/damage/print/{data}', 'damageReportPrint')->name('damage.report.print');
+            Route::post('/damage/print', 'damageReportPrint')->name('damage.report.print');
             Route::get('/damage/product/filter', 'DamageProductFilter')->name('damage.product.filter.view');
 
 

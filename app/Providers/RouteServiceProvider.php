@@ -44,12 +44,14 @@ class RouteServiceProvider extends ServiceProvider
                 $logo = $settings->logo;
                 $facebook = $settings->facebook;
                 $address = $settings->address;
+                $header = $settings->header_text;
                 $phone = $settings->phone;
                 $email = $settings->email;
                 $invoice_logo_type = $settings->invoice_logo_type;
                 $view->with([
                     'siteTitle' => $siteTitle,
                     'logo' => $logo,
+                    'header' => $header,
                     'address' => $address,
                     'facebook' => $facebook,
                     'phone' => $phone,

@@ -5,7 +5,7 @@
                     <h6 class="card-title text-info">damage Report</h6>
 
                         <div id="" class="table-responsive">
-                            <table id="dataTableExample" class="table">
+                            <table id="example" class="table">
                                 <thead>
                                     <tr>
                                         <th>SN#</th>

@@ -3,7 +3,7 @@
     <div class="col-md-12 ">
         <div id="" class="table-responsive">
             <h5>Expense List</h5><br>
-            <table id="dataTableExample" class="table w-100 display nowrap">
+            <table id="example" class="table w-100 display nowrap">
                 <thead>
                     <tr>
                         <th>SN</th>

@@ -252,7 +252,7 @@
                     }
                 });
             });
-            // print 
+            // print
             document.querySelector('.print-btn').addEventListener('click', function(e) {
                 e.preventDefault();
                 $('#dataTableExample').removeAttr('id');

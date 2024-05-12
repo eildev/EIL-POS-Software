@@ -95,6 +95,10 @@
 <script>
     $(document).ready(function() {
         new DataTable('#example', {
+            columnDefs: [{
+                    "defaultContent": "-",
+                    "targets": "_all"
+                }],
             dom: 'Bfrtip',
     layout: {
         topStart: {

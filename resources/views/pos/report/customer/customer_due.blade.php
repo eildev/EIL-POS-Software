@@ -59,7 +59,7 @@
                 <div class="card-body">
                     <h6 class="card-title">Customer Due Table</h6>
                     <div class="table-responsive">
-                        <table id="dataTableExample" class="table">
+                        <table id="example" class="table">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -131,7 +131,7 @@
                     }
                 });
             });
-            // print 
+            // print
             document.querySelector('.print-btn').addEventListener('click', function(e) {
                 e.preventDefault();
                 $('#dataTableExample').removeAttr('id');

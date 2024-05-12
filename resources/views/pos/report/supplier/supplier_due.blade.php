@@ -140,6 +140,9 @@
                 // Trigger the print function
                 window.print();
             });
-        })
+        });
+
+
+
     </script>
 @endsection

@@ -1,5 +1,6 @@
 @extends('master')
 @section('admin')
+
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
@@ -22,6 +23,7 @@
                                     <th>SN</th>
                                     <th>Image</th>
                                     <th>Name</th>
+                                    <th>Barcode</th>
                                     <th>Category</th>
                                     <th>Brand</th>
                                     <th>Price</th>
@@ -40,11 +42,14 @@
                                                     alt="product image">
                                             </td>
                                             <td>{{ $product->name ?? '' }}</td>
+                                            <td>{!!DNS1D::getBarcodeHTML("$product->barcode",'PHARMA')!!}
+                                            P - {{$product->barcode}}</td>
                                             <td>{{ $product->category->name ?? '' }}</td>
                                             <td>{{ $product->brand->name ?? '' }}</td>
                                             <td>{{ $product->price ?? 0 }}</td>
                                             <td>{{ $product->stock ?? 0 }}</td>
                                             <td>{{ $product->unit->name ?? '' }}</td>
+                                         
                                             <td>
                                                 <a href="{{ route('product.edit', $product->id) }}"
                                                     class="btn btn-primary btn-icon">
@@ -53,6 +58,9 @@
                                                 <a href="{{ route('product.destroy', $product->id) }}"
                                                     class="btn btn-danger btn-icon" id="delete">
                                                     <i data-feather="trash-2"></i>
+                                                </a>
+                                                <a href="#" class="input-text btn border-dark" onclick="printBarcode({{$product->id}})">
+                                                    <i class="fa-solid fa-barcode"></i> Print Barcode
                                                 </a>
                                             </td>
                                         </tr>
@@ -66,4 +74,14 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function printBarcodes() {
+            var barcodes = document.querySelectorAll('.barcode-container');
+            barcodes.forEach(function(barcode) {
+                barcode.style.display = 'block'; // Show the barcode
+            });
+            window.print();
+        }
+    </script>
 @endsection

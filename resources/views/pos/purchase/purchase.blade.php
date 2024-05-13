@@ -423,13 +423,7 @@
                             $('#exampleModalLongScollable').modal('hide');
                             $('.supplierForm')[0].reset();
                             supplierView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             // console.log(res);
                             if (res.error.name) {
@@ -738,13 +732,7 @@
                             $('#paymentModal').modal('hide');
                             // $('.supplierForm')[0].reset();
                             // supplierView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                             let id = res.purchaseId;
                             // console.log(id)
 

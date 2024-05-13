@@ -54,9 +54,8 @@
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">Percentage</label>
-                            <input id="defaultconfig" class="form-control tax_percentage" maxlength="39"
-                                name="percentage" type="number" onkeyup="errorRemove(this);"
-                                onblur="errorRemove(this);">
+                            <input id="defaultconfig" class="form-control tax_percentage" maxlength="39" name="percentage"
+                                type="number" onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                             <span class="text-danger tax_percentage_error"></span>
                         </div>
 
@@ -139,13 +138,7 @@
                             $('#exampleModalLongScollable').modal('hide');
                             $('.taxForm')[0].reset();
                             taxView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             if (res.error.name) {
                                 showError('.tax_name', res.error.name);
@@ -157,7 +150,7 @@
                         }
                     }
                 });
-        });
+            });
 
 
             // show tax
@@ -231,20 +224,14 @@
                             $('.edit_tax_percentage').val(res.tax.percentage);
                             $('.update_tax').val(res.tax.id);
                         } else {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "warning",
-                                title: "No Data Found",
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.warning("No Data Found");
                         }
                     }
                 });
             })
 
             //  update tax
-             $('.update_tax').click(function(e) {
+            $('.update_tax').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
                 let id = $(this).val();
@@ -266,13 +253,7 @@
                             $('#edit').modal('hide');
                             $('.editTaxForm')[0].reset();
                             taxView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             if (res.error.name) {
                                 showError('.edit_tax_name', res.error.name);
@@ -288,52 +269,53 @@
             // tax Delete
             $(document).on('click', '.tax_delete', function(e) {
                 $('.tax_delete').click(function(e) {
-                e.preventDefault();
-                let id = this.getAttribute('data-id');
+                    e.preventDefault();
+                    let id = this.getAttribute('data-id');
 
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to Delete this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                        $.ajax({
-                            url: `/tax/delete/${id}`,
-                            type: 'GET',
-                            success: function(data) {
-                                if (data.status == 200) {
-                                    Swal.fire({
-                                        title: "Deleted!",
-                                        text: "Your file has been deleted.",
-                                        icon: "success"
-                                    });
-                                    taxView();
-                                } else {
-                                    Swal.fire({
-                                        position: "top-end",
-                                        icon: "warning",
-                                        title: "Deleted Unsuccessful!",
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    });
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to Delete this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
                                 }
+                            });
+                            $.ajax({
+                                url: `/tax/delete/${id}`,
+                                type: 'GET',
+                                success: function(data) {
+                                    if (data.status == 200) {
+                                        Swal.fire({
+                                            title: "Deleted!",
+                                            text: "Your file has been deleted.",
+                                            icon: "success"
+                                        });
+                                        taxView();
+                                    } else {
+                                        Swal.fire({
+                                            position: "top-end",
+                                            icon: "warning",
+                                            title: "Deleted Unsuccessful!",
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        });
+                                    }
 
 
-                            }
-                        });
-                    }
-                });
-            })
+                                }
+                            });
+                        }
+                    });
+                })
+            });
         });
- });
     </script>
 @endsection

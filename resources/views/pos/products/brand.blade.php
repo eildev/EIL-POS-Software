@@ -183,13 +183,7 @@
                             // alert('added successfully');
                             $('.brandForm')[0].reset();
                             brandView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             showError('.brand_name', res.error.name);
                         }
@@ -312,13 +306,7 @@
                             $('#edit').modal('hide');
                             $('.brandFormEdit')[0].reset();
                             brandView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             showError('.edit_brand_name', res.error.name);
                         }

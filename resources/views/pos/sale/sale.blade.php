@@ -126,24 +126,14 @@
                                                 Discount :
                                             </div>
                                             <div class="col-md-8">
-                                                @php
+                                                {{-- @php
                                                     $promotions = App\Models\Promotion::get();
-                                                @endphp
-                                                <select class="js-example-basic-single form-select promotion_id"
-                                                    data-width="100%" onclick="errorRemove(this);"
-                                                    onblur="errorRemove(this);">
-                                                    @if ($promotions->count() > 0)
-                                                        <option selected disabled>Select Discount</option>
-                                                        @foreach ($promotions as $promotion)
-                                                            <option value="{{ $promotion->id }}">
-                                                                {{ $promotion->promotion_name }}
-                                                                ({{ $promotion->discount_value }} /
-                                                                {{ $promotion->discount_type }})
-                                                            </option>
-                                                        @endforeach
-                                                    @else
-                                                        <option selected disabled>Please Add Product</option>
-                                                    @endif
+                                                @endphp --}}
+                                                {{-- <input type="number" class="form-control discount_field border-0 " name="discount_field"
+                                                    readonly value="0.00" /> --}}
+                                                {{-- <span class="ms-3 discount_field">00</span> --}}
+                                                <select class="form-select discount_field" name="discount_field">
+
                                                 </select>
                                             </div>
                                         </div>
@@ -404,13 +394,7 @@
                             $('#customerModal').modal('hide');
                             $('.customerForm')[0].reset();
                             viewCustomer();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             // console.log(res);
                             if (res.error.name) {
@@ -446,6 +430,70 @@
                 });
             }
 
+            function showAddProduct(product, promotion) {
+                $('.showData').append(
+                    `<tr class="data_row${product.id}">
+                        <td></td>
+                    <td>
+                        <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
+                    </td>
+                    <td>
+                        <input type="hidden" class="product_id" name="product_id[]" readonly value="${product.id ?? 0}" />
+                        <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.price ?? 0}" />
+                    </td>
+                    <td>
+                        <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="1" />
+                    </td>
+                    <td>
+                        ${promotion && promotion.discount_type ? 
+                        promotion.discount_type == 'percentage' ? 
+                        `<span class="discount_percentage${product.id}">${promotion.discount_value}</span>%` : 
+                        `<span class="discount_amount${product.id}">${promotion.discount_value}</span>Tk` : 
+                        (promotion ? `<span>00</span>` : `<span>00</span>`)
+                        }
+                    </td>
+                    <td>
+                        ${
+                        promotion ? 
+                        promotion.discount_type == 'percentage' ? 
+                        `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - (product.price * promotion.discount_value / 100)}" />` 
+                        : 
+                        `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - promotion.discount_value}" />` 
+                        : 
+                        `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price}" />`
+                        }
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
+                    </td>
+                </tr>`
+                );
+            }
+
+
+            // // barcode product add 
+            // $('.barcode_input').change(function() {
+            //     let barcode = $(this).val();
+            //     // alert(barcode);
+            //     $.ajax({
+            //         url: '/product/barcode/find/' + barcode,
+            //         type: 'GET',
+            //         dataType: 'JSON',
+            //         success: function(res) {
+            //             const product = res.data;
+            //             const promotion = res.promotion;
+            //             // console.log(promotion);
+            //             showAddProduct(product, promotion);
+            //             // Update SL numbers
+            //             updateSLNumbers();
+            //             updateGrandTotal();
+            //             barcode = '';
+            //             // calculateGrandTotal();
+            //         }
+            //     })
+            // })
 
             // select product 
             $('.product_select').change(function() {
@@ -461,50 +509,11 @@
                             const product = res.data;
                             const promotion = res.promotion;
                             // console.log(promotion);
-                            $('.showData').append(
-                                `<tr class="data_row${product.id}">
-                                    <td>
-
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
-                                    </td>
-                                    <td>
-                                        <input type="hidden" class="product_id" name="product_id[]" readonly value="${product.id ?? 0}" />
-                                        <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.price ?? 0}" />
-                                    </td>
-                                    <td>
-                                        <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="1" />
-                                    </td>
-                                    <td>
-                                        ${promotion && promotion.discount_type ? 
-                                            promotion.discount_type == 'percentage' ? 
-                                            `<span class="discount_percentage${product.id}">${promotion.discount_value}</span>%` : 
-                                            `<span class="discount_amount${product.id}">${promotion.discount_value}</span>Tk` : 
-                                            (promotion ? `<span>00</span>` : `<span>00</span>`)
-                                        }
-                                    </td>
-                                    <td>
-                                        ${
-                                            promotion ? 
-                                            promotion.discount_type == 'percentage' ? 
-                                            `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - (product.price * promotion.discount_value / 100)}" />` 
-                                            : 
-                                            `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - promotion.discount_value}" />` 
-                                            : 
-                                            `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price}" />`
-                                        }
-                                    </td>
-                                    <td>
-                                        <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </a>
-                                    </td>
-                                </tr>`
-                            );
+                            showAddProduct(product, promotion);
                             // Update SL numbers
                             updateSLNumbers();
                             updateGrandTotal();
+                            // calculateGrandTotal();
                         }
                     })
                 }
@@ -512,8 +521,10 @@
 
 
             // Function to recalculate total
+            let total = 0;
+
             function calculateTotal() {
-                let total = 0;
+                // let total = 0;
                 $('.quantity').each(function() {
                     let $quantityInput = $(this); // Store the reference to $(this)
                     let productId = $quantityInput.attr('product-id');
@@ -559,34 +570,74 @@
             }
 
 
-            // grandTotalCalulate
+            // // grandTotalCalulate
             function calculateGrandTotal() {
-                let id = $('.promotion_id').val();
-                let total = parseFloat($('.total').val());
+                let id = $('.select-customer').val();
+                // let total = parseFloat($('.total').val());
+                // console.log(id);
                 if (id) {
                     $.ajax({
-                        url: `/promotion/find/${id}`,
+                        url: `/sale/customer/${id}`,
                         type: 'GET',
                         dataType: 'JSON',
                         success: function(res) {
                             // console.log(res)
-                            const promotion = res.data;
+                            const promotions = res.promotions;
+                            // console.log(promotions);
+                            if (promotions) {
+                                $('.discount_field').html(
+                                    `<option selected disabled>Select a Discount</option>`);
+                                $.each(promotions, function(index, promotion) {
+                                    $('.discount_field').append(
+                                        `<option value="${promotion.id}">${promotion.promotion_name}(${promotion.discount_value} / ${promotion.discount_type})</option>`
+                                    );
+                                })
+                            } else {
+                                $('.grand_total').val(total);
+                                $('.discount_field').html(
+                                    `<option>No Discount</option>`
+                                );
+                            }
+                        }
+                    })
+                } else {
+                    $('.grand_total').val(total);
+                    $('.discount_field').html(
+                        `<option>No Discount</option>`
+                    );
+                }
+            }
+            calculateGrandTotal();
+            // let id = $('.select-customer').val();
+            // console.log(id);
+            $(document).on('change', '.discount_field', function() {
+                let id = $(this).val();
+                $.ajax({
+                    url: `/sale/promotions/${id}`,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function(res) {
+                        console.log(res)
+                        const promotion = res.promotions;
+                        if (promotion) {
                             if (promotion.discount_type == 'percentage') {
                                 let grandTotalAmount = parseFloat(total - ((total * promotion
                                     .discount_value) / 100)).toFixed(2);
                                 $('.grand_total').val(grandTotalAmount);
                             } else {
-                                let grandTotalAmount = parseFloat(total - promotion.discount_value)
+                                let grandTotalAmount = parseFloat(total - promotion
+                                        .discount_value)
                                     .toFixed(2);
                                 $('.grand_total').val(grandTotalAmount);
                             }
+                        } else {
+                            $('.grand_total').val(total);
                         }
-                    })
-                } else {
-                    $('.grand_total').val(total)
-                }
-            }
-            calculateGrandTotal();
+
+                    }
+                })
+            })
+
             // Function to update grand total when a product is added or deleted
             function updateGrandTotal() {
                 calculateTotal();
@@ -609,12 +660,10 @@
                         if (quantity > stock) {
                             $('.quantity').val(stock);
                             // subTotal.val(parseFloat(stock * productPrice).toFixed(2));
-                            calculateTotal();
                             updateGrandTotal();
                             toastr.warning('Not enough stock');
                         } else {
                             // subTotal.val(parseFloat(quantity * productPrice).toFixed(2));
-                            calculateTotal();
                             updateGrandTotal();
                         }
 
@@ -624,7 +673,8 @@
             })
 
             // discount 
-            $('.promotion_id').change(function() {
+            $(document).on('change', '.select-customer', function() {
+                // let id = $(this).val();
                 calculateGrandTotal();
             })
 

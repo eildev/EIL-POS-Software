@@ -206,13 +206,7 @@
                             $('#exampleModalLongScollable').modal('hide');
                             $('.bankForm')[0].reset();
                             bankView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             if (res.error.name) {
                                 showError('.bank_name', res.error.name);
@@ -327,13 +321,7 @@
                             $('.edit_opening_balance').val(res.bank.opening_balance);
                             $('.update_bank').val(res.bank.id);
                         } else {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "warning",
-                                title: "No Data Found",
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.warning(No Data Found);
                         }
                     }
                 });
@@ -362,13 +350,7 @@
                             $('#edit').modal('hide');
                             $('.editBankForm')[0].reset();
                             bankView();
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             if (res.error.name) {
                                 showError('.edit_bank_name', res.error.name);

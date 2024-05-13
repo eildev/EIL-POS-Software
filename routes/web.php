@@ -300,6 +300,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/sale/find/{id}', 'find')->name('sale.find');
         Route::get('/product/find-qty/{id}', 'findQty')->name('product.find.qty');
         Route::post('/sale/transaction/{id}', 'saleTransaction')->name('sale.transaction');
+        Route::get('/sale/customer/{id}', 'saleCustomer')->name('sale.customer');
+        Route::get('/sale/promotions/{id}', 'salePromotions')->name('sale.promotions');
+        Route::get('/product/barcode/find/{id}', 'findProductWithBarcode')->name('product.barcode.find');
     });
     // Transaction related route(n)
     Route::controller(EmployeeSalaryController::class)->group(function () {

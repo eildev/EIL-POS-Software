@@ -344,13 +344,7 @@
                             $('#paymentModal').modal('hide');
                             $('.paymentForm')[0].reset();
                             window.location.href = '{{ route('sale.view') }}'
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                         } else {
                             // console.log(res.error);
                             if (res.error.paid) {

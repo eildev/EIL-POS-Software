@@ -76,20 +76,27 @@
                     <div class="modal-header">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body text-center">
 
+
+
+                    <div class="modal-body text-center border">
+                        <div class="row">
                         @for($i = 0; $i < $product->stock; $i++)
+                        <div class="col-md-4">
                         <div class="barcode-container">
-                            {!! DNS1D::getBarcodeHTML($product->barcode, 'PHARMA') !!}
+                            <span class="dblock">
+                            {!! DNS1D::getBarcodeHTML($product->barcode, 'PHARMA') !!}</span><br>
                             <span style="">{{$product->barcode}}</span><br>
                             <span>{{ $product->name ?? '' }} </span><br>
                             <span class="bold">{{ $product->price ?? 0 }}TK</span>
                         </div>
+                    </div>
                         @endfor
                     </div>
+                </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button onclick="printModalContent('exampleModal{{$product->id}}')"class="btn btn-primary">Print</button>
                     </div>
                 </div>
                 </div>
@@ -105,12 +112,24 @@
             </div>
         </div>
     </div>
+    <script>
+        function printModalContent(modalId) {
+            var modalContent = document.getElementById(modalId).innerHTML;
+            var originalBody = document.body.innerHTML;
+            document.body.innerHTML = modalContent;
+            window.print();
+            document.body.innerHTML = originalBody;
+        }
+    </script>
     <style>
         .barcode-container {
             text-align: center;
-            display: inline-block;
-            border: 2px solid #e9ecef;
+            border: 1px solid #e9ecef;
             padding: 10px;
         }
+        .dblock{
+            display: inline-block;
+        }
+
     </style>
 @endsection

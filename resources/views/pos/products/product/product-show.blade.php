@@ -49,7 +49,7 @@
                                             <td>{{ $product->price ?? 0 }}</td>
                                             <td>{{ $product->stock ?? 0 }}</td>
                                             <td>{{ $product->unit->name ?? '' }}</td>
-                                         
+
                                             <td>
                                                 <a href="{{ route('product.edit', $product->id) }}"
                                                     class="btn btn-primary btn-icon">
@@ -59,11 +59,39 @@
                                                     class="btn btn-danger btn-icon" id="delete">
                                                     <i data-feather="trash-2"></i>
                                                 </a>
-                                                <a href="#" class="input-text btn border-dark" onclick="printBarcode({{$product->id}})">
+                                                <a href="#"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$product->id}}" class="input-text btn border-dark">
                                                     <i class="fa-solid fa-barcode"></i> Print Barcode
                                                 </a>
                                             </td>
                                         </tr>
+
+                                        {{-- /Modal Start/ --}}
+                                        <!-- Button trigger modal -->
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal{{$product->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        @for($i = 0; $i < $product->stock; $i++)
+                        {!! DNS1D::getBarcodeHTML($product->barcode, 'PHARMA') !!}
+                        <p>P - {{$product->barcode}}</p>
+                    @endfor
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+                                        {{-- /Modal End/ --}}
                                     @endforeach
                                 @endif
 
@@ -74,14 +102,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function printBarcodes() {
-            var barcodes = document.querySelectorAll('.barcode-container');
-            barcodes.forEach(function(barcode) {
-                barcode.style.display = 'block'; // Show the barcode
-            });
-            window.print();
-        }
-    </script>
 @endsection

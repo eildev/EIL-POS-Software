@@ -7,7 +7,7 @@ use App\Models\PromotionDetails;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Validation\Rule;
 class ProductsController extends Controller
 {
     public function index()
@@ -24,7 +24,14 @@ class ProductsController extends Controller
             'brand_id' => 'required',
             'price' => 'required:max:7',
             'unit_id' => 'required:max:11',
+            'barcode' => [
+                'required',
+                Rule::unique('products', 'barcode')->where(function ($query) use ($request) {
+                    return $query->where('barcode', $request->barcode);
+                }),
+            ],
         ]);
+
         if ($validator->passes()) {
             $product = new Product;
             $product->name =  $request->name;

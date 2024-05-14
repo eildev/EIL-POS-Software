@@ -109,7 +109,7 @@
                         columns: ':visible'
                     },
                     customize: function(data) {
-                        return 'Here is report list\n\n' + data + '\n\nThank you for using our service!';
+                        return 'Here is report list\n\n' + data + '\n\n';
                     }
                 },
                 {
@@ -143,7 +143,7 @@
                     },
                     customize: function(doc) {
                         doc.content.unshift({
-                            text: '{{ $header }}\n {{ $phone ??'+880.....'}}\n {{ $email }}\n{{ $address }}',
+                            text: '{{ $header ??""}}\n {{ $phone ??'+880.....'}}\n {{ $email ??"" }}\n{{ $address ?? "" }}',
                             fontSize: 14,
                             alignment: 'center',
                             margin: [0, 0, 0, 12]
@@ -165,8 +165,8 @@
                         columns: ':visible'
                     },
                     customize: function(win) {
-                        $(win.document.body).prepend('<h4>{{ $header }}</br>{{$phone?? '+880......'}}</br>Email:{{$email}}</br>Address:{{$address}}</h4>');
-                        $(win.document.body).append('<p>Thank you for using our service!</p>');
+                        $(win.document.body).prepend('<h4>{{ $header }}</br>{{$phone?? '+880....'}}</br>Email:{{$email}}</br>Address:{{$address}}</h4>');
+
                     }
                 }
             ]

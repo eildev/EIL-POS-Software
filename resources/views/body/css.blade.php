@@ -7,7 +7,7 @@
     content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<title>{{$siteTitle}}</title>
+<title>{{ $siteTitle }}</title>
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,17 +38,22 @@
 <link rel="stylesheet" href="{{ asset('assets') }}/fonts/feather-font/css/iconfont.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/vendors/flag-icon-css/css/flag-icon.min.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/vendors/easymde/easymde.min.css">
+
 <!-- endinject -->
 @php
     $mode = App\models\PosSetting::all()->first();
 @endphp
 <!-- Layout styles -->
 @if (empty($mode->dark_mode))
-<link rel="stylesheet" href="{{ asset('assets') }}/css/demo1/style.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/css/demo1/style.css">
 @else
-<link rel="stylesheet" href="{{ asset('assets') }}/css/demo{{ $mode->dark_mode }}/style.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/css/demo{{ $mode->dark_mode }}/style.css">
 @endif
 
+
+
+{{-- apex chart  --}}
+<script src="{{ asset('assets') }}/vendors/apexcharts/apexcharts.min.js"></script>
 
 <!-- End layout styles -->
 

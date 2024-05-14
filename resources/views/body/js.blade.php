@@ -4,7 +4,7 @@
 
 <!-- Plugin js for this page -->
 <script src="{{ asset('assets') }}/vendors/flatpickr/flatpickr.min.js"></script>
-<script src="{{ asset('assets') }}/vendors/apexcharts/apexcharts.min.js"></script>
+{{-- <script src="{{ asset('assets') }}/vendors/apexcharts/apexcharts.min.js"></script> --}}
 <script src="{{ asset('assets') }}/vendors/datatables.net/jquery.dataTables.js"></script>
 <script src="{{ asset('assets') }}/vendors/datatables.net-bs5/dataTables.bootstrap5.js"></script>
 <script src="{{ asset('assets') }}/vendors/prismjs/prism.js"></script>
@@ -47,6 +47,7 @@
 <script src="{{ asset('assets') }}/js/flatpickr.js"></script>
 <script src="{{ asset('assets') }}/js/sweet-alert.js"></script>
 <script src="{{ asset('assets') }}/js/tinymce.js"></script>
+<script src="{{ asset('assets') }}/js/apexcharts-dark.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
     @if (Session::has('message'))
@@ -100,8 +101,7 @@
                 "targets": "_all"
             }],
             dom: 'Bfrtip',
-            buttons: [
-                {
+            buttons: [{
                     extend: 'copyHtml5',
                     text: 'Copy',
                     exportOptions: {
@@ -120,7 +120,8 @@
                         columns: ':visible'
                     },
                     customize: function(data) {
-                        return '{{ $header }}\n {{ $phone ??'+880.....'}}\n {{ $email }}\n{{ $address }}\n\n' + data + '\n\n';
+                        return '{{ $header }}\n {{ $phone ?? '+880.....' }}\n {{ $email }}\n{{ $address }}\n\n' +
+                            data + '\n\n';
                     }
                 },
                 {
@@ -131,7 +132,8 @@
                         columns: ':visible'
                     },
                     customize: function(xlsx) {
-                        return '{{ $header ?? '' }}\n {{ $phone ??'+880.....'}}\n {{ $email ?? ''}}\n{{ $address ?? ''}}\n\n' + xlsx + '\n\n';
+                        return '{{ $header ?? '' }}\n {{ $phone ?? '+880.....' }}\n {{ $email ?? '' }}\n{{ $address ?? '' }}\n\n' +
+                            xlsx + '\n\n';
                     }
                 },
                 {
@@ -143,7 +145,7 @@
                     },
                     customize: function(doc) {
                         doc.content.unshift({
-                            text: '{{ $header ??""}}\n {{ $phone ??'+880.....'}}\n {{ $email ??"" }}\n{{ $address ?? "" }}',
+                            text: '{{ $header ?? '' }}\n {{ $phone ?? '+880.....' }}\n {{ $email ?? '' }}\n{{ $address ?? '' }}',
                             fontSize: 14,
                             alignment: 'center',
                             margin: [0, 0, 0, 12]
@@ -165,11 +167,13 @@
                         columns: ':visible'
                     },
                     customize: function(win) {
-                        $(win.document.body).prepend('<h4>{{ $header }}</br>{{$phone?? '+880....'}}</br>Email:{{$email}}</br>Address:{{$address}}</h4>');
+                        $(win.document.body).prepend(
+                            '<h4>{{ $header }}</br>{{ $phone ?? '+880....' }}</br>Email:{{ $email }}</br>Address:{{ $address }}</h4>'
+                        );
 
                     }
                 }
             ]
         });
     });
-    </script>
+</script>

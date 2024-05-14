@@ -17,7 +17,7 @@
                             Product</a>
                     </div>
                     <div class="table-responsive">
-                        <table id="dataTableExample" class="table">
+                        <table id="example" class="table">
                             <thead>
                                 <tr>
                                     <th>SN</th>
@@ -60,14 +60,13 @@
                                                     <i data-feather="trash-2"></i>
                                                 </a>
                                                 <a href="#"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$product->id}}" class="input-text btn border-dark">
-                                                    <i class="fa-solid fa-barcode"></i> Print Barcode
+                                                    <i class="fa-solid fa-barcode"></i>
                                                 </a>
                                             </td>
                                         </tr>
 
                                         {{-- /Modal Start/ --}}
                                         <!-- Button trigger modal -->
-
 
             <!-- Modal -->
             <div class="modal fade modal-lg" id="exampleModal{{$product->id}}"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -76,9 +75,6 @@
                     <div class="modal-header">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
-
-
                     <div class="modal-body text-center border">
                         <div class="row">
                         @for($i = 0; $i < $product->stock; $i++)
@@ -112,15 +108,7 @@
             </div>
         </div>
     </div>
-    <script>
-        function printModalContent(modalId) {
-            var modalContent = document.getElementById(modalId).innerHTML;
-            var originalBody = document.body.innerHTML;
-            document.body.innerHTML = modalContent;
-            window.print();
-            document.body.innerHTML = originalBody;
-        }
-    </script>
+
     <style>
         .barcode-container {
             text-align: center;

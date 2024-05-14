@@ -162,4 +162,9 @@ class ProductsController extends Controller
             ]);
         }
     }
+    //
+    public function ProductBarcode($id){
+        $product = Product::findOrFail($id);
+        return view('pos.products.product.product-barcode', compact('product'));
+    }
 }

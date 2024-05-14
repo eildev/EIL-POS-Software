@@ -296,6 +296,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/get/customer', 'getCustomer')->name('get.customer');
         Route::post('/add/customer', 'addCustomer')->name('add.customer');
         Route::get('/sale/invoice/{id}', 'invoice')->name('sale.invoice');
+        Route::get('/sale/print/{id}', 'print')->name('sale.print');
         Route::get('/sale/filter', 'filter')->name('sale.filter');
         Route::get('/sale/find/{id}', 'find')->name('sale.find');
         Route::get('/product/find-qty/{id}', 'findQty')->name('product.find.qty');

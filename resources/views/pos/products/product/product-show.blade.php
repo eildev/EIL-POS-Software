@@ -59,9 +59,13 @@
                                                     class="btn btn-danger btn-icon" id="delete">
                                                     <i data-feather="trash-2"></i>
                                                 </a>
-                                                <a href="#"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$product->id}}" class="input-text btn border-dark">
+                                                <a href="{{ route('product.barcode', $product->id) }}"
+                                                    class="btn  btn-icon">
                                                     <i class="fa-solid fa-barcode"></i>
                                                 </a>
+                                                {{-- <a href="#"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$product->id}}" class="input-text btn border-dark">
+                                                    <i class="fa-solid fa-barcode"></i>
+                                                </a> --}}
                                             </td>
                                         </tr>
 
@@ -69,7 +73,7 @@
                                         <!-- Button trigger modal -->
 
             <!-- Modal -->
-            <div class="modal fade modal-lg" id="exampleModal{{$product->id}}"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            {{-- <div class="modal fade modal-lg" id="exampleModal{{$product->id}}"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -92,11 +96,11 @@
                 </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button onclick="printModalContent('exampleModal{{$product->id}}')"class="btn btn-primary">Print</button>
+                    <button onclick="printModalContent('modalContent{{$product->id}}')" class="btn btn-primary">Print</button>
                     </div>
                 </div>
                 </div>
-            </div>
+            </div> --}}
                                         {{-- /Modal End/ --}}
                                     @endforeach
                                 @endif
@@ -108,7 +112,17 @@
             </div>
         </div>
     </div>
+<script>
 
+function printModalContent(modalId) {
+    var modalBodyContent = document.getElementById(modalId).getElementsByClassName('modal-body')[0].innerHTML;
+    var printWindow = window.open('', '_blank');
+    printWindow.document.write('<html><head><title>Print</title><link rel="stylesheet" type="text/css" href="print.css" /></head><body>' + modalBodyContent + '</body></html>');
+    printWindow.document.close();
+    printWindow.print();
+
+}
+</script>
     <style>
         .barcode-container {
             text-align: center;

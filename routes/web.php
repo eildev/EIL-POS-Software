@@ -219,7 +219,7 @@ Route::middleware('auth')->group(function () {
         // Route::get('/damage/destroy/{id}', 'destroy')->name('damage.destroy');
         // Route::get('/damage/invoice/{id}', 'invoice')->name('damage.invoice');
     });
-    // Promotion related route(n)
+    // Promotion  related route(n)
     Route::controller(PromotionController::class)->group(function () {
         Route::get('/promotion/add', 'PromotionAdd')->name('promotion.add');
         Route::post('/promotion/store', 'PromotionStore')->name('promotion.store');
@@ -228,15 +228,15 @@ Route::middleware('auth')->group(function () {
         Route::post('/promotion/update/{id}', 'PromotionUpdate')->name('promotion.update');
         Route::get('/promotion/delete/{id}', 'PromotionDelete')->name('promotion.delete');
         Route::get('/promotion/find/{id}', 'find')->name('promotion.find');
-
-        // Promotion Details related route(n)
+    });
+    // Promotion Details related route(n)
+    Route::controller(PromotionController::class)->group(function () {
         Route::get('/promotion/details/add', 'PromotionDetailsAdd')->name('promotion.details.add');
         Route::post('/promotion/details/store', 'PromotionDetailsStore')->name('promotion.details.store');
         Route::get('/promotion/details/view', 'PromotionDetailsView')->name('promotion.details.view');
         Route::get('/promotion/details/edit/{id}', 'PromotionDetailsEdit')->name('promotion.details.edit');
         Route::post('/promotion/details/update/{id}', 'PromotionDetailsUpdate')->name('promotion.details.update');
         Route::get('/promotion/details/delete/{id}', 'PromotionDetailsDelete')->name('promotion.details.delete');
-        Route::get('/promotion/details/find', 'PromotionDetailsFind')->name('promotion.details.find');
         Route::get('/promotion/product', 'allProduct')->name('promotion.product');
         Route::get('/promotion/customers', 'allCustomers')->name('promotion.customers');
         Route::get('/promotion/branch', 'allBranch')->name('promotion.branch');
@@ -332,6 +332,12 @@ Route::middleware('auth')->group(function () {
             Route::get('low-stock', 'lowStockReport')->name('low.stock.report');
             Route::get('top-products', 'topProducts')->name('top.products.report');
             // Route::get('purchase', 'purchaseReport')->name('purchase.report');
+            // Route::group(['prefix' => 'today'], function () {
+            //     Route::get('ledger', 'customerLedger')->name('customer.ledger.report');
+            //     Route::get('filter', 'customerLedgerFilter')->name('customer.ledger.filter');
+            //     Route::get('due', 'customerDue')->name('customer.due.report');
+            //     Route::get('due/filter', 'customerDueFilter')->name('customer.due.filter');
+            // });
             Route::group(['prefix' => 'customer'], function () {
                 Route::get('ledger', 'customerLedger')->name('customer.ledger.report');
                 Route::get('filter', 'customerLedgerFilter')->name('customer.ledger.filter');
@@ -348,6 +354,8 @@ Route::middleware('auth')->group(function () {
             Route::get('stock', 'stockReport')->name('stock.report');
             //
             Route::get('/report/purchase', 'purchaseReport')->name('purchase.report');
+
+
             Route::get('/report/damage', 'damageReport')->name('damage.report');
             Route::post('/damage/print', 'damageReportPrint')->name('damage.report.print');
             Route::get('/damage/product/filter', 'DamageProductFilter')->name('damage.product.filter.view');

@@ -467,8 +467,8 @@
                                         <tr>
                                             <td>{{ $num++ }}</td>
                                             <td>{{ $supplierData['supplier']['name'] ?? '' }}</td>
-                                            <td>{{ $supplierData->date ?? '-' }}</td>
-                                            <td>{{ $supplierData->debit ?? '0' }} <span>TK</span></td>
+                                            <td>{{ $supplierData->date ?? '' }}</td>
+                                            <td>{{ $supplierData->debit ?? '' }} <span>TK</span></td>
                                             <?php
                                             $totalSupplierAmount += isset($supplierData->debit) ? $supplierData->debit : 0;
                                             ?>
@@ -523,10 +523,10 @@
                                         <tr>
                                             <td>{{ $num++ }}</td>
                                             <td>{{ $customerData['customer']['name'] ?? '' }}</td>
-                                            <td>{{ $customerData->date ?? '-' }}</td>
-                                            <td>{{ $customerData->credit ?? '0' }} <span>TK</span></td>
+                                            <td>{{ $customerData->date ?? '' }}</td>
+                                            <td>{{ $customerData->debit ?? '' }} <span>TK</span></td>
                                             <?php
-                                            $customerTotalPayment += isset($customerData->credit) ? $customerData->credit : 0;
+                                            $customerTotalPayment += isset($customerData->debit) ? $customerData->debit : 0;
                                             ?>
                                         </tr>
                                     @endforeach

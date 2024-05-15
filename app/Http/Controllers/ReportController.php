@@ -11,6 +11,7 @@ use App\Models\Transaction;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Models\Sale;
+use App\Models\SaleItem;
 use App\Models\Employee;
 use App\Models\Damage;
 use Illuminate\Http\Request;
@@ -22,7 +23,43 @@ class ReportController extends Controller
     // today report function
     public function todayReport()
     {
-        return view('pos.report.today.today');
+
+        $todayDate = now()->toDateString();
+
+        //Today Invoice
+        $saleItemsForDate = SaleItem::whereDate('created_at', $todayDate);
+        $todaySaleItemsToday = $saleItemsForDate->sum('qty');
+        $totalInvoiceToday = Sale::whereDate('sale_date', $todayDate)->count();
+        $totalSales = Sale::whereDate('sale_date', $todayDate)->get();
+
+        //Today Purchase
+        $todayPurchaseItems = PurchaseItem::whereDate('created_at', $todayDate);
+        $todayPurchaseItemsToday = $todayPurchaseItems->sum('quantity');
+        $todayPurchaseToday = Purchase::whereDate('purchse_date', $todayDate)->get();
+        // dd($todayPurchaseToday);
+        $today_grand_total = $todayPurchaseToday->sum('grand_total');
+
+        //Today invoice product
+        $todayInvoiceProductItems = Sale::whereDate('sale_date', $todayDate);
+        $todayInvoiceProductTotal = $todayInvoiceProductItems->sum('quantity');
+        $todayInvoiceProductAmount = $todayInvoiceProductItems->sum('final_receivable');
+        //today invoice amount
+        $totalInvoiceTodaySum = Sale::whereDate('sale_date', $todayDate);
+        $todayInvoiceAmount = $totalInvoiceTodaySum->sum('receivable');
+        $todayProfit = $totalInvoiceTodaySum->sum('profit');
+        //today expenses
+        $todayExpenseDate = Expense::whereDate('expense_date', $todayDate);
+        $todayExpenseAmount = $todayExpenseDate->sum('amount');
+        //Today Customer
+        $todayCustomer = Customer::whereDate('created_at', $todayDate);
+        //Sale Profit
+        $saleProfitAmount = $totalInvoiceTodaySum->sum('profit');
+
+        $expense = Expense::whereDate('expense_date', $todayDate)->get();
+        $expenseAmount = $expense->sum('amount');
+        $salary = EmployeeSalary::whereDate('date', $todayDate)->get();
+        $totalSalary = $salary->sum('debit');
+        return view('pos.report.today.today', compact('todayInvoiceAmount', 'totalSales', 'today_grand_total', 'todayExpenseAmount', 'totalSalary', 'expense'));
     }
     // summary report function
     public function summaryReport()
@@ -264,6 +301,21 @@ class ReportController extends Controller
         $accountTransaction = AccountTransaction::latest()->get();
         return view('pos.report.account_transaction.account_transaction_ledger', compact('accountTransaction'));
     }
+<<<<<<< HEAD
+    public function AccountTransactionFilter(Request $request){
+       // dd($request->all());
+       $accountTransaction = AccountTransaction::when($request->accountId, function ($query) use ($request) {
+        return $query->where('account_id', $request->accountId);
+    })
+    ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+        return $query->whereBetween('created_at', [$request->startDate, $request->endDate]);
+    })
+    ->get();
+    return view('pos.report.account_transaction.account_transaction_table',compact('accountTransaction'))->render();
+    }
+    //////////////////Expense Report Method //////////////
+    public function ExpenseReport(){
+=======
     public function AccountTransactionFilter(Request $request)
     {
         // dd($request->all());
@@ -279,6 +331,7 @@ class ReportController extends Controller
     //////////////////Rexpense Report MEthod //////////////
     public function ExpenseReport()
     {
+>>>>>>> c26f722ee0f6419bc6d927004b9bf6db08995a9c
         $expense = Expense::latest()->get();
         return view('pos.report.expense.expense', compact('expense'));
     } //

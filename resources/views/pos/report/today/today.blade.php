@@ -138,7 +138,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <h3 class="mb-2">
-                                        ৳ {{ $saleAmount }}
+                                        ৳ {{ $todayInvoiceAmount }}
                                     </h3>
                                     <div class="d-flex align-items-baseline">
                                         <p class="text-success">
@@ -183,7 +183,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <h3 class="mb-2">
-                                        ৳ {{ $purchaseAmount }}
+                                        ৳ {{ $today_grand_total }}
                                     </h3>
                                     <div class="d-flex align-items-baseline">
                                         <p class="text-danger">
@@ -228,7 +228,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <h3 class="mb-2">
-                                        ৳ {{ $expenseAmount }}
+                                        ৳ {{ $todayExpenseAmount }}
                                     </h3>
                                     <div class="d-flex align-items-baseline">
                                         <p class="text-success">
@@ -299,7 +299,7 @@
 
     <div class="row">
         <!--//Top Sale Product Start// --->
-        <div class="col-md-6 grid-margin stretch-card">
+        {{-- <div class="col-md-6 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title text-info">Top Sale Product</h6>
@@ -309,23 +309,33 @@
                             <thead>
                                 <tr>
                                     <th>SN#</th>
+                                    <th>Invoice No.</th>
                                     <th>Product Name</th>
-                                    <th>Quantity</th>
-                                    <th>No Of Sales</th>
+                                    <th>Sell amount</th>
+                                    <th>due</th>
                                     <th>Sale Amount</th>
                                 </tr>
                             </thead>
+
                             <tbody class="showData">
-                                @if ($products->count() > 0)
+                                @if ($totalSales->count() > 0)
+
+
                                     @php
                                         $num = 0;
                                     @endphp
-                                    <?php
-                                    $totalSaleAmount = 0;
-                                    $totalQty = 0;
-                                    $totalNoSale = 0;
-                                    ?>
-                                    @foreach ($products as $key => $productItem)
+
+                                    @foreach ($totalSales as $totalSale)
+                                        @php
+                                                $sellDetails = $totalSale->saleItem;
+                                            @endphp
+
+                                            @foreach ($sellDetails as $sellDetail)
+
+                                            @endforeach
+                                        @php
+                                            $selling = $sales->saleItem;
+                                        @endphp
                                         <tr>
                                             <td>{{ $num++ }}</td>
                                             <td>{{ $productItem->name ?? '' }}</td>
@@ -378,7 +388,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="col-md-6 grid-margin stretch-card">
             <div class="card">
@@ -396,7 +406,9 @@
                                 </tr>
                             </thead>
                             <tbody class="showData">
+                                @dd($expense);
                                 @if ($expense->count() > 0)
+                                {{-- @dd($expense); --}}
                                     @php
                                         $num = 0;
                                     @endphp

@@ -42,8 +42,7 @@
                                                     alt="product image">
                                             </td>
                                             <td>{{ $product->name ?? '' }}</td>
-                                            <td>{!!DNS1D::getBarcodeHTML("$product->barcode",'PHARMA')!!}
-                                            P - {{$product->barcode}}</td>
+                                            <td>{{$product->barcode}}</td>
                                             <td>{{ $product->category->name ?? '' }}</td>
                                             <td>{{ $product->brand->name ?? '' }}</td>
                                             <td>{{ $product->price ?? 0 }}</td>
@@ -60,7 +59,7 @@
                                                     <i data-feather="trash-2"></i>
                                                 </a>
                                                 <a target="_blank" href="{{ route('product.barcode', $product->id) }}"
-                                                    class="btn  btn-icon">
+                                                    class="btn btn-info btn-icon">
                                                     <i class="fa-solid fa-barcode"></i>
                                                 </a>
                                                 {{-- <a href="#"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$product->id}}" class="input-text btn border-dark">

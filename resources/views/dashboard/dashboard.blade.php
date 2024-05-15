@@ -807,7 +807,7 @@
 
 
     {{-- /// pie chart start /// --}}
-    {{-- <div class="row">
+    <div class="row">
         <div class="col-xl-6 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -915,7 +915,7 @@
             var chartAreaBounds = chart.w.globals.dom.baseEl.querySelector('.apexcharts-inner')
                 .getBoundingClientRect();
         });
-    </script> --}}
+    </script>
     {{-- /// pie chart end /// --}}
     {{-- //////Start Total Summary /////// --}}
     <div class="row">

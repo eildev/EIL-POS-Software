@@ -2,7 +2,11 @@
     @foreach ($sales as $index => $data)
         <tr>
             <td class="id">{{ $index + 1 }}</td>
-            <td>#{{ $data->invoice_number ?? 0 }}</td>
+            <td>
+                <a href="{{ route('sale.invoice', $data->id) }}">
+                    #{{ $data->invoice_number ?? 0 }}
+                </a>
+            </td>
             <td>{{ $data->customer->name ?? '' }}</td>
             <td>
                 <ul>

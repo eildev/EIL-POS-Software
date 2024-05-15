@@ -80,7 +80,7 @@ class ReportController extends Controller
         $sellProfit = $sale->sum('profit');
         $salary = EmployeeSalary::where('branch_id', Auth::user()->branch_id)->get();
         $totalSalary = $salary->sum('debit');
-        return view('pos.report.summary.summary', compact('saleAmount', 'purchaseAmount', 'expenseAmount', 'sellProfit', 'totalSalary', 'products','expense','supplier','customer'));
+        return view('pos.report.summary.summary', compact('saleAmount', 'purchaseAmount', 'expenseAmount', 'sellProfit', 'totalSalary', 'products', 'expense', 'supplier', 'customer'));
     }
     // customer due report function
     public function customerDue()
@@ -90,8 +90,26 @@ class ReportController extends Controller
             ->get();
         return view('pos.report.customer.customer_due', compact('customer'));
     }
-    function damageReportPrint($data){
-        return view('pos.report.damages.print', compact('data'));
+    function damageReportPrint(Request $request)
+    {
+        // dd($request->all());
+
+        $damageItem = Damage::when($request->startdatepurches && $request->enddatepurches, function ($query) use ($request) {
+            return $query->whereBetween('date', [$request->startdatepurches, $request->enddatepurches]);
+        })
+            ->when($request->filterProduct, function ($query) use ($request) {
+                return $query->where('product_id', $request->filterProduct);
+            })
+            ->when($request->branchId, function ($query) use ($request) {
+                return $query->where('branch_id', $request->branchId);
+            })
+            ->get();
+
+        if ($damageItem->isEmpty()) {
+            $damageItem = Damage::all();
+        }
+
+        return view('pos.report.damages.print', compact('damageItem'));
     }
     // customer due filter function
     public function customerDueFilter(Request $request)
@@ -197,12 +215,12 @@ class ReportController extends Controller
         $damageItem = Damage::when($request->startDatePurches && $request->endDatePurches, function ($query) use ($request) {
             return $query->whereBetween('date', [$request->startDatePurches, $request->endDatePurches]);
         })
-        ->when($request->filterProduct !="Select Product", function ($query) use ($request) {
-            return $query->where('product_id',$request->filterProduct);
-        })
-        ->when($request->branchId !="Select Branch", function ($query) use ($request) {
-            return $query->where('branch_id',$request->branchId);
-        })
+            ->when($request->filterProduct != "Select Product", function ($query) use ($request) {
+                return $query->where('product_id', $request->filterProduct);
+            })
+            ->when($request->branchId != "Select Branch", function ($query) use ($request) {
+                return $query->where('branch_id', $request->branchId);
+            })
             ->get();
         return view('pos.report.damages.damage-filter-table', compact('damageItem'))->render();
     } //
@@ -275,13 +293,15 @@ class ReportController extends Controller
     {
         $products = Product::where('branch_id', Auth::user()->branch_id)->get();
         return view('pos.report.products.stock', compact('products'));
-    }//
+    } //
 
- ////////////////Account Transaction Method  //////////////
-    public function AccountTransactionView(){
+    ////////////////Account Transaction Method  //////////////
+    public function AccountTransactionView()
+    {
         $accountTransaction = AccountTransaction::latest()->get();
-        return view('pos.report.account_transaction.account_transaction_ledger',compact('accountTransaction'));
+        return view('pos.report.account_transaction.account_transaction_ledger', compact('accountTransaction'));
     }
+<<<<<<< HEAD
     public function AccountTransactionFilter(Request $request){
        // dd($request->all());
        $accountTransaction = AccountTransaction::when($request->accountId, function ($query) use ($request) {
@@ -295,30 +315,50 @@ class ReportController extends Controller
     }
     //////////////////Expense Report Method //////////////
     public function ExpenseReport(){
+=======
+    public function AccountTransactionFilter(Request $request)
+    {
+        // dd($request->all());
+        $accountTransaction = AccountTransaction::when($request->accountId, function ($query) use ($request) {
+            return $query->where('account_id', $request->accountId);
+        })
+            ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+                return $query->whereBetween('created_at', [$request->startDate, $request->endDate]);
+            })
+            ->get();
+        return view('pos.report.account_transaction.account_transaction_table', compact('accountTransaction'))->render();
+    }
+    //////////////////Rexpense Report MEthod //////////////
+    public function ExpenseReport()
+    {
+>>>>>>> c26f722ee0f6419bc6d927004b9bf6db08995a9c
         $expense = Expense::latest()->get();
-        return view('pos.report.expense.expense',compact('expense'));
-    }//
-    public function ExpenseReportFilter(Request $request){
+        return view('pos.report.expense.expense', compact('expense'));
+    } //
+    public function ExpenseReportFilter(Request $request)
+    {
         //dd($request->all());
-       $expense = Expense::when($request->startDate && $request->endDate, function ($query) use ($request) {
-        return $query->whereBetween('expense_date', [$request->startDate, $request->endDate]);
-    })->get();
-    return view('pos.report.expense.expense-table', compact('expense'))->render();
+        $expense = Expense::when($request->startDate && $request->endDate, function ($query) use ($request) {
+            return $query->whereBetween('expense_date', [$request->startDate, $request->endDate]);
+        })->get();
+        return view('pos.report.expense.expense-table', compact('expense'))->render();
     }
     //////////////////Employee Salary Report MEthod //////////////
-    public function EmployeeSalaryReport(){
+    public function EmployeeSalaryReport()
+    {
         $employeeSalary = EmployeeSalary::all();
-        return view('pos.report.employee_salary.employee_salary',compact('employeeSalary'));
-    }//
-    public function EmployeeSalaryReportFilter(Request $request){
+        return view('pos.report.employee_salary.employee_salary', compact('employeeSalary'));
+    } //
+    public function EmployeeSalaryReportFilter(Request $request)
+    {
 
-    $employeeSalary = EmployeeSalary::when($request->salaryId, function ($query) use ($request) {
-        return $query->where('employee_id', $request->salaryId);
-    })
-    ->when($request->startDate && $request->endDate, function ($query) use ($request) {
-        return $query->whereBetween('date', [$request->startDate, $request->endDate]);
-    })
-    ->get();
-    return view('pos.report.employee_salary.employee_salary-table', compact('employeeSalary'))->render();
+        $employeeSalary = EmployeeSalary::when($request->salaryId, function ($query) use ($request) {
+            return $query->where('employee_id', $request->salaryId);
+        })
+            ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+                return $query->whereBetween('date', [$request->startDate, $request->endDate]);
+            })
+            ->get();
+        return view('pos.report.employee_salary.employee_salary-table', compact('employeeSalary'))->render();
     }
 }

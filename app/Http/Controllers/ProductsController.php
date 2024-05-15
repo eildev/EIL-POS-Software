@@ -7,7 +7,7 @@ use App\Models\PromotionDetails;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Validation\Rule;
 class ProductsController extends Controller
 {
     public function index()
@@ -24,7 +24,14 @@ class ProductsController extends Controller
             'brand_id' => 'required',
             'price' => 'required:max:7',
             'unit_id' => 'required:max:11',
+            'barcode' => [
+                'required',
+                Rule::unique('products', 'barcode')->where(function ($query) use ($request) {
+                    return $query->where('barcode', $request->barcode);
+                }),
+            ],
         ]);
+
         if ($validator->passes()) {
             $product = new Product;
             $product->name =  $request->name;
@@ -136,13 +143,17 @@ class ProductsController extends Controller
     }
     public function find($id)
     {
+        $status = 'active';
         $product = Product::findOrFail($id);
-        $promotionDetails = PromotionDetails::where('Product_id', $product->id)->latest()->first();
+        $promotionDetails = PromotionDetails::whereHas('promotion', function ($query) use ($status) {
+            return $query->where('status', '=', $status);
+        })->where('promotion_type', 'products')->where('logic', 'like', '%' . $id . "%")->latest()->first();
+        // dd($promotionDetails->promotion);
         if ($promotionDetails) {
             return response()->json([
                 'status' => '200',
                 'data' => $product,
-                'promotion' => $promotionDetails
+                'promotion' => $promotionDetails->promotion,
             ]);
         } else {
             return response()->json([
@@ -150,5 +161,10 @@ class ProductsController extends Controller
                 'data' => $product
             ]);
         }
+    }
+    //
+    public function ProductBarcode($id){
+        $product = Product::findOrFail($id);
+        return view('pos.products.product.product-barcode', compact('product'));
     }
 }

@@ -141,6 +141,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/product/update/{id}', 'update')->name('product.update');
         Route::get('/product/destroy/{id}', 'destroy')->name('product.destroy');
         Route::get('/product/find/{id}', 'find')->name('product.find');
+        Route::get('/product/barcode/{id}', 'ProductBarcode')->name('product.barcode');
     });
     // Product  related route(n)
     Route::controller(EmployeeController::class)->group(function () {
@@ -236,6 +237,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/promotion/details/edit/{id}', 'PromotionDetailsEdit')->name('promotion.details.edit');
         Route::post('/promotion/details/update/{id}', 'PromotionDetailsUpdate')->name('promotion.details.update');
         Route::get('/promotion/details/delete/{id}', 'PromotionDetailsDelete')->name('promotion.details.delete');
+        Route::get('/promotion/product', 'allProduct')->name('promotion.product');
+        Route::get('/promotion/customers', 'allCustomers')->name('promotion.customers');
+        Route::get('/promotion/branch', 'allBranch')->name('promotion.branch');
     });
     // Tax related route(n)
     Route::controller(TaxController::class)->group(function () {
@@ -293,10 +297,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/get/customer', 'getCustomer')->name('get.customer');
         Route::post('/add/customer', 'addCustomer')->name('add.customer');
         Route::get('/sale/invoice/{id}', 'invoice')->name('sale.invoice');
+        Route::get('/sale/print/{id}', 'print')->name('sale.print');
         Route::get('/sale/filter', 'filter')->name('sale.filter');
         Route::get('/sale/find/{id}', 'find')->name('sale.find');
         Route::get('/product/find-qty/{id}', 'findQty')->name('product.find.qty');
         Route::post('/sale/transaction/{id}', 'saleTransaction')->name('sale.transaction');
+        Route::get('/sale/customer/{id}', 'saleCustomer')->name('sale.customer');
+        Route::get('/sale/promotions/{id}', 'salePromotions')->name('sale.promotions');
+        Route::get('/product/barcode/find/{id}', 'findProductWithBarcode')->name('product.barcode.find');
     });
     // Transaction related route(n)
     Route::controller(EmployeeSalaryController::class)->group(function () {
@@ -306,6 +314,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/employee/salary/edit/{id}', 'EmployeeSalaryEdit')->name('employee.salary.edit');
         Route::post('/employee/salary/update/{id}', 'EmployeeSalaryUpdate')->name('employee.salary.update');
         Route::get('/employee/salary/delete/{id}', 'EmployeeSalaryDelete')->name('employee.salary.delete');
+        Route::get('/employee/branch/{branch_id}', 'BranchAjax'); //dependency
+        Route::get('/employee/info/{employee_id}', 'getEmployeeInfo');
         /////////////////Employ Salary Advanced ////////////
         Route::get('/advanced/employee/salary/add', 'EmployeeSalaryAdvancedAdd')->name('advanced.employee.salary.add');
         Route::post('/advanced/employee/salary/store', 'EmployeeSalaryAdvancedStore')->name('advanced.employee.salary.store');
@@ -347,6 +357,7 @@ Route::middleware('auth')->group(function () {
 
 
             Route::get('/report/damage', 'damageReport')->name('damage.report');
+            Route::post('/damage/print', 'damageReportPrint')->name('damage.report.print');
             Route::get('/damage/product/filter', 'DamageProductFilter')->name('damage.product.filter.view');
 
 

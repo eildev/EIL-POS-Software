@@ -4,7 +4,7 @@
 
 <!-- Plugin js for this page -->
 <script src="{{ asset('assets') }}/vendors/flatpickr/flatpickr.min.js"></script>
-<script src="{{ asset('assets') }}/vendors/apexcharts/apexcharts.min.js"></script>
+{{-- <script src="{{ asset('assets') }}/vendors/apexcharts/apexcharts.min.js"></script> --}}
 <script src="{{ asset('assets') }}/vendors/datatables.net/jquery.dataTables.js"></script>
 <script src="{{ asset('assets') }}/vendors/datatables.net-bs5/dataTables.bootstrap5.js"></script>
 <script src="{{ asset('assets') }}/vendors/prismjs/prism.js"></script>
@@ -47,6 +47,7 @@
 <script src="{{ asset('assets') }}/js/flatpickr.js"></script>
 <script src="{{ asset('assets') }}/js/sweet-alert.js"></script>
 <script src="{{ asset('assets') }}/js/tinymce.js"></script>
+<script src="{{ asset('assets') }}/js/apexcharts-dark.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
     @if (Session::has('message'))
@@ -81,4 +82,98 @@
 <script src="{{ asset('assets/js/codedeletesweet.js') }}"></script>
 
 <script src="{{ asset('assets/js/myvalidate.min.js') }}"></script>
+{{-- ///Export/// --}}
+
+<script type="text/javascript" src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
 <!-- End custom js for this page --->
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({
+            columnDefs: [{
+                "defaultContent": "-",
+                "targets": "_all"
+            }],
+            dom: 'Bfrtip',
+            buttons: [{
+                    extend: 'copyHtml5',
+                    text: 'Copy',
+                    exportOptions: {
+                        header: true,
+                        columns: ':visible'
+                    },
+                    customize: function(data) {
+                        return 'Here is report list\n\n' + data + '\n\n';
+                    }
+                },
+                {
+                    extend: 'csvHtml5',
+                    text: 'CSV',
+                    exportOptions: {
+                        header: true,
+                        columns: ':visible'
+                    },
+                    customize: function(data) {
+                        return '{{ $header }}\n {{ $phone ?? '+880.....' }}\n {{ $email }}\n{{ $address }}\n\n' +
+                            data + '\n\n';
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: 'Excel',
+                    exportOptions: {
+                        header: true,
+                        columns: ':visible'
+                    },
+                    customize: function(xlsx) {
+                        return '{{ $header ?? '' }}\n {{ $phone ?? '+880.....' }}\n {{ $email ?? '' }}\n{{ $address ?? '' }}\n\n' +
+                            xlsx + '\n\n';
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: 'PDF',
+                    exportOptions: {
+                        header: true,
+                        columns: ':visible'
+                    },
+                    customize: function(doc) {
+                        doc.content.unshift({
+                            text: '{{ $header ?? '' }}\n {{ $phone ?? '+880.....' }}\n {{ $email ?? '' }}\n{{ $address ?? '' }}',
+                            fontSize: 14,
+                            alignment: 'center',
+                            margin: [0, 0, 0, 12]
+                        });
+                        doc.content.push({
+                            text: 'Thank you for using our service!',
+                            fontSize: 14,
+                            alignment: 'center',
+                            margin: [0, 12, 0, 0]
+                        });
+                        return doc;
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: 'Print',
+                    exportOptions: {
+                        header: true,
+                        columns: ':visible'
+                    },
+                    customize: function(win) {
+                        $(win.document.body).prepend(
+                            '<h4>{{ $header }}</br>{{ $phone ?? '+880....' }}</br>Email:{{ $email }}</br>Address:{{ $address }}</h4>'
+                        );
+
+                    }
+                }
+            ]
+        });
+    });
+</script>

@@ -18,13 +18,16 @@
                             <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Product Name <span
                                         class="text-danger">*</span></label>
-                                <input class="form-control name" name="name" type="text" onkeyup="errorRemove(this);"
+                                <input class="form-control name" onkeyup="generateCode(this);"  name="name" type="text" onkeyup="errorRemove(this);"
                                     onblur="errorRemove(this);">
                                 <span class="text-danger name_error"></span>
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Product Code</label>
-                                <input class="form-control" name="barcode" type="number">
+                                <input class="form-control @error('barcode') is-invalid @enderror" name="barcode" type="number"  value="{{ old('barcode') }}">
+                                @error('barcode')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                 @enderror
                             </div>
                             <div class="mb-3 col-md-4">
                                 @php
@@ -162,7 +165,7 @@
 
 
     <script>
-        // remove error 
+        // remove error
         function errorRemove(element) {
             if (element.value != '') {
                 $(element).siblings('span').hide();
@@ -192,7 +195,7 @@
                                 // $('.subcategory_id').size_id();
                                 // console.log(res);
 
-                                // show subcategory 
+                                // show subcategory
                                 if (res.data.length > 0) {
 
                                     // console.log(res.data)
@@ -209,7 +212,7 @@
                                         <option selected disable>Please add Subcategory</option>`)
                                 }
 
-                                // show Size 
+                                // show Size
                                 if (res.size.length > 0) {
                                     // console.log(res.size);
                                     $('.size_id').html(
@@ -232,7 +235,7 @@
             })
 
 
-            // product save 
+            // product save
             $('.save_product').click(function(e) {
                 e.preventDefault();
                 // alert('ok')
@@ -253,13 +256,7 @@
                             // console.log(res);
                             $('.productForm')[0].reset();
 
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: res.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            toastr.success(res.message);
                             window.location.href = "{{ route('product.view') }}";
                         } else {
                             // console.log(res.error);
@@ -288,5 +285,18 @@
                 });
             })
         });
+
+        function generateCode(input) {
+        var nameInput = input.value.trim();
+        if (nameInput !== "") {
+            var codeInput = input.parentElement.nextElementSibling.querySelector('input[name="barcode"]');
+            var randomNumber = Math.floor(Math.random() * 1000000) + 20; // Generate a random number between 1 and 1000000
+            var generatedCode = nameInput.replace(/\s+/g, '').toUpperCase() + randomNumber;
+            var generatedNumber = randomNumber; // Extract the generated number
+
+            codeInput.value = generatedNumber; // Set the generated number directly in the input field
+        }
+    }
+
     </script>
 @endsection

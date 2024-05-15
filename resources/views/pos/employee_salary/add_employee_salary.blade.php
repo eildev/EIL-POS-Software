@@ -25,7 +25,7 @@
 					<div class="col-sm-6">
 						<div class="mb-3 form-valid-groups">
 							<label class="form-label">Select Branch <span class="text-danger">*</span></label>
-                            <select class="form-select mb-3"  name="branch_id">
+                            <select class="form-select mb-3 js-example-basic-single"  name="branch_id">
                                 <option selected="" value="">Select Branch</option>
                                 @foreach ($branch as $branchs)
                                 <option value="{{$branchs ->id}}">{{$branchs->name}}</option>
@@ -36,7 +36,7 @@
 					<div class="col-sm-6">
 						<div class="mb-3 form-valid-groups">
 							<label class="form-label">Select Employee Name<span class="text-danger">*</span></label>
-							<select class="form-select mb-3" name="employee_id">
+							<select class="form-select mb-3 js-example-basic-single" name="employee_id">
                                 {{-- <option selected="" disabled>Select Employee Name</option> --}}
                                 <option ></option>
 
@@ -160,7 +160,6 @@
                         $('#employeeSalary').text( "*");
                         $('#advancedSalary').text( "Note: Avanced Amount: ৳ " + 0 );
                     }
-
                 },
             });
         }

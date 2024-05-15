@@ -9,6 +9,7 @@ use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Models\Supplier;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ class PurchaseController extends Controller
     }
     public function store(Request $request)
     {
-        // dd($request->all());
+        dd($request);
         $validator = Validator::make($request->all(), [
             'supplier_id' => 'required',
             'products' => 'required',
@@ -49,6 +50,11 @@ class PurchaseController extends Controller
             $purchase->carrying_cost = $request->carrying_cost;
             $purchase->payment_method = $request->payment_method;
             $purchase->note = $request->note;
+            if ($request->document) {
+                $docName = rand() . '.' . $request->document->getClientOriginalExtension();
+                $request->document->move(public_path('uploads/purchase/'), $docName);
+                $purchase->document = $docName;
+            }
             $purchase->save();
 
             // get purchaseId 
@@ -87,6 +93,7 @@ class PurchaseController extends Controller
             $accountTransaction->account_id =  $request->payment_method;
             $accountTransaction->debit = $request->paid;
             // $accountTransaction->balance = $accountTransaction->balance - $request->paid;
+            $accountTransaction->created_at = Carbon::now();
             $accountTransaction->save();
 
             // get Transaction Model 

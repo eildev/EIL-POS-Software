@@ -6,6 +6,8 @@ use App\Models\AccountTransaction;
 use App\Models\ActualPayment;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Promotion;
+use App\Models\PromotionDetails;
 use App\Models\Sale;
 use App\Models\SaleItem;
 use App\Models\Transaction;
@@ -104,6 +106,7 @@ class SaleController extends Controller
             $sale->payment_method = $request->payment_method;
             $sale->profit = $request->change_amount - $productCost;
             $sale->note = $request->note;
+            $sale->created_at = Carbon::now();
             $sale->save();
 
 
@@ -118,7 +121,8 @@ class SaleController extends Controller
                 $items->product_id = $product['product_id']; // Access 'product_id' as an array key
                 $items->rate = $product['unit_price']; // Access 'unit_price' as an array key
                 $items->qty = $product['quantity'];
-                $items->sub_total = $product['unit_price'] * $product['quantity'];
+                $items->discount = $product['discount'];
+                $items->sub_total = $product['total_price'];
                 $items->total_purchase_cost = $items2->cost * $product['quantity'];
                 $items->save();
 
@@ -196,6 +200,11 @@ class SaleController extends Controller
     {
         $sale = Sale::findOrFail($id);
         return view('pos.sale.invoice', compact('sale'));
+    }
+    public function print($id)
+    {
+        $sale = Sale::findOrFail($id);
+        return view('pos.sale.pos-print', compact('sale'));
     }
 
     public function view()
@@ -332,5 +341,71 @@ class SaleController extends Controller
             'status' => 200,
             'product' => $product
         ]);
+    }
+
+
+    public function saleCustomer($id)
+    {
+
+        $status = 'active';
+        $customer = Customer::findOrFail($id);
+        $promotionDetails = PromotionDetails::whereHas('promotion', function ($query) use ($status) {
+            return $query->where('status', '=', $status);
+        })->where('promotion_type', 'customers')->where('logic', 'like', '%' . $id . "%")->get();
+        $promotions = [];
+        foreach ($promotionDetails as $promo) {
+            $promotions[] = $promo->promotion;
+        }
+        // dd($promotion);
+        if ($promotions) {
+            return response()->json([
+                'status' => '200',
+                'data' => $customer,
+                'promotions' => $promotions,
+            ]);
+        } else {
+            return response()->json([
+                'status' => '200',
+                'data' => $customer
+            ]);
+        }
+    }
+
+    public function salePromotions($id)
+    {
+        $promotions = Promotion::findOrFail($id);
+        return response()->json([
+            'status' => '200',
+            'promotions' => $promotions
+        ]);
+    }
+    public function findProductWithBarcode($id)
+    {
+        $status = 'active';
+        $products = Product::where('branch_id', Auth::user()->branch_id)->where('stock', '>', 0)->where('barcode', $id)->latest()->first();
+        // dd($products);
+        if ($products) {
+            $promotionDetails = PromotionDetails::whereHas('promotion', function ($query) use ($status) {
+                return $query->where('status', '=', $status);
+            })->where('promotion_type', 'products')->where('logic', 'like', '%' . $products->id . "%")->latest()->first();
+
+            if ($promotionDetails) {
+                return response()->json([
+                    'status' => '200',
+                    'data' => $products,
+                    'promotion' => $promotionDetails->promotion,
+                ]);
+            } else {
+                return response()->json([
+                    'status' => '200',
+                    'data' => $products
+                ]);
+            }
+        } else {
+            return response()->json([
+                'status' => '500',
+                'error' => 'Not Enough Stock'
+            ]);
+        }
     }
 }

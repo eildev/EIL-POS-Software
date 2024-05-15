@@ -1,6 +1,5 @@
 @extends('master')
 @section('admin')
-    <div>
         <div class="btn-print">
             <button class="btn btn-info text-center" onClick="window.print();">Print</button> </br></br>
         </div>
@@ -13,7 +12,7 @@
                             <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($product->barcode, 'C39', 1, 30) }}"
                                 alt="Barcode"> </br>
                             {{-- {!! DNS1D::getBarcodeHTML($product->barcode, 'PHARMA') !!}</span><br> --}}
-                            <span style="">{{ $product->barcode }}</span><br>
+                            <span style="">{{ $product->barcode ?? '' }}</span><br>
                             <span>{{ $product->name ?? '' }} </span><br>
                             <span class="bold">{{ $product->price ?? 0 }}TK</span>
                     </div>
@@ -21,7 +20,6 @@
             @endfor
         </div>
     @endsection
-</div>
 
 <style>
     .barcode-container {

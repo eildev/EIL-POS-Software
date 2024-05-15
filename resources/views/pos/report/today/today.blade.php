@@ -406,7 +406,7 @@
                                 </tr>
                             </thead>
                             <tbody class="showData">
-                                @dd($expense);
+                                {{-- @dd($expense); --}}
                                 @if ($expense->count() > 0)
                                 {{-- @dd($expense); --}}
                                     @php

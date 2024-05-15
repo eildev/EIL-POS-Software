@@ -109,6 +109,12 @@ class ExpenseController extends Controller
     {
 
         $expense = Expense::findOrFail($id);
+        if ($expense->image) {
+            $previousImagePath = public_path('uploads/expense/') . $expense->image;
+            if (file_exists($previousImagePath)) {
+                unlink($previousImagePath);
+            }
+        }
         $expense->delete();
         $notification = [
             'message' => 'Expense Deleted Successfully',

@@ -346,4 +346,11 @@ class ReportController extends Controller
             ->get();
         return view('pos.report.employee_salary.employee_salary-table', compact('employeeSalary'))->render();
     }
+    ////////Product Info Report /////
+    public function ProductInfoReport()
+    {
+        $productInfo = Product::all();
+        return view('pos.report.products.product_info_report', compact('productInfo'));
+    } //
+
 }

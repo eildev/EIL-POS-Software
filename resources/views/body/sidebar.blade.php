@@ -240,6 +240,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('product.info.report') }}" role="button"
+                                aria-controls="general-pages">
+                                Product Info Report
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('summary.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Summary Report

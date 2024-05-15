@@ -301,21 +301,7 @@ class ReportController extends Controller
         $accountTransaction = AccountTransaction::latest()->get();
         return view('pos.report.account_transaction.account_transaction_ledger', compact('accountTransaction'));
     }
-<<<<<<< HEAD
-    public function AccountTransactionFilter(Request $request){
-       // dd($request->all());
-       $accountTransaction = AccountTransaction::when($request->accountId, function ($query) use ($request) {
-        return $query->where('account_id', $request->accountId);
-    })
-    ->when($request->startDate && $request->endDate, function ($query) use ($request) {
-        return $query->whereBetween('created_at', [$request->startDate, $request->endDate]);
-    })
-    ->get();
-    return view('pos.report.account_transaction.account_transaction_table',compact('accountTransaction'))->render();
-    }
-    //////////////////Expense Report Method //////////////
-    public function ExpenseReport(){
-=======
+
     public function AccountTransactionFilter(Request $request)
     {
         // dd($request->all());
@@ -331,7 +317,6 @@ class ReportController extends Controller
     //////////////////Rexpense Report MEthod //////////////
     public function ExpenseReport()
     {
->>>>>>> c26f722ee0f6419bc6d927004b9bf6db08995a9c
         $expense = Expense::latest()->get();
         return view('pos.report.expense.expense', compact('expense'));
     } //

@@ -6,6 +6,10 @@ $(function() {
 
   $(function() {
     $('#dataTableExample').DataTable({
+        columnDefs: [{
+            "defaultContent": "-",
+            "targets": "_all"
+        }],
       "aLengthMenu": [
         [10, 30, 50, -1],
         [10, 30, 50, "All"]
@@ -16,6 +20,7 @@ $(function() {
       }
     });
     $('#dataTableExample').each(function() {
+
       var datatable = $(this);
       // SEARCH - Add the placeholder for Search and Turn this into in-line form control
       var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
@@ -34,6 +39,10 @@ $(function() {
   'use strict';
   $(function() {
     $('#dataTableExample1').DataTable({
+        columnDefs: [{
+            "defaultContent": "-",
+            "targets": "_all"
+        }],
       "aLengthMenu": [
         [10, 30, 50, -1],
         [10, 30, 50, "All"]
@@ -61,6 +70,10 @@ $(function() {
     'use strict';
     $(function() {
       $('#dataTableExample2').DataTable({
+        columnDefs: [{
+            "defaultContent": "-",
+            "targets": "_all"
+        }],
         "aLengthMenu": [
           [10, 30, 50, -1],
           [10, 30, 50, "All"]
@@ -88,6 +101,10 @@ $(function() {
     'use strict';
     $(function() {
       $('#dataTableExample4').DataTable({
+        columnDefs: [{
+            "defaultContent": "-",
+            "targets": "_all"
+        }],
         "aLengthMenu": [
           [10, 30, 50, -1],
           [10, 30, 50, "All"]

@@ -54,7 +54,7 @@
                             <div class="col-sm-6">
                                 <div class="mb-3 form-valid-groups">
                                     <label class="form-label">Splender<span class="text-danger">*</span></label>
-                                    <input type="number" name="spender" value="{{ $expense->spender }}"
+                                    <input type="text" name="spender" value="{{ $expense->spender }}"
                                         class="form-control" placeholder="Enter Amount">
                                 </div>
                             </div><!-- Col -->
@@ -82,12 +82,29 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Expense Image</h6>
+                                        <div style="height:150px;position:relative">
+                                            <button class="btn btn-info edit_upload_img"
+                                                style="position: absolute;top:50%;left:50%;transform:translate(-50%,-50%)">Browse</button>
+                                            <img class="img-fluid showEditImage"
+                                            src="{{ $expense->image ? asset('uploads/expense/' . $expense->image) : asset('dummy/image.jpg') }}"
+                                                style="height:100%; object-fit:cover">
+                                        </div>
+                                        <input hidden type="file" class="edit_image" name="image" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
                                 <div class="mb-3 form-valid-groups">
                                     <label class="form-label">Note<span class="text-danger">*</span></label>
                                     <textarea name="note" class="form-control" id="" cols="10" rows="5">{{ $expense->note }}</textarea>
                                 </div>
                             </div>
                         </div><!-- Row -->
+                        <br>
                         <div>
                             <input type="submit" class="btn btn-primary submit" value="Update">
                         </div>
@@ -196,5 +213,25 @@
                 }
             });
         })
+
+
+
+$(document).ready(function(){
+    const edit_upload_img = document.querySelector('.edit_upload_img');
+            const edit_image = document.querySelector('.edit_image');
+            edit_upload_img.addEventListener('click', function(e) {
+                e.preventDefault();
+                edit_image.click();
+
+                edit_image.addEventListener('change', function(e) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelector('.showEditImage').src = e.target.result;
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                });
+            });
+});
+
     </script>
 @endsection

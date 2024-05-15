@@ -52,6 +52,11 @@ class ExpenseController extends Controller
         $expense->spender =  $request->spender;
         $expense->bank_account_id =  $request->bank_account_id;
         $expense->note =  $request->note;
+        if ($request->image) {
+            $imageName = rand() . '.' . $request->image->extension();
+            $request->image->move(public_path('uploads/expense/'), $imageName);
+            $expense->image = $imageName;
+        }
         $expense->save();
         $notification = [
             'message' => 'Expense Added Successfully',
@@ -88,6 +93,11 @@ class ExpenseController extends Controller
         $expense->spender =  $request->spender;
         $expense->bank_account_id =  $request->bank_account_id;
         $expense->note =  $request->note;
+        if ($request->image) {
+            $imageName = rand() . '.' . $request->image->extension();
+            $request->image->move(public_path('uploads/expense/'), $imageName);
+            $expense->image = $imageName;
+        }
         $expense->save();
         $notification = [
             'message' => 'Expense Updated Successfully',
@@ -99,6 +109,12 @@ class ExpenseController extends Controller
     {
 
         $expense = Expense::findOrFail($id);
+        if ($expense->image) {
+            $previousImagePath = public_path('uploads/expense/') . $expense->image;
+            if (file_exists($previousImagePath)) {
+                unlink($previousImagePath);
+            }
+        }
         $expense->delete();
         $notification = [
             'message' => 'Expense Deleted Successfully',

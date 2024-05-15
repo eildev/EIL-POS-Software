@@ -109,7 +109,7 @@
                                                     <div class="mb-3 form-valid-groups">
                                                         <label class="form-label">Splender<span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="number" name="spender"
+                                                        <input type="text" name="spender"
                                                             class="form-control @error('spender') is-invalid @enderror"
                                                             value="{{ old('spender') }}" placeholder="Enter Splender">
                                                     </div>
@@ -168,6 +168,16 @@
                                                         </select>
                                                         <span class="text-danger related_sign_error"></span>
                                                     </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <h6 class="card-title">Expense Image</h6>
+                                                                <p class="mb-3 text-warning">Note: <span class="fst-italic">Image not
+                                                                    required.</span></p>
+                                                                <input type="file"  name="image" id="myDropify" />
+                                                            </div>
+                                                        </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="mb-3 form-valid-groups">

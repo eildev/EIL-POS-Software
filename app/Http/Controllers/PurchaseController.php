@@ -23,7 +23,7 @@ class PurchaseController extends Controller
     }
     public function store(Request $request)
     {
-        // dd($request->all());
+        dd($request);
         $validator = Validator::make($request->all(), [
             'supplier_id' => 'required',
             'products' => 'required',
@@ -50,6 +50,11 @@ class PurchaseController extends Controller
             $purchase->carrying_cost = $request->carrying_cost;
             $purchase->payment_method = $request->payment_method;
             $purchase->note = $request->note;
+            if ($request->document) {
+                $docName = rand() . '.' . $request->document->getClientOriginalExtension();
+                $request->document->move(public_path('uploads/purchase/'), $docName);
+                $purchase->document = $docName;
+            }
             $purchase->save();
 
             // get purchaseId 

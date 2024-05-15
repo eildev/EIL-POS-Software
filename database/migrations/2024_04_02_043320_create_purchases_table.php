@@ -30,6 +30,7 @@ return new class extends Migration
             $table->decimal('carrying_cost', 10, 2)->default(0);
             $table->integer('payment_method');
             $table->string('note')->nullable();
+            $table->string('document')->nullable();
             $table->timestamps();
         });
     }

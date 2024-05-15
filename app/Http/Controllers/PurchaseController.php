@@ -23,7 +23,20 @@ class PurchaseController extends Controller
     }
     public function store(Request $request)
     {
-        dd($request);
+
+        for($i = 0; count($request->product_name) > 0; $i++) {
+            $items = new PurchaseItem;
+            // $items->purchase_id = $purchaseId;
+            $items->product_id = $request->product_id[$i]; // Access 'product_id' as an array key
+            $items->unit_price = $request->unit_price[$i]; // Access 'unit_price' as an array key
+            $items->quantity = $request->quantity[$i];
+            $items->total_price = $request->unit_price[$i] * $request->quantity[$i];
+            $items->save();
+
+            $items2 = Product::findOrFail($product['product_id']);
+            $items2->stock = $items2->stock + $product['quantity'];
+            $items2->save();
+        }
         $validator = Validator::make($request->all(), [
             'supplier_id' => 'required',
             'products' => 'required',
@@ -33,7 +46,7 @@ class PurchaseController extends Controller
 
 
         if ($validator->passes()) {
-            // purchase table Crud 
+            // purchase table Crud
             $purchase = new Purchase;
             $purchase->branch_id = Auth::user()->branch_id;
             $purchase->supplier_id = $request->supplier_id;
@@ -57,10 +70,10 @@ class PurchaseController extends Controller
             }
             $purchase->save();
 
-            // get purchaseId 
+            // get purchaseId
             $purchaseId = $purchase->id;
 
-            // product table CRUD 
+            // product table CRUD
             $products = $request->products;
             foreach ($products as $product) {
                 $items = new PurchaseItem;
@@ -76,7 +89,7 @@ class PurchaseController extends Controller
                 $items2->save();
             }
 
-            // actual payment CRUD 
+            // actual payment CRUD
             $actualPayment = new ActualPayment;
             $actualPayment->branch_id =  Auth::user()->branch_id;
             $actualPayment->payment_type =  'pay';
@@ -86,7 +99,7 @@ class PurchaseController extends Controller
             $actualPayment->date = $request->purchse_date;
             $actualPayment->save();
 
-            // account Transaction crud 
+            // account Transaction crud
             $accountTransaction = new AccountTransaction;
             $accountTransaction->branch_id =  Auth::user()->branch_id;
             $accountTransaction->purpose =  'Deposit';
@@ -96,10 +109,10 @@ class PurchaseController extends Controller
             $accountTransaction->created_at = Carbon::now();
             $accountTransaction->save();
 
-            // get Transaction Model 
+            // get Transaction Model
             $transaction = Transaction::where('supplier_id', $request->supplier_id)->first();
 
-            // Transaction table CRUD 
+            // Transaction table CRUD
             if ($transaction) {
                 // Update existing transaction
                 $transaction->date = $request->purchse_date;
@@ -126,7 +139,7 @@ class PurchaseController extends Controller
 
 
 
-            // Supplier Crud 
+            // Supplier Crud
             $supplier = Supplier::findOrFail($request->supplier_id);
             $supplier->total_receivable = $supplier->total_receivable + $request->grand_total;
             $supplier->total_payable = $supplier->total_payable + $request->paid;
@@ -254,19 +267,19 @@ class PurchaseController extends Controller
             }
         });
         if ($validator->passes()) {
-            // purchase related crud 
+            // purchase related crud
             $purchase = Purchase::findOrFail($id);
             $purchase->paid = $purchase->paid - $request->amount;
             $purchase->due = $purchase->due - $request->amount;
             $purchase->save();
 
-            // supplier related CRUD 
+            // supplier related CRUD
             $supplier = Supplier::findOrFail($purchase->supplier_id);
             $supplier->total_payable = $supplier->total_payable - $request->amount;
             $supplier->wallet_balance = $supplier->wallet_balance - $request->amount;
             $supplier->save();
 
-            // account Transaction crud 
+            // account Transaction crud
             $accountTransaction = new AccountTransaction;
             $accountTransaction->branch_id =  Auth::user()->branch_id;
             $accountTransaction->purpose =  'Deposit';
@@ -274,7 +287,7 @@ class PurchaseController extends Controller
             $accountTransaction->debit = $request->amount;
             $accountTransaction->save();
 
-            // transaction related CRUD 
+            // transaction related CRUD
             $transaction = new Transaction;
             $transaction->date = $request->payment_date;
             $transaction->payment_type = 'pay';

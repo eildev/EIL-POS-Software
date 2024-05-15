@@ -117,11 +117,30 @@
     <div id="purchase-filter-table">
         @include('pos.report.damages.damage-filter-table')
     </div>
+<<<<<<< HEAD
+
+<script>
+            function printIframe() {
+                var iframe = document.getElementById('iframeToPrint');
+                iframe.style.display = "block"; // Make the iframe visible
+
+                iframe.onload = function() {
+                    iframe.contentWindow.focus(); // Focus on the iframe
+                    iframe.contentWindow.print(); // Print its content
+                    iframe.style.display = "none"; // Optionally hide iframe after printing
+                };
+            }
+    $(document).ready(function (){
+
+        document.querySelector('#purchesfilter').addEventListener('click', function(e) {
+            e.preventDefault();
+=======
     <script>
         $(document).ready(function() {
 
             document.querySelector('#purchesfilter').addEventListener('click', function(e) {
                 e.preventDefault();
+>>>>>>> c26f722ee0f6419bc6d927004b9bf6db08995a9c
                 let startDatePurches = document.querySelector('.start-date-purches').value;
                 let endDatePurches = document.querySelector('.end-date-purches').value;
                 //  alert(endDatePurches);
@@ -142,6 +161,59 @@
                     }
                 });
             });
+<<<<<<< HEAD
+    });
+
+    $('.print-btn').click(function() {
+            // Remove the id attribute from the table
+            $('#dataTableExample').removeAttr('id');
+            $('.table-responsive').removeAttr('class');
+            // Trigger the print function
+            window.print();
+
+    });
+</script>
+<style>
+    @media print {
+
+        nav,.nav,
+        .footer {
+            display: none !important;
+        }
+
+        .page-content {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        .btn_group ,.filter_table,.dataTables_length,.pagination,.dataTables_info{
+            display: none !important;
+        }
+        #dataTableExample_filter{
+            display: none !important;
+        }
+        .border{
+            border: none !important;
+        }
+        table,th,td{
+            border: 1px solid black;
+            background: #fff
+        }
+        .actions ,.filter-class{
+            display: none !important;
+        }
+        .card{
+            background: #fff!important;
+            box-shadow: none!important;
+            border: none !important;
+        }
+        .note_short{
+
+        }
+    }
+</style>
+=======
         });
     </script>
+>>>>>>> c26f722ee0f6419bc6d927004b9bf6db08995a9c
 @endsection

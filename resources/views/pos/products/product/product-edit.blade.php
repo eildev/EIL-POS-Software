@@ -183,7 +183,7 @@
 
 
     <script>
-        // remove error 
+        // remove error
         function errorRemove(element) {
             if (element.value != '') {
                 $(element).siblings('span').hide();
@@ -229,7 +229,7 @@
                         success: function(res) {
                             if (res.status == 200) {
                                 // console.log(res.data)
-                                // subcategory data 
+                                // subcategory data
                                 $('select[name="subcategory_id"]').html(
                                     '<option selected disabled>Select a Sub-Category</option>'
                                 );
@@ -241,7 +241,7 @@
                                         .name + '</option>');
                                 })
 
-                                // size selcet 
+                                // size selcet
                                 $('select[name="size_id"]').html(
                                     '<option selected disabled>Select a Size</option>');
                                 $.each(res.size, function(key, item) {

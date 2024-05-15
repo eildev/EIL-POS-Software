@@ -292,7 +292,7 @@
                                     $payments = App\Models\Bank::get();
                                 @endphp
                                 <select class="form-select payment_method" data-width="100%" onclick="errorRemove(this);"
-                                    onblur="errorRemove(this);">
+                                    onblur="errorRemove(this);" name="payment_method">
                                     @if ($payments->count() > 0)
                                         <option selected disabled>Select Payment Method</option>
                                         @foreach ($payments as $payemnt)
@@ -341,8 +341,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary purchase_btn"><i
-                                    class="fa-solid fa-cart-shopping"></i>
+                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i>
                                 Purchase</button>
                         </div>
 
@@ -355,7 +354,7 @@
 
 
     <script>
-        // error remove 
+        // error remove
         function errorRemove(element) {
             if (element.value != '') {
                 $(element).siblings('span').hide();
@@ -379,7 +378,7 @@
             //     getTodayDate();
 
 
-            // show error 
+            // show error
             function showError(name, message) {
                 $(name).css('border-color', 'red');
                 $(name).focus();
@@ -474,7 +473,7 @@
                 });
             }
 
-            // select product 
+            // select product
             $('.product_select').change(function() {
                 let id = $(this).val();
                 let supplier = $('.select-supplier').val();
@@ -599,12 +598,12 @@
 
 
 
-            // discount 
+            // discount
             $('.promotion_id').change(function() {
                 calculateGrandTotal();
             })
 
-            // purchase Delete 
+            // purchase Delete
             $(document).on('click', '.purchase_delete', function(e) {
                 // alert('ok');
                 let id = $(this).attr('data-id');
@@ -626,7 +625,7 @@
 
             })
 
-            // paid amount 
+            // paid amount
             $('.paid_btn').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -645,7 +644,7 @@
                 $('.total_payable_amount').text(value);
             })
 
-            // due 
+            // due
             function totalDue() {
                 let pay = $('.total_payable').val();
                 let grandTotal = parseFloat($('.grandTotal').text());
@@ -666,74 +665,10 @@
             })
 
 
+            $('#purchaseForm').submit(function(event) {
+                event.preventDefault();
+                let formData = new FormData($('#purchaseForm')[0]);
 
-
-            $('.purchase_btn').click(function(e) {
-                e.preventDefault();
-                // alert('ok');
-                let supplier_id = $('.select-supplier').val();
-                let purchse_date = $('.purchase_date').val();
-                let formattedPurchaseDate = moment(purchse_date, 'DD-MMM-YYYY').format(
-                    'YYYY-MM-DD HH:mm:ss');
-                let total_quantity = totalQuantity;
-                let total_amount = parseFloat($('.total').val());
-                let discount = $('.promotion_id').val();
-                let sub_total = parseFloat($('.grand_total').val());
-                let tax = $('.tax').val();
-                let grand_total = parseFloat($('.grandTotal').text());
-                let discount_amount = sub_total - total_amount;
-                let paid = $('.total_payable').val();
-                let due = grand_total - paid;
-                let carrying_cost = $('.carrying_cost').val();
-                let note = $('.note').val();
-                let document = $('.document_file').val();
-                let payment_method = $('.payment_method').val();
-                // let product_id = $('.product_id').val();
-                // console.log(total_quantity);
-
-                let products = [];
-
-                $('tr[class^="data_row"]').each(function() {
-                    let row = $(this);
-                    // Get values from the current row's elements
-                    let product_id = row.find('.product_id').val();
-                    let quantity = row.find('input[name="quantity[]"]').val();
-                    let unit_price = row.find('input[name="unit_price[]"]').val();
-
-                    // Create an object with the gathered data
-                    let product = {
-                        product_id,
-                        quantity,
-                        unit_price,
-                    };
-
-                    // Push the object into the products array
-                    products.push(product);
-                });
-
-                let formData = new FormData($('.purchaseForm')[0]);
-                // let allData = {
-                //     // for purchase table 
-                //     supplier_id,
-                //     purchse_date: formattedPurchaseDate,
-                //     total_quantity,
-                //     total_amount,
-                //     discount,
-                //     discount_amount,
-                //     sub_total,
-                //     tax,
-                //     grand_total,
-                //     paid,
-                //     due,
-                //     carrying_cost,
-                //     note,
-                //     payment_method,
-                //     document,
-                //     products,
-                //     formData
-                // }
-
-                // console.log(allData);
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -748,14 +683,9 @@
                     contentType: false,
                     success: function(res) {
                         if (res.status == 200) {
-                            // console.log(res.data);
                             $('#paymentModal').modal('hide');
-                            // $('.supplierForm')[0].reset();
-                            // supplierView();
                             toastr.success(res.message);
                             let id = res.purchaseId;
-                            // console.log(id)
-
                             window.location.href = '/purchase/invoice/' + id;
 
                         } else {
@@ -779,8 +709,123 @@
                         }
                     }
                 });
+            });
 
-            })
+            // $('.purchase_btn').click(function(e) {
+            //     e.preventDefault();
+
+            //     event.preventDefault();
+            //     // alert('ok');
+            //     let supplier_id = $('.select-supplier').val();
+            //     let purchse_date = $('.purchase_date').val();
+            //     let formattedPurchaseDate = moment(purchse_date, 'DD-MMM-YYYY').format(
+            //         'YYYY-MM-DD HH:mm:ss');
+            //     let total_quantity = totalQuantity;
+            //     let total_amount = parseFloat($('.total').val());
+            //     let discount = $('.promotion_id').val();
+            //     let sub_total = parseFloat($('.grand_total').val());
+            //     let tax = $('.tax').val();
+            //     let grand_total = parseFloat($('.grandTotal').text());
+            //     let discount_amount = sub_total - total_amount;
+            //     let paid = $('.total_payable').val();
+            //     let due = grand_total - paid;
+            //     let carrying_cost = $('.carrying_cost').val();
+            //     let note = $('.note').val();
+            //     let document = $('.document_file').val();
+            //     let payment_method = $('.payment_method').val();
+            //     // let product_id = $('.product_id').val();
+            //     // console.log(total_quantity);
+
+            //     let products = [];
+
+            //     $('tr[class^="data_row"]').each(function() {
+            //         let row = $(this);
+            //         // Get values from the current row's elements
+            //         let product_id = row.find('.product_id').val();
+            //         let quantity = row.find('input[name="quantity[]"]').val();
+            //         let unit_price = row.find('input[name="unit_price[]"]').val();
+
+            //         // Create an object with the gathered data
+            //         let product = {
+            //             product_id,
+            //             quantity,
+            //             unit_price,
+            //         };
+
+            //         // Push the object into the products array
+            //         products.push(product);
+            //     });
+
+            //     let formData = new FormData($('#purchaseForm')[0]);
+            //     console.log(formData);
+            //     // let allData = {
+            //     //     // for purchase table
+            //     //     supplier_id,
+            //     //     purchse_date: formattedPurchaseDate,
+            //     //     total_quantity,
+            //     //     total_amount,
+            //     //     discount,
+            //     //     discount_amount,
+            //     //     sub_total,
+            //     //     tax,
+            //     //     grand_total,
+            //     //     paid,
+            //     //     due,
+            //     //     carrying_cost,
+            //     //     note,
+            //     //     payment_method,
+            //     //     document,
+            //     //     products,
+            //     //     formData
+            //     // }
+
+            //     // console.log(allData);
+            //     $.ajaxSetup({
+            //         headers: {
+            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         }
+            //     });
+
+            //     $.ajax({
+            //         url: '/purchase/store',
+            //         type: 'POST',
+            //         data: formData,
+            //         processData: false,
+            //         contentType: false,
+            //         success: function(res) {
+            //             if (res.status == 200) {
+            //                 // console.log(res.data);
+            //                 $('#paymentModal').modal('hide');
+            //                 // $('.supplierForm')[0].reset();
+            //                 // supplierView();
+            //                 toastr.success(res.message);
+            //                 let id = res.purchaseId;
+            //                 // console.log(id)
+
+            //                 window.location.href = '/purchase/invoice/' + id;
+
+            //             } else {
+
+            //                 if (res.error.payment_method == null) {
+            //                     $('#paymentModal').modal('hide');
+            //                     if (res.error.supplier_id) {
+            //                         showError('.supplier_id', res.error.supplier_id);
+            //                     }
+            //                     if (res.error.products) {
+            //                         showError('.product_select', res.error.products);
+            //                     }
+            //                     if (res.error.purchase_date) {
+            //                         showError('.purchase_date', res.error.purchase_date);
+            //                     }
+            //                 } else {
+            //                     if (res.error.payment_method) {
+            //                         showError('.payment_method', res.error.payment_method);
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     });
+            // })
 
         });
     </script>

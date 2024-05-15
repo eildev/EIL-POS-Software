@@ -21,7 +21,8 @@ return new class extends Migration
             $table->foreign('expense_category_id')->references('id')->on('expense_categories')->onDelete('cascade');
             $table->string('purpose',255);
             $table->decimal('amount');
-            $table->integer('spender');
+            $table->string('image')->nullable();
+            $table->string('spender')->nullable();
             $table->integer('bank_account_id')->nullable();
             $table->text('note')->nullable();
             $table->timestamps();

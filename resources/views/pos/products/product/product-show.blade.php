@@ -59,7 +59,7 @@
                                                     class="btn btn-danger btn-icon" id="delete">
                                                     <i data-feather="trash-2"></i>
                                                 </a>
-                                                <a href="{{ route('product.barcode', $product->id) }}"
+                                                <a target="_blank" href="{{ route('product.barcode', $product->id) }}"
                                                     class="btn  btn-icon">
                                                     <i class="fa-solid fa-barcode"></i>
                                                 </a>

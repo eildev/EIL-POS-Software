@@ -234,11 +234,13 @@
 
             // show Unit
             function bankView() {
+                // console.log('hello');
                 $.ajax({
                     url: '/bank/view',
                     method: 'GET',
                     success: function(res) {
                         const banks = res.data;
+                        // console.log(banks);
                         $('.showData').empty();
                         if (banks.length > 0) {
                             $.each(banks, function(index, bank) {
@@ -321,7 +323,7 @@
                             $('.edit_opening_balance').val(res.bank.opening_balance);
                             $('.update_bank').val(res.bank.id);
                         } else {
-                            toastr.warning(No Data Found);
+                            toastr.warning("No Data Found");
                         }
                     }
                 });

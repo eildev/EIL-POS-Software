@@ -812,7 +812,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Pie chart</h6>
-                    <div id="apexPie"></div>
+                    <div id="apexPie1"></div>
                 </div>
             </div>
         </div>
@@ -820,7 +820,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Banking Details</h6>
-                    <div id="apexRadialBar1"></div>
+                    <div id="apexRadialBar"></div>
                 </div>
             </div>
         </div>
@@ -844,11 +844,11 @@
             }
 
             var fontFamily = "'Roboto', Helvetica, sans-serif"
+
             var options = {
                 chart: {
                     height: 300,
-                    type: "radialBar",
-                    parentHeightOffset: 0,
+                    type: "pie",
                     foreColor: colors.bodyColor,
                     background: colors.cardBg,
                     toolbar: {
@@ -861,32 +861,22 @@
                 tooltip: {
                     theme: 'dark'
                 },
-                colors: [colors.primary, colors.warning, colors.danger, colors.info],
-                fill: {
-
+                colors: [colors.primary, colors.warning, colors.danger, colors.info, colors.success],
+                legend: {
+                    show: true,
+                    position: "top",
+                    horizontalAlign: 'center',
+                    fontFamily: fontFamily,
+                    itemMargin: {
+                        horizontal: 8,
+                        vertical: 0
+                    },
                 },
-                grid: {
-                    padding: {
-                        top: 10
-                    }
+                stroke: {
+                    colors: ['rgba(0,0,0,0)']
                 },
-                plotOptions: {
-                    radialBar: {
-                        dataLabels: {
-                            total: {
-                                show: true,
-                                label: 'TOTAL',
-                                fontSize: '14px',
-                                fontFamily: fontFamily,
-                            }
-                        },
-                        track: {
-                            background: colors.gridBorder,
-                            strokeWidth: '100%',
-                            opacity: 1,
-                            margin: 5,
-                        },
-                    }
+                dataLabels: {
+                    enabled: false
                 },
                 series: [
                     @foreach ($totalTransactionAmounts as $element)
@@ -898,22 +888,10 @@
                         '{{ $bank->name }}',
                     @endforeach
                 ],
-                legend: {
-                    show: true,
-                    position: "top",
-                    horizontalAlign: 'center',
-                    fontFamily: fontFamily,
-                    itemMargin: {
-                        horizontal: 8,
-                        vertical: 0
-                    },
-                },
             };
 
-            var chart = new ApexCharts(document.querySelector("#apexRadialBar1"), options);
+            var chart = new ApexCharts(document.querySelector("#apexPie1"), options);
             chart.render();
-            var chartAreaBounds = chart.w.globals.dom.baseEl.querySelector('.apexcharts-inner')
-                .getBoundingClientRect();
         });
     </script>
     {{-- /// pie chart end /// --}}

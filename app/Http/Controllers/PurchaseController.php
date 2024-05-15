@@ -9,6 +9,7 @@ use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Models\Supplier;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -87,6 +88,7 @@ class PurchaseController extends Controller
             $accountTransaction->account_id =  $request->payment_method;
             $accountTransaction->debit = $request->paid;
             // $accountTransaction->balance = $accountTransaction->balance - $request->paid;
+            $accountTransaction->created_at = Carbon::now();
             $accountTransaction->save();
 
             // get Transaction Model 

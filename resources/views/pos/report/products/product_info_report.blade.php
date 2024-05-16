@@ -9,7 +9,7 @@
                         {{-- /// --}}
                             <input type="text" class="form-control filter-start-price" placeholder="Price">
                     </div>
-                    <style>
+                    {{-- <style>
                         .dt-buttons{
                             width: 60% !important;
                             position: absolute !important;
@@ -18,7 +18,7 @@
                         .dt-search{
                             float: right;
                         }
-                    </style>
+                    </style> --}}
                     @php
                         $category = App\Models\Category::all();
                         $subCategory = App\Models\SubCategory::all();
@@ -77,7 +77,7 @@
                     <div class="col-md-6 mb-3">
                         <div class="justify-content-left">
                             <button class="btn btn-sm bg-info text-dark mr-2" id="product-filter">Filter</button>
-                            <button class="btn btn-sm bg-primary text-dark" onClick="#">Reset</button>
+                            <button class="btn btn-sm bg-primary text-dark" onclick="window.location.reload();">Reset</button>
                         </div>
                     </div>
                 </div>

@@ -101,29 +101,30 @@
                 "targets": "_all"
             }],
             dom: 'Bfrtip',
-            buttons: [{
-                    extend: 'copyHtml5',
-                    text: 'Copy',
-                    exportOptions: {
-                        header: true,
-                        columns: ':visible'
-                    },
-                    customize: function(data) {
-                        return 'Here is report list\n\n' + data + '\n\n';
-                    }
-                },
-                {
-                    extend: 'csvHtml5',
-                    text: 'CSV',
-                    exportOptions: {
-                        header: true,
-                        columns: ':visible'
-                    },
-                    customize: function(data) {
-                        return '{{ $header }}\n {{ $phone ?? '+880.....' }}\n {{ $email }}\n{{ $address }}\n\n' +
-                            data + '\n\n';
-                    }
-                },
+            buttons: [
+                // {
+                //     extend: 'copyHtml5',
+                //     text: 'Copy',
+                //     exportOptions: {
+                //         header: true,
+                //         columns: ':visible'
+                //     },
+                //     customize: function(data) {
+                //         return 'Here is report list\n\n' + data + '\n\n';
+                //     }
+                // },
+                // {
+                //     extend: 'csvHtml5',
+                //     text: 'CSV',
+                //     exportOptions: {
+                //         header: true,
+                //         columns: ':visible'
+                //     },
+                //     customize: function(data) {
+                //         return '{{ $header }}\n {{ $phone ?? '+880.....' }}\n {{ $email }}\n{{ $address }}\n\n' +
+                //             data + '\n\n';
+                //     }
+                // },
                 {
                     extend: 'excelHtml5',
                     text: 'Excel',

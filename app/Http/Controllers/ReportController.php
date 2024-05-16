@@ -16,6 +16,7 @@ use App\Models\Employee;
 use App\Models\SubCategory;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\Sms;
 use App\Models\Damage;
 use Illuminate\Http\Request;
 use App\Models\AccountTransaction;
@@ -375,5 +376,20 @@ class ReportController extends Controller
             })
             ->get();
         return view('pos.report.products.product-info-filter-rander-table', compact('productInfo'))->render();
+    }
+    ///SMS Report Method
+    public function SmsView(){
+        $smsAll =Sms::all();
+        return view('pos.report.sms.sms_report',compact('smsAll'));
+    }//
+    public function SmsReportFilter(Request $request){
+        $smsAll = Sms::when($request->customerId != "Select Customer", function ($query) use ($request) {
+            return $query->where('customer_id', $request->customerId);
+        })
+        ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+            return $query->whereBetween('created_at', [$request->startDate, $request->endDate]);
+        })
+            ->get();
+        return view('pos.report.sms.sms-filter-table', compact('smsAll'))->render();
     }
 }

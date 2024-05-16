@@ -5,7 +5,7 @@
             <div class="card-body">
                 <h6>Product Info</h6> <br>
                 <div class="table-responsive">
-                    <table id="example" class="table">
+                    <table id="example" class="table" style="padding-top:10px">
                         <thead>
                             <tr>
                                 <th>SN</th>

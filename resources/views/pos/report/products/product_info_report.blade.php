@@ -29,8 +29,18 @@
                                 <option value="100000">100000</option>
 
                             </select>--}}
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control filter-start-price" >
                     </div>
+                    <style>
+                        .dt-buttons{
+                            width: 60% !important;
+                            position: absolute !important;
+                            margin-bottom: 10px !important;
+                        }
+                        .dt-search{
+                            float: right;
+                        }
+                    </style>
                     @php
                         $category = App\Models\Category::all();
                         $subCategory = App\Models\SubCategory::all();
@@ -129,7 +139,7 @@ $(document).ready(function (){
 document.querySelector('#product-filter').addEventListener('click', function(e) {
     e.preventDefault();
          let filterStartPrice = document.querySelector('.filter-start-price').value;
-         let filterEndPrice = document.querySelector('.filter-end-price').value;
+        //  let filterEndPrice = document.querySelector('.filter-end-price').value;
         // alert(filterEndPrice);
         let filterBrand = document.querySelector('.filter-brand-name').value;
         let FilterCat = document.querySelector('.filter-category-name').value;
@@ -140,7 +150,6 @@ document.querySelector('#product-filter').addEventListener('click', function(e) 
             method: 'GET',
             data: {
                 filterStartPrice,
-                filterEndPrice,
                 filterBrand,
                 FilterCat,
                 filterSubcat,

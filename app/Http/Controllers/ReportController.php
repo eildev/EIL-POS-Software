@@ -360,17 +360,17 @@ class ReportController extends Controller
     }
 
     public function ProductInfoFilter(Request $request){
-
+            // dd($request->filterBrand);
             $productInfo = Product::when($request->filterStartPrice, function ($query) use ($request) {
-                return $query->where('price', '<=', $request->filterStartPrice);
+                return $query->where('price', '<=', (float) $request->filterStartPrice);
             })
-            ->when($request->filterBrand, function ($query) use ($request) {
+            ->when($request->filterBrand != "Select Brand", function ($query) use ($request) {
                 return $query->where('brand_id', $request->filterBrand);
             })
-            ->when($request->FilterCat, function ($query) use ($request) {
+            ->when($request->FilterCat != "Select Category", function ($query) use ($request) {
                 return $query->where('category_id', $request->FilterCat);
             })
-            ->when($request->filterSubcat, function ($query) use ($request) {
+            ->when($request->filterSubcat != "Select Sub Category", function ($query) use ($request) {
                 return $query->where('subcategory_id', $request->filterSubcat);
             })
             ->get();

@@ -48,6 +48,7 @@ class RouteServiceProvider extends ServiceProvider
                 $phone = $settings->phone;
                 $email = $settings->email;
                 $invoice_logo_type = $settings->invoice_logo_type;
+                $invoice_type = $settings->invoice_type;
                 $view->with([
                     'siteTitle' => $siteTitle,
                     'logo' => $logo,
@@ -56,7 +57,8 @@ class RouteServiceProvider extends ServiceProvider
                     'facebook' => $facebook,
                     'phone' => $phone,
                     'email' => $email,
-                    'invoice_logo_type' => $invoice_logo_type
+                    'invoice_logo_type' => $invoice_logo_type,
+                    'invoice_type' => $invoice_type
                 ]);
             }
         });

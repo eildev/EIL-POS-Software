@@ -39,6 +39,12 @@
 
 
                                 @endforeach
+                                @else
+                                <tr>
+                                    <td colspan="12">
+                                        <div class="text-center text-warning mb-2">Data Not Found</div>
+                                    </td>
+                                </tr>
                             @endif
 
                         </tbody>

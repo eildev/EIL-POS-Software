@@ -10,10 +10,11 @@
                             <th>purpose</th>
                             <th>Amount</th>
                             <th>Spender</th>
+                            <th>receipt Image</th>
                             <th>Bank Account</th>
-                            <th>Note</th>
                             <th>Expense Category</th>
                             <th>Expense Date</th>
+                            <th>Note</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -25,10 +26,14 @@
                                     <td>{{ $expenses->purpose ?? '' }}</td>
                                     <td>{{ $expenses->amount ?? '' }}</td>
                                     <td>{{ $expenses->spender ?? '' }}</td>
+                                    <td>
+                                     <img src="{{ $expenses->image ? asset('uploads/expense/' . $expenses->image) : asset('dummy/image.jpg') }}"
+                                            alt="Receipt image">
+                                    </td>
                                     <td>{{ $expenses['bank']['name'] ?? '-' }}</td>
-                                    <td>{{ $expenses->note ?? '-' }}</td>
                                     <td>{{ $expenses['expenseCat']['name'] ?? '' }}</td>
                                     <td>{{ $expenses->expense_date ?? '' }}</td>
+                                    <td>{{ $expenses->note ?? '-' }}</td>
 
                                     <td>
                                         <a href="{{ route('expense.edit', $expenses->id) }}"

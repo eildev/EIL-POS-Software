@@ -373,6 +373,9 @@ Route::middleware('auth')->group(function () {
             //////////////Employee Salary Report /////////////
             Route::get('/employee/salary/report/view', 'EmployeeSalaryReport')->name('employee.salary.report.view');
             Route::get('/employee/salary/filter', 'EmployeeSalaryReportFilter')->name('employee.salary.report.filter');
+            /////////////Product Info Report //////////////
+            Route::get('/product/info/report', 'ProductInfoReport')->name('product.info.report');
+
         });
     });
     // Report related routes

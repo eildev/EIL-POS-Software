@@ -62,7 +62,7 @@
                             <div class="col-sm-6">
                                 <div class="mb-3 form-valid-groups">
                                     <label class="form-label">Date<span class="text-danger">*</span></label>
-                                    
+
                                         <div class="input-group flatpickr" id="flatpickr-date">
                                             <input type="text"name="expense_date" value="{{ $expense->expense_date }}"
                                                 class="form-control @error('expense_date') is-invalid @enderror flatpickr-input"
@@ -107,7 +107,7 @@
                                     <div class="card-body">
                                         <h6 class="card-title">Expense Image</h6>
                                         <div style="height:150px;position:relative">
-                                            <button class="btn btn-info edit_upload_img"
+                                            <button type="button" class="btn btn-info edit_upload_img" id="abc"
                                                 style="position: absolute;top:50%;left:50%;transform:translate(-50%,-50%)">Browse</button>
                                             <img class="img-fluid showEditImage"
                                             src="{{ $expense->image ? asset('uploads/expense/' . $expense->image) : asset('dummy/image.jpg') }}"
@@ -198,47 +198,10 @@
                 },
             });
         });
-        ////Expense
-        const saveCategory = document.querySelector('.save_category');
-        saveCategory.addEventListener('click', function(e) {
-            e.preventDefault();
-            let formData = new FormData($('.categoryForm')[0]);
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '/expense/category/store',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(res) {
-                    if (res.status == 200) {
-                        $('#exampleModalLongScollable').modal('hide');
-                        // formData.delete(entry[0]);
-                        // alert('added successfully');
-                        $('.categoryForm')[0].reset();
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: res.message,
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
-                        window.location.reload();
-                    } else {
-                        showError('.category_name', res.error.name);
-                    }
-                }
-            });
-        })
-
 
 
 $(document).ready(function(){
-    const edit_upload_img = document.querySelector('.edit_upload_img');
+    const edit_upload_img = document.querySelector('#abc');
             const edit_image = document.querySelector('.edit_image');
             edit_upload_img.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -253,6 +216,5 @@ $(document).ready(function(){
                 });
             });
 });
-
     </script>
 @endsection

@@ -58,7 +58,10 @@
                                     @if ($products->count() > 0)
                                         <option selected disabled>Select Product</option>
                                         @foreach ($products as $product)
-                                            <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                            <option value="{{ $product->id }}">{{ $product->name }}
+                                                ({{ $product->stock }}
+                                                {{ $product->unit->name }})
+                                            </option>
                                         @endforeach
                                     @else
                                         <option selected disabled>Please Add Product</option>
@@ -67,7 +70,7 @@
                                 <span class="text-danger product_select_error"></span>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label" for="formFile">File/Picture upload</label>
+                                <label class="form-label" for="formFile">Invoice File/Picture upload</label>
                                 <input class="form-control document_file" name="document" type="file" id="formFile">
                             </div>
                             <div class="col-md-6 mb-3">
@@ -126,8 +129,8 @@
                                                     Discount :
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <input type="number" class="form-control  border-0 "
-                                                        name="discount_amount" readonly value="0.00" />
+                                                    <input type="number" class="form-control discount_amount"
+                                                        name="discount_amount" value="0.00" />
                                                     {{-- @php
                                                     $promotions = App\Models\Promotion::get();
                                                 @endphp
@@ -554,31 +557,9 @@
 
             // grandTotalCalulate
             function calculateGrandTotal() {
-                let id = $('.promotion_id').val();
+                let discountAmount = $('.discount_amount').val();
                 let total = parseFloat($('.total').val());
-                if (id) {
-                    $.ajax({
-                        url: `/promotion/find/${id}`,
-                        type: 'GET',
-                        dataType: 'JSON',
-                        success: function(res) {
-                            // console.log(res)
-                            const promotion = res.data;
-                            if (promotion.discount_type == 'percentage') {
-                                let grandTotalAmount = parseFloat(total - ((total * promotion
-                                    .discount_value) / 100)).toFixed(2);
-                                $('.grand_total').val(grandTotalAmount);
-                            } else {
-                                let grandTotalAmount = parseFloat(total - promotion.discount_value)
-                                    .toFixed(2);
-                                $('.grand_total').val(grandTotalAmount);
-                            }
-                        }
-                    })
-                } else {
-                    $('.grand_total').val(total)
-                }
-
+                $('.grand_total').val(total - discountAmount);
             }
             calculateGrandTotal();
 
@@ -606,7 +587,10 @@
 
 
             // discount
-            $('.promotion_id').change(function() {
+            $('.discount_amount').change(function() {
+                calculateGrandTotal();
+            })
+            $('.discount_amount').keyup(function() {
                 calculateGrandTotal();
             })
 

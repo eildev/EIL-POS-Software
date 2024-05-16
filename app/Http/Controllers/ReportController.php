@@ -13,6 +13,9 @@ use App\Models\PurchaseItem;
 use App\Models\Sale;
 use App\Models\SaleItem;
 use App\Models\Employee;
+use App\Models\SubCategory;
+use App\Models\Category;
+use App\Models\Brand;
 use App\Models\Damage;
 use Illuminate\Http\Request;
 use App\Models\AccountTransaction;
@@ -336,7 +339,6 @@ class ReportController extends Controller
     } //
     public function EmployeeSalaryReportFilter(Request $request)
     {
-
         $employeeSalary = EmployeeSalary::when($request->salaryId, function ($query) use ($request) {
             return $query->where('employee_id', $request->salaryId);
         })
@@ -352,5 +354,26 @@ class ReportController extends Controller
         $productInfo = Product::all();
         return view('pos.report.products.product_info_report', compact('productInfo'));
     } //
+    public function ProductCategoryShow($product_category_id){
+        $subCategory =SubCategory::where('category_id',$product_category_id)->get();
+        return  json_encode($subCategory);
+    }
 
+    public function ProductInfoFilter(Request $request){
+
+            $productInfo = Product::when($request->filterStartPrice && $request->filterEndPrice, function ($query) use ($request) {
+                return $query->whereBetween('price', [$request->filterStartPrice, $request->filterEndPrice]);
+            })
+            ->when($request->filterBrand, function ($query) use ($request) {
+                return $query->where('brand_id', $request->filterBrand);
+            })
+            ->when($request->FilterCat, function ($query) use ($request) {
+                return $query->where('category_id', $request->FilterCat);
+            })
+            ->when($request->filterSubcat, function ($query) use ($request) {
+                return $query->where('subcategory_id', $request->filterSubcat);
+            })
+            ->get();
+        return view('pos.report.products.product-info-filter-rander-table', compact('productInfo'))->render();
+    }
 }

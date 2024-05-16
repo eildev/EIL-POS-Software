@@ -230,77 +230,77 @@
             </div>
             {{-- ///End Expense --}}
 
-            <div class="tab-pane fade show " id="expense" role="tabpanel" aria-labelledby="expense-tab">
-                {{-- /////Expensse Report Start --}}
-                <div class="row">
-                    <div class="col-md-12   grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <!-- Col -->
-                                    <div class="col-sm-4">
-                                        <div class="input-group flatpickr" id="flatpickr-date">
-                                            <input type="text" class="form-control from-date"
-                                                placeholder="Select date" data-input>
-                                            <span class="input-group-text input-group-addon" data-toggle><i
-                                                    data-feather="calendar"></i></span>
-                                        </div>
-                                    </div><!-- Col -->
-                                    <div class="col-sm-4">
-                                        <div class="input-group flatpickr" id="flatpickr-date">
-                                            <input type="text" class="form-control to-date" placeholder="Select date"
-                                                data-input>
-                                            <span class="input-group-text input-group-addon" data-toggle><i
-                                                    data-feather="calendar"></i></span>
-                                        </div>
-                                    </div>
-                                    <style>
-                                        .select2-container--default {
-                                            width: 100% !important;
-                                        }
-                                    </style>
+    <div class="tab-pane fade show " id="expense" role="tabpanel" aria-labelledby="expense-tab">
+        {{-- /////Expensse Report Start --}}
+        <div class="row">
+            <div class="col-md-12   grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="input-group flatpickr" id="flatpickr-date">
+                                    <input type="text" class="form-control from-date"
+                                        placeholder="Select date" data-input>
+                                    <span class="input-group-text input-group-addon" data-toggle><i
+                                            data-feather="calendar"></i></span>
+                                </div>
+                            </div><!-- Col -->
+                            <div class="col-sm-4">
+                                <div class="input-group flatpickr" id="flatpickr-date">
+                                    <input type="text" class="form-control to-date" placeholder="Select date"
+                                        data-input>
+                                    <span class="input-group-text input-group-addon" data-toggle><i
+                                            data-feather="calendar"></i></span>
+                                </div>
+                            </div>
+                            <style>
+                                .select2-container--default {
+                                    width: 100% !important;
+                                }
+                            </style>
 
-                                </div><br>
-                                <div class="row">
-                                    <div class="col-md-11 mb-2"> <!-- Left Section -->
-                                        <div class="justify-content-left">
-                                            <a href="" class="btn btn-sm bg-info text-dark mr-2"
-                                                id="filter">Filter</a>
-                                            <a class="btn btn-sm bg-primary text-dark" onclick="resetWindow()">Reset</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-1"> <!-- Right Section -->
-                                        <div class="justify-content-end">
-                                            <a href="#" onclick="printTable()"
-                                                class="btn btn-sm bg-info text-dark mr-2"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="feather feather-printer btn-icon-prepend">
-                                                    <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                                                    <path
-                                                        d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2">
-                                                    </path>
-                                                    <rect x="6" y="14" width="12" height="8"></rect>
-                                                </svg>Print</a>
-                                        </div>
-                                    </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-md-11 mb-2"> <!-- Left Section -->
+                                <div class="justify-content-left">
+                                    <a href="" class="btn btn-sm bg-info text-dark mr-2"
+                                        id="filter">Filter</a>
+                                    <a class="btn btn-sm bg-primary text-dark" onclick="resetWindow()">Reset</a>
                                 </div>
                             </div>
 
+                            <div class="col-md-1"> <!-- Right Section -->
+                                <div class="justify-content-end">
+                                    <a href="#" onclick="printTable()"
+                                        class="btn btn-sm bg-info text-dark mr-2"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-printer btn-icon-prepend">
+                                            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                                            <path
+                                                d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2">
+                                            </path>
+                                            <rect x="6" y="14" width="12" height="8"></rect>
+                                        </svg>Print</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    {{-- ////list// --}}
-                    <div id="filter-rander">
-                        @include('pos.expense.expense-filter-rander-table')
 
-                    </div>
                 </div>
-                {{-- /////Expensse Report End --}}
             </div>
-            {{-- /////End Report --}}
+            {{-- ////list// --}}
+            <div id="filter-rander">
+                @include('pos.expense.expense-filter-rander-table')
+
+            </div>
         </div>
+        {{-- /////Expensse Report End --}}
+    </div>
+    {{-- /////End Report --}}
+</div>
 
         <!-----Expense Categories Start---->
         <div class="tab-content border border-top-0 p-3" id="myTabContent">

@@ -375,6 +375,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/employee/salary/filter', 'EmployeeSalaryReportFilter')->name('employee.salary.report.filter');
             /////////////Product Info Report //////////////
             Route::get('/product/info/report', 'ProductInfoReport')->name('product.info.report');
+            Route::get('/product/category/ajax/{product_category_id}','ProductCategoryShow');
+            Route::get('/product/info/filter/view','ProductInfoFilter')->name('product.info.filter.view');
 
         });
     });

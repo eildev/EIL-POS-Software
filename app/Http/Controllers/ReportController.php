@@ -354,15 +354,15 @@ class ReportController extends Controller
         $productInfo = Product::all();
         return view('pos.report.products.product_info_report', compact('productInfo'));
     } //
-    public function ProductCategoryShow($product_category_id){
-        $subCategory =SubCategory::where('category_id',$product_category_id)->get();
+    public function ProductSubCategoryShow($categoryId){
+        $subCategory =SubCategory::where('category_id',$categoryId)->get();
         return  json_encode($subCategory);
     }
 
     public function ProductInfoFilter(Request $request){
 
-            $productInfo = Product::when($request->filterStartPrice && $request->filterEndPrice, function ($query) use ($request) {
-                return $query->whereBetween('price', [$request->filterStartPrice, $request->filterEndPrice]);
+            $productInfo = Product::when($request->filterStartPrice, function ($query) use ($request) {
+                return $query->where('price', '<=', $request->filterStartPrice);
             })
             ->when($request->filterBrand, function ($query) use ($request) {
                 return $query->where('brand_id', $request->filterBrand);

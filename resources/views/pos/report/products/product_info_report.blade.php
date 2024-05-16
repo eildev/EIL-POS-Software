@@ -8,7 +8,7 @@
                     <div class="col-md-3">
                         {{-- /// --}}
 
-                        <select class="js-example-basic-single form-select filter-start-price"
+                        {{-- <select class="js-example-basic-single form-select filter-start-price"
                                 data-width="100%" name="">
                                 <option selected disabled>From Price</option>
                                 <option value="0">0</option>
@@ -28,7 +28,8 @@
                                 <option value="10000">10000</option>
                                 <option value="100000">100000</option>
 
-                            </select>
+                            </select>--}}
+                            <input type="text" class="form-control">
                     </div>
                     @php
                         $category = App\Models\Category::all();
@@ -88,7 +89,7 @@
                     <div class="col-md-6 mb-3">
                         <div class="justify-content-left">
                             <button class="btn btn-sm bg-info text-dark mr-2" id="product-filter">Filter</button>
-                            <button class="btn btn-sm bg-primary text-dark" id="reset">Reset</button>
+                            <button class="btn btn-sm bg-primary text-dark" onClick="window.reset()">Reset</button>
                         </div>
                     </div>
                 </div>
@@ -100,29 +101,29 @@
 @include('pos.report.products.product-info-filter-rander-table')
 </div>
 <script type="text/javascript">
-// $(document).ready(function(){
-// 		$('select[name="product_category_id"]').on('change',function(){
-// 			var product_category_id = $(this).val();
-// 			if(product_category_id){
-// 				$.ajax({
-// 					url:"{{('/product/category/ajax')}}/"+product_category_id,
-// 					type:"GET",
-// 					dataType:'json',
-// 					success:function(data){
-// 						$('select[name = "product_subcategory_id"]').html('');
-// 						var d = $('select[name= "product_subcategory_id"]').empty();
-// 						$.each(data,function(key,value){
-// 							$('select[name= "product_subcategory_id"]').append(
-// 								'<option value="'+value.id+'">'+value.name+'</option>')
-// 						});
-// 					},
-// 				});
-// 			}
-// 			else{
-// 				alert('Danger');
-// 			}
-// 		});
-// 	});
+$(document).ready(function(){
+		$('select[name="product_category_id"]').on('change',function(){
+			var categoryId = $(this).val();
+			if(categoryId){
+				$.ajax({
+					url:"{{('/product/category/ajax')}}/"+categoryId,
+					type:"GET",
+					dataType:'json',
+					success:function(data){
+						$('select[name = "product_subcategory_id"]').html('');
+						var d = $('select[name= "product_subcategory_id"]').empty();
+						$.each(data,function(key,value){
+							$('select[name= "product_subcategory_id"]').append(
+								'<option value="'+value.id+'">'+value.name+'</option>')
+						});
+					},
+				});
+			}
+			else{
+				alert('Danger');
+			}
+		});
+	});
 $(document).ready(function (){
 
 document.querySelector('#product-filter').addEventListener('click', function(e) {

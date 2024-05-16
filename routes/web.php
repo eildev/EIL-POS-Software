@@ -240,6 +240,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/promotion/product', 'allProduct')->name('promotion.product');
         Route::get('/promotion/customers', 'allCustomers')->name('promotion.customers');
         Route::get('/promotion/branch', 'allBranch')->name('promotion.branch');
+        Route::get('/promotion/details/find', 'PromotionDetailsFind')->name('promotion.details.find');
     });
     // Tax related route(n)
     Route::controller(TaxController::class)->group(function () {
@@ -375,7 +376,6 @@ Route::middleware('auth')->group(function () {
             Route::get('/employee/salary/filter', 'EmployeeSalaryReportFilter')->name('employee.salary.report.filter');
             /////////////Product Info Report //////////////
             Route::get('/product/info/report', 'ProductInfoReport')->name('product.info.report');
-
         });
     });
     // Report related routes

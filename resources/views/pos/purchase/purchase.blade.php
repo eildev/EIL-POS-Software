@@ -24,8 +24,8 @@
                             <div class="mb-3 col-md-6">
                                 <label for="ageSelect" class="form-label">Supplier</label>
                                 <select class="js-example-basic-single form-select select-supplier supplier_id"
-                                    data-width="100%" name="" onclick="errorRemove(this);"
-                                    onblur="errorRemove(this);">
+                                    data-width="100%" onclick="errorRemove(this);" onblur="errorRemove(this);"
+                                    name="supplier_id">
                                     <option value="">Select Supplier</option>
                                 </select>
                                 <span class="text-danger supplier_id_error"></span>
@@ -69,6 +69,10 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="formFile">File/Picture upload</label>
                                 <input class="form-control document_file" name="document" type="file" id="formFile">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="formFile">Invoice Number</label>
+                                <input class="form-control document_file" name="invoice" type="text">
                             </div>
                         </div>
                     </div>
@@ -117,12 +121,14 @@
                                                         name="total" readonly value="0.00" />
                                                 </div>
                                             </div>
-                                            {{-- <div class="row align-items-center">
-                                            <div class="col-md-4">
-                                                Discount :
-                                            </div>
-                                            <div class="col-md-8">
-                                                @php
+                                            <div class="row align-items-center">
+                                                <div class="col-md-4">
+                                                    Discount :
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="number" class="form-control  border-0 "
+                                                        name="discount_amount" readonly value="0.00" />
+                                                    {{-- @php
                                                     $promotions = App\Models\Promotion::get();
                                                 @endphp
                                                 <select class="js-example-basic-single form-select promotion_id"
@@ -140,9 +146,9 @@
                                                     @else
                                                         <option selected disabled>Please Add Product</option>
                                                     @endif
-                                                </select>
+                                                </select> --}}
+                                                </div>
                                             </div>
-                                        </div> --}}
                                             <div class="row align-items-center">
                                                 <div class="col-md-4">
                                                     Carrying Cost :
@@ -158,7 +164,7 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <input type="number" class="form-control grand_total border-0 "
-                                                        name="grand_total" readonly value="0.00" />
+                                                        name="sub_total" readonly value="0.00" />
                                                 </div>
                                             </div>
                                         </td>
@@ -181,8 +187,8 @@
 
 
         <!-- Modal -->
-        <div class="modal fade" id="exampleModalLongScollable" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
-            aria-hidden="true">
+        <div class="modal fade" id="exampleModalLongScollable" tabindex="-1"
+            aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -261,7 +267,8 @@
                                         </th>
                                         <th>Grand Total :</th>
                                         <th>
-                                            (<span class="grandTotal">00</span>TK)
+                                            <input type="number" name="grand_total"
+                                                class="grandTotal form-control border-0 " readonly value="00">
                                         </th>
                                     </tr>
                                     <tr>
@@ -313,7 +320,7 @@
                                     $taxs = App\Models\Tax::get();
                                 @endphp
                                 <select class="form-select tax" data-width="100%" onclick="errorRemove(this);"
-                                    onblur="errorRemove(this);" value="">
+                                    onblur="errorRemove(this);" value="" name="tax">
                                     @if ($taxs->count() > 0)
                                         <option selected disabled>Select Taxes</option>
                                         @foreach ($taxs as $taxs)
@@ -620,7 +627,7 @@
                 e.preventDefault();
                 // $('.total_payable_amount').text($('.grand_total').val());
                 $('.total_due').text($('.grand_total').val());
-                $('.grandTotal').text($('.grand_total').val());
+                $('.grandTotal').val($('.grand_total').val());
                 $('.paying_items').text(totalQuantity);
 
             })
@@ -629,7 +636,7 @@
             $('.paid_btn').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
-                let grandTotal = $('.grandTotal').text();
+                let grandTotal = $('.grandTotal').val();
                 $('.total_payable').val(grandTotal);
                 $('.total_payable_amount').text(grandTotal);
                 totalDue();
@@ -637,7 +644,7 @@
 
             // total_payable
             $('.total_payable').keyup(function(e) {
-                let grandTotal = parseFloat($('.grandTotal').text());
+                let grandTotal = parseFloat($('.grandTotal').val());
                 let value = parseFloat($(this).val());
 
                 totalDue();
@@ -647,7 +654,7 @@
             // due
             function totalDue() {
                 let pay = $('.total_payable').val();
-                let grandTotal = parseFloat($('.grandTotal').text());
+                let grandTotal = parseFloat($('.grandTotal').val());
                 let due = (grandTotal - pay).toFixed(2);
                 $('.total_due').text(due);
             }
@@ -660,7 +667,7 @@
 
                 let taxTotal = ((grandTotal * value) / 100);
                 taxTotal = (taxTotal + grandTotal).toFixed(2);
-                $('.grandTotal').text(taxTotal);
+                $('.grandTotal').val(taxTotal);
                 $('.total_due').text(taxTotal);
             })
 
@@ -690,6 +697,7 @@
 
                         } else {
 
+                            console.log(res.error);
                             if (res.error.payment_method == null) {
                                 $('#paymentModal').modal('hide');
                                 if (res.error.supplier_id) {

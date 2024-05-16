@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('purchse_date');
             $table->decimal('total_quantity', 12, 2);
             $table->decimal('total_amount', 12, 2);
-            $table->string('discount')->nullable();
+            $table->string('invoice')->nullable();
             $table->decimal('discount_amount', 12, 2)->default(0);;
             $table->decimal('sub_total', 12, 2);
             $table->integer('tax')->nullable();

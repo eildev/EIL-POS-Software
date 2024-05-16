@@ -206,6 +206,30 @@
         </div>
     </div>
 
+
+
+    {{-- Money Receipt Modal modal  --}}
+    <div class="modal fade " id="moneyReceiptModal" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Money Receipt</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="show_doc">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary"><i class="fa-solid fa-print me-2"></i>Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <style>
         @media print {
             .page-content {
@@ -361,6 +385,12 @@
                         }
                     }
                 });
+            })
+
+
+            $(document).on('click', '.money_receipt', function(e) {
+                e.preventDefault();
+                alert('ok');
             })
         });
     </script>

@@ -177,11 +177,15 @@
                         </div>
                     </div>
                     <div class="container-fluid w-100 btn_group">
+                        @if($invoice_type == 'a4')
+                        <a href="#" class="btn btn-outline-primary float-end mt-4 me-3" onclick="window.print();"><i
+                            data-feather="printer" class="me-2 icon-md"></i>Print Invoice</a>
+                        @else
                         <a target="_blank" href="{{ route('sale.print', $sale->id) }}"
                             class="btn btn-outline-primary float-end mt-4 "><i data-feather="printer"
                                 class="me-2 icon-md"></i>Print POS</a>
-                        <a href="#" class="btn btn-outline-primary float-end mt-4 me-3" onclick="window.print();"><i
-                                data-feather="printer" class="me-2 icon-md"></i>Print Invoice</a>
+                        @endif
+
                     </div>
 
                 </div>

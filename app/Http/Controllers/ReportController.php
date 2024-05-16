@@ -354,10 +354,10 @@ class ReportController extends Controller
         $productInfo = Product::all();
         return view('pos.report.products.product_info_report', compact('productInfo'));
     } //
-    public function ProductSubCategoryShow($categoryId){
-        $subCategory =SubCategory::where('category_id',$categoryId)->get();
-        return  json_encode($subCategory);
-    }
+    // public function ProductSubCategoryShow($categoryId){
+    //     $subCategory =SubCategory::where('category_id',$categoryId)->get();
+    //     return  json_encode($subCategory);
+    // }
 
     public function ProductInfoFilter(Request $request){
             // dd($request->filterBrand);

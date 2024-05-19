@@ -65,7 +65,7 @@
                         </td>
 
                         <td>Account:</td>
-                     <td>{{$transaction['paymentMethod']['name']}}</td>
+                     <td>{{$transaction['bank']['name']}}</td>
                     </tr>
 
                     <tr>

@@ -24,15 +24,15 @@ class CustomeMailControler extends Controller
         $recipients = $request->recipients;
         // $ccRecipients = $request->input('cc_recipients');
 
-         //     foreach ($recipients as $recipient) {
-         //         Mail::to($recipient)->cc($ccRecipients)->send(new CustomerSendEmail($data));
-         //     }
+             foreach ($recipients as $recipient) {
+                 Mail::to($recipient)->send(new CustomerSendEmail($data));
+             }
             // dd($recipients);
-            foreach ($recipients as $recipient) {
-                // Queue::push(new SendCustomerEmailJob($recipient, $data));
-                 dispatch(new SendCustomerEmailJob($recipient, $data));
-                // Mail::to($recipient)->queue(new CustomerSendEmail($data));
-            }
+            // foreach ($recipients as $recipient) {
+            //     // Queue::push(new SendCustomerEmailJob($recipient, $data));
+            //      dispatch(new SendCustomerEmailJob($recipient, $data));
+            //     // Mail::to($recipient)->queue(new CustomerSendEmail($data));
+            // }
 
         $notification = array(
             'message' => 'Email Send Successfully',

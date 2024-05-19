@@ -376,6 +376,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/employee/salary/filter', 'EmployeeSalaryReportFilter')->name('employee.salary.report.filter');
             /////////////Product Info Report //////////////
             Route::get('/product/info/report', 'ProductInfoReport')->name('product.info.report');
+            // Route::get('/product/category/ajax/{categoryId}', 'ProductSubCategoryShow');
+            Route::get('/product/info/filter/view','ProductInfoFilter')->name('product.info.filter.view');
+            /////SMS Report ///////
+            Route::get('/sms/report/view','SmsView')->name('sms.report');
+            Route::get('/sms/report/filter','SmsReportFilter')->name('sms.report.filter');
+
         });
     });
     // Report related routes

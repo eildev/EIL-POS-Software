@@ -13,6 +13,10 @@ use App\Models\PurchaseItem;
 use App\Models\Sale;
 use App\Models\SaleItem;
 use App\Models\Employee;
+use App\Models\SubCategory;
+use App\Models\Category;
+use App\Models\Brand;
+use App\Models\Sms;
 use App\Models\Damage;
 use Illuminate\Http\Request;
 use App\Models\AccountTransaction;
@@ -336,7 +340,6 @@ class ReportController extends Controller
     } //
     public function EmployeeSalaryReportFilter(Request $request)
     {
-
         $employeeSalary = EmployeeSalary::when($request->salaryId, function ($query) use ($request) {
             return $query->where('employee_id', $request->salaryId);
         })
@@ -352,5 +355,41 @@ class ReportController extends Controller
         $productInfo = Product::all();
         return view('pos.report.products.product_info_report', compact('productInfo'));
     } //
+    // public function ProductSubCategoryShow($categoryId){
+    //     $subCategory =SubCategory::where('category_id',$categoryId)->get();
+    //     return  json_encode($subCategory);
+    // }
 
+    public function ProductInfoFilter(Request $request){
+            // dd($request->filterBrand);
+            $productInfo = Product::when($request->filterStartPrice, function ($query) use ($request) {
+                return $query->where('price', '<=', (float) $request->filterStartPrice);
+            })
+            ->when($request->filterBrand != "Select Brand", function ($query) use ($request) {
+                return $query->where('brand_id', $request->filterBrand);
+            })
+            ->when($request->FilterCat != "Select Category", function ($query) use ($request) {
+                return $query->where('category_id', $request->FilterCat);
+            })
+            ->when($request->filterSubcat != "Select Sub Category", function ($query) use ($request) {
+                return $query->where('subcategory_id', $request->filterSubcat);
+            })
+            ->get();
+        return view('pos.report.products.product-info-filter-rander-table', compact('productInfo'))->render();
+    }
+    ///SMS Report Method
+    public function SmsView(){
+        $smsAll =Sms::all();
+        return view('pos.report.sms.sms_report',compact('smsAll'));
+    }//
+    public function SmsReportFilter(Request $request){
+        $smsAll = Sms::when($request->customerId != "Select Customer", function ($query) use ($request) {
+            return $query->where('customer_id', $request->customerId);
+        })
+        ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+            return $query->whereBetween('created_at', [$request->startDate, $request->endDate]);
+        })
+            ->get();
+        return view('pos.report.sms.sms-filter-table', compact('smsAll'))->render();
+    }
 }

@@ -340,6 +340,12 @@
                                 Damage Report
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('sms.report') }}" role="button"
+                                aria-controls="general-pages">
+                                Sms Report
+                            </a>
+                        </li>
 
                     </ul>
                 </div>

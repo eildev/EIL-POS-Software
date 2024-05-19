@@ -120,7 +120,7 @@
                                     <th>Receivable</th>
                                     <th>Paid</th>
                                     <th>Product <br> Returned</th>
-                                    <th>Due</th>
+                                    <th>Due/Return</th>
                                     <th>Purchase <br> Cost</th>
                                     <th>Profit</th>
                                     <th>Status</th>
@@ -281,8 +281,8 @@
                 e.preventDefault();
                 $('.start-date').val("");
                 $('.end-date').val("");
-                $('.product_select').val(null).trigger('change');
-                $('.customer_id').val(null).trigger('change');
+                $('.product_select').val('Select Product').trigger('change');
+                $('.customer_id').val('Select Customer').trigger('change');
             });
 
             // print 

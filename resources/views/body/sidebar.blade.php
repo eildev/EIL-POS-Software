@@ -1,10 +1,10 @@
 <nav class="sidebar">
     <div class="sidebar-header">
         <a href="{{ route('dashboard') }}" class="sidebar-brand">
-            @if(!empty($logo))
-            <img src="{{ asset('/').$logo }}" alt="" height="40">
+            @if (!empty($logo))
+                <img src="{{ asset('/') . $logo }}" alt="" height="40">
             @else
-            EIL<span>POS</span>
+                EIL<span>POS</span>
             @endif
         </a>
         <div class="sidebar-toggler not-active">
@@ -344,6 +344,12 @@
                             <a class="nav-link" href="{{ route('sms.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Sms Report
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('monthly.report') }}" role="button"
+                                aria-controls="general-pages">
+                                Monthly Report
                             </a>
                         </li>
 

@@ -1256,14 +1256,6 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="col-xl-6 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title">Total Sales</h6>
-                    <div id="apexBar2"></div>
-                </div>
-            </div>
-        </div> --}}
     </div>
     <script>
         $(document).ready(function() {
@@ -1283,84 +1275,6 @@
             }
 
             var fontFamily = "'Roboto', Helvetica, sans-serif"
-            // Apex Bar chart start
-            var options = {
-                chart: {
-                    type: 'bar',
-                    height: '320',
-                    parentHeightOffset: 0,
-                    foreColor: colors.bodyColor,
-                    background: colors.cardBg,
-                    toolbar: {
-                        show: false
-                    },
-                },
-                theme: {
-                    mode: 'dark'
-                },
-                tooltip: {
-                    theme: 'dark'
-                },
-                colors: [colors.primary],
-                grid: {
-                    padding: {
-                        bottom: -4
-                    },
-                    borderColor: colors.gridBorder,
-                    xaxis: {
-                        lines: {
-                            show: true
-                        }
-                    }
-                },
-                series: [{
-                    name: 'sales',
-                    data: [
-                        @foreach ($salesByDay as $date => $salesCount)
-                            {{ $salesCount }},
-                        @endforeach
-                    ]
-                }],
-                xaxis: {
-                    type: 'datetime',
-                    categories: [
-                        @foreach ($salesByDayCount as $date => $salesCount)
-                            '{{ $date }}',
-                        @endforeach
-                    ],
-                    axisBorder: {
-                        color: colors.gridBorder,
-                    },
-                    axisTicks: {
-                        color: colors.gridBorder,
-                    },
-                },
-                legend: {
-                    show: true,
-                    position: "top",
-                    horizontalAlign: 'center',
-                    fontFamily: fontFamily,
-                    itemMargin: {
-                        horizontal: 8,
-                        vertical: 0
-                    },
-                },
-                stroke: {
-                    width: 0
-                },
-                plotOptions: {
-                    bar: {
-                        borderRadius: 4
-                    }
-                }
-            }
-
-            var apexBarChart = new ApexCharts(document.querySelector("#apexBar2"), options);
-            apexBarChart.render();
-
-            // Apex Bar chart end
-
-
 
             var lineChartOptions = {
                 chart: {
@@ -1379,7 +1293,7 @@
                 tooltip: {
                     theme: 'dark'
                 },
-                colors: [colors.primary, colors.danger, colors.warning],
+                colors: [colors.success, colors.info, colors.primary],
                 grid: {
                     padding: {
                         bottom: -4

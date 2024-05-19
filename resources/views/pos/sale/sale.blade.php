@@ -809,17 +809,8 @@
             $('.total_payable').blur(function(e) {
                 let grandTotal = parseFloat($('.grandTotal').text());
                 let value = parseFloat($(this).val());
-
-                if (value > grandTotal) {
-                    $(this).val(grandTotal);
-                    totalDue();
-                    $('.total_payable_amount').text(value);
-                    toastr.warning('Over Payment Not Allowed');
-                } else {
-                    totalDue();
-                    $('.total_payable_amount').text(value);
-                }
-
+                totalDue();
+                $('.total_payable_amount').text(value);
             })
 
             // due 

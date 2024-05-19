@@ -18,16 +18,17 @@
                             <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Product Name <span
                                         class="text-danger">*</span></label>
-                                <input class="form-control name" onkeyup="generateCode(this);"  name="name" type="text" onkeyup="errorRemove(this);"
-                                    onblur="errorRemove(this);">
+                                <input class="form-control name" onkeyup="generateCode(this);" name="name" type="text"
+                                    onkeyup="errorRemove(this);" onblur="errorRemove(this);">
                                 <span class="text-danger name_error"></span>
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Product Code</label>
-                                <input class="form-control @error('barcode') is-invalid @enderror" name="barcode" type="number"  value="{{ old('barcode') }}">
+                                <input class="form-control @error('barcode') is-invalid @enderror" name="barcode"
+                                    type="number" value="{{ old('barcode') }}">
                                 @error('barcode')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                                 @enderror
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3 col-md-4">
                                 @php
@@ -99,14 +100,14 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="mb-3 col-md-6">
+                            {{-- <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Stock</label>
                                 <input class="form-control" name="stock" type="number" placeholder="00">
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Main Unit Stock</label>
                                 <input class="form-control" name="main_unit_stock" type="number" placeholder="00">
-                            </div>
+                            </div> --}}
                             {{-- <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Total Sold</label>
                                 <input class="form-control" name="total_sold" type="number" placeholder="00">
@@ -287,16 +288,16 @@
         });
 
         function generateCode(input) {
-        var nameInput = input.value.trim();
-        if (nameInput !== "") {
-            var codeInput = input.parentElement.nextElementSibling.querySelector('input[name="barcode"]');
-            var randomNumber = Math.floor(Math.random() * 1000000) + 20; // Generate a random number between 1 and 1000000
-            var generatedCode = nameInput.replace(/\s+/g, '').toUpperCase() + randomNumber;
-            var generatedNumber = randomNumber; // Extract the generated number
+            var nameInput = input.value.trim();
+            if (nameInput !== "") {
+                var codeInput = input.parentElement.nextElementSibling.querySelector('input[name="barcode"]');
+                var randomNumber = Math.floor(Math.random() * 1000000) +
+                20; // Generate a random number between 1 and 1000000
+                var generatedCode = nameInput.replace(/\s+/g, '').toUpperCase() + randomNumber;
+                var generatedNumber = randomNumber; // Extract the generated number
 
-            codeInput.value = generatedNumber; // Set the generated number directly in the input field
+                codeInput.value = generatedNumber; // Set the generated number directly in the input field
+            }
         }
-    }
-
     </script>
 @endsection

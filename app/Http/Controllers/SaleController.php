@@ -209,7 +209,7 @@ class SaleController extends Controller
 
     public function view()
     {
-        $sales = Sale::where('branch_id', Auth::user()->branch_id)->get();
+        $sales = Sale::where('branch_id', Auth::user()->branch_id)->latest()->get();
         return view('pos.sale.view', compact('sales'));
     }
     // public function viewAll()

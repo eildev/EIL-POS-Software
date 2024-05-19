@@ -150,6 +150,34 @@
             }
         }
         // dd($ttt, $totalTransactionAmounts);
+
+        // monthly report
+        use Carbon\Carbon;
+
+        // Initialize arrays to store monthly data
+        $salesByMonth = [];
+        $profitsByMonth = [];
+        $purchasesByMonth = [];
+
+        for ($i = 0; $i < 12; $i++) {
+            $monthStart = now()->subMonths($i)->startOfMonth();
+            $monthEnd = now()->subMonths($i)->endOfMonth();
+
+            $monthlySales = App\Models\Sale::whereBetween('sale_date', [$monthStart, $monthEnd])->sum('receivable');
+            $monthlyProfit = App\Models\Sale::whereBetween('sale_date', [$monthStart, $monthEnd])->sum('profit');
+            $monthlyPurchase = App\Models\Purchase::whereBetween('purchse_date', [$monthStart, $monthEnd])->sum(
+                'grand_total',
+            );
+
+            $salesByMonth[$monthStart->format('Y-m')] = $monthlySales;
+            $profitsByMonth[$monthStart->format('Y-m')] = $monthlyProfit;
+            $purchasesByMonth[$monthStart->format('Y-m')] = $monthlyPurchase;
+        }
+
+        // Reverse the arrays to get the data in chronological order
+        $salesByMonth = array_reverse($salesByMonth, true);
+        $profitsByMonth = array_reverse($profitsByMonth, true);
+        $purchasesByMonth = array_reverse($purchasesByMonth, true);
     @endphp
 
 
@@ -1366,24 +1394,24 @@
                 series: [{
                         name: "Monthly Sale",
                         data: [
-                            @foreach ($salesByDay as $date => $dailySales)
-                                {{ $dailySales }},
+                            @foreach ($salesByMonth as $month => $monthlySales)
+                                {{ $monthlySales }},
                             @endforeach
                         ]
                     },
                     {
                         name: "Monthly Profit",
                         data: [
-                            @foreach ($salesProfitByDay as $date => $dailyProfit)
-                                {{ $dailyProfit }},
+                            @foreach ($profitsByMonth as $month => $monthlyProfit)
+                                {{ $monthlyProfit }},
                             @endforeach
                         ]
                     },
                     {
                         name: "Monthly Purchase",
                         data: [
-                            @foreach ($purchaseByDay as $date => $dailyPurchase)
-                                {{ $dailyPurchase }},
+                            @foreach ($purchasesByMonth as $month => $monthlyPurchase)
+                                {{ $monthlyPurchase }},
                             @endforeach
                         ]
                     }
@@ -1391,8 +1419,8 @@
                 xaxis: {
                     type: "datetime",
                     categories: [
-                        @foreach ($salesByDay as $date => $salesCount)
-                            '{{ $date }}',
+                        @foreach ($salesByMonth as $month => $salesCount)
+                            '{{ $month }}-01',
                         @endforeach
                     ],
                     lines: {

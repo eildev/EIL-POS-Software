@@ -25,7 +25,7 @@
                             <div class="mb-3 col-md-6">
                                 <label for="name" class="form-label">Product Code</label>
                                 <input class="form-control @error('barcode') is-invalid @enderror" name="barcode"
-                                    type="number" value="{{ old('barcode') }}">
+                                    type="number" value="{{ old('barcode') }}" readonly>
                                 @error('barcode')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror

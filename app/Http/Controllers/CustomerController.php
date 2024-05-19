@@ -25,11 +25,11 @@ class CustomerController extends Controller
         $customer->phone = $request->phone;
         $customer->email = $request->email;
         $customer->address = $request->address;
-        $customer->opening_receivable = $request->opening_receivable ?? 0;
-        $customer->opening_payable = $request->opening_payable ?? 0;
+        // $customer->opening_receivable = $request->opening_receivable ?? 0;
+        // $customer->opening_payable = $request->opening_payable ?? 0;
         $customer->wallet_balance = $request->wallet_balance ?? 0;
-        $customer->total_receivable = $request->total_receivable ?? 0;
-        $customer->total_payable = $request->total_payable ?? 0;
+        // $customer->total_receivable = $request->total_receivable ?? 0;
+        // $customer->total_payable = $request->total_payable ?? 0;
         $customer->created_at = Carbon::now();
         $customer->save();
         $notification = array(
@@ -54,11 +54,11 @@ class CustomerController extends Controller
         $customer->phone = $request->phone;
         $customer->email = $request->email;
         $customer->address = $request->address;
-        $customer->opening_receivable = $request->opening_receivable;
-        $customer->opening_payable = $request->opening_payable;
-        $customer->wallet_balance = $request->wallet_balance;
-        $customer->total_receivable = $request->total_receivable;
-        $customer->total_payable = $request->total_payable;
+        // $customer->opening_receivable = $request->opening_receivable ?? 0;
+        // $customer->opening_payable = $request->opening_payable ?? 0;
+        $customer->wallet_balance = $request->wallet_balance ?? 0;
+        // $customer->total_receivable = $request->total_receivable ?? 0;
+        // $customer->total_payable = $request->total_payable ?? 0;
         $customer->updated_at = Carbon::now();
         $customer->save();
         $notification = array(

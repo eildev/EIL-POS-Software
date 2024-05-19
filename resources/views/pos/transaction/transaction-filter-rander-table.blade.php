@@ -37,7 +37,7 @@
                                         @else
                                             <span>Cash Received</span>
                                         @endif
-                                    <td>{{ $trans['paymentMethod']['name'] ?? '' }}</td>
+                                    <td>{{ $trans['bank']['name'] ?? '' }}</td>
                                     <td class="note_short"> @php
                                         $note = $trans->note;
                                         $noteChunks = str_split($note, 20);

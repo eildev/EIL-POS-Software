@@ -20,11 +20,12 @@
                                     <th>SN</th>
                                     <th>Name</th>
                                     <th>Phone</th>
-                                    <th>Opening Receivable</th>
+                                    <th>Branch</th>
+                                    {{-- <th>Opening Receivable</th>
                                     <th>Opening Payable</th>
 
                                     <th>Total Receivable</th>
-                                    <th>Total Payable</th>
+                                    <th>Total Payable</th> --}}
                                     <th>Due</th>
                                     <th>Wallet Balance</th>
                                     <th>Action</th>
@@ -37,10 +38,11 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $customer->name ?? '' }}</td>
                                             <td>{{ $customer->phone ?? '' }}</td>
-                                            <td>{{ $customer->opening_receivable ?? 0 }}</td>
+                                            <td>{{ $customer['branch']['name'] ?? '' }}</td>
+                                            {{-- <td>{{ $customer->opening_receivable ?? 0 }}</td>
                                             <td>{{ $customer->opening_payable ?? 0 }}</td>
                                             <td>{{ $customer->total_receivable ?? 0 }}</td>
-                                            <td>{{ $customer->total_payable ?? 0 }}</td>
+                                            <td>{{ $customer->total_payable ?? 0 }}</td> --}}
                                             <td>
                                                 @if ($customer->sales->sum('due') > 0)
                                                     <span class="text-danger">৳

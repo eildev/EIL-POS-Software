@@ -32,7 +32,13 @@
 							<input type="email" name="email"  value="{{$customer->email}}" class="form-control" placeholder="Enter Customer email">
 						</div>
 					</div><!-- Col -->
-					<div class="col-sm-6">
+                    <div class="col-sm-6">
+						<div class="mb-3">
+							<label class="form-label">Wallet Balance</label>
+							<input type="number" class="form-control" value="{{$customer->wallet_balance}}" name="wallet_balance" placeholder="0.00">
+						</div>
+					</div><!-- Col -->
+					<div class="col-sm-12">
 						<div class="mb-3">
 							<label class="form-label">Customer Address</label>
 							<textarea name="address" class="form-control"  placeholder="Write Customer Address" rows="4" cols="50">{{$customer->address}}</textarea>
@@ -40,7 +46,7 @@
 					</div><!-- Col -->
 				</div><!-- Row -->
 				<div class="row">
-					<div class="col-sm-4">
+					{{-- <div class="col-sm-4">
 						<div class="mb-3">
 							<label class="form-label">Opening Receivable</label>
 							<input type="number" class="form-control" value="{{$customer->opening_receivable}}" name="opening_receivable"  placeholder="0.00">
@@ -52,12 +58,7 @@
 							<input type="number" name="opening_payable" value="{{$customer->opening_payable}}" class="form-control" placeholder="0.00">
 						</div>
 					</div><!-- Col -->
-					<div class="col-sm-4">
-						<div class="mb-3">
-							<label class="form-label">Wallet Balance</label>
-							<input type="number" class="form-control" value="{{$customer->wallet_balance}}" name="wallet_balance" placeholder="0.00">
-						</div>
-					</div><!-- Col -->
+
 				</div><!-- Row -->
 				<div class="row">
 				<div class="col-sm-6">
@@ -71,7 +72,7 @@
 							<label class="form-label">Total Payable</label>
 							<input type="number" class="form-control" value="{{$customer->total_payable}}" name="total_payable" placeholder="0.00">
 						</div>
-					</div><!-- Col -->
+					</div><!-- Col --> --}}
 					<!-- Col -->
 				</div><!-- Row -->
 				<input type="submit" class="btn btn-primary submit" value="Update">

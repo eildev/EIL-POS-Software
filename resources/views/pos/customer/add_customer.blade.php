@@ -33,15 +33,22 @@
 							<input type="email" name="email" class="form-control" placeholder="Enter Customer email">
 						</div>
 					</div><!-- Col -->
-					<div class="col-sm-6">
+                    <div class="col-sm-6">
+						<div class="mb-3">
+							<label class="form-label">Wallet Balance</label>
+							<input type="number" class="form-control" name="wallet_balance" placeholder="0.00">
+						</div>
+					</div><!-- Col -->
+					<div class="col-sm-12">
 						<div class="mb-3">
 							<label class="form-label">Customer Address</label>
 							<textarea name="address" class="form-control"  placeholder="Write Customer Address" rows="4" cols="50"></textarea>
 						</div>
 					</div><!-- Col -->
+
 				</div><!-- Row -->
 				<div class="row">
-					<div class="col-sm-4">
+					{{-- <div class="col-sm-4">
 						<div class="mb-3">
 							<label class="form-label">Opening Receivable</label>
 							<input type="number" class="form-control" name="opening_receivable"  placeholder="0.00">
@@ -52,16 +59,11 @@
 							<label class="form-label">Opening Payable</label>
 							<input type="number" name="opening_payable" class="form-control" placeholder="0.00">
 						</div>
-					</div><!-- Col -->
-					<div class="col-sm-4">
-						<div class="mb-3">
-							<label class="form-label">Wallet Balance</label>
-							<input type="number" class="form-control" name="wallet_balance" placeholder="0.00">
-						</div>
-					</div><!-- Col -->
+					</div><!-- Col --> --}}
+
 				</div><!-- Row -->
 				<div class="row">
-				<div class="col-sm-6">
+				{{-- <div class="col-sm-6">
 						<div class="mb-3">
 							<label class="form-label">Total Receivable</label>
 							<input type="number" class="form-control" name="total_receivable"  placeholder="0.00">
@@ -74,7 +76,7 @@
 						</div>
 					</div><!-- Col -->
 					<!-- Col -->
-				</div><!-- Row -->
+				</div><!-- Row --> --}}
 				<div >
 				<input type="submit" class="btn btn-primary submit" value="Save">
 				</div>

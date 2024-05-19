@@ -3,7 +3,7 @@
         <div class="card-body">
             <h6 class="card-title text-info ">Transaction History </h6>
             <div class="table-responsive">
-                <table id="dataTableExample" class="table">
+                <table id="example" class="table">
                     <thead class="action ">
                         <tr>
                             <th>SN</th>

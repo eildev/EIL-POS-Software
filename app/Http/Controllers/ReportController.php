@@ -35,13 +35,20 @@ class ReportController extends Controller
         $todaySaleItemsToday = $saleItemsForDate->sum('qty');
         $totalInvoiceToday = Sale::whereDate('sale_date', $todayDate)->count();
         $totalSales = Sale::whereDate('sale_date', $todayDate)->get();
+        $todayTotalSaleAmount = Sale::whereDate('sale_date', $todayDate)->sum('receivable');
+        $todayTotalSaleQty = Sale::whereDate('sale_date', $todayDate)->sum('quantity');
+        $todayTotalSaleDue = Sale::whereDate('sale_date', $todayDate)->sum('due');
 
         //Today Purchase
         $todayPurchaseItems = PurchaseItem::whereDate('created_at', $todayDate);
+        $purchases = Purchase::whereDate('created_at', $todayDate)->get();
         $todayPurchaseItemsToday = $todayPurchaseItems->sum('quantity');
         $todayPurchaseToday = Purchase::whereDate('purchse_date', $todayDate)->get();
         // dd($todayPurchaseToday);
         $today_grand_total = $todayPurchaseToday->sum('grand_total');
+        $todayTotalPurchaseAmount = Purchase::whereDate('purchse_date', $todayDate)->sum('grand_total');
+        $todayTotalPurchaseQty = Purchase::whereDate('purchse_date', $todayDate)->sum('total_quantity');
+        $todayTotalPurchaseDue = Purchase::whereDate('purchse_date', $todayDate)->sum('due');
 
         //Today invoice product
         $todayInvoiceProductItems = Sale::whereDate('sale_date', $todayDate);
@@ -63,7 +70,8 @@ class ReportController extends Controller
         $expenseAmount = $expense->sum('amount');
         $salary = EmployeeSalary::whereDate('date', $todayDate)->get();
         $totalSalary = $salary->sum('debit');
-        return view('pos.report.today.today', compact('todayInvoiceAmount', 'totalSales', 'today_grand_total', 'todayExpenseAmount', 'totalSalary', 'expense'));
+        $totalSalaryDue = $salary->sum('balance');
+        return view('pos.report.today.today', compact('todayInvoiceAmount', 'totalSales', 'today_grand_total', 'todayExpenseAmount', 'totalSalary', 'expense', 'todayTotalSaleAmount', 'todayTotalSaleDue', 'todayTotalSaleQty', 'purchases', 'todayTotalPurchaseDue', 'todayTotalPurchaseQty', 'todayTotalPurchaseAmount', 'salary'));
     }
     // summary report function
     public function summaryReport()
@@ -360,11 +368,12 @@ class ReportController extends Controller
     //     return  json_encode($subCategory);
     // }
 
-    public function ProductInfoFilter(Request $request){
-            // dd($request->filterBrand);
-            $productInfo = Product::when($request->filterStartPrice, function ($query) use ($request) {
-                return $query->where('price', '<=', (float) $request->filterStartPrice);
-            })
+    public function ProductInfoFilter(Request $request)
+    {
+        // dd($request->filterBrand);
+        $productInfo = Product::when($request->filterStartPrice, function ($query) use ($request) {
+            return $query->where('price', '<=', (float) $request->filterStartPrice);
+        })
             ->when($request->filterBrand != "Select Brand", function ($query) use ($request) {
                 return $query->where('brand_id', $request->filterBrand);
             })
@@ -378,18 +387,61 @@ class ReportController extends Controller
         return view('pos.report.products.product-info-filter-rander-table', compact('productInfo'))->render();
     }
     ///SMS Report Method
-    public function SmsView(){
-        $smsAll =Sms::all();
-        return view('pos.report.sms.sms_report',compact('smsAll'));
-    }//
-    public function SmsReportFilter(Request $request){
+    public function SmsView()
+    {
+        $smsAll = Sms::all();
+        return view('pos.report.sms.sms_report', compact('smsAll'));
+    } //
+    public function SmsReportFilter(Request $request)
+    {
         $smsAll = Sms::when($request->customerId != "Select Customer", function ($query) use ($request) {
             return $query->where('customer_id', $request->customerId);
         })
-        ->when($request->startDate && $request->endDate, function ($query) use ($request) {
-            return $query->whereBetween('created_at', [$request->startDate, $request->endDate]);
-        })
+            ->when($request->startDate && $request->endDate, function ($query) use ($request) {
+                return $query->whereBetween('created_at', [$request->startDate, $request->endDate]);
+            })
             ->get();
         return view('pos.report.sms.sms-filter-table', compact('smsAll'))->render();
+    }
+
+    public function monthlyReport()
+    {
+        $monthlyReports = [];
+
+        for ($i = 0; $i < 12; $i++) {
+            // Calculate the start and end dates for the month
+            $startOfMonth = now()->subMonths($i)->startOfMonth()->toDateString();
+            $endOfMonth = now()->subMonths($i)->endOfMonth()->toDateString();
+
+            // Calculate the totals for the month
+            $totalPurchaseCost = Purchase::whereBetween('purchse_date', [$startOfMonth, $endOfMonth])
+                ->sum('grand_total');
+            $totalSale = Sale::whereBetween('sale_date', [$startOfMonth, $endOfMonth])
+                ->sum('receivable');
+            $totalProfit = Sale::whereBetween('sale_date', [$startOfMonth, $endOfMonth])
+                ->sum('profit');
+            $totalExpense = Expense::whereBetween('expense_date', [$startOfMonth, $endOfMonth])
+                ->sum('amount');
+            $totalSalary = EmployeeSalary::whereBetween('date', [$startOfMonth, $endOfMonth])
+                ->sum('debit');
+            $finalProfit = $totalProfit - ($totalExpense + $totalSalary);
+
+            $monthName = now()->subMonths($i)->format('F Y');
+
+
+            // Store the report data in the array
+            $monthlyReports[now()->subMonths($i)->format('Y-m')] = [
+                'month' => $monthName,
+                'totalPurchaseCost' => $totalPurchaseCost,
+                'totalSale' => $totalSale,
+                'totalProfit' => $totalProfit,
+                'totalExpense' => $totalExpense,
+                'totalSalary' => $totalSalary,
+                'finalProfit' => $finalProfit
+            ];
+        }
+
+        // Pass the monthly reports array to the view
+        return view('pos.report.monthly.monthly', compact('monthlyReports'));
     }
 }

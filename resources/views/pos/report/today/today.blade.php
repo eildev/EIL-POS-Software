@@ -241,13 +241,6 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 col-xl-12 stretch-card">
-            <div class="row flex-grow-1">
                 <div class="col-md-3 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
@@ -296,13 +289,23 @@
             </div>
         </div>
     </div>
+    {{-- <div class="row">
+        <div class="col-12 col-xl-12 stretch-card">
+            <div class="row flex-grow-1">
+
+            </div>
+        </div>
+    </div> --}}
+
+
 
     <div class="row">
-        <!--//Top Sale Product Start// --->
-        {{-- <div class="col-md-6 grid-margin stretch-card">
+
+        {{-- today sale Report  --}}
+        <div class="col-md-6 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title text-info">Top Sale Product</h6>
+                    <h6 class="card-title text-info">Today Sale Report</h6>
 
                     <div id="" class="table-responsive">
                         <table id="dataTableExample" class="table">
@@ -311,60 +314,38 @@
                                     <th>SN#</th>
                                     <th>Invoice No.</th>
                                     <th>Product Name</th>
-                                    <th>Sell amount</th>
-                                    <th>due</th>
+                                    <th>Qty</th>
+                                    <th>Due</th>
                                     <th>Sale Amount</th>
                                 </tr>
                             </thead>
-
                             <tbody class="showData">
                                 @if ($totalSales->count() > 0)
-
-
-                                    @php
-                                        $num = 0;
-                                    @endphp
-
-                                    @foreach ($totalSales as $totalSale)
-                                        @php
-                                                $sellDetails = $totalSale->saleItem;
-                                            @endphp
-
-                                            @foreach ($sellDetails as $sellDetail)
-
-                                            @endforeach
-                                        @php
-                                            $selling = $sales->saleItem;
-                                        @endphp
+                                    @foreach ($totalSales as $key => $sale)
                                         <tr>
-                                            <td>{{ $num++ }}</td>
-                                            <td>{{ $productItem->name ?? '' }}</td>
-                                            @php
-                                                $purchaseItems = App\Models\PurchaseItem::where(
-                                                    'product_id',
-                                                    $productItem->id,
-                                                )->get();
-                                                $totalPurchaseQuantity = $purchaseItems->sum('quantity');
-
-                                                $saleItems = App\Models\SaleItem::where(
-                                                    'product_id',
-                                                    $productItem->id,
-                                                )->get();
-
-                                                $noOfSales = $saleItems->sum('qty');
-                                                $totalSalePrice = $saleItems->sum('sub_total');
-
-                                            @endphp
-
-                                            <td> {{ $productItem->stock ?? 0 }}</td>
-                                            <td>{{ $noOfSales }}</td>
-                                            <td>{{ $totalSalePrice ?? 0 }}</td>
-                                            <?php
-                                            $totalSaleAmount += isset($totalSalePrice) ? $totalSalePrice : 0;
-                                            $totalQty += isset($productItem->stock) ? $productItem->stock : 0;
-                                            $totalNoSale += isset($noOfSales) ? $noOfSales : 0;
-                                            ?>
-
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>
+                                                <a
+                                                    href="{{ route('sale.invoice', $sale->id) }}">#{{ $sale->invoice_number ?? 0 }}</a>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    @foreach ($sale->saleItem as $item)
+                                                        <li>{{ $item->product->name ?? '' }}
+                                                            <br>({{ $item->product->barcode ?? '' }})
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                {{ $sale->quantity ?? 0 }}
+                                            </td>
+                                            <td>
+                                                {{ $sale->due ?? 0 }}
+                                            </td>
+                                            <td>
+                                                {{ $sale->receivable ?? 0 }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @else
@@ -378,9 +359,10 @@
                                 <tr>
                                     <th></th>
                                     <th></th>
-                                    <th>Qty : {{ $totalQty ?? 0 }}</th>
-                                    <th>Total : {{ $totalNoSale ?? 0 }}</th>
-                                    <th>Total : {{ $totalSaleAmount ?? 0 }}Tk</th>
+                                    <th></th>
+                                    <th>Qty : {{ $todayTotalSaleQty ?? 0 }}</th>
+                                    <th>Total : {{ $todayTotalSaleDue ?? 0 }}Tk</th>
+                                    <th>Total : {{ $todayTotalSaleAmount ?? 0 }}Tk</th>
                                 </tr>
                             </tfoot>
                             </tbody>
@@ -388,12 +370,14 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
 
+
+        {{-- today Expanse Report  --}}
         <div class="col-md-6 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title text-info">Expense</h6>
+                    <h6 class="card-title text-info">Expense Report</h6>
 
                     <div id="" class="table-responsive">
                         <table id="dataTableExample2" class="table">
@@ -408,7 +392,7 @@
                             <tbody class="showData">
                                 {{-- @dd($expense); --}}
                                 @if ($expense->count() > 0)
-                                {{-- @dd($expense); --}}
+                                    {{-- @dd($expense); --}}
                                     @php
                                         $num = 0;
                                     @endphp
@@ -445,43 +429,58 @@
                     </div>
                 </div>
             </div>
-            <!--//Top Sale Product End// --->
         </div>
     </div>
 
-    {{-- <div class="row">
-        <!---Pay to Supplier Start -->
+
+    <div class="row">
+
+        {{-- today Purchase Report  --}}
         <div class="col-md-6 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title text-info">Pay to Supplier</h6>
+                    <h6 class="card-title text-info">Today Purchase Report</h6>
 
                     <div id="" class="table-responsive">
-                        <table id="dataTableExample1"class="table">
+                        <table id="dataTableExample" class="table">
                             <thead>
                                 <tr>
                                     <th>SN#</th>
-                                    <th>Supplier Name</th>
-                                    <th>Payment Date</th>
-                                    <th>Amount</th>
+                                    <th>Invoice No.</th>
+                                    <th>Product Name</th>
+                                    <th>Qty</th>
+                                    <th>Due</th>
+                                    <th>Purchase Amount</th>
                                 </tr>
                             </thead>
                             <tbody class="showData">
-
-                                @if ($supplier->count() > 0)
-                                    @php
-                                        $num = 0;
-                                        $totalSupplierAmount = 0;
-                                    @endphp
-                                    @foreach ($supplier as $key => $supplierData)
+                                @if ($purchases->count() > 0)
+                                    {{-- @dd($purchases); --}}
+                                    @foreach ($purchases as $key => $purchase)
                                         <tr>
-                                            <td>{{ $num++ }}</td>
-                                            <td>{{ $supplierData['supplier']['name'] ?? '' }}</td>
-                                            <td>{{ $supplierData->date ?? '' }}</td>
-                                            <td>{{ $supplierData->debit ?? '' }} <span>TK</span></td>
-                                            <?php
-                                            $totalSupplierAmount += isset($supplierData->debit) ? $supplierData->debit : 0;
-                                            ?>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>
+                                                <a
+                                                    href="{{ route('purchase.invoice', $purchase->id) }}">#{{ $purchase->id ?? 0 }}</a>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    @foreach ($purchase->purchaseItem as $item)
+                                                        <li>{{ $item->product->name ?? '' }}
+                                                            <br>({{ $item->product->barcode ?? '' }})
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                {{ $purchase->total_quantity ?? 0 }}
+                                            </td>
+                                            <td>
+                                                {{ $purchase->due ?? 0 }}
+                                            </td>
+                                            <td>
+                                                {{ $purchase->grand_total ?? 0 }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @else
@@ -496,7 +495,9 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
-                                    <th>Total : {{ $totalSupplierAmount ?? 0 }}Tk</th>
+                                    <th>Qty : {{ $todayTotalPurchaseQty ?? 0 }}</th>
+                                    <th>Total : {{ $todayTotalPurchaseDue ?? 0 }}Tk</th>
+                                    <th>Total : {{ $todayTotalPurchaseAmount ?? 0 }}Tk</th>
                                 </tr>
                             </tfoot>
                             </tbody>
@@ -505,39 +506,33 @@
                 </div>
             </div>
         </div>
-        <!---Pay to Supplier End -->
+
+
+        {{-- today Expanse Report  --}}
         <div class="col-md-6 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title text-info">Receive from Customer</h6>
+                    <h6 class="card-title text-info">Today Salary Report</h6>
 
                     <div id="" class="table-responsive">
-                        <table id="dataTableExample4" class="table">
+                        <table id="dataTableExample2" class="table">
                             <thead>
                                 <tr>
                                     <th>SN#</th>
-                                    <th>Customer Name</th>
-                                    <th>Payment Date</th>
+                                    <th>Employee Name</th>
                                     <th>Amount</th>
+                                    <th>Due</th>
                                 </tr>
                             </thead>
-                            <tbody class="showData">
-                                @if ($customer->count() > 0)
-                                    @php
-                                        $num = 0;
-                                    @endphp
-                                    <?php
-                                    $customerTotalPayment = 0;
-                                    ?>
-                                    @foreach ($customer as $key => $customerData)
+                            <tbody>
+
+                                @if ($salary->count() > 0)
+                                    @foreach ($salary as $key => $data)
                                         <tr>
-                                            <td>{{ $num++ }}</td>
-                                            <td>{{ $customerData['customer']['name'] ?? '' }}</td>
-                                            <td>{{ $customerData->date ?? '' }}</td>
-                                            <td>{{ $customerData->debit ?? '' }} <span>TK</span></td>
-                                            <?php
-                                            $customerTotalPayment += isset($customerData->debit) ? $customerData->debit : 0;
-                                            ?>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $data->emplyee->full_name ?? '' }}</td>
+                                            <td>{{ $data->debit ?? 0 }}</td>
+                                            <td>{{ $data->balance ?? 0 }}</td>
                                         </tr>
                                     @endforeach
                                 @else
@@ -553,15 +548,16 @@
                                 <tr>
                                     <th></th>
                                     <th></th>
-                                    <th></th>
-                                    <th><strong>Total : {{ $customerTotalPayment ?? 0 }} Tk</strong></th>
+                                    <th><strong>Total Amount : {{ $totalSalary ?? 0 }} Tk</strong></th>
+                                    <th><strong>Total Due : {{ $totalSalaryDue ?? 0 }} Tk</strong></th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
                 </div>
             </div>
-            <!--//Top Sale Product End// --->
         </div>
-    </div> --}}
+    </div>
+
+
 @endsection

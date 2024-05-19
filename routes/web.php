@@ -377,11 +377,12 @@ Route::middleware('auth')->group(function () {
             /////////////Product Info Report //////////////
             Route::get('/product/info/report', 'ProductInfoReport')->name('product.info.report');
             // Route::get('/product/category/ajax/{categoryId}', 'ProductSubCategoryShow');
-            Route::get('/product/info/filter/view','ProductInfoFilter')->name('product.info.filter.view');
+            Route::get('/product/info/filter/view', 'ProductInfoFilter')->name('product.info.filter.view');
             /////SMS Report ///////
-            Route::get('/sms/report/view','SmsView')->name('sms.report');
-            Route::get('/sms/report/filter','SmsReportFilter')->name('sms.report.filter');
-
+            Route::get('/sms/report/view', 'SmsView')->name('sms.report');
+            Route::get('/sms/report/filter', 'SmsReportFilter')->name('sms.report.filter');
+            // MONNTHLY Report 
+            Route::get('/monthly/report', 'monthlyReport')->name('monthly.report');
         });
     });
     // Report related routes

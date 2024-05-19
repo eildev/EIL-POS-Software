@@ -128,11 +128,28 @@
 
         // Loop through each bank to calculate total transaction amount
         foreach ($banks as $bank) {
-            $totalTransactionAmount = App\Models\AccountTransaction::where('account_id', $bank->id)->sum('balance');
+            $totalTransactionAmount = App\Models\AccountTransaction::where('account_id', $bank->id)
+                ->where('balance', '>', 0)
+                ->sum('balance');
             // array_push(floatval($totalTransactionAmounts), floatval($totalTransactionAmount));
             array_push($totalTransactionAmounts, floatval($totalTransactionAmount));
         }
         // dd($totalTransactionAmounts);
+        $tt = 0;
+        $ttt = [];
+        foreach ($totalTransactionAmounts as $item) {
+            if ($item > 0) {
+                $tt += $item;
+            }
+        }
+        foreach ($totalTransactionAmounts as $item) {
+            if ($item > 0) {
+                $ot = ($item * 100) / $tt;
+                $formatted_ot = number_format($ot, 2, '.', '');
+                array_push($ttt, floatval($formatted_ot));
+            }
+        }
+        // dd($ttt, $totalTransactionAmounts);
     @endphp
 
 
@@ -437,7 +454,7 @@
                 series: [{
                     name: 'sales',
                     data: [
-                        @foreach ($salesByDayCount as $date => $salesCount)
+                        @foreach ($salesByDay as $date => $salesCount)
                             {{ $salesCount }},
                         @endforeach
                     ]
@@ -811,7 +828,7 @@
         <div class="col-xl-6 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Pie chart</h6>
+                    <h6 class="card-title">Total Trnasaction</h6>
                     <div id="apexPie1"></div>
                 </div>
             </div>
@@ -820,7 +837,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Banking Details</h6>
-                    <div id="apexRadialBar"></div>
+                    <div id="apexRadialBar1"></div>
                 </div>
             </div>
         </div>
@@ -892,6 +909,79 @@
 
             var chart = new ApexCharts(document.querySelector("#apexPie1"), options);
             chart.render();
+
+
+
+            var options = {
+                chart: {
+                    height: 300,
+                    type: "radialBar",
+                    parentHeightOffset: 0,
+                    foreColor: colors.bodyColor,
+                    background: colors.cardBg,
+                    toolbar: {
+                        show: false
+                    },
+                },
+                theme: {
+                    mode: 'dark'
+                },
+                tooltip: {
+                    theme: 'dark'
+                },
+                colors: [colors.primary, colors.warning, colors.danger, colors.info, colors.success],
+                fill: {
+
+                },
+                grid: {
+                    padding: {
+                        top: 10
+                    }
+                },
+                plotOptions: {
+                    radialBar: {
+                        dataLabels: {
+                            total: {
+                                show: true,
+                                label: 'TOTAL',
+                                fontSize: '14px',
+                                fontFamily: fontFamily,
+                            }
+                        },
+                        track: {
+                            background: colors.gridBorder,
+                            strokeWidth: '100%',
+                            opacity: 1,
+                            margin: 5,
+                        },
+                    }
+                },
+                series: [
+                    @foreach ($ttt as $item)
+                        {{ $item }},
+                    @endforeach
+                ],
+                labels: [
+                    @foreach ($banks as $bank)
+                        '{{ $bank->name }}',
+                    @endforeach
+                ],
+                legend: {
+                    show: true,
+                    position: "top",
+                    horizontalAlign: 'center',
+                    fontFamily: fontFamily,
+                    itemMargin: {
+                        horizontal: 8,
+                        vertical: 0
+                    },
+                },
+            };
+
+            var chart = new ApexCharts(document.querySelector("#apexRadialBar1"), options);
+            chart.render();
+            var chartAreaBounds = chart.w.globals.dom.baseEl.querySelector('.apexcharts-inner')
+                .getBoundingClientRect();
         });
     </script>
     {{-- /// pie chart end /// --}}

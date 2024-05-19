@@ -71,11 +71,13 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="formFile">Invoice File/Picture upload</label>
-                                <input class="form-control document_file" name="document" type="file" id="formFile">
+                                <input class="form-control document_file" name="document" type="file" id="formFile"
+                                    onclick="errorRemove(this);" onblur="errorRemove(this);">
+                                <span class="text-danger document_file_error"></span>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="formFile">Invoice Number</label>
-                                <input class="form-control document_file" name="invoice" type="text">
+                                <input class="form-control" name="invoice" type="text">
                             </div>
                         </div>
                     </div>
@@ -692,6 +694,9 @@
                                 }
                                 if (res.error.purchase_date) {
                                     showError('.purchase_date', res.error.purchase_date);
+                                }
+                                if (res.error.document) {
+                                    showError('.document_file', res.error.document);
                                 }
                             } else {
                                 if (res.error.payment_method) {

@@ -29,6 +29,7 @@ class PurchaseController extends Controller
             'supplier_id' => 'required',
             'date' => 'required',
             'payment_method' => 'required',
+            'document' => 'file|mimes:jpg,pdf,png,svg,webp,jpeg,gif|max:5120'
         ]);
 
 
@@ -56,7 +57,7 @@ class PurchaseController extends Controller
             $purchase->tax = $request->tax;
             $purchase->grand_total = $request->grand_total;
             $purchase->paid = $request->total_payable;
-            $purchase->due = $request->grand_total - $request->paid;
+            $purchase->due = $request->grand_total - $request->total_payable;
             $purchase->carrying_cost = $request->carrying_cost;
             $purchase->payment_method = $request->payment_method;
             $purchase->note = $request->note;

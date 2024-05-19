@@ -238,9 +238,9 @@
         };
 
         // Close the tab when print window is closed or cancelled
-        // window.onafterprint = function() {
-        //     window.close();
-        // };
+        window.onafterprint = function() {
+            window.close();
+        };
     </script>
 </body>
 

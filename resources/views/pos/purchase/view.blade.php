@@ -1,5 +1,7 @@
 @extends('master')
 @section('admin')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+
 
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card filter_box">
@@ -224,7 +226,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary"><i class="fa-solid fa-print me-2"></i>Print</button>
+                    <button type="button" class="btn btn-primary" onclick="window.print();"><i
+                            class="fa-solid fa-print me-2"></i>Print</button>
                 </div>
             </div>
         </div>
@@ -390,7 +393,32 @@
 
             $(document).on('click', '.money_receipt', function(e) {
                 e.preventDefault();
-                alert('ok');
+                let id = $(this).attr('data-id');
+                $.ajax({
+                    url: '/purchase/find/' + id,
+                    method: "GET",
+                    success: function(res) {
+                        // console.log(res);
+                        if (res.status == 200) {
+                            let imageUrl = `/uploads/purchase/${res.data.document}`;
+                            // Extract the file extension
+                            if (imageUrl) {
+                                let fileExtension = imageUrl.split('.').pop().toLowerCase();
+                                if (fileExtension !== 'pdf') {
+                                    $('.show_doc').html(
+                                        `<img src="${imageUrl}" width="100%" height="500px" alt="Image" />`
+                                    );
+                                } else {
+                                    $('.show_doc').html(
+                                        `<iframe src="${imageUrl}" width="100%" height="500px"></iframe>`
+                                    );
+                                }
+                            }
+                        } else {
+                            // Handle other status codes or errors if needed
+                        }
+                    }
+                })
             })
         });
     </script>

@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Add Purchase')
 @section('admin')
 
     <nav class="page-breadcrumb">

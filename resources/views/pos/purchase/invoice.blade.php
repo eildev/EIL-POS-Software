@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Purchase Invoice')
 @section('admin')
     @php
         $branch = App\Models\Branch::findOrFail($purchase->branch_id);

@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Transaction Invoice')
 @section('admin')
 
 <div class="row" bis_skin_checked="1">

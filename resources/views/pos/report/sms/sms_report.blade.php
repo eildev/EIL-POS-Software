@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| SMS Report')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">

@@ -1,4 +1,6 @@
 @extends('master')
+@section('title','| Purchase Report')
+
 @section('admin')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
 
@@ -95,7 +97,7 @@
                                     <i class="btn-icon-prepend" data-feather="printer"></i>
                                     Print
                                 </button>
-                                {{-- 
+                                {{--
                                 <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
                                     <i class="btn-icon-prepend" data-feather="download-cloud"></i>
                                     Download Report
@@ -113,7 +115,7 @@
                 <div class="card-body">
                     <h6 class="card-title">Purchase Table</h6>
                     <div class="table-responsive">
-                        <table id="dataTableExample" class="table">
+                        <table id="example" class="table">
                             <thead>
                                 <tr>
                                     <th class="id">#</th>
@@ -261,7 +263,7 @@
 
 
     <script>
-        // error remove 
+        // error remove
         function errorRemove(element) {
             if (element.value != '') {
                 $(element).siblings('span').hide();
@@ -269,14 +271,14 @@
             }
         }
         $(document).ready(function() {
-            // show error 
+            // show error
             function showError(name, message) {
                 $(name).css('border-color', 'red');
                 $(name).focus();
                 $(`${name}_error`).show().text(message);
             }
 
-            // filter 
+            // filter
             document.querySelector('#filter').addEventListener('click', function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -302,7 +304,7 @@
                 });
             });
 
-            // reset 
+            // reset
             document.querySelector('#reset').addEventListener('click', function(e) {
                 e.preventDefault();
                 $('.start-date').val("");
@@ -311,7 +313,7 @@
                 $('.supplier_id').val(null).trigger('change');
             });
 
-            // print 
+            // print
             $('.print-btn').click(function() {
                 // Remove the id attribute from the table
                 $('#dataTableExample').removeAttr('id');
@@ -324,7 +326,7 @@
 
 
 
-            //    add payment 
+            //    add payment
             $(document).on('click', '.add_payment', function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -349,7 +351,7 @@
                 })
             });
 
-            // save payment 
+            // save payment
             $(document).on('click', '.save_payment', function(e) {
                 e.preventDefault();
                 let id = $(this).val();

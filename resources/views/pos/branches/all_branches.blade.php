@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Branch List')
 @section('admin')
 
 <div class="row">

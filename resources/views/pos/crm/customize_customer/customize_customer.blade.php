@@ -1,10 +1,10 @@
 @extends('master')
+@section('title','| Customer Customize')
 @section('admin')
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
       <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Customer Customize List</a>
     </li>
-
   </ul>
   <div class="tab-content border border-print border-top-0 p-3" id="myTabContent">
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">

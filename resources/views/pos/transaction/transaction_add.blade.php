@@ -1,4 +1,6 @@
 @extends('master')
+@section('title','| Transactions')
+
 @section('admin')
 <style>
     .nav.nav-tabs .nav-item .nav-link.active {

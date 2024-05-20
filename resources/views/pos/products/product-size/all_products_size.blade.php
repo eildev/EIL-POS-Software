@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Product Size list')
 @section('admin')
 
 <div class="row">
@@ -30,8 +31,8 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $pSize['category']['name']}}</td>
                                 <td>{{ $pSize->size ?? ''}}</td>
-                                
-                                
+
+
                                 <td>
                                     <a href="{{route('product.size.edit',$pSize->id)}}" class="btn btn-sm btn-primary btn-icon">
                                         <i data-feather="edit"></i>

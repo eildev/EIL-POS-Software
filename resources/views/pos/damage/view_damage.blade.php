@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Damage List')
 @section('admin')
 
     <div class="row">

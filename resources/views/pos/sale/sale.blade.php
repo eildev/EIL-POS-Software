@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Sale')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -329,7 +330,7 @@
 
 
     <script>
-        // error remove 
+        // error remove
         function errorRemove(element) {
             if (element.value != '') {
                 $(element).siblings('span').hide();
@@ -341,14 +342,14 @@
             $('.barcode_input').focus();
             // var currentDate = new Date().toISOString().split('T')[0];
             // $('.purchase_date').val(currentDate);
-            // show error 
+            // show error
             function showError(name, message) {
                 $(name).css('border-color', 'red');
                 $(name).focus();
                 $(`${name}_error`).show().text(message);
             }
 
-            // customer view function 
+            // customer view function
             function viewCustomer() {
                 $.ajax({
                     url: '/get/customer',
@@ -409,7 +410,7 @@
             })
 
 
-            // calculate quantity 
+            // calculate quantity
             let totalQuantity = 0;
 
             // Function to update total quantity
@@ -445,21 +446,21 @@
         //             <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="1" />
         //         </td>
         //         <td>
-        //             ${promotion && promotion.discount_type ? 
-        //             promotion.discount_type == 'percentage' ? 
-        //             `<span class="discount_percentage${product.id}">${promotion.discount_value}</span>%` : 
-        //             `<span class="discount_amount${product.id}">${promotion.discount_value}</span>Tk` : 
+        //             ${promotion && promotion.discount_type ?
+        //             promotion.discount_type == 'percentage' ?
+        //             `<span class="discount_percentage${product.id}">${promotion.discount_value}</span>%` :
+        //             `<span class="discount_amount${product.id}">${promotion.discount_value}</span>Tk` :
         //             (promotion ? `<span>00</span>` : `<span>00</span>`)
         //             }
         //         </td>
         //         <td>
         //             ${
-        //             promotion ? 
-        //             promotion.discount_type == 'percentage' ? 
-        //             `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - (product.price * promotion.discount_value / 100)}" />` 
-        //             : 
-        //             `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - promotion.discount_value}" />` 
-        //             : 
+        //             promotion ?
+        //             promotion.discount_type == 'percentage' ?
+        //             `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - (product.price * promotion.discount_value / 100)}" />`
+        //             :
+        //             `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - promotion.discount_value}" />`
+        //             :
         //             `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price}" />`
         //             }
         //         </td>
@@ -472,7 +473,7 @@
             //     );
             // }
 
-            // show Product function 
+            // show Product function
             function showAddProduct(product, promotion) {
                 // Check if a row with the same product ID already exists
                 let existingRow = $(`.data_row${product.id}`);
@@ -499,21 +500,21 @@
                     <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="1" />
                 </td>
                 <td>
-                    ${promotion && promotion.discount_type ? 
-                        promotion.discount_type == 'percentage' ? 
-                            `<span class="discount_percentage${product.id}">${promotion.discount_value}</span>%` : 
-                            `<span class="discount_amount${product.id}">${promotion.discount_value}</span>Tk` : 
+                    ${promotion && promotion.discount_type ?
+                        promotion.discount_type == 'percentage' ?
+                            `<span class="discount_percentage${product.id}">${promotion.discount_value}</span>%` :
+                            `<span class="discount_amount${product.id}">${promotion.discount_value}</span>Tk` :
                         (promotion ? `<span>00</span>` : `<span>00</span>`)
                     }
                 </td>
                 <td>
                     ${
-                        promotion ? 
-                            promotion.discount_type == 'percentage' ? 
-                                `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - (product.price * promotion.discount_value / 100)}" />` 
-                                : 
-                                `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - promotion.discount_value}" />` 
-                            : 
+                        promotion ?
+                            promotion.discount_type == 'percentage' ?
+                                `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - (product.price * promotion.discount_value / 100)}" />`
+                                :
+                                `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - promotion.discount_value}" />`
+                            :
                             `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price}" />`
                     }
                 </td>
@@ -558,7 +559,7 @@
                 })
             })
 
-            // select product 
+            // select product
             $('.product_select').change(function() {
                 let id = $(this).val();
 
@@ -765,14 +766,14 @@
 
             })
 
-            // discount 
+            // discount
             $(document).on('change', '.select-customer', function() {
                 // let id = $(this).val();
                 calculateGrandTotal();
             })
 
 
-            // purchase Delete 
+            // purchase Delete
             $(document).on('click', '.purchase_delete', function(e) {
                 // alert('ok');
                 let id = $(this).attr('data-id');
@@ -795,7 +796,7 @@
 
             })
 
-            // paid amount 
+            // paid amount
             $('.paid_btn').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -813,7 +814,7 @@
                 $('.total_payable_amount').text(value);
             })
 
-            // due 
+            // due
             function totalDue() {
                 let pay = $('.total_payable').val();
                 let grandTotal = parseFloat($('.grandTotal').text());
@@ -834,7 +835,7 @@
             })
 
 
-            // order btn 
+            // order btn
             $('.order_btn').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -883,7 +884,7 @@
                 });
 
                 let allData = {
-                    // for purchase table 
+                    // for purchase table
                     customer_id,
                     sale_date: formattedSaleDate,
                     quantity,

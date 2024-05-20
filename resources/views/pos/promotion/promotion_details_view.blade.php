@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Promotional Details List')
 @section('admin')
 
     <div class="row">

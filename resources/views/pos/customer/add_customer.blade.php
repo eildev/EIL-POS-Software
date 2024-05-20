@@ -1,4 +1,6 @@
 @extends('master')
+@section('title','| Add Customer')
+
 @section('admin')
 <div class="row">
 <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">

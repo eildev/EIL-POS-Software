@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Employee List')
 @section('admin')
 
 <div class="row">
@@ -45,10 +46,10 @@
                                     @else
                                     <img src="{{ asset('dummy/image.jpg') }}" alt="Dummy Image">
                                     @endif
-                                
+
                                 <td>{{ $employe->designation ?? ''}}</td>
                                 <td>{{ $employe->salary ?? ''}}</td>
-                                
+
                                 <td>
                                     <a href="{{route('employee.edit',$employe->id)}}" class="btn btn-sm btn-primary btn-icon">
                                         <i data-feather="edit"></i>

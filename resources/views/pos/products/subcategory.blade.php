@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Product Sub-Category')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">

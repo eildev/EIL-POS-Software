@@ -1,7 +1,6 @@
-
 @extends('master')
+@section('title','| Advanced Employee Salary List')
 @section('admin')
-
 <div class="row">
 
 <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
@@ -15,7 +14,7 @@
                 <h6 class="card-title text-info">View Advanced Salary History</h6>
 
                     <div id="" class="table-responsive">
-                        <table id="dataTableExample" class="table">
+                        <table id="example" class="table">
                             <thead>
                                 <tr>
                                     <th>SN</th>

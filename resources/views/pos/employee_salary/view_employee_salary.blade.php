@@ -1,9 +1,7 @@
 @extends('master')
+@section('title','| Employee Salary List')
 @section('admin')
-
-
 <div class="row">
-
 <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
     <div class="">
         <h4 class="text-right"><a href="{{route('employee.salary.add')}}" class="btn btn-info">Add New Salary </a></h4>
@@ -15,7 +13,7 @@
                 <h6 class="card-title text-info">View Salary History</h6>
 
                     <div id="" class="table-responsive">
-                        <table id="dataTableExample" class="table">
+                        <table id="example" class="table">
                             <thead>
                                 <tr>
                                     <th>SN</th>

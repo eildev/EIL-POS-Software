@@ -7,7 +7,7 @@
     content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<title>{{ $siteTitle }}</title>
+<title>{{ $siteTitle }} @yield('title')</title>
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">

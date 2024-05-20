@@ -1,9 +1,10 @@
 @extends('master')
+@section('title','| Damage Report')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Purchase Report</li>
+            <li class="breadcrumb-item active" aria-current="page">Damage Report</li>
         </ol>
     </nav>
 

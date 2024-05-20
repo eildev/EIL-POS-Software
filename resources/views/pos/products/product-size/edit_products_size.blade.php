@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Edit Product Size')
 @section('admin')
 
 <div class="row">
@@ -15,7 +16,7 @@
     <h6 class="card-title text-info">Edit Product Size</h6>
     <form class="forms-sample" id="myValidForm" action="{{route('product.size.update',$productSize->id)}}" method="POST">
         @csrf
-        
+
         <div class="row mb-3">
             <label for="exampleInputBranchname2" class="col-sm-3 col-form-label">Select Category</label>
             <div class="col-sm-9 form-valid-groups">
@@ -25,25 +26,25 @@
                 <option value="{{$category->id}}" {{$category->id == $productSize->category_id ? 'selected' : ''}} >{{$category->name}}</option>
                 @endforeach
               </select>
-               
+
             </div>
         </div>
         <div class="row mb-3">
             <label for="exampleInputBranchname2" class="col-sm-3 col-form-label">Product Size</label>
             <div class="col-sm-9 form-valid-groups">
                 <input type="text" name="size" value="{{$productSize->size}}" class="form-control" id="exampleInputBranchname2" placeholder="Please Enter Size">
-               
+
             </div>
         </div>
-      
+
         <div class="row mb-3">
             <label for="exampleInputPassword2" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
             <button type="submit" class="btn btn-primary me-2">Update</button>
             </div>
         </div>
-        
-    
+
+
     </form>
 
 </div>

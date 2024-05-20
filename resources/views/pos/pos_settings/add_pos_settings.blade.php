@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Settings Page')
 @section('admin')
 @php
 $mode = App\models\PosSetting::all()->first();

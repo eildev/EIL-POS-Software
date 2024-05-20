@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Edit Promotional Details')
 @section('admin')
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
@@ -77,7 +78,7 @@
         </div>
     </div>
     <script>
-        // error remove 
+        // error remove
         function errorRemove(element) {
             if (element.value != '') {
                 $(element).siblings('span').hide();
@@ -87,7 +88,7 @@
 
 
         $(document).ready(function() {
-            // show error 
+            // show error
             function showError(name, message) {
                 $(name).css('border-color', 'red');
                 $(name).focus();

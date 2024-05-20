@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Purchase Edit')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -332,7 +333,7 @@
 
 
     <script>
-        // error remove 
+        // error remove
         function errorRemove(element) {
             if (element.value != '') {
                 $(element).siblings('span').hide();
@@ -340,7 +341,7 @@
             }
         }
         $(document).ready(function() {
-            // show error 
+            // show error
             function showError(name, message) {
                 $(name).css('border-color', 'red');
                 $(name).focus();
@@ -376,7 +377,7 @@
             supplierView();
 
 
-            // showItems 
+            // showItems
             function showItems() {
                 let id = '{{ $purchase->id }}'
                 $.ajax({
@@ -420,7 +421,7 @@
             showItems();
 
 
-            // // total items quantity 
+            // // total items quantity
             // let totalQuantity = 0;
 
             // // Function to update total quantity

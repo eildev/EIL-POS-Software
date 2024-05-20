@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Dashboard')
 @section('admin')
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>

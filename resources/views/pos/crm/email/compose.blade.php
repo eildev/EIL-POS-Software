@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Email Sending Page')
 @section('admin')
 @if(!empty($content))
     {{ $content}}

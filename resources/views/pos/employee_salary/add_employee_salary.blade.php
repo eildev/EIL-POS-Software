@@ -1,10 +1,10 @@
 
 @extends('master')
+@section('title','| Add Employee Salary')
 @section('admin')
 <div class="row">
 <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
     <div class="">
-
         <h4 class="text-right"><a href="{{route('employee.salary.view')}}" class="btn btn-info">View Salary History</a></h4>
     </div>
 </div>

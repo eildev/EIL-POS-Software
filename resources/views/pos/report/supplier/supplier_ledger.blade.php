@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Supplier Ledger Report')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -253,7 +254,7 @@
                     }
                 });
             });
-            // print 
+            // print
             document.querySelector('.print-btn').addEventListener('click', function(e) {
                 e.preventDefault();
                 $('#dataTableExample').removeAttr('id');

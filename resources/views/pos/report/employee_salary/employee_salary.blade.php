@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Employee Salary Ledger')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">

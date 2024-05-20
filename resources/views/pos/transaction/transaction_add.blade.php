@@ -1,4 +1,6 @@
 @extends('master')
+@section('title','| Transactions')
+
 @section('admin')
 <style>
     .nav.nav-tabs .nav-item .nav-link.active {
@@ -19,7 +21,7 @@
         <a class="nav-link active" id="profile-tab" data-bs-toggle="tab" href="#profile" style="background: " role="tab" aria-controls="profile" aria-selected="false">Add Transaction</a>
       </li>
     <li class="nav-item">
-      <a class="nav-link " id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Transaction List</a>
+      <a class="nav-link " id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Transaction History</a>
     </li>
 
   </ul>

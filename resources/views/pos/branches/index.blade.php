@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Add Branch')
 @section('admin')
 
 <div class="row">
@@ -52,7 +53,7 @@
             @enderror
         </div>
         </div>
-        
+
         <div class="row mb-3">
             <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Branch Logo</label>
             <div class="col-sm-9">
@@ -75,8 +76,8 @@
             <button type="submit" class="btn btn-primary me-2">Submit</button>
             </div>
         </div>
-        
-    
+
+
     </form>
 
 </div>

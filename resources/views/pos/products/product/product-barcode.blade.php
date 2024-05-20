@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Barcode Page')
 @section('admin')
     <div class="btn-print">
         <button class="btn btn-info text-center" onClick="window.print();">Print</button> </br></br>

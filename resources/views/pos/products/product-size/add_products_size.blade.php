@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Add Product Size')
 @section('admin')
 
 <div class="row">
@@ -16,7 +17,7 @@
 
     <form class="forms-sample" id="myValidForm" action="{{route('product.size.store')}}" method="POST">
         @csrf
-        
+
         <div class="row mb-3">
             <label for="exampleInputBranchname2" class="col-sm-3 col-form-label">Select Category</label>
             <div class="col-sm-9 form-valid-groups">
@@ -26,17 +27,17 @@
                 <option value="{{$category->id}}">{{$category->name}}</option>
                 @endforeach
               </select>
-               
+
             </div>
         </div>
         <div class="row mb-3">
             <label for="exampleInputBranchname2" class="col-sm-3 col-form-label">Product Size</label>
             <div class="col-sm-9 form-valid-groups">
                 <input type="text" name="size" class="form-control" id="exampleInputBranchname2" placeholder="Please Enter Size">
-               
+
             </div>
         </div>
-      
+
         <div class="row mb-3">
             <label for="exampleInputPassword2" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
@@ -79,8 +80,8 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $pSize['category']['name']}}</td>
                                 <td>{{ $pSize->size ?? ''}}</td>
-                                
-                                
+
+
                                 <td>
                                     <a href="{{route('product.size.edit',$pSize->id)}}" class="btn btn-sm btn-primary btn-icon">
                                         <i data-feather="edit"></i>
@@ -114,15 +115,15 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#submitForm').on('click', function(e) {
-            e.preventDefault(); 
+            e.preventDefault();
 
             if ($('#myValidForm').valid()) { // Check if form is valid
                 var formData = $('#myValidForm').serialize(); // Serialize form data
 
                 $.ajax({
                     url: $('#myValidForm').attr('action'), // Form action URL
-                    type: 'POST', 
-                    data: formData, 
+                    type: 'POST',
+                    data: formData,
                     success: function(response) {
                         toastr.success(response.message);
                          window.location.href = '{{ route("product.size.view") }}';

@@ -28,8 +28,16 @@
                                         <td>Supplier <br> Name: {{ $trans['supplier']['name'] ?? '' }} <br> Phone:
                                             {{ $trans['supplier']['phone'] ?? '' }}</td>
                                     @endif
-                                    <td>{{ $trans->date }} <Span style="color:brown">:</Span>
-                                        {{ date('h:i A', strtotime($trans->created_at)) }}</td>
+                                    @php
+                                    $dacTimeZone = new DateTimeZone('Asia/Dhaka');
+                                    $created_at = optional($trans->created_at)->setTimezone($dacTimeZone);
+                                    $formatted_date = optional($trans->created_at)->format('d F Y') ?? '';
+                                    $formatted_time = $created_at ? $created_at->format('h:i A') : '';
+                                    @endphp
+
+                                    <td>{{ $formatted_date  ?? ''}} <Span style="color:brown">:</Span>
+                                        {{ $formatted_time ?? '' }}</td>
+
                                     <td>{{ $trans->debit }}</td>
                                     <td>
                                         @if ($trans->payment_type == 'pay')
@@ -38,11 +46,13 @@
                                             <span>Cash Received</span>
                                         @endif
                                     <td>{{ $trans['bank']['name'] ?? '' }}</td>
-                                    <td class="note_short"> @php
+                                    <td class="note_short">
+                                        @php
                                         $note = $trans->note;
                                         $noteChunks = str_split($note, 20);
                                         echo implode('<br>', $noteChunks);
-                                    @endphp</td>
+                                       @endphp
+                                    </td>
                                     <td class="actions">
                                         <a href="{{ route('transaction.invoice.receipt', $trans->id) }}"
                                             class="btn btn-sm btn-primary " title="Print">

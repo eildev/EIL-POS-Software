@@ -27,7 +27,7 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody class="showData">
+                            <tbody>
                                 @if ($damages->count() > 0)
                                     @foreach ($damages as $key => $damage)
                                         {{-- @dd($damage->branch->name); --}}
@@ -39,25 +39,26 @@
                                             <td>{{ $damage->date ?? '' }}</td>
                                             <td>{{ $damage->note ?? '' }}</td>
                                             <td>
-                                    <a href="{{route('damage.edit',$damage->id)}}" class="btn btn-sm btn-primary btn-icon">
-                                        <i data-feather="edit"></i>
-                                    </a>
-                                    {{-- <a href="{{route('damage.delete',$damage->id)}}" id="delete" class="btn btn-sm btn-danger btn-icon"> --}}
-                                        <i data-feather="trash-2"></i>
-                                    </a>
-                                </td>
+                                                <a href="{{ route('damage.edit', $damage->id) }}"
+                                                    class="btn btn-sm btn-primary btn-icon">
+                                                    <i data-feather="edit"></i>
+                                                </a>
+                                                {{-- <a href="{{route('damage.delete',$damage->id)}}" id="delete" class="btn btn-sm btn-danger btn-icon"> --}}
+                                                <i data-feather="trash-2"></i>
+                                                </a>
+                                            </td>
                                         </tr>
                                     @endforeach
-                                @else
+                                    {{-- @else
                                     <tr>
-                                        <td colspan="12">
+                                        <td colspan="7">
                                             <div class="text-center text-warning mb-2">Data Not Found</div>
                                             <div class="text-center">
-                                                <a href="{{route('damage.add')}}" class="btn btn-primary">Add damage<i
+                                                <a href="{{ route('damage') }}" class="btn btn-primary">Add damage<i
                                                         data-feather="plus"></i></a>
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr> --}}
                                 @endif
 
                             </tbody>

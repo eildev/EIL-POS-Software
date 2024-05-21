@@ -47,7 +47,7 @@
                                 $products = App\Models\Product::where('stock', '>', 0)->get();
                             @endphp
                             <label for="ageSelect" class="form-label">Product</label>
-                            <select class="js-example-basic-single form-select product_select" data-width="100%"
+                            <select class="js-example-basic-single  form-select product_select" data-width="100%"
                                 onclick="errorRemove(this);" onblur="errorRemove(this);">
                                 @if ($products->count() > 0)
                                     <option selected disabled>Select Product</option>

@@ -7,7 +7,6 @@
             <li class="breadcrumb-item active" aria-current="page">Monthly Report</li>
         </ol>
     </nav>
-
     <div class="row">
         <div class="col-md-12   grid-margin stretch-card filter_box">
             <div class="card">
@@ -122,7 +121,7 @@
                                     <th>Profit</th>
                                     <th>Expanse</th>
                                     <th>Salary</th>
-                                    <th>Final Profit</th>
+                                    <th>Net Profit</th>
                                     <th class="id">Action</th>
                                 </tr>
                             </thead>

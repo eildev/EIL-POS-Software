@@ -53,7 +53,6 @@
                 <form  id="myValidForm" method="POST" action="{{ route('customer.send.email') }}">
                             @csrf
                             <select id="customerEmailSelect" name="recipients[]" class="compose-multiple-select form-select @error('recipients') is-invalid @enderror" multiple="multiple">
-
                                 {{-- <option selected disabled>Select Mail</option> --}}
                                 @foreach ($customer as $customerEmail)
                                     <option value="{{$customerEmail->email}}">{{$customerEmail->email}}</option>

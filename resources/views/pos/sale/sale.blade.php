@@ -165,7 +165,7 @@
                                             <select class="form-select tax" data-width="100%" onclick="errorRemove(this);"
                                                 onblur="errorRemove(this);" value="">
                                                 @if ($taxs->count() > 0)
-                                                    <option selected disabled>Select Taxes</option>
+                                                    <option selected disabled>0%</option>
                                                     @foreach ($taxs as $taxs)
                                                         <option value="{{ $taxs->percentage }}">
                                                             {{ $taxs->percentage }} %
@@ -302,111 +302,7 @@
         </div>
     </div>
 
-    {{-- payement modal  --}}
-    {{-- <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Payment</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="" class="table-responsive mb-3">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Paying Items :</th>
-                                    <th>
-                                        <span class="paying_items">0</span>
-                                    </th>
-                                    <th>Grand Total :</th>
-                                    <th>
-                                        (<span class="grandTotal">00</span>TK)
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th>Total Payable :</th>
-                                    <th>
-                                        (<span class="total_payable_amount">00</span>TK)
-                                    </th>
-                                    <th>Total Due :</th>
-                                    <th>
-                                        <span class="total_due">0</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <form id="signupForm" class="supplierForm row">
-                        <div class="mb-3 col-md-12">
-                            <label for="name" class="form-label">Note</label>
-                            <textarea name="note" class="form-control note" id="" placeholder="Enter Note (Optional)"
-                                rows="3"></textarea>
-                        </div>
 
-                        <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Transaction Method <span
-                                    class="text-danger">*</span></label>
-                            @php
-                                $payments = App\Models\Bank::get();
-                            @endphp
-                            <select class="form-select payment_method" data-width="100%" onclick="errorRemove(this);"
-                                onblur="errorRemove(this);">
-                                @if ($payments->count() > 0)
-                                    @foreach ($payments as $payemnt)
-                                        <option value="{{ $payemnt->id }}">
-                                            {{ $payemnt->name }}
-                                        </option>
-                                    @endforeach
-                                @else
-                                    <option selected disabled>Please Add Transaction</option>
-                                @endif
-                            </select>
-                            <span class="text-danger payment_method_error"></span>
-                        </div>
-
-                        <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Tax</label>
-                            @php
-                                $taxs = App\Models\Tax::get();
-                            @endphp
-                            <select class="form-select tax" data-width="100%" onclick="errorRemove(this);"
-                                onblur="errorRemove(this);" value="">
-                                @if ($taxs->count() > 0)
-                                    <option selected disabled>Select Taxes</option>
-                                    @foreach ($taxs as $taxs)
-                                        <option value="{{ $taxs->percentage }}">
-                                            {{ $taxs->percentage }} %
-                                        </option>
-                                    @endforeach
-                                @else
-                                    <option selected disabled>Please Add Transaction</option>
-                                @endif
-                            </select>
-                        </div>
-                        <div class="mb-3 col-12">
-                            <label for="name" class="form-label">Pay Amount <span
-                                    class="text-danger">*</span></label>
-                            <div class="d-flex align-items-center">
-                                <input class="form-control total_payable border-end-0 rounded-0" name="total_payable"
-                                    type="number">
-                                <button class="btn btn-info border-start-0 rounded-0 paid_btn">Paid</button>
-                            </div>
-                            <span class="text-danger total_payable_error"></span>
-                        </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary order_btn"><i class="fa-solid fa-cart-shopping"></i>
-                        Order</button>
-                </div>
-
-            </div>
-        </div>
-    </div> --}}
 
 
 
@@ -512,47 +408,7 @@
                 });
             }
 
-            // function showAddProduct(product, promotion) {
-            //     $('.showData').append(
-            //         `<tr class="data_row${product.id}">
-        //             <td></td>
-        //         <td>
-        //             <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
-        //         </td>
-        //         <td>
-        //             <input type="hidden" class="product_id" name="product_id[]" readonly value="${product.id ?? 0}" />
-        //             <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.price ?? 0}" />
-        //         </td>
-        //         <td>
-        //             <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="1" />
-        //         </td>
-        //         <td>
-        //             ${promotion && promotion.discount_type ?
-        //             promotion.discount_type == 'percentage' ?
-        //             `<span class="discount_percentage${product.id}">${promotion.discount_value}</span>%` :
-        //             `<span class="discount_amount${product.id}">${promotion.discount_value}</span>Tk` :
-        //             (promotion ? `<span>00</span>` : `<span>00</span>`)
-        //             }
-        //         </td>
-        //         <td>
-        //             ${
-        //             promotion ?
-        //             promotion.discount_type == 'percentage' ?
-        //             `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - (product.price * promotion.discount_value / 100)}" />`
-        //             :
-        //             `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - promotion.discount_value}" />`
-        //             :
-        //             `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price}" />`
-        //             }
-        //         </td>
-        //         <td>
-        //             <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
-        //                 <i class="fa-solid fa-trash-can"></i>
-        //             </a>
-        //         </td>
-        //     </tr>`
-            //     );
-            // }
+
 
             // show Product function
             function showAddProduct(product, promotion) {
@@ -725,21 +581,6 @@
 
 
 
-
-            // function allProductTotal() {
-            //     let total = 0;
-            //     let pTotal = $('input[name="total_price[]"]');
-            //     $.each(pTotal, function(index, item) {
-            //         total = total + parseFloat(item.value);
-            //         $('.total').val(total);
-            //     })
-            // }
-
-
-
-
-
-
             // grandTotalCalulate
             function calculateGrandTotal() {
                 let id = $('.select-customer').val();
@@ -831,30 +672,68 @@
                 updateTotalQuantity();
             }
 
+
+            $(document).on('click', '.quantity', function(e) {
+                e.preventDefault();
+                let id = $(this).attr("product-id")
+                let quantity = $(this).val();
+                quantity = parseInt(quantity);
+                let subTotal = $('.product_subtotal' + id);
+                if (quantity < 0) {
+                    toastr.warning('quantity must be positive value');
+                    $(this).val('');
+                } else {
+                    $.ajax({
+                        url: `/product/find-qty/${id}`,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        success: function(res) {
+                            let stock = res.product.stock;
+                            let productPrice = res.product.price;
+                            if (quantity > stock) {
+                                $('.quantity').val(stock);
+                                // subTotal.val(parseFloat(stock * productPrice).toFixed(2));
+                                updateGrandTotal();
+                                toastr.warning('Not enough stock');
+                            } else {
+                                // subTotal.val(parseFloat(quantity * productPrice).toFixed(2));
+                                updateGrandTotal();
+                            }
+
+                        }
+                    })
+                }
+            })
+
             $(document).on('keyup', '.quantity', function() {
                 let id = $(this).attr("product-id")
                 let quantity = $(this).val();
                 quantity = parseInt(quantity);
                 let subTotal = $('.product_subtotal' + id);
-                $.ajax({
-                    url: `/product/find-qty/${id}`,
-                    type: 'GET',
-                    dataType: 'JSON',
-                    success: function(res) {
-                        let stock = res.product.stock;
-                        let productPrice = res.product.price;
-                        if (quantity > stock) {
-                            $('.quantity').val(stock);
-                            // subTotal.val(parseFloat(stock * productPrice).toFixed(2));
-                            updateGrandTotal();
-                            toastr.warning('Not enough stock');
-                        } else {
-                            // subTotal.val(parseFloat(quantity * productPrice).toFixed(2));
-                            updateGrandTotal();
-                        }
+                if (quantity < 0) {
+                    toastr.warning('quantity must be positive value');
+                    $(this).val('');
+                } else {
+                    $.ajax({
+                        url: `/product/find-qty/${id}`,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        success: function(res) {
+                            let stock = res.product.stock;
+                            let productPrice = res.product.price;
+                            if (quantity > stock) {
+                                $('.quantity').val(stock);
+                                // subTotal.val(parseFloat(stock * productPrice).toFixed(2));
+                                updateGrandTotal();
+                                toastr.warning('Not enough stock');
+                            } else {
+                                // subTotal.val(parseFloat(quantity * productPrice).toFixed(2));
+                                updateGrandTotal();
+                            }
 
-                    }
-                })
+                        }
+                    })
+                }
 
             })
 
@@ -877,26 +756,6 @@
                 updateTotalQuantity();
             })
 
-
-            // payment button click event
-            // $('.payment_btn').click(function(e) {
-            //     e.preventDefault();
-            //     // $('.total_payable_amount').text($('.grand_total').val());
-            //     $('.total_due').text($('.grand_total').val());
-            //     $('.grandTotal').text($('.grand_total').val());
-            //     $('.paying_items').text(totalQuantity);
-
-            // })
-
-            // paid amount
-            // $('.paid_btn').click(function(e) {
-            //     e.preventDefault();
-            //     // alert('ok');
-            //     let grandTotal = $('.grandTotal').text();
-            //     $('.total_payable').val(grandTotal);
-            //     $('.total_payable_amount').text(grandTotal);
-            //     totalDue();
-            // })
 
             // total_payable
             $('.total_payable').keyup(function(e) {
@@ -942,14 +801,8 @@
                 let tax = $('.tax').val();
                 let change_amount = parseFloat($('.grandTotal').val());
                 let actual_discount = change_amount - total;
-                let total_payable = $('.total_payable').val();
+                let paid = $('.total_payable').val();
                 let due = $('.total_due').val();
-                let paid = 0;
-                if (due <= 0) {
-                    paid = total_payable - paid;
-                } else {
-                    paid = total_payable;
-                }
                 let note = $('.note').val();
                 let payment_method = $('.payment_method').val();
                 // let product_id = $('.product_id').val();

@@ -52,9 +52,10 @@
                         @endphp
                 <form  id="myValidForm" method="POST" action="{{ route('customer.send.email') }}">
                             @csrf
-                            <select id="customerEmailSelect" name="recipients[]" class="compose-multiple-select form-select @error('recipients') is-invalid @enderror" multiple="multiple">
 
-                                {{-- <option selected disabled>Select Mail</option> --}}
+                            {{-- <option id="select_all">Select All</option> --}}
+                            <select id="customerEmailSelect" name="recipients[]" class="compose-multiple-select form-select @error('recipients') is-invalid @enderror" multiple="multiple" placeholder="Search Email">
+                                <option value="" disabled  hidden>Search Mail</option>
                                 @foreach ($customer as $customerEmail)
                                     <option value="{{$customerEmail->email}}">{{$customerEmail->email}}</option>
                                 @endforeach

@@ -1,5 +1,5 @@
 @extends('master')
-@section('title','| Sale')
+@section('title', '| Sale')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -47,7 +47,7 @@
                                 $products = App\Models\Product::where('stock', '>', 0)->get();
                             @endphp
                             <label for="ageSelect" class="form-label">Product</label>
-                            <select class="js-example-basic-single form-select product_select" data-width="100%"
+                            <select class="js-example-basic-single  form-select product_select" data-width="100%"
                                 onclick="errorRemove(this);" onblur="errorRemove(this);">
                                 @if ($products->count() > 0)
                                     <option selected disabled>Select Product</option>
@@ -81,7 +81,7 @@
 
     {{-- table  --}}
     <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
+        <div class="col-md-7 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
@@ -92,7 +92,6 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>#SL</th>
                                     <th>Product</th>
                                     <th>Price</th>
                                     <th>Qty</th>
@@ -105,59 +104,140 @@
                             </thead>
                             <tbody class="showData">
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <div class="row align-items-center">
-                                            <div class="col-md-4">
-                                                Total :
-                                            </div>
-                                            <div class="col-md-8">
-                                                <input type="number" class="form-control total border-0 " name="total"
-                                                    readonly value="0.00" />
-                                            </div>
-                                        </div>
-                                        <div class="row align-items-center">
-                                            <div class="col-md-4">
-                                                Discount :
-                                            </div>
-                                            <div class="col-md-8">
-                                                {{-- @php
-                                                    $promotions = App\Models\Promotion::get();
-                                                @endphp --}}
-                                                {{-- <input type="number" class="form-control discount_field border-0 " name="discount_field"
-                                                    readonly value="0.00" /> --}}
-                                                {{-- <span class="ms-3 discount_field">00</span> --}}
-                                                <select class="form-select discount_field" name="discount_field">
-
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row align-items-center">
-                                            <div class="col-md-4">
-                                                Sub Total :
-                                            </div>
-                                            <div class="col-md-8">
-                                                <input type="number" class="form-control grand_total border-0 "
-                                                    name="grand_total" readonly value="0.00" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            </tfoot>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+
+
+                    <div>
+                        <div>
+                            <div>
+                                <div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            Total :
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="number" class="form-control total border-0 " name="total"
+                                                readonly value="0.00" />
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            Discount :
+                                        </div>
+                                        <div class="col-md-8">
+                                            {{-- @php
+                                                $promotions = App\Models\Promotion::get();
+                                            @endphp --}}
+                                            {{-- <input type="number" class="form-control discount_field border-0 " name="discount_field"
+                                                readonly value="0.00" /> --}}
+                                            {{-- <span class="ms-3 discount_field">00</span> --}}
+                                            <select class="form-select discount_field" name="discount_field">
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            Sub Total :
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="number" class="form-control grand_total border-0 "
+                                                name="grand_total" readonly value="0.00" />
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            <label for="name" class="form-label">Tax:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @php
+                                                $taxs = App\Models\Tax::get();
+                                            @endphp
+                                            <select class="form-select tax" data-width="100%" onclick="errorRemove(this);"
+                                                onblur="errorRemove(this);" value="">
+                                                @if ($taxs->count() > 0)
+                                                    <option selected disabled>0%</option>
+                                                    @foreach ($taxs as $taxs)
+                                                        <option value="{{ $taxs->percentage }}">
+                                                            {{ $taxs->percentage }} %
+                                                        </option>
+                                                    @endforeach
+                                                @else
+                                                    <option selected disabled>Please Add Transaction</option>
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            Grand Total :
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="number" class="form-control grandTotal border-0 "
+                                                name="" readonly value="0.00" />
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            <label for="name" class="form-label">Pay Amount <span
+                                                    class="text-danger">*</span>:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input class="form-control total_payable" name="total_payable" type="number"
+                                                value="0.00">
+                                            <span class="text-danger total_payable_error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            Due/Return :
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="number" class="form-control total_due border-0 " name=""
+                                                readonly value="0.00" />
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            <label for="name" class="form-label">Transaction Method <span
+                                                    class="text-danger">*</span>:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @php
+                                                $payments = App\Models\Bank::get();
+                                            @endphp
+                                            <select class="form-select payment_method" data-width="100%"
+                                                onclick="errorRemove(this);" onblur="errorRemove(this);">
+                                                @if ($payments->count() > 0)
+                                                    @foreach ($payments as $payemnt)
+                                                        <option value="{{ $payemnt->id }}">
+                                                            {{ $payemnt->name }}
+                                                        </option>
+                                                    @endforeach
+                                                @else
+                                                    <option selected disabled>Please Add Transaction</option>
+                                                @endif
+                                            </select>
+                                            <span class="text-danger payment_method_error"></span>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="my-3">
-                        <button class="btn btn-primary payment_btn" data-bs-toggle="modal" data-bs-target="#paymentModal"><i
-                                class="fa-solid fa-money-check-dollar"></i>
+                        <button class="btn btn-primary payment_btn"><i class="fa-solid fa-money-check-dollar"></i>
                             Payment</button>
                     </div>
                 </div>
@@ -221,111 +301,7 @@
         </div>
     </div>
 
-    {{-- payement modal  --}}
-    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Payment</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="" class="table-responsive mb-3">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Paying Items :</th>
-                                    <th>
-                                        <span class="paying_items">0</span>
-                                    </th>
-                                    <th>Grand Total :</th>
-                                    <th>
-                                        (<span class="grandTotal">00</span>TK)
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th>Total Payable :</th>
-                                    <th>
-                                        (<span class="total_payable_amount">00</span>TK)
-                                    </th>
-                                    <th>Total Due :</th>
-                                    <th>
-                                        <span class="total_due">0</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <form id="signupForm" class="supplierForm row">
-                        <div class="mb-3 col-md-12">
-                            <label for="name" class="form-label">Note</label>
-                            <textarea name="note" class="form-control note" id="" placeholder="Enter Note (Optional)"
-                                rows="3"></textarea>
-                        </div>
 
-                        <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Transaction Method <span
-                                    class="text-danger">*</span></label>
-                            @php
-                                $payments = App\Models\Bank::get();
-                            @endphp
-                            <select class="form-select payment_method" data-width="100%" onclick="errorRemove(this);"
-                                onblur="errorRemove(this);">
-                                @if ($payments->count() > 0)
-                                    @foreach ($payments as $payemnt)
-                                        <option value="{{ $payemnt->id }}">
-                                            {{ $payemnt->name }}
-                                        </option>
-                                    @endforeach
-                                @else
-                                    <option selected disabled>Please Add Transaction</option>
-                                @endif
-                            </select>
-                            <span class="text-danger payment_method_error"></span>
-                        </div>
-
-                        <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Tax</label>
-                            @php
-                                $taxs = App\Models\Tax::get();
-                            @endphp
-                            <select class="form-select tax" data-width="100%" onclick="errorRemove(this);"
-                                onblur="errorRemove(this);" value="">
-                                @if ($taxs->count() > 0)
-                                    <option selected disabled>Select Taxes</option>
-                                    @foreach ($taxs as $taxs)
-                                        <option value="{{ $taxs->percentage }}">
-                                            {{ $taxs->percentage }} %
-                                        </option>
-                                    @endforeach
-                                @else
-                                    <option selected disabled>Please Add Transaction</option>
-                                @endif
-                            </select>
-                        </div>
-                        <div class="mb-3 col-12">
-                            <label for="name" class="form-label">Pay Amount <span
-                                    class="text-danger">*</span></label>
-                            <div class="d-flex align-items-center">
-                                <input class="form-control total_payable border-end-0 rounded-0" name="total_payable"
-                                    type="number">
-                                <button class="btn btn-info border-start-0 rounded-0 paid_btn">Paid</button>
-                            </div>
-                            <span class="text-danger total_payable_error"></span>
-                        </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary order_btn"><i class="fa-solid fa-cart-shopping"></i>
-                        Order</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
 
 
 
@@ -425,53 +401,13 @@
                 // console.log(totalQuantity);
             }
             // Function to update SL numbers
-            function updateSLNumbers() {
-                $('.showData > tr').each(function(index) {
-                    $(this).find('td:first').text(index + 1);
-                });
-            }
-
-            // function showAddProduct(product, promotion) {
-            //     $('.showData').append(
-            //         `<tr class="data_row${product.id}">
-        //             <td></td>
-        //         <td>
-        //             <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
-        //         </td>
-        //         <td>
-        //             <input type="hidden" class="product_id" name="product_id[]" readonly value="${product.id ?? 0}" />
-        //             <input type="number" class="form-control product_price${product.id} border-0 "  name="unit_price[]" readonly value="${product.price ?? 0}" />
-        //         </td>
-        //         <td>
-        //             <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="1" />
-        //         </td>
-        //         <td>
-        //             ${promotion && promotion.discount_type ?
-        //             promotion.discount_type == 'percentage' ?
-        //             `<span class="discount_percentage${product.id}">${promotion.discount_value}</span>%` :
-        //             `<span class="discount_amount${product.id}">${promotion.discount_value}</span>Tk` :
-        //             (promotion ? `<span>00</span>` : `<span>00</span>`)
-        //             }
-        //         </td>
-        //         <td>
-        //             ${
-        //             promotion ?
-        //             promotion.discount_type == 'percentage' ?
-        //             `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - (product.price * promotion.discount_value / 100)}" />`
-        //             :
-        //             `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - promotion.discount_value}" />`
-        //             :
-        //             `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price}" />`
-        //             }
-        //         </td>
-        //         <td>
-        //             <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
-        //                 <i class="fa-solid fa-trash-can"></i>
-        //             </a>
-        //         </td>
-        //     </tr>`
-            //     );
+            // function updateSLNumbers() {
+            //     $('.showData > tr').each(function(index) {
+            //         $(this).find('td:first').text(index + 1);
+            //     });
             // }
+
+
 
             // show Product function
             function showAddProduct(product, promotion) {
@@ -488,7 +424,7 @@
                     // If the row doesn't exist, add a new row
                     $('.showData').append(
                         `<tr class="data_row${product.id}">
-                <td></td>
+
                 <td>
                     <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
                 </td>
@@ -546,7 +482,7 @@
                             // console.log(promotion);
                             showAddProduct(product, promotion);
                             // Update SL numbers
-                            updateSLNumbers();
+
                             updateGrandTotal();
                             allProductTotal();
                             $('.barcode_input').val('');
@@ -575,7 +511,7 @@
                             // console.log(promotion);
                             showAddProduct(product, promotion);
                             // Update SL numbers
-                            updateSLNumbers();
+
                             updateGrandTotal();
                             // allProductTotal();
                             // calculateGrandTotal();
@@ -615,7 +551,7 @@
                                     product_subtotal.val(disPrice * qty);
                                     total += parseFloat($('.product_subtotal' + productId)
                                         .val());
-                                    console.log(total);
+                                    // console.log(total);
                                     $('.total').val(total.toFixed(2));
                                 } else {
                                     let discount_amount = parseFloat($('.discount_amount' +
@@ -628,34 +564,19 @@
                                     total += parseFloat($('.product_subtotal' + productId)
                                         .val());
                                     $('.total').val(total.toFixed(2));
-                                    console.log(total);
+                                    // console.log(total);
                                 }
                             } else {
                                 product_subtotal.val(qty * price);
                                 total += parseFloat($('.product_subtotal' + productId)
                                     .val());
                                 $('.total').val(total.toFixed(2));
-                                console.log(total);
+                                // console.log(total);
                             }
                         }
                     });
                 });
             }
-
-
-
-
-            // function allProductTotal() {
-            //     let total = 0;
-            //     let pTotal = $('input[name="total_price[]"]');
-            //     $.each(pTotal, function(index, item) {
-            //         total = total + parseFloat(item.value);
-            //         $('.total').val(total);
-            //     })
-            // }
-
-
-
 
 
 
@@ -684,6 +605,8 @@
                             } else {
                                 let total = $('.total').val();
                                 $('.grand_total').val(total);
+                                $('.grandTotal').val(total);
+                                // $('.total_payable').val(total);
                                 $('.discount_field').html(
                                     `<option>No Discount</option>`
                                 );
@@ -696,6 +619,8 @@
                     $('.discount_field').html(
                         `<option>No Discount</option>`
                     );
+                    $('.grandTotal').val(total);
+                    // $('.total_payable').val(total);
                 }
             }
             calculateGrandTotal();
@@ -708,7 +633,7 @@
                     type: 'GET',
                     dataType: 'JSON',
                     success: function(res) {
-                        console.log(res)
+                        // console.log(res)
                         const promotion = res.promotions;
                         if (promotion) {
                             if (promotion.discount_type == 'percentage') {
@@ -716,16 +641,23 @@
                                 let grandTotalAmount = parseFloat(total - ((total * promotion
                                     .discount_value) / 100)).toFixed(2);
                                 $('.grand_total').val(grandTotalAmount);
+                                $('.grandTotal').val(grandTotalAmount);
+                                // $('.total_payable').val(grandTotalAmount);
                             } else {
                                 let total = $('.total').val();
                                 let grandTotalAmount = parseFloat(total - promotion
                                         .discount_value)
                                     .toFixed(2);
                                 $('.grand_total').val(grandTotalAmount);
+                                $('.grandTotal').val(grandTotalAmount);
+                                // $('.total_payable').val(grandTotalAmount);
                             }
                         } else {
                             let total = $('.total').val();
                             $('.grand_total').val(total);
+                            $('.grandTotal').val(total);
+                            // $('.total_payable').val(total);
+
                         }
 
                     }
@@ -739,30 +671,68 @@
                 updateTotalQuantity();
             }
 
+
+            $(document).on('click', '.quantity', function(e) {
+                e.preventDefault();
+                let id = $(this).attr("product-id")
+                let quantity = $(this).val();
+                quantity = parseInt(quantity);
+                let subTotal = $('.product_subtotal' + id);
+                if (quantity < 0) {
+                    toastr.warning('quantity must be positive value');
+                    $(this).val('');
+                } else {
+                    $.ajax({
+                        url: `/product/find-qty/${id}`,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        success: function(res) {
+                            let stock = res.product.stock;
+                            let productPrice = res.product.price;
+                            if (quantity > stock) {
+                                $('.quantity').val(stock);
+                                // subTotal.val(parseFloat(stock * productPrice).toFixed(2));
+                                updateGrandTotal();
+                                toastr.warning('Not enough stock');
+                            } else {
+                                // subTotal.val(parseFloat(quantity * productPrice).toFixed(2));
+                                updateGrandTotal();
+                            }
+
+                        }
+                    })
+                }
+            })
+
             $(document).on('keyup', '.quantity', function() {
                 let id = $(this).attr("product-id")
                 let quantity = $(this).val();
                 quantity = parseInt(quantity);
                 let subTotal = $('.product_subtotal' + id);
-                $.ajax({
-                    url: `/product/find-qty/${id}`,
-                    type: 'GET',
-                    dataType: 'JSON',
-                    success: function(res) {
-                        let stock = res.product.stock;
-                        let productPrice = res.product.price;
-                        if (quantity > stock) {
-                            $('.quantity').val(stock);
-                            // subTotal.val(parseFloat(stock * productPrice).toFixed(2));
-                            updateGrandTotal();
-                            toastr.warning('Not enough stock');
-                        } else {
-                            // subTotal.val(parseFloat(quantity * productPrice).toFixed(2));
-                            updateGrandTotal();
-                        }
+                if (quantity < 0) {
+                    toastr.warning('quantity must be positive value');
+                    $(this).val('');
+                } else {
+                    $.ajax({
+                        url: `/product/find-qty/${id}`,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        success: function(res) {
+                            let stock = res.product.stock;
+                            let productPrice = res.product.price;
+                            if (quantity > stock) {
+                                $('.quantity').val(stock);
+                                // subTotal.val(parseFloat(stock * productPrice).toFixed(2));
+                                updateGrandTotal();
+                                toastr.warning('Not enough stock');
+                            } else {
+                                // subTotal.val(parseFloat(quantity * productPrice).toFixed(2));
+                                updateGrandTotal();
+                            }
 
-                    }
-                })
+                        }
+                    })
+                }
 
             })
 
@@ -781,62 +751,42 @@
                 dataRow.remove();
                 // Recalculate grand total
                 updateGrandTotal();
-                updateSLNumbers();
                 updateTotalQuantity();
             })
 
 
-            // payment button click event
-            $('.payment_btn').click(function(e) {
-                e.preventDefault();
-                // $('.total_payable_amount').text($('.grand_total').val());
-                $('.total_due').text($('.grand_total').val());
-                $('.grandTotal').text($('.grand_total').val());
-                $('.paying_items').text(totalQuantity);
-
-            })
-
-            // paid amount
-            $('.paid_btn').click(function(e) {
-                e.preventDefault();
-                // alert('ok');
-                let grandTotal = $('.grandTotal').text();
-                $('.total_payable').val(grandTotal);
-                $('.total_payable_amount').text(grandTotal);
-                totalDue();
-            })
-
             // total_payable
-            $('.total_payable').blur(function(e) {
-                let grandTotal = parseFloat($('.grandTotal').text());
+            $('.total_payable').keyup(function(e) {
+                let grandTotal = parseFloat($('.grandTotal').val());
                 let value = parseFloat($(this).val());
                 totalDue();
-                $('.total_payable_amount').text(value);
+                // $('.total_payable_amount').text(value);
             })
 
             // due
             function totalDue() {
                 let pay = $('.total_payable').val();
-                let grandTotal = parseFloat($('.grandTotal').text());
+                let grandTotal = parseFloat($('.grandTotal').val());
                 let due = (grandTotal - pay).toFixed(2);
-                $('.total_due').text(due);
+                $('.total_due').val(due);
             }
 
 
             $('.tax').change(function() {
                 let grandTotal = parseFloat($('.grand_total').val());
-                let value = parseFloat($(this).val());
+                let value = parseInt($(this).val());
                 // alert(value);
 
-                let taxTotal = ((grandTotal * value) / 100);
+                let taxTotal = (grandTotal * value) / 100;
                 taxTotal = (taxTotal + grandTotal).toFixed(2);
-                $('.grandTotal').text(taxTotal);
-                $('.total_due').text(taxTotal);
+                // $('.grandTotal').text(taxTotal);
+                $('.grandTotal').val(taxTotal);
+                // $('.total_payable').val(taxTotal);
             })
 
 
             // order btn
-            $('.order_btn').click(function(e) {
+            $('.payment_btn').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
                 let customer_id = $('.select-customer').val();
@@ -847,10 +797,10 @@
                 let discount = $('.discount_field').val();
                 let total = parseFloat($('.grand_total').val());
                 let tax = $('.tax').val();
-                let change_amount = parseFloat($('.grandTotal').text());
+                let change_amount = parseFloat($('.grandTotal').val());
                 let actual_discount = change_amount - total;
                 let paid = $('.total_payable').val();
-                let due = change_amount - paid;
+                let due = $('.total_due').val();
                 let note = $('.note').val();
                 let payment_method = $('.payment_method').val();
                 // let product_id = $('.product_id').val();
@@ -925,22 +875,14 @@
                             window.location.href = '/sale/invoice/' + id;
 
                         } else {
-
-                            if (res.error.payment_method == null) {
-                                $('#paymentModal').modal('hide');
-                                if (res.error.customer_id) {
-                                    showError('.select-customer', res.error.customer_id);
-                                }
-                                if (res.error.products) {
-                                    showError('.product_select', res.error.products);
-                                }
-                                if (res.error.sale_date) {
-                                    showError('.purchase_date', res.error.sale_date);
-                                }
-                            } else {
-                                if (res.error.payment_method) {
-                                    showError('.payment_method', res.error.payment_method);
-                                }
+                            if (res.error.customer_id) {
+                                showError('.select-customer', res.error.customer_id);
+                            }
+                            if (res.error.sale_date) {
+                                showError('.purchase_date', res.error.sale_date);
+                            }
+                            if (res.error.payment_method) {
+                                showError('.payment_method', res.error.payment_method);
                             }
                         }
                     }

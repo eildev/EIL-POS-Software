@@ -24,7 +24,7 @@ class SaleController extends Controller
     }
     public function getCustomer()
     {
-        $data = Customer::where('branch_id', Auth::user()->branch_id)->get();
+        $data = Customer::where('branch_id', Auth::user()->branch_id)->latest()->get();
         return response()->json([
             'status' => 200,
             'message' => 'successfully save',
@@ -99,8 +99,13 @@ class SaleController extends Controller
             $sale->actual_discount = $request->actual_discount;
             $sale->tax = $request->tax;
             $sale->receivable = $request->change_amount;
-            $sale->paid = $request->paid;
+            // $sale->paid = $request->paid;
             $sale->due = $request->due;
+            if ($request->due < 0) {
+                $sale->paid = $request->paid + $request->due;
+            } else {
+                $sale->paid = $request->paid;
+            }
             // $sale->returned = $request->due;
             $sale->final_receivable = $request->change_amount;
             $sale->payment_method = $request->payment_method;

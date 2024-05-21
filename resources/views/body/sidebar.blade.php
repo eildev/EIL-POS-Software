@@ -48,7 +48,7 @@
             <li class="nav-item">
                 <a href="{{ route('sale.view') }}" class="nav-link" id="sale">
                     <i class="link-icon" data-feather="shopping-bag"></i>
-                    <span class="link-title">Sale</span>
+                    <span class="link-title">POS Manage</span>
                 </a>
             </li>
             <li class="nav-item nav-category">Products</li>

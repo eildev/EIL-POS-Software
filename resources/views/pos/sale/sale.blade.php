@@ -1,5 +1,5 @@
 @extends('master')
-@section('title','| Sale')
+@section('title', '| Sale')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -81,7 +81,7 @@
 
     {{-- table  --}}
     <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
+        <div class="col-md-8 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
@@ -105,59 +105,140 @@
                             </thead>
                             <tbody class="showData">
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <div class="row align-items-center">
-                                            <div class="col-md-4">
-                                                Total :
-                                            </div>
-                                            <div class="col-md-8">
-                                                <input type="number" class="form-control total border-0 " name="total"
-                                                    readonly value="0.00" />
-                                            </div>
-                                        </div>
-                                        <div class="row align-items-center">
-                                            <div class="col-md-4">
-                                                Discount :
-                                            </div>
-                                            <div class="col-md-8">
-                                                {{-- @php
-                                                    $promotions = App\Models\Promotion::get();
-                                                @endphp --}}
-                                                {{-- <input type="number" class="form-control discount_field border-0 " name="discount_field"
-                                                    readonly value="0.00" /> --}}
-                                                {{-- <span class="ms-3 discount_field">00</span> --}}
-                                                <select class="form-select discount_field" name="discount_field">
-
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row align-items-center">
-                                            <div class="col-md-4">
-                                                Sub Total :
-                                            </div>
-                                            <div class="col-md-8">
-                                                <input type="number" class="form-control grand_total border-0 "
-                                                    name="grand_total" readonly value="0.00" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            </tfoot>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+
+
+                    <div>
+                        <div>
+                            <div>
+                                <div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            Total :
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="number" class="form-control total border-0 " name="total"
+                                                readonly value="0.00" />
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            Discount :
+                                        </div>
+                                        <div class="col-md-8">
+                                            {{-- @php
+                                                $promotions = App\Models\Promotion::get();
+                                            @endphp --}}
+                                            {{-- <input type="number" class="form-control discount_field border-0 " name="discount_field"
+                                                readonly value="0.00" /> --}}
+                                            {{-- <span class="ms-3 discount_field">00</span> --}}
+                                            <select class="form-select discount_field" name="discount_field">
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            Sub Total :
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="number" class="form-control grand_total border-0 "
+                                                name="grand_total" readonly value="0.00" />
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            <label for="name" class="form-label">Tax:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @php
+                                                $taxs = App\Models\Tax::get();
+                                            @endphp
+                                            <select class="form-select tax" data-width="100%" onclick="errorRemove(this);"
+                                                onblur="errorRemove(this);" value="">
+                                                @if ($taxs->count() > 0)
+                                                    <option selected disabled>Select Taxes</option>
+                                                    @foreach ($taxs as $taxs)
+                                                        <option value="{{ $taxs->percentage }}">
+                                                            {{ $taxs->percentage }} %
+                                                        </option>
+                                                    @endforeach
+                                                @else
+                                                    <option selected disabled>Please Add Transaction</option>
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            Grand Total :
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="number" class="form-control grandTotal border-0 "
+                                                name="" readonly value="0.00" />
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            <label for="name" class="form-label">Pay Amount <span
+                                                    class="text-danger">*</span>:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input class="form-control total_payable" name="total_payable" type="number"
+                                                value="0.00">
+                                            <span class="text-danger total_payable_error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            Due/Return :
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="number" class="form-control total_due border-0 " name=""
+                                                readonly value="0.00" />
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            <label for="name" class="form-label">Transaction Method <span
+                                                    class="text-danger">*</span>:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @php
+                                                $payments = App\Models\Bank::get();
+                                            @endphp
+                                            <select class="form-select payment_method" data-width="100%"
+                                                onclick="errorRemove(this);" onblur="errorRemove(this);">
+                                                @if ($payments->count() > 0)
+                                                    @foreach ($payments as $payemnt)
+                                                        <option value="{{ $payemnt->id }}">
+                                                            {{ $payemnt->name }}
+                                                        </option>
+                                                    @endforeach
+                                                @else
+                                                    <option selected disabled>Please Add Transaction</option>
+                                                @endif
+                                            </select>
+                                            <span class="text-danger payment_method_error"></span>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="my-3">
-                        <button class="btn btn-primary payment_btn" data-bs-toggle="modal" data-bs-target="#paymentModal"><i
-                                class="fa-solid fa-money-check-dollar"></i>
+                        <button class="btn btn-primary payment_btn"><i class="fa-solid fa-money-check-dollar"></i>
                             Payment</button>
                     </div>
                 </div>
@@ -222,7 +303,7 @@
     </div>
 
     {{-- payement modal  --}}
-    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
+    {{-- <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
@@ -325,7 +406,7 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
 
@@ -615,7 +696,7 @@
                                     product_subtotal.val(disPrice * qty);
                                     total += parseFloat($('.product_subtotal' + productId)
                                         .val());
-                                    console.log(total);
+                                    // console.log(total);
                                     $('.total').val(total.toFixed(2));
                                 } else {
                                     let discount_amount = parseFloat($('.discount_amount' +
@@ -628,14 +709,14 @@
                                     total += parseFloat($('.product_subtotal' + productId)
                                         .val());
                                     $('.total').val(total.toFixed(2));
-                                    console.log(total);
+                                    // console.log(total);
                                 }
                             } else {
                                 product_subtotal.val(qty * price);
                                 total += parseFloat($('.product_subtotal' + productId)
                                     .val());
                                 $('.total').val(total.toFixed(2));
-                                console.log(total);
+                                // console.log(total);
                             }
                         }
                     });
@@ -684,6 +765,8 @@
                             } else {
                                 let total = $('.total').val();
                                 $('.grand_total').val(total);
+                                $('.grandTotal').val(total);
+                                // $('.total_payable').val(total);
                                 $('.discount_field').html(
                                     `<option>No Discount</option>`
                                 );
@@ -696,6 +779,8 @@
                     $('.discount_field').html(
                         `<option>No Discount</option>`
                     );
+                    $('.grandTotal').val(total);
+                    // $('.total_payable').val(total);
                 }
             }
             calculateGrandTotal();
@@ -708,7 +793,7 @@
                     type: 'GET',
                     dataType: 'JSON',
                     success: function(res) {
-                        console.log(res)
+                        // console.log(res)
                         const promotion = res.promotions;
                         if (promotion) {
                             if (promotion.discount_type == 'percentage') {
@@ -716,16 +801,23 @@
                                 let grandTotalAmount = parseFloat(total - ((total * promotion
                                     .discount_value) / 100)).toFixed(2);
                                 $('.grand_total').val(grandTotalAmount);
+                                $('.grandTotal').val(grandTotalAmount);
+                                // $('.total_payable').val(grandTotalAmount);
                             } else {
                                 let total = $('.total').val();
                                 let grandTotalAmount = parseFloat(total - promotion
                                         .discount_value)
                                     .toFixed(2);
                                 $('.grand_total').val(grandTotalAmount);
+                                $('.grandTotal').val(grandTotalAmount);
+                                // $('.total_payable').val(grandTotalAmount);
                             }
                         } else {
                             let total = $('.total').val();
                             $('.grand_total').val(total);
+                            $('.grandTotal').val(total);
+                            // $('.total_payable').val(total);
+
                         }
 
                     }
@@ -787,56 +879,57 @@
 
 
             // payment button click event
-            $('.payment_btn').click(function(e) {
-                e.preventDefault();
-                // $('.total_payable_amount').text($('.grand_total').val());
-                $('.total_due').text($('.grand_total').val());
-                $('.grandTotal').text($('.grand_total').val());
-                $('.paying_items').text(totalQuantity);
+            // $('.payment_btn').click(function(e) {
+            //     e.preventDefault();
+            //     // $('.total_payable_amount').text($('.grand_total').val());
+            //     $('.total_due').text($('.grand_total').val());
+            //     $('.grandTotal').text($('.grand_total').val());
+            //     $('.paying_items').text(totalQuantity);
 
-            })
+            // })
 
             // paid amount
-            $('.paid_btn').click(function(e) {
-                e.preventDefault();
-                // alert('ok');
-                let grandTotal = $('.grandTotal').text();
-                $('.total_payable').val(grandTotal);
-                $('.total_payable_amount').text(grandTotal);
-                totalDue();
-            })
+            // $('.paid_btn').click(function(e) {
+            //     e.preventDefault();
+            //     // alert('ok');
+            //     let grandTotal = $('.grandTotal').text();
+            //     $('.total_payable').val(grandTotal);
+            //     $('.total_payable_amount').text(grandTotal);
+            //     totalDue();
+            // })
 
             // total_payable
-            $('.total_payable').blur(function(e) {
-                let grandTotal = parseFloat($('.grandTotal').text());
+            $('.total_payable').keyup(function(e) {
+                let grandTotal = parseFloat($('.grandTotal').val());
                 let value = parseFloat($(this).val());
                 totalDue();
-                $('.total_payable_amount').text(value);
+                // $('.total_payable_amount').text(value);
             })
 
             // due
             function totalDue() {
                 let pay = $('.total_payable').val();
-                let grandTotal = parseFloat($('.grandTotal').text());
+                let grandTotal = parseFloat($('.grandTotal').val());
                 let due = (grandTotal - pay).toFixed(2);
-                $('.total_due').text(due);
+                $('.total_due').val(due);
             }
 
 
             $('.tax').change(function() {
                 let grandTotal = parseFloat($('.grand_total').val());
-                let value = parseFloat($(this).val());
+                let value = parseInt($(this).val());
                 // alert(value);
 
-                let taxTotal = ((grandTotal * value) / 100);
+                let taxTotal = (grandTotal * value) / 100;
                 taxTotal = (taxTotal + grandTotal).toFixed(2);
-                $('.grandTotal').text(taxTotal);
-                $('.total_due').text(taxTotal);
+                // $('.grandTotal').text(taxTotal);
+                $('.grandTotal').val(taxTotal);
+                // $('.total_payable').val(taxTotal);
             })
 
 
             // order btn
-            $('.order_btn').click(function(e) {
+            $('.payment_btn').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
                 let customer_id = $('.select-customer').val();
@@ -847,10 +940,16 @@
                 let discount = $('.discount_field').val();
                 let total = parseFloat($('.grand_total').val());
                 let tax = $('.tax').val();
-                let change_amount = parseFloat($('.grandTotal').text());
+                let change_amount = parseFloat($('.grandTotal').val());
                 let actual_discount = change_amount - total;
-                let paid = $('.total_payable').val();
-                let due = change_amount - paid;
+                let total_payable = $('.total_payable').val();
+                let due = $('.total_due').val();
+                let paid = 0;
+                if (due <= 0) {
+                    paid = total_payable - paid;
+                } else {
+                    paid = total_payable;
+                }
                 let note = $('.note').val();
                 let payment_method = $('.payment_method').val();
                 // let product_id = $('.product_id').val();

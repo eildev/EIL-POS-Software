@@ -60,9 +60,9 @@
             </td>
             <td>
                 @if ($data->due <= 0)
-                    <span class="text-primary">Paid</span>
+                    <span class="badge bg-success">Paid</span>
                 @else
-                    <span class="text-secondary">Unpaid</span>
+                    <span class="badge bg-warning">Unpaid</span>
                 @endif
             </td>
             <td class="id">

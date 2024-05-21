@@ -24,7 +24,7 @@ class SaleController extends Controller
     }
     public function getCustomer()
     {
-        $data = Customer::where('branch_id', Auth::user()->branch_id)->get();
+        $data = Customer::where('branch_id', Auth::user()->branch_id)->latest()->get();
         return response()->json([
             'status' => 200,
             'message' => 'successfully save',

@@ -81,7 +81,7 @@
 
     {{-- table  --}}
     <div class="row">
-        <div class="col-md-8 grid-margin stretch-card">
+        <div class="col-md-7 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
@@ -92,7 +92,6 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>#SL</th>
                                     <th>Product</th>
                                     <th>Price</th>
                                     <th>Qty</th>
@@ -110,7 +109,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 grid-margin stretch-card">
+        <div class="col-md-5 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
 
@@ -402,11 +401,11 @@
                 // console.log(totalQuantity);
             }
             // Function to update SL numbers
-            function updateSLNumbers() {
-                $('.showData > tr').each(function(index) {
-                    $(this).find('td:first').text(index + 1);
-                });
-            }
+            // function updateSLNumbers() {
+            //     $('.showData > tr').each(function(index) {
+            //         $(this).find('td:first').text(index + 1);
+            //     });
+            // }
 
 
 
@@ -425,7 +424,7 @@
                     // If the row doesn't exist, add a new row
                     $('.showData').append(
                         `<tr class="data_row${product.id}">
-                <td></td>
+
                 <td>
                     <input type="text" class="form-control product_name${product.id} border-0 "  name="product_name[]" readonly value="${product.name ?? ""}" />
                 </td>
@@ -483,7 +482,7 @@
                             // console.log(promotion);
                             showAddProduct(product, promotion);
                             // Update SL numbers
-                            updateSLNumbers();
+
                             updateGrandTotal();
                             allProductTotal();
                             $('.barcode_input').val('');
@@ -512,7 +511,7 @@
                             // console.log(promotion);
                             showAddProduct(product, promotion);
                             // Update SL numbers
-                            updateSLNumbers();
+
                             updateGrandTotal();
                             // allProductTotal();
                             // calculateGrandTotal();
@@ -752,7 +751,6 @@
                 dataRow.remove();
                 // Recalculate grand total
                 updateGrandTotal();
-                updateSLNumbers();
                 updateTotalQuantity();
             })
 
@@ -877,22 +875,14 @@
                             window.location.href = '/sale/invoice/' + id;
 
                         } else {
-
-                            if (res.error.payment_method == null) {
-                                $('#paymentModal').modal('hide');
-                                if (res.error.customer_id) {
-                                    showError('.select-customer', res.error.customer_id);
-                                }
-                                if (res.error.products) {
-                                    showError('.product_select', res.error.products);
-                                }
-                                if (res.error.sale_date) {
-                                    showError('.purchase_date', res.error.sale_date);
-                                }
-                            } else {
-                                if (res.error.payment_method) {
-                                    showError('.payment_method', res.error.payment_method);
-                                }
+                            if (res.error.customer_id) {
+                                showError('.select-customer', res.error.customer_id);
+                            }
+                            if (res.error.sale_date) {
+                                showError('.purchase_date', res.error.sale_date);
+                            }
+                            if (res.error.payment_method) {
+                                showError('.payment_method', res.error.payment_method);
                             }
                         }
                     }

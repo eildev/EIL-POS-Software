@@ -303,12 +303,12 @@
                                 Supplier Ledger
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="{{ route('bank.report') }}" role="button"
                                 aria-controls="general-pages">
                                 Bank Report
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('account.transaction.view') }}" role="button"
                                 aria-controls="general-pages">

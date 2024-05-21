@@ -1,5 +1,4 @@
 @extends('master')
-@section('title','| Monthly Report')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -7,7 +6,7 @@
             <li class="breadcrumb-item active" aria-current="page">Monthly Report</li>
         </ol>
     </nav>
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-md-12   grid-margin stretch-card filter_box">
             <div class="card">
                 <div class="card-body">
@@ -92,17 +91,14 @@
                                     <i class="btn-icon-prepend" data-feather="printer"></i>
                                     Print
                                 </button>
-                                {{-- <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
-                                    <i class="btn-icon-prepend" data-feather="download-cloud"></i>
-                                    Download Report
-                                </button> --}}
+                               
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     <div class="row">
@@ -111,7 +107,7 @@
                 <div class="card-body">
                     <h6 class="card-title">Monthly Report</h6>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table id="example" class="table">
                             <thead>
                                 <tr>
                                     <th class="id">#</th>
@@ -122,7 +118,7 @@
                                     <th>Expanse</th>
                                     <th>Salary</th>
                                     <th>Net Profit</th>
-                                    <th class="id">Action</th>
+                                    {{-- <th class="id">Action</th> --}}
                                 </tr>
                             </thead>
                             {{-- @dd($monthlyReports) --}}
@@ -143,10 +139,10 @@
                                         <td> {{ $report['totalExpense'] }}</td>
                                         <td> {{ $report['totalSalary'] }}</td>
                                         <td> {{ $report['finalProfit'] }}</td>
-                                        <td>
+                                        {{-- <td>
                                             <a class="btn btn-primary btn-sm" href="#"><i
                                                     class="fa-solid fa-file-invoice me-2"></i> Print</a>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -156,7 +152,4 @@
             </div>
         </div>
     </div>
-
-
-
 @endsection

@@ -105,6 +105,7 @@ class BranchController extends Controller
             return redirect()->route('branch.view')->with($notification);
         }
    }//End Method
+
    public function BranchDelete($id){
     $branch = Branch::findOrFail($id);
     $path = public_path('uploads/branch/'.$branch->logo);

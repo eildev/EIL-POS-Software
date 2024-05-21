@@ -25,6 +25,7 @@ use App\Http\Controllers\EmployeeSalaryController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DamageController;
 use App\Http\Controllers\CustomeMailControler;
+use App\Http\Controllers\RolePermissionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -381,7 +382,7 @@ Route::middleware('auth')->group(function () {
             /////SMS Report ///////
             Route::get('/sms/report/view', 'SmsView')->name('sms.report');
             Route::get('/sms/report/filter', 'SmsReportFilter')->name('sms.report.filter');
-            // MONNTHLY Report 
+            // MONNTHLY Report
             Route::get('/monthly/report', 'monthlyReport')->name('monthly.report');
         });
     });
@@ -409,6 +410,32 @@ Route::middleware('auth')->group(function () {
     ///Email Marketing
     Route::controller(CustomeMailControler::class)->group(function () {
         Route::post('/customer-send-email', 'CustomerSendEmail')->name('customer.send.email');
+    });
+    ////////////////////Role And Permission Route /////////////////
+    Route::controller(RolePermissionController::class)->group(function () {
+                                 ///Permission///
+        Route::get('/all/permission/view', 'AllPermissionView')->name('all.permission');
+        Route::get('/add/permission', 'AddPermission')->name('add.permission');
+        Route::post('/store/permission', 'StorePermission')->name('store.permission');
+        Route::get('/edit/permission/{id}', 'EditPermission')->name('permission.edit');
+        Route::post('/update/permission', 'updatePermission')->name('permission.update');
+        Route::get('/delete/permission/{id}', 'DeletePermission')->name('permission.delete');
+                                 ///Role///
+        Route::get('/all/role/view', 'AllRoleView')->name('all.role');
+        Route::get('/add/role', 'AddRole')->name('add.role');
+        Route::post('/store/role', 'StoreRole')->name('store.role');
+        Route::get('/edit/role/{id}', 'EditRole')->name('role.edit');
+        Route::post('/update/role', 'updateRole')->name('role.update');
+        Route::get('/delete/role/{id}', 'DeleteRole')->name('role.delete');
+                                ///Role In Permission///
+        // Route::get('/all/role/permission//view', 'AllRolePermissionView')->name('all.role.permission');
+        Route::get('/add/role/permission', 'AddRolePermission')->name('add.role.permission');
+        Route::post('/store/role/permission', 'StoreRolePermission')->name('store.role.permission');
+        Route::get('/edit/role/permission/{id}', 'EditRolePermission')->name('role.permission.edit');
+        Route::post('/update/role/permission', 'updateRolePermission')->name('role.permission.update');
+        Route::get('/delete/role/permission/{id}', 'DeleteRolePermission')->name('role.permission.delete');
+        Route::post('/store/role/permission', 'StoreRolePermission')->name('role.permission.store');
+
     });
 });
 

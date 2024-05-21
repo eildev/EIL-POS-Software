@@ -356,6 +356,28 @@
                     </ul>
                 </div>
             </li>
+            <!---Role & Permission--->
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#role" role="button" aria-expanded="false"
+                    aria-controls="emails">
+                    <i class="fa-solid fa-users-gear link-icon"></i>
+                    <span class="link-title">Role & Permission</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="role">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('all.permission') }}" class="nav-link">All Permisiion</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('all.role') }}" class="nav-link">All Role</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('add.role.permission') }}" class="nav-link">Role In Permission</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
             <li class="nav-item nav-category">SETTING & CUSTOMIZE</li>
             <li class="nav-item">
                 <a href="{{ route('pos.settings.add') }}" class="nav-link">

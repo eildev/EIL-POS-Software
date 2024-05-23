@@ -3,9 +3,8 @@
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title text-info">damage Report</h6>
-
                 <div id="" class="table-responsive">
-                    <table id="dataTableExample" class="table">
+                    <table id="example" class="table">
                         <thead>
                             <tr>
                                 <th>SN#</th>
@@ -20,10 +19,6 @@
                         <tbody class="showData">
                             @if ($damageItem->count() > 0)
                                 @foreach ($damageItem as $key => $damage)
-                                    {{-- @dd($damage); --}}
-                        <div id="" class="table-responsive">
-                            <table id="example" class="table">
-                                <thead>
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $damage->date ?? '' }}</td>

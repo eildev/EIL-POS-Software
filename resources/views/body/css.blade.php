@@ -71,16 +71,17 @@
         background: #5660d9;
         color: #fff;
     }
-/* //data table js */
-    .dt-buttons{
+
+    /* //data table js */
+    .dt-buttons {
         width: 60% !important;
         position: absolute !important;
         margin-bottom: 10px !important;
     }
-    .dt-search{
+
+    .dt-search {
         float: right;
     }
-
 </style>
 {{-- jquery plugin  --}}
 

@@ -72,8 +72,11 @@
                         Manage
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+
+                        @if(Auth::user()->can('pos-manage.invoice'))
                         <a class="dropdown-item" href="{{ route('sale.invoice', $data->id) }}"><i
                                 class="fa-solid fa-file-invoice me-2"></i> Invoice</a>
+                        @endif
                         <a class="dropdown-item " href="{{ route('sale.view.details', $data->id) }}"><i
                                 class="fa-solid fa-eye me-2"></i> Show</a>
                         <a class="dropdown-item" href="#"><i style="transform: rotate(90deg);"
@@ -84,10 +87,14 @@
                                 data-bs-target="#paymentModal" data-id="{{ $data->id }}"><i
                                     class="fa-solid fa-credit-card me-2"></i> Payment</a>
                         @endif
+                        @if(Auth::user()->can('pos-manage.edit'))
                         <a class="dropdown-item" href="{{ route('sale.edit', $data->id) }}"><i
                                 class="fa-solid fa-pen-to-square me-2"></i> Edit</a>
+                        @endif
+                        @if(Auth::user()->can('	pos-manage.delete'))
                         <a class="dropdown-item" id="delete" href="{{ route('sale.destroy', $data->id) }}"><i
                                 class="fa-solid fa-trash-can me-2"></i>Delete</a>
+                       @endif
                     </div>
                 </div>
             </td>

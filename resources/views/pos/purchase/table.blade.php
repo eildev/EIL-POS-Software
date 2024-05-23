@@ -44,13 +44,17 @@
                                 class="fa-solid fa-eye me-2"></i> Show</a>
                         @if ($data->due > 0)
                             <a class="dropdown-item add_payment" href="#" data-bs-toggle="modal"
-                                data-bs-target="#paymentModal" data-id="{{ $data->id }}"><i
-                                    class="fa-solid fa-credit-card me-2"></i> Payment</a>
+                            data-bs-target="#paymentModal" data-id="{{ $data->id }}"><i
+                                class="fa-solid fa-credit-card me-2"></i> Payment</a>
                         @endif
+                        @if(Auth::user()->can('purchase.edit'))
                         <a class="dropdown-item" href="{{ route('purchase.edit', $data->id) }}"><i
                                 class="fa-solid fa-pen-to-square me-2"></i> Edit</a>
+                        @endif
+                        @if(Auth::user()->can('purchase.delete'))
                         <a class="dropdown-item" id="delete" href="{{ route('purchase.destroy', $data->id) }}"><i
                                 class="fa-solid fa-trash-can me-2"></i>Delete</a>
+                        @endif
                     </div>
                 </div>
             </td>

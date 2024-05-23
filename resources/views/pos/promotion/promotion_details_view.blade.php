@@ -3,13 +3,14 @@
 @section('admin')
 
     <div class="row">
-
+        @if(Auth::user()->can('promotion-details.add'))
         <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
             <div class="">
                 <h4 class="text-right"><a href="{{ route('promotion.details.add') }}" class="btn btn-primary">Add Promotion
                         Details</a></h4>
             </div>
         </div>
+        @endif
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -79,14 +80,18 @@
                                             </td>
                                             <td>{{ $promotions_details->additional_conditions ?? '' }}</td>
                                             <td>
+                                                @if(Auth::user()->can('promotion-details.edit'))
                                                 <a href="{{ route('promotion.details.edit', $promotions_details->id) }}"
                                                     class="btn btn-sm btn-primary btn-icon">
                                                     <i data-feather="edit"></i>
                                                 </a>
+                                                @endif
+                                                @if(Auth::user()->can('promotion-details.delete'))
                                                 <a href="{{ route('promotion.details.delete', $promotions_details->id) }}"
                                                     id="delete" class="btn btn-sm btn-danger btn-icon">
                                                     <i data-feather="trash-2"></i>
                                                 </a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

@@ -33,24 +33,31 @@
                 </div>
             </li>
             <li class="nav-item nav-category">Main</li>
+
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}" class="nav-link">
                     <i class="link-icon" data-feather="home"></i>
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
+
+            @if(Auth::user()->can('pos.menu'))
             <li class="nav-item">
                 <a href="{{ route('sale') }}" class="nav-link" id="pos">
                     <i class="link-icon" data-feather="shopping-cart"></i>
                     <span class="link-title">POS</span>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->can('pos-manage.menu'))
             <li class="nav-item">
                 <a href="{{ route('sale.view') }}" class="nav-link" id="sale">
                     <i class="link-icon" data-feather="shopping-bag"></i>
                     <span class="link-title">POS Manage</span>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->can('products.menu'))
             <li class="nav-item nav-category">Products</li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
@@ -61,59 +68,80 @@
                 </a>
                 <div class="collapse" id="emails">
                     <ul class="nav sub-menu">
+
+                        @if(Auth::user()->can('products.add'))
                         <li class="nav-item">
                             <a href="{{ route('product') }}" class="nav-link">Add Product</a>
                         </li>
+                        @endif
+                        @if(Auth::user()->can('products.list'))
                         <li class="nav-item">
                             <a href="{{ route('product.view') }}" class="nav-link">Manage Products</a>
                         </li>
+                        @endif
                     </ul>
                 </div>
             </li>
+            @endif
+            @if(Auth::user()->can('category.menu'))
             <li class="nav-item">
                 <a href="{{ route('category') }}" class="nav-link">
                     <i class="link-icon" data-feather="grid"></i>
                     <span class="link-title">Category</span>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->can('subcategory.menu'))
             <li class="nav-item">
                 <a href="{{ route('subcategory') }}" class="nav-link">
                     <i class="link-icon" data-feather="layers"></i>
                     <span class="link-title">Sub Category</span>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->can('brand.menu'))
             <li class="nav-item">
                 <a href="{{ route('brand') }}" class="nav-link">
                     <i class="link-icon" data-feather="hash"></i>
                     <span class="link-title">Brand</span>
                 </a>
             </li>
-
+            @endif
+            @if(Auth::user()->can('unit.menu'))
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('unit') }}" role="button" aria-controls="general-pages">
                     <i class="link-icon" data-feather="trello"></i>
                     <span class="link-title">Unit</span>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->can('products-size.menu'))
             <li class="nav-item">
                 <a href="{{ route('product.size.view') }}" class="nav-link">
                     <i class="link-icon" data-feather="maximize"></i>
                     <span class="link-title">Product Size</span>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->can('tax.menu'))
             <li class="nav-item">
                 <a href="{{ route('tax.add') }}" class="nav-link">
                     <i class="fa-regular fa-money-bill-1 link-icon"></i>
                     <span class="link-title">Taxes</span>
                 </a>
             </li>
+            @endif
             <li class="nav-item nav-category">Inventory</li>
+
+            @if(Auth::user()->can('supplier.menu'))
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('supplier') }}" role="button" aria-controls="general-pages">
                     <i class="fa-solid fa-handshake link-icon"></i>
                     <span class="link-title">Supplier</span>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->can('purchase.menu'))
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
                     aria-controls="emails">
@@ -123,59 +151,74 @@
                 </a>
                 <div class="collapse" id="emails">
                     <ul class="nav sub-menu">
+                        @if(Auth::user()->can('purchase.add'))
                         <li class="nav-item">
                             <a href="{{ route('purchase') }}" class="nav-link">Add Purchase</a>
                         </li>
+                        @endif
+                        @if(Auth::user()->can('purchase.list'))
                         <li class="nav-item">
                             <a href="{{ route('purchase.view') }}" class="nav-link">Manage Purchase</a>
                         </li>
+                        @endif
                     </ul>
                 </div>
             </li>
+            @endif
+            @if(Auth::user()->can('promotion.menu'))
             <li class="nav-item">
                 <a href="{{ route('promotion.view') }}" class="nav-link">
                     <i class="fa-solid fa-tag link-icon"></i>
                     <span class="link-title">Promotion</span>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->can('promotion-details.menu'))
             <li class="nav-item">
                 <a href="{{ route('promotion.details.view') }}" class="nav-link">
                     <i class="fa-solid fa-tags link-icon"></i>
                     <span class="link-title">Promotion Details</span>
                 </a>
             </li>
-
+            @endif
+            @if(Auth::user()->can('damage.menu'))
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('damage') }}" role="button" aria-controls="general-pages">
                     <i class="link-icon" data-feather="book"></i>
                     <span class="link-title">Damage</span>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->can('bank.menu'))
             <li class="nav-item">
                 <a href="{{ route('bank') }}" class="nav-link">
                     <i class="fa-solid fa-building-columns link-icon"></i>
                     <span class="link-title">Bank</span>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->can('expense.menu'))
             <li class="nav-item">
                 <a href="{{ route('expense.view') }}" class="nav-link">
                     <i class="fa-solid fa-money-bill-transfer link-icon"></i>
                     <span class="link-title">Expense</span>
                 </a>
             </li>
-            <li class="nav-item">
+            @endif
+            {{-- <li class="nav-item">
                 <a href="{{ route('payment.method.add') }}" class="nav-link">
                     <i class="fa-solid fa-cash-register link-icon"></i>
                     <span class="link-title">Payment Method</span>
                 </a>
-            </li>
-
+            </li> --}}
+            @if(Auth::user()->can('transaction.menu'))
             <li class="nav-item">
                 <a href="{{ route('transaction.add') }}" class="nav-link">
                     <i class="fa-solid fa-receipt link-icon"></i>
                     <span class="link-title">Transaction</span>
                 </a>
             </li>
+            @endif
             <li class="nav-item nav-category">PEOPLES</li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('customer.view') }}" role="button"
@@ -375,6 +418,29 @@
                         <li class="nav-item">
                             <a href="{{ route('add.role.permission') }}" class="nav-link">Role In Permission</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('all.role.permission') }}" class="nav-link">All Role Permission</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+                <!---Admin Manage--->
+                <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#admin-manage" role="button" aria-expanded="false"
+                    aria-controls="emails">
+                    <i class="fa-solid fa-users-gear link-icon"></i>
+                    <span class="link-title">Admin Manage</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="admin-manage">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('all.admin') }}" class="nav-link">All Admin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('add.admin') }}" class="nav-link">Add Admin</a>
+                        </li>
+
                     </ul>
                 </div>
             </li>

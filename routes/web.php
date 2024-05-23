@@ -428,13 +428,25 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/role', 'updateRole')->name('role.update');
         Route::get('/delete/role/{id}', 'DeleteRole')->name('role.delete');
                                 ///Role In Permission///
-        // Route::get('/all/role/permission//view', 'AllRolePermissionView')->name('all.role.permission');
         Route::get('/add/role/permission', 'AddRolePermission')->name('add.role.permission');
         Route::post('/store/role/permission', 'StoreRolePermission')->name('store.role.permission');
         Route::get('/edit/role/permission/{id}', 'EditRolePermission')->name('role.permission.edit');
         Route::post('/update/role/permission', 'updateRolePermission')->name('role.permission.update');
         Route::get('/delete/role/permission/{id}', 'DeleteRolePermission')->name('role.permission.delete');
         Route::post('/store/role/permission', 'StoreRolePermission')->name('role.permission.store');
+        Route::get('/all/role/permission', 'AllRolePermission')->name('all.role.permission');
+        Route::get('/admin/role/edit/{id}', 'AdminRoleEdit')->name('admin.role.edit');
+        Route::post('/admin/role/update/{id}', 'AdminRoleUpdate')->name('admin.role.update');
+        Route::get('/admin/role/delete/{id}', 'AdminRoleDelete')->name('admin.role.delete');
+        Route::get('/admin/role/view', 'AdminRoleView')->name('admin.role.view');       
+                            ///Admin Manage Route ///
+        Route::get('/all/admin/view', 'AllAdminView')->name('all.admin');
+        Route::get('/add/admin', 'AddAdmin')->name('add.admin');
+        Route::post('/admin/store', 'AdminStore')->name('admin.store');
+        Route::get('/admin/manage/edit/{id}', 'AdminManageEdit')->name('admin.manage.edit');
+        Route::get('/admin/manage/delete/{id}', 'AdminManageDelete')->name('admin.manage.delete');
+        Route::post('/admin/manage/update/{id}', 'AdminManageUpdate')->name('update.admin.manage');
+
 
     });
 });

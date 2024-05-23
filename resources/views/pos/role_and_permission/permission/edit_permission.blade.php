@@ -20,13 +20,16 @@
                                 <div class="mb-3 form-valid-groups">
                                     <label class="form-label">Permission Name<span class="text-danger">*</span></label>
                                     </label>
-                                    <input type="text" value="{{$permissions->name}}"  name="name" class="form-control" placeholder="Enter Permission Name"  autocomplete="off"">
+                                    <input type="text" value="{{$permissions->name}}"  name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Enter Permission Name"  autocomplete="off">
+                                    @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-sm-12">
                             <div class="mb-3 form-valid-groups">
                                 <label for="ageSelect" class="form-label">Group Name <span class="text-danger">*</span></label>
-                                <select class="js-example-basic-single form-select" name="group_name"
+                                <select class="js-example-basic-single form-select @error('group_name') is-invalid @enderror" name="group_name"
                                     data-width="100%"  >
                                         <option selected disabled>Select Group Name</option>
                                         <option value="dashboard" {{ $permissions->group_name == 'dashboard' ? 'selected': ''}}>Dashboard</option>
@@ -55,6 +58,9 @@
                                         <option value="settings" {{ $permissions->group_name == 'settings' ? 'selected': ''}}>Settings</option>
                                         <option value="branch" {{ $permissions->group_name == 'branch' ? 'selected': ''}}>Branch</option>
                                 </select>
+                                @error('group_name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                             </div>
                         </div>
 

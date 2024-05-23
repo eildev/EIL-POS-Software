@@ -19,7 +19,10 @@
                                 <div class="mb-3 form-valid-groups">
                                     <label class="form-label">Role Name<span class="text-danger">*</span></label>
                                     </label>
-                                    <input type="text"  name="name" class="form-control" placeholder="Enter role Name"  autocomplete="off"">
+                                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Enter role Name"  autocomplete="off">
+                                    @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div><!-- Row -->

@@ -19,17 +19,21 @@
                                 <div class="mb-3 form-valid-groups">
                                     <label class="form-label">Permission Name<span class="text-danger">*</span></label>
                                     </label>
-                                    <input type="text"  name="name" class="form-control" placeholder="Enter Permission Name"  autocomplete="off"">
+                                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }} "placeholder="Enter Permission Name"  autocomplete="off">
+                                    @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-sm-12">
                             <div class="mb-3 form-valid-groups">
                                 <label for="ageSelect" class="form-label">Group Name <span class="text-danger">*</span></label>
-                                <select class="js-example-basic-single form-select" name="group_name"
+                                <select class="js-example-basic-single form-select @error('group_name') is-invalid @enderror" name="group_name"
                                     data-width="100%"  >
                                         <option selected disabled>Select Group Name</option>
                                         <option value="dashboard">Dashboard</option>
-                                        <option value="sale" >Sale</option>
+                                        <option value="pos" >Pos</option>
+                                        <option value="pos-manage" >Pos Manage</option>
                                         <option value="products" >Products</option>
                                         <option value="category" >Category</option>
                                         <option value="sub-category" >Sub Category</option>
@@ -51,9 +55,14 @@
                                         <option value="advanced-employee-salary" >Advanced Employee Salary</option>
                                         <option value="crm" >CRM</option>
                                         <option value="report" >Report</option>
+                                        <option value="role-and-permissions" >Role & Permissions</option>
+                                        <option value="admin-manage" >Admin Manage</option>
                                         <option value="settings" >Settings</option>
                                         <option value="branch" >Branch</option>
                                 </select>
+                                    @error('group_name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                             </div>
                         </div>
 

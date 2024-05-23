@@ -1,10 +1,15 @@
 @extends('master')
 @section('title','| Add Role-Permission')
 @section('admin')
+<style>
+    .form-check-label{
+        text-transform: capitalize;
+    }
+</style>
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
             <div class="">
-                <h4 class="text-right"><a href="{{ route('all.role') }}" class="btn btn-info">Role-Permission List</a></h4>
+                <h4 class="text-right"><a href="{{ route('add.role') }}" class="btn btn-info">Add Role</a></h4>
             </div>
         </div>
         <div class="col-md-12 stretch-card">
@@ -32,22 +37,22 @@
 
                                 <label class="form-check-label" for="checkInlineCheckedAll">
                                    Select All Permission</label>
-                                <input type="checkbox" class="form-check-input" id="checkInlineCheckedAll" checked="">
+                                <input type="checkbox" class="form-check-input" id="checkInlineCheckedAll" >
                             </div>
 
                             <hr>
                             @foreach ($permission_group->unique('group_name') as $group )
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-3 form-valid-groups">
                                         {{-- <h5 class="form-label">Group Name</h5><br> --}}
                                     <div class="form-check form-check-inline">
 
                                         <label class="form-check-label" for="checkInlineChecked{{$group->group_name}}">
                                             {{$group->group_name}} </label>
-                                        <input type="checkbox" class="form-check-input" id="checkInlineChecked{{$group->group_name}}" checked="">
+                                        <input type="checkbox" class="form-check-input" id="checkInlineChecked{{$group->group_name}}" >
                                     </div>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-9 form-valid-groups">
                                 @php
                                     $permissions = App\Models\User::getPermissionByGroupName($group->group_name);
                                 @endphp
@@ -55,11 +60,11 @@
                                     @foreach ($permissions as $permission)
 
 
-                                <div class="form-check form-check-inline">
+                                <div class="form-check form-check-inline form-valid-groups">
                                     <label class="form-check-label" for="checkInlineChecked{{$permission->id}}">
                                         {{$permission->name}}
                                     </label>
-                                    <input type="checkbox" name="permission[]" class="form-check-input" id="checkInlineChecked{{$permission->id}}" value="{{$permission->id}}" checked="">
+                                    <input type="checkbox" name="permission[]" class="form-check-input" id="checkInlineChecked{{$permission->id}}" value="{{$permission->id}}">
                                 </div></br>
                                 @endforeach </br>
                             </div>
@@ -85,8 +90,41 @@
 	    });
 
         });
+        $(document).ready(function() {
+        $('#myValidForm').validate({
+    rules: {
+        role_id: {
+            required: true,
+        },
+        permission: {
+            required: true,
+        },
 
-
-
+    },
+    messages: {
+        role_id: {
+            required: 'Please Select Role Name',
+        },
+        permission: {
+            required: 'Please Checked Persmission Name',
+        },
+    },
+    errorElement: 'span',
+    errorPlacement: function(error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-valid-groups').append(error);
+    },
+    highlight: function(element, errorClass, validClass) {
+        $(element).addClass('is-invalid');
+    },
+    unhighlight: function(element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+        $(element).addClass('is-valid');
+    },
+});
+});
     </script>
 @endsection
+
+
+<!-- //////////////Validation baki////////////// -->

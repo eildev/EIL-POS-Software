@@ -1,5 +1,5 @@
 @extends('master')
-@section('title','| Dashboard')
+@section('title', '| Dashboard')
 @section('admin')
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
@@ -940,7 +940,6 @@
             chart.render();
 
 
-
             var options = {
                 chart: {
                     height: 300,
@@ -975,6 +974,10 @@
                                 label: 'TOTAL',
                                 fontSize: '14px',
                                 fontFamily: fontFamily,
+                                formatter: function(w) {
+                                    return (w.globals.seriesTotals.reduce((a, b) => a + b, 0) / w.globals
+                                        .series.length).toFixed(2) + '%';
+                                }
                             }
                         },
                         track: {
@@ -1009,8 +1012,7 @@
 
             var chart = new ApexCharts(document.querySelector("#apexRadialBar1"), options);
             chart.render();
-            var chartAreaBounds = chart.w.globals.dom.baseEl.querySelector('.apexcharts-inner')
-                .getBoundingClientRect();
+
         });
     </script>
     {{-- /// pie chart end /// --}}

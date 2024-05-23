@@ -1,7 +1,7 @@
 @extends('master')
 @section('title', '| Dashboard')
 @section('admin')
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+    {{-- <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
             <h4 class="mb-3 mb-md-0">Welcome to Dashboard</h4>
         </div>
@@ -20,7 +20,7 @@
                 Download Report
             </button>
         </div>
-    </div>
+    </div> --}}
     @php
         ///////////////////Total Summary////////////////
         $totalInvoice = App\Models\Sale::all();
@@ -189,7 +189,7 @@
         <div class="col-12 col-xl-12 stretch-card">
 
             <div class="row flex-grow-1">
-                <h3 class="my-3">Today Summary</h3>
+                <h3 class="mb-3">Today Summary</h3>
                 <div class="col-md-3 grid-margin stretch-card">
                     <div class="card" style="">
                         <div class="card-body">

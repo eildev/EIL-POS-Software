@@ -69,9 +69,10 @@ class DamageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function view(){
+    public function view()
+    {
         $damages = $this->damage_repo->ViewAllDamage();
-        return view('pos.damage.view_damage',compact('damages'));
+        return view('pos.damage.view_damage', compact('damages'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -104,8 +105,14 @@ class DamageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $damage_info = Damage::findOrFail($id);
+        $damage_info->delete();
+        $notification = array(
+            'message' => 'Damage Deleted successfully',
+            'alert-type' => 'info'
+        );
+        return back()->with($notification);
     }
 }

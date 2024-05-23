@@ -447,11 +447,11 @@
                     ${
                         promotion ?
                             promotion.discount_type == 'percentage' ?
-                                `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - (product.price * promotion.discount_value / 100)}" />`
+                                `<input type="number" class="form-control product_subtotal${product.id} border-0 " name="total_price[]" id="productTotal" readonly value="${product.price - (product.price * promotion.discount_value / 100)}" />`
                                 :
-                                `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price - promotion.discount_value}" />`
+                                `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" id="productTotal" readonly value="${product.price - promotion.discount_value}" />`
                             :
-                            `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" readonly value="${product.price}" />`
+                            `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" id="productTotal" readonly value="${product.price}" />`
                     }
                 </td>
                 <td>
@@ -484,6 +484,7 @@
                             // Update SL numbers
 
                             updateGrandTotal();
+                            calculateProductTotal();
                             allProductTotal();
                             $('.barcode_input').val('');
                             // calculateGrandTotal();
@@ -513,6 +514,7 @@
                             // Update SL numbers
 
                             updateGrandTotal();
+                            calculateProductTotal();
                             // allProductTotal();
                             // calculateGrandTotal();
                         }
@@ -525,7 +527,7 @@
 
 
             function calculateTotal() {
-                let total = 0;
+                // let total = 0;
                 $('.quantity').each(function() {
                     let $quantityInput = $(this); // Store the reference to $(this)
                     let productId = $quantityInput.attr('product-id');
@@ -549,10 +551,10 @@
                                     // console.log(discount_percentage);
                                     let disPrice = price - (price * discount_percentage) / 100;
                                     product_subtotal.val(disPrice * qty);
-                                    total += parseFloat($('.product_subtotal' + productId)
-                                        .val());
-                                    // console.log(total);
-                                    $('.total').val(total.toFixed(2));
+                                    // total += parseFloat($('.product_subtotal' + productId)
+                                    //     .val());
+                                    // // console.log(total);
+                                    // $('.total').val(total.toFixed(2));
                                 } else {
                                     let discount_amount = parseFloat($('.discount_amount' +
                                         productId).text());
@@ -561,22 +563,34 @@
                                     // console.log(disPrice);
                                     product_subtotal.val(disPrice * qty);
                                     // total += qty * disPrice;
-                                    total += parseFloat($('.product_subtotal' + productId)
-                                        .val());
-                                    $('.total').val(total.toFixed(2));
+                                    // total += parseFloat($('.product_subtotal' + productId)
+                                    //     .val());
+                                    // $('.total').val(total.toFixed(2));
                                     // console.log(total);
                                 }
                             } else {
                                 product_subtotal.val(qty * price);
-                                total += parseFloat($('.product_subtotal' + productId)
-                                    .val());
-                                $('.total').val(total.toFixed(2));
+                                // total += parseFloat($('.product_subtotal' + productId)
+                                //     .val());
+                                // $('.total').val(total.toFixed(2));
                                 // console.log(total);
                             }
                         }
                     });
                 });
             }
+
+
+            function calculateProductTotal() {
+                let allProductTotal = document.querySelectorAll('#productTotal');
+                let allTotal = 0;
+                allProductTotal.forEach(product => {
+                    let productValue = parseFloat(product.value);
+                    allTotal += productValue;
+                });
+                $('.total').val(allTotal.toFixed(2));
+            }
+            calculateProductTotal();
 
 
 
@@ -669,6 +683,7 @@
                 calculateTotal();
                 calculateGrandTotal();
                 updateTotalQuantity();
+                calculateProductTotal();
             }
 
 

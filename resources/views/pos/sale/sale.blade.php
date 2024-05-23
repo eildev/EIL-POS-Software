@@ -1,20 +1,13 @@
 @extends('master')
 @section('title', '| Sale')
 @section('admin')
-    <nav class="page-breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Sale</li>
-        </ol>
-    </nav>
-
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="card-body px-4 py-2">
+                    {{-- <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="card-title">POS Sale</h6>
-                    </div>
+                    </div> --}}
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="ageSelect" class="form-label">Barcode</label>
@@ -83,7 +76,7 @@
     <div class="row">
         <div class="col-md-7 grid-margin stretch-card">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body px-4 py-2">
                     <div class="mb-3">
                         <h6 class="card-title">Purchase Table</h6>
                     </div>
@@ -111,128 +104,107 @@
         </div>
         <div class="col-md-5 grid-margin stretch-card">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body px-4 py-2">
+                    <div class="row align-items-center">
+                        <div class="col-sm-4">
+                            Grand Total :
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control grandTotal border-0 " name="" readonly
+                                value="0.00" />
+                        </div>
 
+                        <input type="hidden" class="form-control total border-0 " name="total" readonly value="0.00" />
 
-                    <div>
-                        <div>
-                            <div>
-                                <div>
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4">
-                                            Total :
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="number" class="form-control total border-0 " name="total"
-                                                readonly value="0.00" />
-                                        </div>
-                                    </div>
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4">
-                                            Discount :
-                                        </div>
-                                        <div class="col-md-8">
-                                            {{-- @php
-                                                $promotions = App\Models\Promotion::get();
-                                            @endphp --}}
-                                            {{-- <input type="number" class="form-control discount_field border-0 " name="discount_field"
-                                                readonly value="0.00" /> --}}
-                                            {{-- <span class="ms-3 discount_field">00</span> --}}
-                                            <select class="form-select discount_field" name="discount_field">
+                    </div>
+                    <div class="row align-items-center mb-2">
+                        <div class="col-sm-4">
+                            Discount :
+                        </div>
+                        <div class="col-sm-8">
+                            {{-- @php
+                                $promotions = App\Models\Promotion::get();
+                            @endphp --}}
+                            {{-- <input type="number" class="form-control discount_field border-0 " name="discount_field"
+                                readonly value="0.00" /> --}}
+                            {{-- <span class="ms-3 discount_field">00</span> --}}
+                            <select class="form-select discount_field" name="discount_field">
 
-                                            </select>
-                                        </div>
-                                    </div>
+                            </select>
+                        </div>
+                    </div>
 
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4">
-                                            Sub Total :
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="number" class="form-control grand_total border-0 "
-                                                name="grand_total" readonly value="0.00" />
-                                        </div>
-                                    </div>
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4">
-                                            <label for="name" class="form-label">Tax:</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            @php
-                                                $taxs = App\Models\Tax::get();
-                                            @endphp
-                                            <select class="form-select tax" data-width="100%" onclick="errorRemove(this);"
-                                                onblur="errorRemove(this);" value="">
-                                                @if ($taxs->count() > 0)
-                                                    <option selected disabled>0%</option>
-                                                    @foreach ($taxs as $taxs)
-                                                        <option value="{{ $taxs->percentage }}">
-                                                            {{ $taxs->percentage }} %
-                                                        </option>
-                                                    @endforeach
-                                                @else
-                                                    <option selected disabled>Please Add Transaction</option>
-                                                @endif
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4">
-                                            Grand Total :
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="number" class="form-control grandTotal border-0 "
-                                                name="" readonly value="0.00" />
-                                        </div>
-                                    </div>
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4">
-                                            <label for="name" class="form-label">Pay Amount <span
-                                                    class="text-danger">*</span>:</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input class="form-control total_payable" name="total_payable" type="number"
-                                                value="0.00">
-                                            <span class="text-danger total_payable_error"></span>
-                                        </div>
-                                    </div>
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4">
-                                            Due/Return :
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="number" class="form-control total_due border-0 " name=""
-                                                readonly value="0.00" />
-                                        </div>
-                                    </div>
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4">
-                                            <label for="name" class="form-label">Transaction Method <span
-                                                    class="text-danger">*</span>:</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            @php
-                                                $payments = App\Models\Bank::get();
-                                            @endphp
-                                            <select class="form-select payment_method" data-width="100%"
-                                                onclick="errorRemove(this);" onblur="errorRemove(this);">
-                                                @if ($payments->count() > 0)
-                                                    @foreach ($payments as $payemnt)
-                                                        <option value="{{ $payemnt->id }}">
-                                                            {{ $payemnt->name }}
-                                                        </option>
-                                                    @endforeach
-                                                @else
-                                                    <option selected disabled>Please Add Transaction</option>
-                                                @endif
-                                            </select>
-                                            <span class="text-danger payment_method_error"></span>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
+                    <div class="row align-items-center">
+                        <div class="col-sm-8">
+                            <input type="hidden" class="form-control grand_total border-0 " name="grand_total" readonly
+                                value="0.00" />
+                        </div>
+                    </div>
+                    <div class="row align-items-center mb-2">
+                        <div class="col-sm-4">
+                            <label for="name" class="form-label">Tax:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            @php
+                                $taxs = App\Models\Tax::get();
+                            @endphp
+                            <select class="form-select tax" data-width="100%" onclick="errorRemove(this);"
+                                onblur="errorRemove(this);" value="">
+                                @if ($taxs->count() > 0)
+                                    <option selected disabled>0%</option>
+                                    @foreach ($taxs as $taxs)
+                                        <option value="{{ $taxs->percentage }}">
+                                            {{ $taxs->percentage }} %
+                                        </option>
+                                    @endforeach
+                                @else
+                                    <option selected disabled>Please Add Transaction</option>
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row align-items-center ">
+                        <div class="col-sm-4">
+                            <label for="name" class="form-label">Pay Amount <span
+                                    class="text-danger">*</span>:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input class="form-control total_payable" name="total_payable" type="number"
+                                value="">
+                            <span class="text-danger total_payable_error"></span>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-sm-4">
+                            Due/Return :
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control total_due border-0 " name="" readonly
+                                value="0.00" />
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-sm-4">
+                            <label for="name" class="form-label">Transaction Method <span
+                                    class="text-danger">*</span>:</label>
+                        </div>
+                        <div class="col-sm-8">
+                            @php
+                                $payments = App\Models\Bank::get();
+                            @endphp
+                            <select class="form-select payment_method" data-width="100%" onclick="errorRemove(this);"
+                                onblur="errorRemove(this);">
+                                @if ($payments->count() > 0)
+                                    @foreach ($payments as $payemnt)
+                                        <option value="{{ $payemnt->id }}">
+                                            {{ $payemnt->name }}
+                                        </option>
+                                    @endforeach
+                                @else
+                                    <option selected disabled>Please Add Transaction</option>
+                                @endif
+                            </select>
+                            <span class="text-danger payment_method_error"></span>
                         </div>
                     </div>
 
@@ -435,12 +407,13 @@
                 <td>
                     <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="1" />
                 </td>
-                <td>
+                <td style="padding-top: 20px;">
+                 
                     ${promotion && promotion.discount_type ?
                         promotion.discount_type == 'percentage' ?
-                            `<span class="discount_percentage${product.id}">${promotion.discount_value}</span>%` :
-                            `<span class="discount_amount${product.id}">${promotion.discount_value}</span>Tk` :
-                        (promotion ? `<span>00</span>` : `<span>00</span>`)
+                            `<span class="discount_percentage${product.id} mt-2">${promotion.discount_value}</span>%` :
+                            `<span class="discount_amount${product.id} mt-2">${promotion.discount_value}</span>Tk` :
+                        (promotion ? `<span class="mt-2">00</span>` : `<span class="mt-2">00</span>`)
                     }
                 </td>
                 <td>
@@ -454,9 +427,9 @@
                             `<input type="number" class="form-control product_subtotal${product.id} border-0" name="total_price[]" id="productTotal" readonly value="${product.price}" />`
                     }
                 </td>
-                <td>
-                    <a href="#" class="btn btn-danger btn-icon purchase_delete" data-id=${product.id}>
-                        <i class="fa-solid fa-trash-can"></i>
+                <td style="padding-top: 20px;">
+                    <a href="#" class="btn btn-sm btn-danger btn-icon purchase_delete" style="font-size: 8px; height: 25px; width: 25px;" data-id=${product.id}>
+                        <i class="fa-solid fa-trash-can" style="font-size: 0.8rem; margin-top: 2px;"></i>
                     </a>
                 </td>
             </tr>`

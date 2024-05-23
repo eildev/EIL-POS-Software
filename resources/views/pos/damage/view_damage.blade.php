@@ -1,5 +1,5 @@
 @extends('master')
-@section('title','| Damage List')
+@section('title', '| Damage List')
 @section('admin')
 
     <div class="row">
@@ -43,8 +43,9 @@
                                                     class="btn btn-sm btn-primary btn-icon">
                                                     <i data-feather="edit"></i>
                                                 </a>
-                                                {{-- <a href="{{route('damage.delete',$damage->id)}}" id="delete" class="btn btn-sm btn-danger btn-icon"> --}}
-                                                <i data-feather="trash-2"></i>
+                                                <a href="{{ route('damage.destroy', $damage->id) }}" id="delete"
+                                                    class="btn btn-sm btn-danger btn-icon">
+                                                    <i data-feather="trash-2"></i>
                                                 </a>
                                             </td>
                                         </tr>

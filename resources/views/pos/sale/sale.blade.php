@@ -78,7 +78,7 @@
             <div class="card">
                 <div class="card-body px-4 py-2">
                     <div class="mb-3">
-                        <h6 class="card-title">Purchase Table</h6>
+                        <h6 class="card-title">Items</h6>
                     </div>
 
                     <div id="" class="table-responsive">
@@ -458,7 +458,7 @@
 
                             updateGrandTotal();
                             calculateProductTotal();
-                            allProductTotal();
+                            // allProductTotal();
                             $('.barcode_input').val('');
                             // calculateGrandTotal();
                         } else {
@@ -853,7 +853,7 @@
                     success: function(res) {
                         if (res.status == 200) {
                             // console.log(res.data);
-                            $('#paymentModal').modal('hide');
+                            // $('#paymentModal').modal('hide');
                             // $('.supplierForm')[0].reset();
                             // supplierView();
                             toastr.success(res.message);

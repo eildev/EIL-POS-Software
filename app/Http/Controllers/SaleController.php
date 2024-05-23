@@ -236,6 +236,143 @@ class SaleController extends Controller
         $sale = Sale::findOrFail($id);
         return view('pos.sale.edit', compact('sale'));
     }
+    public function update(Request $request, $id)
+    {
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'customer_id' => 'required',
+            'products' => 'required',
+            'sale_date' => 'required',
+            'payment_method' => 'required',
+        ]);
+
+        if ($validator->passes()) {
+
+            // product Cost 
+            $productCost = 0;
+            $productAll = $request->products;
+            foreach ($productAll as $product) {
+                $items = Product::findOrFail($product['product_id']);
+                $productCost += $items->cost;
+            }
+
+            // Sale Table CRUD 
+            $sale = Sale::findOrFail($id);
+            $sale->branch_id = Auth::user()->branch_id;
+            $sale->customer_id = $request->customer_id;
+            $sale->sale_date = $request->sale_date;
+            $sale->sale_by = 0;
+            $sale->invoice_number = rand(123456, 99999);
+            $sale->order_type = "general";
+            $sale->quantity = $request->quantity;
+            $sale->total = $request->total_amount;
+            $sale->discount = $request->discount;
+            $sale->change_amount = $request->total;
+            $sale->actual_discount = $request->actual_discount;
+            $sale->tax = $request->tax;
+            $sale->receivable = $request->change_amount;
+            // $sale->paid = $request->paid;
+            $sale->due = $request->due;
+            if ($request->due < 0) {
+                $sale->paid = $request->paid + $request->due;
+            } else {
+                $sale->paid = $request->paid;
+            }
+            // $sale->returned = $request->due;
+            $sale->final_receivable = $request->change_amount;
+            $sale->payment_method = $request->payment_method;
+            $sale->profit = $request->change_amount - $productCost;
+            $sale->note = $request->note;
+            $sale->created_at = Carbon::now();
+            $sale->save();
+
+
+            // $saleId = $sale->id;
+
+            // products table CRUD 
+            $products = $request->products;
+            foreach ($products as $product) {
+                $items2 = Product::findOrFail($product['product_id']);
+                $items = new SaleItem;
+                $items->sale_id = $sale->id;
+                $items->product_id = $product['product_id']; // Access 'product_id' as an array key
+                $items->rate = $product['unit_price']; // Access 'unit_price' as an array key
+                $items->qty = $product['quantity'];
+                $items->discount = $product['discount'];
+                $items->sub_total = $product['total_price'];
+                $items->total_purchase_cost = $items2->cost * $product['quantity'];
+                $items->save();
+
+
+                $items2->stock = $items2->stock - $product['quantity'];
+                $items2->total_sold = $items2->total_sold + $product['quantity'];
+                $items2->save();
+            }
+
+            // customer table CRUD 
+            $customer = Customer::findOrFail($request->customer_id);
+            $customer->total_receivable = $customer->total_receivable + $request->change_amount;
+            $customer->total_payable = $customer->total_payable + $request->paid;
+            $customer->wallet_balance = $customer->wallet_balance + ($request->change_amount - $request->paid);
+            $customer->save();
+
+            // actual Payment 
+            $actualPayment = new ActualPayment;
+            $actualPayment->branch_id =  Auth::user()->branch_id;
+            $actualPayment->payment_type =  'receive';
+            $actualPayment->payment_method =  $request->payment_method;
+            $actualPayment->customer_id = $request->customer_id;
+            $actualPayment->amount = $request->paid;
+            $actualPayment->date = $request->sale_date;
+            $actualPayment->save();
+
+            // accountTransaction table 
+            $accountTransaction = new AccountTransaction;
+            $accountTransaction->branch_id =  Auth::user()->branch_id;
+            $accountTransaction->purpose =  'Withdraw';
+            $accountTransaction->account_id =  $request->payment_method;
+            $accountTransaction->credit = $request->paid;
+            // $accountTransaction->balance = $accountTransaction->balance + $request->paid;
+            $accountTransaction->save();
+
+            $transaction = Transaction::where('customer_id', $request->customer_id)->first();
+
+            if ($transaction) {
+                // Update existing transaction
+                $transaction->date =  $request->sale_date;
+                $transaction->payment_type = 'receive';
+                $transaction->particulars = 'Sale#' . $sale->id;
+                $transaction->credit = $transaction->credit + $request->change_amount;
+                $transaction->debit = $transaction->debit + $request->paid;
+                $transaction->balance = $transaction->balance + ($request->change_amount - $request->paid);
+                $transaction->payment_method = $request->payment_method;
+                $transaction->save();
+            } else {
+                // Create new transaction
+                $transaction = new Transaction;
+                $transaction->date =  $request->sale_date;
+                $transaction->payment_type = 'receive';
+                $transaction->particulars = 'Sale#' . $sale->id;
+                $transaction->customer_id = $request->customer_id;
+                $transaction->credit = $request->change_amount;
+                $transaction->debit = $request->paid;
+                $transaction->balance = $request->change_amount - $request->paid;
+                $transaction->payment_method = $request->payment_method;
+                $transaction->save();
+            }
+
+            return response()->json([
+                'status' => 200,
+                'saleId' => $sale->id,
+                'message' => 'successfully Updated',
+            ]);
+        } else {
+            return response()->json([
+                'status' => '500',
+                'error' => $validator->messages(),
+            ]);
+        }
+    }
     public function destroy($id)
     {
         $sale = Sale::findOrFail($id);
@@ -412,5 +549,39 @@ class SaleController extends Controller
                 'error' => 'Not Enough Stock'
             ]);
         }
+    }
+
+    // public function saleProductFind($id)
+    // {
+    //     $saleItems = SaleItem::where('sale_id', $id)->get();
+    //     // $products = Product::where('branch_id', Auth::user()->branch_id)->where('stock', '>', 0)->where('barcode', $id)->latest()->first();
+
+    //     return response()->json([
+    //         'status' => '200',
+    //         'data' => $saleItems
+    //     ]);
+    // }
+    public function saleProductFind($id)
+    {
+        $status = 'active';
+        $saleItems = SaleItem::where('sale_id', $id)->get();
+
+        $items = $saleItems->map(function ($saleItem) use ($status) {
+            $product = Product::find($saleItem->product_id);
+            $promotionDetails = PromotionDetails::whereHas('promotion', function ($query) use ($status) {
+                return $query->where('status', '=', $status);
+            })->where('promotion_type', 'products')->where('logic', 'like', '%' . $product->id . "%")->latest()->first();
+            // dd($saleItem->qty);
+            return [
+                'product' => $product,
+                'promotion' => $promotionDetails ? $promotionDetails->promotion : null,
+                'quantity' => $saleItem->qty,
+            ];
+        });
+
+        return response()->json([
+            'status' => '200',
+            'items' => $items
+        ]);
     }
 }

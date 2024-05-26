@@ -1,11 +1,11 @@
 @charset "UTF-8";
-
 /*
 * NobleUI - HTML Bootstrap 5 Admin Dashboard Template v2.0.3 (https://nobleui.com/)
 * Copyright © 2022 NobleUI
 * Licensed under ThemeForest License
 */
 :root {
+    --nav-hover-background-color: #00a9f1;
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
   --bs-purple: #6f42c1;
@@ -57,7 +57,7 @@
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
   --bs-body-color: #000;
-  --bs-body-bg: #00f1ef;
+  --bs-body-bg: #c7f1ff;
   --bs-border-width: 1px;
   --bs-border-style: solid;
   --bs-border-color: #e9ecef;
@@ -2416,7 +2416,7 @@ progress {
   font-weight: 400;
   line-height: 1.5;
   color: #000;
-  background-color: #fff;
+  background-color: #c7f1ff;
   background-clip: padding-box;
   border: 1px solid #e9ecef;
   appearance: none;
@@ -4658,7 +4658,8 @@ div.tox .btn-group-vertical>.btn-group:not(:first-child)>.tox-button,
 
 .nav-link:hover,
 .nav-link:focus {
-  color: var(--bs-nav-link-hover-color);
+  color: white !important;
+  background-color: var(--nav-hover-background-color);
 }
 
 .nav-link.disabled {
@@ -23735,7 +23736,7 @@ div.tox .buy-now-wrapper .tox-button svg,
 
 .main-wrapper .page-wrapper {
   min-height: 100vh;
-  background: #f9fafb;
+  background: var(--bs-body-bg);
   width: calc(100% - 240px);
   margin-left: 240px;
   display: flex;
@@ -24398,12 +24399,13 @@ div.tox .buy-now-wrapper .tox-button svg,
 }
 
 .sidebar .sidebar-body .nav .nav-item:hover .nav-link .link-icon {
-  color: #6571ff;
-  fill: rgba(239, 243, 255, 0.5);
+  /* color: #6571ff;
+  fill: rgba(239, 243, 255, 0.5); */
 }
 
 .sidebar .sidebar-body .nav .nav-item.active .nav-link {
-  color: #6571ff;
+  color: white !important;
+  background-color: var(--nav-hover-background-color);
 }
 
 .sidebar .sidebar-body .nav .nav-item.active .nav-link::before {
@@ -24416,8 +24418,8 @@ div.tox .buy-now-wrapper .tox-button svg,
 }
 
 .sidebar .sidebar-body .nav .nav-item.active .nav-link .link-icon {
-  fill: rgba(239, 243, 255, 0.5);
-  color: #6571ff;
+  /* fill: rgba(239, 243, 255, 0.5);
+  color: #6571ff; */
 }
 
 .sidebar .sidebar-body .nav.sub-menu {
@@ -24435,7 +24437,9 @@ div.tox .buy-now-wrapper .tox-button svg,
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
+svg{
+  background: rgb(255,255,255) !important;
+}
 .sidebar .sidebar-body .nav.sub-menu .nav-item .nav-link::before {
   content: "";
   width: 6px;
@@ -26641,8 +26645,8 @@ div.apexcharts-canvas .apexcharts-yaxistooltip-right:after {
 
 div.apexcharts-canvas .apexcharts-tooltip-marker {
   /*rtl:raw:
-  margin-right: 0; 
-  margin-left: 10px; 
+  margin-right: 0;
+  margin-left: 10px;
   */
 }
 
@@ -27444,7 +27448,7 @@ div.tox .tox-dialog__body {
 
 .wizard>.actions {
   /*rtl:raw:
-    text-align: left; 
+    text-align: left;
   */
 }
 

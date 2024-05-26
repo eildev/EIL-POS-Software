@@ -4,11 +4,13 @@
 
     <div class="row">
 
+        @if(Auth::user()->can('damage.add'))
         <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
             <div class="">
                 <h4 class="text-right"><a href="{{ route('damage') }}" class="btn btn-info">Add Damage</a></h4>
             </div>
         </div>
+        @endif
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -39,14 +41,23 @@
                                             <td>{{ $damage->date ?? '' }}</td>
                                             <td>{{ $damage->note ?? '' }}</td>
                                             <td>
+                                                @if(Auth::user()->can('damage.edit'))
                                                 <a href="{{ route('damage.edit', $damage->id) }}"
                                                     class="btn btn-sm btn-primary btn-icon">
                                                     <i data-feather="edit"></i>
                                                 </a>
+<<<<<<< HEAD
+                                                @endif
+                                                @if(Auth::user()->can('damage.delete'))
+                                                {{-- <a href="{{route('damage.delete',$damage->id)}}" id="delete" class="btn btn-sm btn-danger btn-icon"> --}}
+                                                <i data-feather="trash-2"></i>
+=======
                                                 <a href="{{ route('damage.destroy', $damage->id) }}" id="delete"
                                                     class="btn btn-sm btn-danger btn-icon">
                                                     <i data-feather="trash-2"></i>
+>>>>>>> 48ef03ab96642f69da74a1e719c62dc561f8958c
                                                 </a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

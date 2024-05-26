@@ -3,12 +3,13 @@
 @section('admin')
 
 <div class="row">
-
+    @if(Auth::user()->can('promotion.add'))
 <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
     <div class="">
         <h4 class="text-right"><a href="{{route('promotion.add')}}" class="btn btn-primary">Add New Promotion</a></h4>
     </div>
 </div>
+@endif
 <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -46,12 +47,16 @@
                                 </td>
                                 <td>{{ $promotion->description ?? ''}}</td>
                                 <td>
+                                    @if(Auth::user()->can('promotion.edit'))
                                     <a href="{{route('promotion.edit',$promotion->id)}}" class="btn btn-sm btn-primary btn-icon">
                                         <i data-feather="edit"></i>
                                     </a>
+                                    @endif
+                                    @if(Auth::user()->can('promotion.delete'))
                                     <a href="{{route('promotion.delete',$promotion->id)}}" id="delete" class="btn btn-sm btn-danger btn-icon">
                                         <i data-feather="trash-2"></i>
                                     </a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

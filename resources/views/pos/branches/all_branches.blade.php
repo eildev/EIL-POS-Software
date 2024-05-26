@@ -3,11 +3,13 @@
 @section('admin')
 
 <div class="row">
+    @if(Auth::user()->can('branch.menu'))
 <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
     <div class="">
         <h4 class="text-right"><a href="{{route('branch')}}" class="btn btn-info">Add New Branch</a></h4>
     </div>
 </div>
+@endif
 <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -36,12 +38,16 @@
                                 <td>{{ $branch->address ?? ''}}</td>
                                 <td><img src="{{asset('uploads/branch/'. $branch->logo)}}" alt="logo" height="60px" width="60px"></td>
                                 <td>
+                                    @if(Auth::user()->can('branch.add'))
                                     <a href="{{route('branch.edit',$branch->id)}}" class="btn btn-sm btn-primary btn-icon">
                                         <i data-feather="edit"></i>
                                     </a>
+                                    @endif
+                                    @if(Auth::user()->can('branch.edit'))
                                     <a href="{{route('branch.delete',$branch->id)}}" id="delete" class="btn btn-sm btn-danger btn-icon">
                                         <i data-feather="trash-2"></i>
                                     </a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

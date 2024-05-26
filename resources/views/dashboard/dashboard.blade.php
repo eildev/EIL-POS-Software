@@ -202,7 +202,7 @@
                                     <img src="uploads/dashboard/Artboard4@300x-100.jpg" height="50px" width="50px" alt="Image" style="border-radius:5px">
                                 </div>
                                 <div class="col-md-8">
-                                    <h3 class="mb-2"> {{ $totalInvoiceToday }}<span style="font-size: 15px; color:white">
+                                    <h3 class="mb-2"> {{ $totalInvoiceToday }}<span style="font-size: 15px; color:black">
                                         ({{ $todaySaleItemsToday }})</span>
                                 </h3>
                                 <h6 class="mb-0">Invoice</h6>

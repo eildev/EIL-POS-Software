@@ -211,12 +211,19 @@
                     <div class="my-3">
                         <button class="btn btn-primary payment_btn"><i class="fa-solid fa-money-check-dollar"></i>
                             Payment</button>
+                            <button id="printButton" class="btn btn-primary print_btn"><i class="fa-solid fa-money-check-dollar"></i>
+                                print</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <style>
+        #printFrame {
+            display: none; /* Hide the iframe */
+        }
+    </style>
+    <iframe id="printFrame" src="" width="0" height="0"></iframe>
     <!-- Modal -->
     <div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
         aria-hidden="true">
@@ -273,7 +280,21 @@
         </div>
     </div>
 
+<script>
+    $(document).ready(function() {
+    $('#printButton').on('click', function() {
+        var printFrame = $('#printFrame')[0];
+        var printContentUrl = '{{route("sale.invoice",102049)}}'; // Specify the URL of the content to be printed
+        console.log('{{route("sale.invoice",102049)}}');
+        $('#printFrame').attr('src', printContentUrl);
 
+        printFrame.onload = function() {
+            printFrame.contentWindow.focus();
+            printFrame.contentWindow.print();
+        };
+    });
+});
+</script>
 
 
 
@@ -408,7 +429,7 @@
                     <input type="number" product-id="${product.id}" class="form-control quantity" name="quantity[]" value="1" />
                 </td>
                 <td style="padding-top: 20px;">
-                 
+
                     ${promotion && promotion.discount_type ?
                         promotion.discount_type == 'percentage' ?
                             `<span class="discount_percentage${product.id} mt-2">${promotion.discount_value}</span>%` :
@@ -860,7 +881,16 @@
                             let id = res.saleId;
                             // console.log(id)
 
-                            window.location.href = '/sale/invoice/' + id;
+                            // window.location.href = '/sale/invoice/' + id;
+                            var printFrame = $('#printFrame')[0];
+                            var printContentUrl = '/sale/print/'+id; // Specify the URL of the content to be printed
+                            // console.log('{{route("sale.invoice",102049)}}');
+                            $('#printFrame').attr('src', printContentUrl);
+
+                            printFrame.onload = function() {
+                                printFrame.contentWindow.focus();
+                                printFrame.contentWindow.print();
+                            };
 
                         } else {
                             if (res.error.customer_id) {

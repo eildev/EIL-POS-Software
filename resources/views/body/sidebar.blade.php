@@ -309,39 +309,41 @@
                     </a>
                 </li>
             @endif
-            <li class="nav-item nav-category">Customer Info. Management</li>
-            @if (Auth::user()->can('advanced-employee-salary.menu'))
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#advancedUI" role="button"
-                        aria-expanded="false" aria-controls="advancedUI">
-                        <i class="link-icon" data-feather="anchor"></i>
-                        <span class="link-title">CRM</span>
-                        <i class="link-arrow" data-feather="chevron-down"></i>
-                    </a>
-                    <div class="collapse" id="advancedUI">
-                        <ul class="nav sub-menu">
-                            @if (Auth::user()->can('crm.customize-customer'))
-                                <li class="nav-item">
-                                    <a href="{{ route('customer.list.view') }}" class="nav-link">Customize
-                                        Customer</a>
-                                </li>
-                            @endif
-                            @if (Auth::user()->can('crm.email-marketing'))
-                                <li class="nav-item">
-                                    <a href="{{ route('email.To.Customer.Page') }}" class="nav-link">Email
-                                        Marketing</a>
-                                </li>
-                            @endif
-                            @if (Auth::user()->can('crm.sms-marketing'))
-                                <li class="nav-item">
-                                    <a href="{{ route('sms.To.Customer.Page') }}" class="nav-link">SMS Marketing</a>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
-                </li>
-            @endif
-            {{-- @if (Auth::user()->can('advanced-employee-salary.menu'))
+            @if (Auth::user()->can('crm.menu'))
+                <li class="nav-item nav-category">Customer Info. Management</li>
+                @if (Auth::user()->can('advanced-employee-salary.menu'))
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#advancedUI" role="button"
+                            aria-expanded="false" aria-controls="advancedUI">
+                            <i class="link-icon" data-feather="anchor"></i>
+                            <span class="link-title">CRM</span>
+                            <i class="link-arrow" data-feather="chevron-down"></i>
+                        </a>
+                        <div class="collapse" id="advancedUI">
+                            <ul class="nav sub-menu">
+                                @if (Auth::user()->can('crm.customize-customer'))
+                                    <li class="nav-item">
+                                        <a href="{{ route('customer.list.view') }}" class="nav-link">Customize
+                                            Customer</a>
+                                    </li>
+                                @endif
+                                @if (Auth::user()->can('crm.email-marketing'))
+                                    <li class="nav-item">
+                                        <a href="{{ route('email.To.Customer.Page') }}" class="nav-link">Email
+                                            Marketing</a>
+                                    </li>
+                                @endif
+                                @if (Auth::user()->can('crm.sms-marketing'))
+                                    <li class="nav-item">
+                                        <a href="{{ route('sms.To.Customer.Page') }}" class="nav-link">SMS
+                                            Marketing</a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+                {{-- @if (Auth::user()->can('advanced-employee-salary.menu'))
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#crm" role="button"
                         aria-expanded="false" aria-controls="emails">
@@ -372,75 +374,82 @@
                     </div>
                 </li>
             @endif --}}
-            <li class="nav-item nav-category">All Reports</li>
-            @if (Auth::user()->can('report.menu'))
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#forms" role="button"
-                        aria-expanded="false" aria-controls="forms">
-                        <i class="link-icon" data-feather="inbox"></i>
-                        <span class="link-title">Reports</span>
-                        <i class="link-arrow" data-feather="chevron-down"></i>
-                    </a>
-                    <div class="collapse" id="forms">
-                        <ul class="nav sub-menu">
-                            <li class="nav-item">
-                                <a href="{{ route('today.report') }}" class="nav-link">Today Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('product.info.report') }}" class="nav-link">Product Info Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('summary.report') }}" class="nav-link">Summary Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('customer.due.report') }}" class="nav-link">Customer Due Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('supplier.due.report') }}" class="nav-link">Supplier Due Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('low.stock.report') }}" class="nav-link">Low Stock Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('top.products.report') }}" class="nav-link">Top Products</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('purchase.report') }}" class="nav-link">Purchase Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('customer.ledger.report') }}" class="nav-link">Customer Ledger</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('suppliers.ledger.report') }}" class="nav-link">Supplier Ledger</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('account.transaction.view') }}" class="nav-link">Account
-                                    Transaction</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('account.transaction.view') }}" class="nav-link">Expense Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('employee.salary.report.view') }}" class="nav-link">Employee Salary
-                                    Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('stock.report') }}" class="nav-link">Stock Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('damage.report') }}" class="nav-link">Damage Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('sms.report') }}" class="nav-link">Sms Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('monthly.report') }}" class="nav-link">Monthly Report</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            @endif
-            {{-- @if (Auth::user()->can('report.menu'))
+                <li class="nav-item nav-category">All Reports</li>
+                @if (Auth::user()->can('report.menu'))
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#forms" role="button"
+                            aria-expanded="false" aria-controls="forms">
+                            <i class="link-icon" data-feather="inbox"></i>
+                            <span class="link-title">Reports</span>
+                            <i class="link-arrow" data-feather="chevron-down"></i>
+                        </a>
+                        <div class="collapse" id="forms">
+                            <ul class="nav sub-menu">
+                                <li class="nav-item">
+                                    <a href="{{ route('today.report') }}" class="nav-link">Today Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('product.info.report') }}" class="nav-link">Product Info
+                                        Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('summary.report') }}" class="nav-link">Summary Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('customer.due.report') }}" class="nav-link">Customer Due
+                                        Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('supplier.due.report') }}" class="nav-link">Supplier Due
+                                        Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('low.stock.report') }}" class="nav-link">Low Stock Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('top.products.report') }}" class="nav-link">Top Products</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('purchase.report') }}" class="nav-link">Purchase Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('customer.ledger.report') }}" class="nav-link">Customer
+                                        Ledger</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('suppliers.ledger.report') }}" class="nav-link">Supplier
+                                        Ledger</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('account.transaction.view') }}" class="nav-link">Account
+                                        Transaction</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('account.transaction.view') }}" class="nav-link">Expense
+                                        Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('employee.salary.report.view') }}" class="nav-link">Employee
+                                        Salary
+                                        Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('stock.report') }}" class="nav-link">Stock Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('damage.report') }}" class="nav-link">Damage Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('sms.report') }}" class="nav-link">Sms Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('monthly.report') }}" class="nav-link">Monthly Report</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+                {{-- @if (Auth::user()->can('report.menu'))
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#report" role="button"
                         aria-expanded="false" aria-controls="emails">
@@ -570,83 +579,84 @@
                     </div>
                 </li>
             @endif --}}
-            <!---Role & Permission--->
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#role" role="button" aria-expanded="false"
-                    aria-controls="emails">
-                    <i class="fa-solid fa-users-gear link-icon"></i>
-                    <span class="link-title">Role & Permission</span>
-                    <i class="link-arrow" data-feather="chevron-down"></i>
-                </a>
-                <div class="collapse" id="role">
-                    <ul class="nav sub-menu">
-                        @if (Auth::user()->can('role-and-permission.all-permission'))
-                            <li class="nav-item">
-                                <a href="{{ route('all.permission') }}" class="nav-link">All Permisiion</a>
-                            </li>
-                        @endif
-                        @if (Auth::user()->can('role-and-permission.all-role'))
-                            <li class="nav-item">
-                                <a href="{{ route('all.role') }}" class="nav-link">All Role</a>
-                            </li>
-                        @endif
-                        @if (Auth::user()->can('role-and-permission.role-in-permission'))
-                            <li class="nav-item">
-                                <a href="{{ route('add.role.permission') }}" class="nav-link">Role In Permission</a>
-                            </li>
-                        @endif
-                        @if (Auth::user()->can('role-and-permission-check-role-permission'))
-                            <li class="nav-item">
-                                <a href="{{ route('all.role.permission') }}" class="nav-link">Check All Role
-                                    Permission</a>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-            </li>
-            <!---Admin Manage--->
-            @if (Auth::user()->can('admin-manage.menu'))
+                <!---Role & Permission--->
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#admin-manage" role="button"
+                    <a class="nav-link" data-bs-toggle="collapse" href="#role" role="button"
                         aria-expanded="false" aria-controls="emails">
                         <i class="fa-solid fa-users-gear link-icon"></i>
-                        <span class="link-title">Admin Manage</span>
+                        <span class="link-title">Role & Permission</span>
                         <i class="link-arrow" data-feather="chevron-down"></i>
                     </a>
-                    <div class="collapse" id="admin-manage">
+                    <div class="collapse" id="role">
                         <ul class="nav sub-menu">
-                            @if (Auth::user()->can('admin-manage.list'))
+                            @if (Auth::user()->can('role-and-permission.all-permission'))
                                 <li class="nav-item">
-                                    <a href="{{ route('all.admin') }}" class="nav-link">All Admin</a>
+                                    <a href="{{ route('all.permission') }}" class="nav-link">All Permisiion</a>
                                 </li>
                             @endif
-                            @if (Auth::user()->can('admin-manage.add'))
+                            @if (Auth::user()->can('role-and-permission.all-role'))
                                 <li class="nav-item">
-                                    <a href="{{ route('add.admin') }}" class="nav-link">Add Admin</a>
+                                    <a href="{{ route('all.role') }}" class="nav-link">All Role</a>
+                                </li>
+                            @endif
+                            @if (Auth::user()->can('role-and-permission.role-in-permission'))
+                                <li class="nav-item">
+                                    <a href="{{ route('add.role.permission') }}" class="nav-link">Role In
+                                        Permission</a>
+                                </li>
+                            @endif
+                            @if (Auth::user()->can('role-and-permission-check-role-permission'))
+                                <li class="nav-item">
+                                    <a href="{{ route('all.role.permission') }}" class="nav-link">Check All Role
+                                        Permission</a>
                                 </li>
                             @endif
                         </ul>
                     </div>
                 </li>
-            @endif
-            <li class="nav-item nav-category">SETTING & CUSTOMIZE</li>
-            @if (Auth::user()->can('settings.menu'))
-                <li class="nav-item">
-                    <a href="{{ route('pos.settings.add') }}" class="nav-link">
-                        <i class="ms-2 ms-2 link-icon" data-feather="settings"></i>
-                        <span class="link-title">Settings</span>
-                    </a>
-                </li>
-            @endif
-            @if (Auth::user()->can('branch.menu'))
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('branch.view') }}" role="button"
-                        aria-controls="general-pages">
-                        <i class="ms-2 ms-2 link-icon" data-feather="sliders"></i>
-                        <span class="link-title">Branches</span>
-                    </a>
-                </li>
-            @endif
+                <!---Admin Manage--->
+                @if (Auth::user()->can('admin-manage.menu'))
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#admin-manage" role="button"
+                            aria-expanded="false" aria-controls="emails">
+                            <i class="fa-solid fa-users-gear link-icon"></i>
+                            <span class="link-title">Admin Manage</span>
+                            <i class="link-arrow" data-feather="chevron-down"></i>
+                        </a>
+                        <div class="collapse" id="admin-manage">
+                            <ul class="nav sub-menu">
+                                @if (Auth::user()->can('admin-manage.list'))
+                                    <li class="nav-item">
+                                        <a href="{{ route('all.admin') }}" class="nav-link">All Admin</a>
+                                    </li>
+                                @endif
+                                @if (Auth::user()->can('admin-manage.add'))
+                                    <li class="nav-item">
+                                        <a href="{{ route('add.admin') }}" class="nav-link">Add Admin</a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+                <li class="nav-item nav-category">SETTING & CUSTOMIZE</li>
+                @if (Auth::user()->can('settings.menu'))
+                    <li class="nav-item">
+                        <a href="{{ route('pos.settings.add') }}" class="nav-link">
+                            <i class="ms-2 ms-2 link-icon" data-feather="settings"></i>
+                            <span class="link-title">Settings</span>
+                        </a>
+                    </li>
+                @endif
+                @if (Auth::user()->can('branch.menu'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('branch.view') }}" role="button"
+                            aria-controls="general-pages">
+                            <i class="ms-2 ms-2 link-icon" data-feather="sliders"></i>
+                            <span class="link-title">Branches</span>
+                        </a>
+                    </li>
+                @endif
         </ul>
     </div>
 </nav>

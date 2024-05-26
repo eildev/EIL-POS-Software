@@ -11,20 +11,41 @@
                 <div class="card-body ">
                     <div class="container-fluid d-flex justify-content-between">
                         <div class="col-lg-3 ps-0">
-                            <a href="#" class="noble-ui-logo logo-light d-block mt-3">EIL<span>POS</span></a>
+                            @if (!empty($invoice_logo_type))
+                                @if ($invoice_logo_type == 'Name')
+                                    <a href="#" class="noble-ui-logo logo-light d-block mt-3">{{ $siteTitle }}</a>
+                                @elseif($invoice_logo_type == 'Logo')
+                                    @if (!empty($logo))
+                                        <img height="50" width="150" src="{{ url($logo) }}" alt="logo">
+                                    @else
+                                        <p class="mt-1 mb-1 show_branch_name"><b>{{ $siteTitle }}</b></p>
+                                    @endif
+                                @elseif($invoice_logo_type == 'Both')
+                                    @if (!empty($logo))
+                                        <img height="50" width="150" src="{{ url($logo) }}" alt="logo">
+                                    @endif
+                                    <p class="mt-1 mb-1 show_branch_name"><b>{{ $siteTitle }}</b></p>
+                                @endif
+                            @else
+                                <a href="#" class="noble-ui-logo logo-light d-block mt-3">EIL<span>POS</span></a>
+                            @endif
+                            <p class="show_branch_address">{{ $address ?? 'Banasree' }}</p>
+                            <p class="show_branch_address">{{ $email ?? '' }}</p>
+                            <p class="show_branch_address">{{ $phone ?? '' }}</p>
+                            {{-- <a href="#" class="noble-ui-logo logo-light d-block mt-3">EIL<span>POS</span></a>
                             <p class="mt-1 mb-1 show_branch_name"><b>{{ $branch->name ?? '' }}</b></p>
                             <p class="show_branch_address">{{ $branch->address ?? 'accordion ' }}</p>
                             <p class="show_branch_email">{{ $branch->email ?? '' }}</p>
-                            <p class="show_branch_phone">{{ $branch->phone ?? '' }}</p>
+                            <p class="show_branch_phone">{{ $branch->phone ?? '' }}</p> --}}
+
+                            <hr>
 
 
-                        </div>
-                        <div class="col-lg-3">
-                            <h5 class="mt-5 mb-2 text-muted">Invoice to :</h5>
-                            <p class="mt-1 mb-1 show_supplier_name"><b>{{ $customer->name ?? '' }}</b></p>
+                            <p class="mt-3 mb-1 show_supplier_name"><b>{{ $customer->name ?? '' }}</b></p>
                             <p class="show_supplier_address">{{ $customer->address ?? '' }}</p>
                             <p class="show_supplier_email">{{ $customer->email ?? '' }}</p>
                             <p class="show_supplier_phone">{{ $customer->phone ?? '' }}</p>
+
                         </div>
                         <div class="col-lg-3 pe-0 text-end">
                             <h4 class="fw-bolder text-uppercase text-end mt-4 mb-2">invoice</h4>
@@ -42,8 +63,9 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Description</th>
-                                        <th class="text-end">Quantity</th>
                                         <th class="text-end">Unit cost</th>
+                                        <th class="text-end">Quantity</th>
+                                        <th class="text-end">Discount</th>
                                         <th class="text-end">Total</th>
                                     </tr>
                                 </thead>
@@ -53,9 +75,10 @@
                                             <tr class="text-end">
                                                 <td class="text-start">{{ $index + 1 }}</td>
                                                 <td class="text-start">{{ $product->product->name }}</td>
-                                                <td>{{ $product->qty }}</td>
-                                                <td>{{ $product->rate }}</td>
-                                                <td>{{ $product->sub_total }}</td>
+                                                <td>{{ $product->rate ?? 0 }}</td>
+                                                <td>{{ $product->qty ?? 0 }}</td>
+                                                <td>{{ $product->discount ?? 0 }}</td>
+                                                <td>{{ $product->sub_total ?? 0 }}</td>
                                             </tr>
                                         @endforeach
                                     @else
@@ -102,7 +125,7 @@
                                                 <td>Sub Total</td>
                                                 <td class="text-end">৳ {{ $sale->total }}</td>
                                             </tr>
-                                            @if ($sale->discount != null)
+                                            @if ($sale->discount != 'No Discount')
                                                 @php
                                                     $discount = App\Models\Promotion::findOrFail($sale->discount);
                                                 @endphp
@@ -140,9 +163,14 @@
                                                     <td class="text-danger text-end">(-) ৳ {{ $sale->paid }} </td>
                                                 </tr>
                                             @endif
-                                            @if ($sale->due != 0)
+                                            @if ($sale->due >= 0)
                                                 <tr class="bg-dark">
                                                     <td class="text-bold-800">Balance Due</td>
+                                                    <td class="text-bold-800 text-end">৳ {{ $sale->due }} </td>
+                                                </tr>
+                                            @else
+                                                <tr class="bg-dark">
+                                                    <td class="text-bold-800">Return</td>
                                                     <td class="text-bold-800 text-end">৳ {{ $sale->due }} </td>
                                                 </tr>
                                             @endif
@@ -154,12 +182,27 @@
                         </div>
                     </div>
                     <div class="container-fluid w-100 btn_group">
-                        {{-- <a href="javascript:;" class="btn btn-primary float-end mt-4 ms-2"><i data-feather="send"
-                                class="me-3 icon-md"></i>Send Invoice</a> --}}
-                        <a href="javascript:;" class="btn btn-outline-primary float-end mt-4" onclick="window.print();"><i
-                                data-feather="printer" class="me-2 icon-md"></i>Print</a>
+                        @if ($invoice_type == 'a4')
+                            <a href="#" class="btn btn-outline-primary float-end mt-4 me-3"
+                                onclick="window.print();"><i data-feather="printer" class="me-2 icon-md"></i>Print
+                                Invoice</a>
+                        @else
+                            <a target="_blank" href="{{ route('sale.print', $sale->id) }}"
+                                class="btn btn-outline-primary float-end mt-4 "><i data-feather="printer"
+                                    class="me-2 icon-md"></i>Print Invoice</a>
+                        @endif
+
                     </div>
+
                 </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="w-100 mx-auto btn_group">
+                <a href="{{ route('sale.view') }}" class="btn btn-primary  mt-4 ms-2"><i
+                        class="fa-solid fa-arrow-rotate-left me-2"></i>Manage Sale</a>
+                <a href="{{ route('sale') }}" class="btn btn-outline-primary mt-4"><i data-feather="plus-circle"
+                        class="me-2 icon-md"></i>Sale</a>
             </div>
         </div>
     </div>

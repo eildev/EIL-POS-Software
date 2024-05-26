@@ -1,15 +1,15 @@
 @extends('master')
 @section('title', '| Sale')
 @section('admin')
-    <div class="row">
-        <div class="col-lg-12 grid-margin stretch-card">
+    <div class="row mt-0">
+        <div class="col-lg-12 grid-margin stretch-card mb-3">
             <div class="card">
                 <div class="card-body px-4 py-2">
                     {{-- <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="card-title">POS Sale</h6>
                     </div> --}}
                     <div class="row">
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-2 col-md-6">
                             <label for="ageSelect" class="form-label">Barcode</label>
 
                             <div class="input-group">
@@ -19,7 +19,7 @@
                             </div>
                         </div>
 
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-2 col-md-6">
                             <label for="date" class="form-label">Date</label>
                             {{-- <div class="input-group flatpickr" id="flatpickr-date">
                                 <input type="date" class="form-control purchase_date" placeholder="" data-input>
@@ -35,7 +35,7 @@
                             </div>
                             <span class="text-danger purchase_date_error"></span>
                         </div>
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-1 col-md-6">
                             @php
                                 $products = App\Models\Product::where('stock', '>', 0)->get();
                             @endphp
@@ -55,7 +55,7 @@
                             </select>
                             <span class="text-danger product_select_error"></span>
                         </div>
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-1 col-md-6">
                             <label for="password" class="form-label">Customer</label>
                             <div class="d-flex g-3">
                                 <select class="js-example-basic-single form-select select-customer" data-width="100%"
@@ -74,7 +74,7 @@
 
     {{-- table  --}}
     <div class="row">
-        <div class="col-md-7 grid-margin stretch-card">
+        <div class="col-md-7 mb-1 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body px-4 py-2">
                     <div class="mb-3">
@@ -102,10 +102,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5 grid-margin stretch-card">
+        <div class="col-md-5 mb-1 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body px-4 py-2">
-                    <div class="row align-items-center">
+                    <div class="row align-items-center mb-2">
                         <div class="col-sm-4">
                             Grand Total :
                         </div>
@@ -163,7 +163,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row align-items-center ">
+                    <div class="row align-items-center mb-2">
                         <div class="col-sm-4">
                             <label for="name" class="form-label">Pay Amount <span
                                     class="text-danger">*</span>:</label>
@@ -477,8 +477,9 @@
                             showAddProduct(product, promotion);
                             // Update SL numbers
 
-                            updateGrandTotal();
+
                             calculateProductTotal();
+                            updateGrandTotal();
                             // allProductTotal();
                             $('.barcode_input').val('');
                             // calculateGrandTotal();
@@ -611,9 +612,10 @@
                                     );
                                 })
                             } else {
-                                let total = $('.total').val();
+                                const total = $('.total').val();
                                 $('.grand_total').val(total);
                                 $('.grandTotal').val(total);
+                                // console.log($('.total').val());
                                 // $('.total_payable').val(total);
                                 $('.discount_field').html(
                                     `<option>No Discount</option>`
@@ -793,7 +795,119 @@
                 // $('.total_payable').val(taxTotal);
             })
 
+            const total_payable = document.querySelector('.total_payable');
+            total_payable.addEventListener('keydown', function(e){
+                if(event.key === 'Enter'){
+                    event.preventDefault();
+                    let customer_id = $('.select-customer').val();
+                    let sale_date = $('.purchase_date').val();
+                    let formattedSaleDate = moment(sale_date, 'DD-MMM-YYYY').format('YYYY-MM-DD HH:mm:ss');
+                    let quantity = totalQuantity;
+                    let total_amount = parseFloat($('.total').val());
+                    let discount = $('.discount_field').val();
+                    let total = parseFloat($('.grand_total').val());
+                    let tax = $('.tax').val();
+                    let change_amount = parseFloat($('.grandTotal').val());
+                    let actual_discount = change_amount - total;
+                    let paid = $('.total_payable').val();
+                    let due = $('.total_due').val();
+                    let note = $('.note').val();
+                    let payment_method = $('.payment_method').val();
+                    // let product_id = $('.product_id').val();
+                    // console.log(total_quantity);
 
+                    let products = [];
+
+                    $('tr[class^="data_row"]').each(function() {
+                        let row = $(this);
+                        // Get values from the current row's elements
+                        let product_id = row.find('.product_id').val();
+                        let quantity = row.find('input[name="quantity[]"]').val();
+                        let unit_price = row.find('input[name="unit_price[]"]').val();
+                        let discount_amount = row.find(`span[class='discount_amount${product_id}']`)
+                            .text() || 0;
+                        let discount_percentage = (row.find(
+                            `span[class='discount_percentage${product_id}']`).text()) || 0;
+                        let total_price = row.find('input[name="total_price[]"]').val();
+
+                        // Create an object with the gathered data
+                        let product = {
+                            product_id,
+                            quantity,
+                            unit_price,
+                            discount: discount_amount == 0 ? discount_percentage : 0,
+                            total_price
+                        };
+
+                        // Push the object into the products array
+                        products.push(product);
+                    });
+
+                    let allData = {
+                        // for purchase table
+                        customer_id,
+                        sale_date: formattedSaleDate,
+                        quantity,
+                        total_amount,
+                        discount,
+                        actual_discount,
+                        total,
+                        change_amount,
+                        tax,
+                        paid,
+                        due,
+                        note,
+                        payment_method,
+                        products
+                    }
+
+                    // console.log(allData);
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    $.ajax({
+                        url: '/sale/store',
+                        type: 'POST',
+                        data: allData,
+                        success: function(res) {
+                            if (res.status == 200) {
+                                // console.log(res.data);
+                                // $('#paymentModal').modal('hide');
+                                // $('.supplierForm')[0].reset();
+                                // supplierView();
+                                toastr.success(res.message);
+                                let id = res.saleId;
+                                // console.log(id)
+
+                                // window.location.href = '/sale/invoice/' + id;
+                                var printFrame = $('#printFrame')[0];
+                                var printContentUrl = '/sale/print/'+id; // Specify the URL of the content to be printed
+                                // console.log('{{route("sale.invoice",102049)}}');
+                                $('#printFrame').attr('src', printContentUrl);
+
+                                printFrame.onload = function() {
+                                    printFrame.contentWindow.focus();
+                                    printFrame.contentWindow.print();
+                                };
+
+                            } else {
+                                if (res.error.customer_id) {
+                                    showError('.select-customer', res.error.customer_id);
+                                }
+                                if (res.error.sale_date) {
+                                    showError('.purchase_date', res.error.sale_date);
+                                }
+                                if (res.error.payment_method) {
+                                    showError('.payment_method', res.error.payment_method);
+                                }
+                            }
+                        }
+                    });
+                    }
+            })
             // order btn
             $('.payment_btn').click(function(e) {
                 e.preventDefault();

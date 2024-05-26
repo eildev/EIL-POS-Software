@@ -22,14 +22,16 @@
 
         body {
             font-family: "Space Mono", monospace;
-            font-weight: 400;
+            font-weight: 500;
             font-style: normal;
-            font-size: 8px;
-            color: #666;
+            font-size: 16px;
+            color: #000000;
+            text-align: left !important;
+            width: 300px !important;
         }
 
         .receipt {
-            width: 230px;
+            width: 100%;
             /* Adjust according to your POS paper width */
             margin: auto;
 
@@ -48,7 +50,8 @@
         table {
             text-align: right;
             /* font-size: 10px; */
-            width: 100%;
+            width: 300px;
+            margin: 0 5px;
         }
 
 
@@ -135,7 +138,7 @@
                         <th class="text-start">
                             Item <br> Name
                         </th>
-                        <th class="text-center"> U.<br> Price</th>
+                        {{-- <th class="text-center"> U.<br> Price</th> --}}
                         <th class="text-center">
                             Qty
                         </th>
@@ -150,7 +153,7 @@
                         @foreach ($products as $index => $product)
                             <tr>
                                 <td class="text-start">{{ $product->product->name ?? '' }}</td>
-                                <td class="text-start">{{ $product->rate ?? 0 }}</td>
+                                {{-- <td class="text-start"></td> --}}
                                 <td class="text-center">{{ $product->qty ?? 0 }}</td>
                                 <td class="text-center">{{ $product->discount ?? 0 }}</td>
                                 <td class="text-end">{{ $product->sub_total ?? 0 }}</td>
@@ -227,8 +230,18 @@
 
 
     <style>
-        @media print {
 
+        @media print {
+            body {
+            font-family: "Space Mono", monospace;
+            font-weight: 500;
+            font-style: normal;
+            font-size: 11px;
+            color: #000000;
+            text-align: left !important;
+            width: 300px !important;
+            /* background: red !important; */
+        }
             nav,
             .footer {
                 display: none !important;

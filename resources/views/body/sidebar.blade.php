@@ -256,8 +256,8 @@
                 </a>
             </li>
             @endif
+            @if(Auth::user()->can('crm.menu'))
             <li class="nav-item nav-category">Customer Info. Management</li>
-            @if(Auth::user()->can('advanced-employee-salary.menu'))
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#crm" role="button" aria-expanded="false"
                     aria-controls="emails">
@@ -286,8 +286,8 @@
                 </div>
             </li>
             @endif
-            <li class="nav-item nav-category">All Reports</li>
             @if(Auth::user()->can('report.menu'))
+            <li class="nav-item nav-category">All Reports</li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#report" role="button" aria-expanded="false"
                     aria-controls="emails">

@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 /*
 * NobleUI - HTML Bootstrap 5 Admin Dashboard Template v2.0.3 (https://nobleui.com/)
 * Copyright © 2022 NobleUI
@@ -26641,8 +26640,8 @@ div.apexcharts-canvas .apexcharts-yaxistooltip-right:after {
 
 div.apexcharts-canvas .apexcharts-tooltip-marker {
   /*rtl:raw:
-  margin-right: 0; 
-  margin-left: 10px; 
+  margin-right: 0;
+  margin-left: 10px;
   */
 }
 
@@ -27444,7 +27443,7 @@ div.tox .tox-dialog__body {
 
 .wizard>.actions {
   /*rtl:raw:
-    text-align: left; 
+    text-align: left;
   */
 }
 

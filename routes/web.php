@@ -307,6 +307,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/sale/customer/{id}', 'saleCustomer')->name('sale.customer');
         Route::get('/sale/promotions/{id}', 'salePromotions')->name('sale.promotions');
         Route::get('/product/barcode/find/{id}', 'findProductWithBarcode')->name('product.barcode.find');
+        Route::get('/sale/product/find/{id}', 'saleProductFind')->name('sale.product.find');
     });
     // Transaction related route(n)
     Route::controller(EmployeeSalaryController::class)->group(function () {

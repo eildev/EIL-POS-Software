@@ -1,5 +1,5 @@
 @extends('master')
-@section('title','| Add Purchase')
+@section('title', '| Add Purchase')
 @section('admin')
 
     <nav class="page-breadcrumb">
@@ -51,7 +51,7 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 @php
-                                    $products = App\Models\Product::get();
+                                    $products = App\Models\Product::orderBy('stock', 'asc')->get();
                                 @endphp
                                 <label for="ageSelect" class="form-label">Product</label>
                                 <select class="js-example-basic-single form-select product_select" data-width="100%"

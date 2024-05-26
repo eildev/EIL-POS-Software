@@ -24437,7 +24437,9 @@ div.tox .buy-now-wrapper .tox-button svg,
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
+svg{
+  background: rgb(255,255,255) !important;
+}
 .sidebar .sidebar-body .nav.sub-menu .nav-item .nav-link::before {
   content: "";
   width: 6px;

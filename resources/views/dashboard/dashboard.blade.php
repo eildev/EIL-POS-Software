@@ -202,8 +202,10 @@
                                     <img src="uploads/dashboard/Artboard4@300x-100.jpg" height="50px" width="50px" alt="Image" style="border-radius:5px">
                                 </div>
                                 <div class="col-md-8">
-                                    <h3 class="mb-2"> {{ $totalInvoiceToday }}<span style="font-size: 15px; color:black">
-                                        ({{ $todaySaleItemsToday }})</span>
+                                    <h3 class="mb-2"> {{ $totalInvoiceToday }}
+
+                                        <span style="font-size: 15px;">
+                                        (৳ {{ $saleProfitAmount }})</span>
                                 </h3>
                                 <h6 class="mb-0">Invoice</h6>
                                 </div>
@@ -220,12 +222,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
-                                    <img src="uploads/dashboard/Artboard5@300x-100.jpg" height="50px" width="50px" alt="Image" style="border-radius:5px">
+                                    <img src="uploads/dashboard/Artboard3@300x-100.jpg" height="50px" width="50px" alt="Image" style="border-radius:5px">
                                 </div>
                                 <div class="col-md-8 ">
-                                    <h3 class="mb-2">{{ $todayPurchaseToday }}<span style="font-size: 15px;color:white">
-                                            ({{ $todayPurchaseItemsToday }})</span></h3>
-                                 <h6 class=" mb-0">Purchase</h6>
+                                    <h3 class="mb-2">{{ $todayPurchaseToday }}<span style="font-size: 15px;">
+                                            (৳ {{ $todayExpenseAmount }})</span></h3>
+                                 <h6 class=" mb-0">Total Purchase</h6>
                                 </div>
                             </div>
                         </div>
@@ -243,7 +245,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h3 class="mb-2">{{ $todayInvoiceProductTotal }} <span
-                                            style="font-size: 15px; color:white">( ৳
+                                            style="font-size: 15px;">( ৳
                                             {{ $todayInvoiceProductAmount }})</span></h3>
                                             <h6 class=" mb-0">Invoice Products</h6>
                                 </div>
@@ -259,18 +261,18 @@
                             </div>
                             <div class="row">
                                 <div class=" col-md-4">
-                                    <img src="uploads/dashboard/Artboard3@300x-100.jpg" height="50px" width="50px" alt="Image" style="border-radius:5px">
+                                    <img src="uploads/dashboard/Artboard5@300x-100.jpg" height="50px" width="50px" alt="Image" style="border-radius:5px">
                                 </div>
                                 <div class="col-md-8">
                                     <h3 class="mb-2"> ৳ {{ $todayInvoiceAmount }}<span
-                                            style="font-size: 15px; color:white"> (৳{{ $todayProfit }})</span></h3>
+                                            style="font-size: 15px;"> (৳ {{ $todayProfit }})</span></h3>
                                     <h6 class=" mb-0">Invoice Amount</h6>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 grid-margin stretch-card">
+                {{-- <div class="col-md-3 grid-margin stretch-card">
                     <div class="card" style="">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
@@ -292,17 +294,14 @@
                                     <h3 class="mb-2"> ৳ {{ $todayExpenseAmount }}<span
                                             style="font-size: 15px; color:white"></span></h3>
                                     <div class="d-flex align-items-baseline">
-                                        {{-- <p class="text-white">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p> --}}
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3 grid-margin stretch-card">
+                </div> --}}
+                {{-- <div class="col-md-3 grid-margin stretch-card">
                     <div class="card" style="">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
@@ -324,17 +323,14 @@
                                 <div class="col-12 col-md-12 col-xl-12">
                                     <h3 class="mb-2">{{ $todayCustomer->count() }}</h3>
                                     <div class="d-flex align-items-baseline">
-                                        {{-- <p class="text-white">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p> --}}
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3 grid-margin stretch-card">
+                </div> --}}
+                {{-- <div class="col-md-3 grid-margin stretch-card">
                     <div class="card" style="">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
@@ -358,7 +354,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 

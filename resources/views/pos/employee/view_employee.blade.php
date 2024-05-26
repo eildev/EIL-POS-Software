@@ -1,13 +1,15 @@
 @extends('master')
+@section('title','| Employee List')
 @section('admin')
 
 <div class="row">
-
+    @if(Auth::user()->can('employee.add'))
 <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
     <div class="">
         <h4 class="text-right"><a href="{{route('employee.add')}}" class="btn btn-info">Add New Employee</a></h4>
     </div>
 </div>
+@endif
 <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -45,17 +47,21 @@
                                     @else
                                     <img src="{{ asset('dummy/image.jpg') }}" alt="Dummy Image">
                                     @endif
-                                
+
                                 <td>{{ $employe->designation ?? ''}}</td>
                                 <td>{{ $employe->salary ?? ''}}</td>
-                                
+
                                 <td>
+                                    @if(Auth::user()->can('employee.edit'))
                                     <a href="{{route('employee.edit',$employe->id)}}" class="btn btn-sm btn-primary btn-icon">
                                         <i data-feather="edit"></i>
                                     </a>
+                                    @endif
+                                    @if(Auth::user()->can('employee.delete'))
                                     <a href="{{route('employee.delete',$employe->id)}}" id="delete" class="btn btn-sm btn-danger btn-icon">
                                         <i data-feather="trash-2"></i>
                                     </a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

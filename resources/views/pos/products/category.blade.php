@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Product Category')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -210,12 +211,16 @@
                                 data-id="${category.id}">${category.status != 0 ? 'Active' : 'Inactive'}</button>
                             </td>
                             <td>
+                                @if(Auth::user()->can('category.edit'))
                                 <a href="#" class="btn btn-primary btn-icon category_edit" data-id=${category.id} data-bs-toggle="modal" data-bs-target="#edit">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
+                                @endif
+                                @if(Auth::user()->can('category.delete'))
                                 <a href="#" class="btn btn-danger btn-icon category_delete" data-id=${category.id}>
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
+                                @endif
                             </td>
                             `;
                                 $('.showData').append(tr);

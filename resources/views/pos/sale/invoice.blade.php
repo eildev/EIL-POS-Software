@@ -163,9 +163,14 @@
                                                     <td class="text-danger text-end">(-) ৳ {{ $sale->paid }} </td>
                                                 </tr>
                                             @endif
-                                            @if ($sale->due != 0)
+                                            @if ($sale->due >= 0)
                                                 <tr class="bg-dark">
                                                     <td class="text-bold-800">Balance Due</td>
+                                                    <td class="text-bold-800 text-end">৳ {{ $sale->due }} </td>
+                                                </tr>
+                                            @else
+                                                <tr class="bg-dark">
+                                                    <td class="text-bold-800">Return</td>
                                                     <td class="text-bold-800 text-end">৳ {{ $sale->due }} </td>
                                                 </tr>
                                             @endif

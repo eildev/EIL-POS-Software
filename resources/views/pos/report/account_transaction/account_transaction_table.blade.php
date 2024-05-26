@@ -5,7 +5,7 @@
                 <thead>
                     <tr>
                         <th>SN</th>
-                        <th>Account</th>
+                        <th>Payment Type</th>
                         <th>Branch Name</th>
                         <th>Purpose</th>
                         <th>Debit</th>
@@ -30,7 +30,6 @@
             <tr>
                 <td colspan="12">
                     <div class="text-center text-warning mb-2">Data Not Found</div>
-
                 </td>
             </tr>
             @endif

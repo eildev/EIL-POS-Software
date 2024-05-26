@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Unit')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -142,7 +143,7 @@
     </div>
 
     <script>
-        // error remove 
+        // error remove
         function errorRemove(element) {
             if (element.value != '') {
                 $(element).siblings('span').hide();
@@ -150,7 +151,7 @@
             }
         }
         $(document).ready(function() {
-            // show error 
+            // show error
             function showError(name, message) {
                 $(name).css('border-color', 'red'); // Highlight input with red border
                 $(name).focus(); // Set focus to the input field
@@ -254,7 +255,7 @@
             }
             unitView();
 
-            // edit Unit 
+            // edit Unit
             $(document).on('click', '.unit_edit', function(e) {
                 e.preventDefault();
                 // console.log('0k');
@@ -281,7 +282,7 @@
                 });
             })
 
-            // update unit 
+            // update unit
             $('.update_unit').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -323,7 +324,7 @@
                 });
             })
 
-            // unit Delete 
+            // unit Delete
             $(document).on('click', '.unit_delete', function(e) {
                 // $('.unit_delete').click(function(e) {
                 e.preventDefault();

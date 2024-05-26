@@ -205,7 +205,21 @@
                 <p>Grand Total: </p>
                 <p>৳ {{ $sale->receivable }}</p>
             </div>
-            {{-- <p>-------------------</p> --}}
+            <hr>
+            <div class="flex">
+                <p>Paid</p>
+                <p>৳ {{ $sale->paid }} </p>
+            </div>
+            <hr>
+            <div class="flex">
+                @if ($sale->due >= 0)
+                    <p>Balance Due</p>
+                    <p>৳ {{ $sale->due }} </p>
+                @else
+                    <p>Return</p>
+                    <p>৳ {{ $sale->due }} </p>
+                @endif
+            </div>
             <hr>
             <p>Thank you for your purchase!</p>
         </div>

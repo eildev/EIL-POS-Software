@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Product Info Report')
 @section('admin')
 <div class="row">
     <div class="col-md-12   grid-margin stretch-card filter_box">

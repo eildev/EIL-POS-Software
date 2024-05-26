@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Product List')
 @section('admin')
 
     <nav class="page-breadcrumb">
@@ -50,14 +51,18 @@
                                             <td>{{ $product->unit->name ?? '' }}</td>
 
                                             <td>
+                                                @if(Auth::user()->can('products.edit'))
                                                 <a href="{{ route('product.edit', $product->id) }}"
                                                     class="btn btn-primary btn-icon">
                                                     <i data-feather="edit"></i>
                                                 </a>
+                                                @endif
+                                                @if(Auth::user()->can('products.delete'))
                                                 <a href="{{ route('product.destroy', $product->id) }}"
                                                     class="btn btn-danger btn-icon" id="delete">
                                                     <i data-feather="trash-2"></i>
                                                 </a>
+                                                @endif
                                                 <a target="_blank" href="{{ route('product.barcode', $product->id) }}"
                                                     class="btn btn-info btn-icon">
                                                     <i class="fa-solid fa-barcode"></i>

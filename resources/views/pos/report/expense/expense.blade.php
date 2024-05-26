@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Expense Report')
 @section('admin')
 
     <nav class="page-breadcrumb">

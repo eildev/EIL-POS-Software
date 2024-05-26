@@ -1,6 +1,7 @@
 @extends('master')
+@section('title', '| Dashboard')
 @section('admin')
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+    {{-- <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
             <h4 class="mb-3 mb-md-0">Welcome to Dashboard</h4>
         </div>
@@ -19,7 +20,7 @@
                 Download Report
             </button>
         </div>
-    </div>
+    </div> --}}
     @php
         ///////////////////Total Summary////////////////
         $totalInvoice = App\Models\Sale::all();
@@ -150,6 +151,34 @@
             }
         }
         // dd($ttt, $totalTransactionAmounts);
+
+        // monthly report
+        use Carbon\Carbon;
+
+        // Initialize arrays to store monthly data
+        $salesByMonth = [];
+        $profitsByMonth = [];
+        $purchasesByMonth = [];
+
+        for ($i = 0; $i < 12; $i++) {
+            $monthStart = now()->subMonths($i)->startOfMonth();
+            $monthEnd = now()->subMonths($i)->endOfMonth();
+
+            $monthlySales = App\Models\Sale::whereBetween('sale_date', [$monthStart, $monthEnd])->sum('receivable');
+            $monthlyProfit = App\Models\Sale::whereBetween('sale_date', [$monthStart, $monthEnd])->sum('profit');
+            $monthlyPurchase = App\Models\Purchase::whereBetween('purchse_date', [$monthStart, $monthEnd])->sum(
+                'grand_total',
+            );
+
+            $salesByMonth[$monthStart->format('Y-m')] = $monthlySales;
+            $profitsByMonth[$monthStart->format('Y-m')] = $monthlyProfit;
+            $purchasesByMonth[$monthStart->format('Y-m')] = $monthlyPurchase;
+        }
+
+        // Reverse the arrays to get the data in chronological order
+        $salesByMonth = array_reverse($salesByMonth, true);
+        $profitsByMonth = array_reverse($profitsByMonth, true);
+        $purchasesByMonth = array_reverse($purchasesByMonth, true);
     @endphp
 
 
@@ -160,7 +189,7 @@
         <div class="col-12 col-xl-12 stretch-card">
 
             <div class="row flex-grow-1">
-                <h3 class="my-3">Today Summary</h3>
+                <h3 class="mb-3">Today Summary</h3>
                 <div class="col-md-3 grid-margin stretch-card">
                     <div class="card" style="">
                         <div class="card-body">
@@ -911,7 +940,6 @@
             chart.render();
 
 
-
             var options = {
                 chart: {
                     height: 300,
@@ -946,6 +974,10 @@
                                 label: 'TOTAL',
                                 fontSize: '14px',
                                 fontFamily: fontFamily,
+                                formatter: function(w) {
+                                    return (w.globals.seriesTotals.reduce((a, b) => a + b, 0) / w.globals
+                                        .series.length).toFixed(2) + '%';
+                                }
                             }
                         },
                         track: {
@@ -980,8 +1012,7 @@
 
             var chart = new ApexCharts(document.querySelector("#apexRadialBar1"), options);
             chart.render();
-            var chartAreaBounds = chart.w.globals.dom.baseEl.querySelector('.apexcharts-inner')
-                .getBoundingClientRect();
+
         });
     </script>
     {{-- /// pie chart end /// --}}
@@ -1228,14 +1259,6 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="col-xl-6 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title">Total Sales</h6>
-                    <div id="apexBar2"></div>
-                </div>
-            </div>
-        </div> --}}
     </div>
     <script>
         $(document).ready(function() {
@@ -1255,84 +1278,6 @@
             }
 
             var fontFamily = "'Roboto', Helvetica, sans-serif"
-            // Apex Bar chart start
-            var options = {
-                chart: {
-                    type: 'bar',
-                    height: '320',
-                    parentHeightOffset: 0,
-                    foreColor: colors.bodyColor,
-                    background: colors.cardBg,
-                    toolbar: {
-                        show: false
-                    },
-                },
-                theme: {
-                    mode: 'dark'
-                },
-                tooltip: {
-                    theme: 'dark'
-                },
-                colors: [colors.primary],
-                grid: {
-                    padding: {
-                        bottom: -4
-                    },
-                    borderColor: colors.gridBorder,
-                    xaxis: {
-                        lines: {
-                            show: true
-                        }
-                    }
-                },
-                series: [{
-                    name: 'sales',
-                    data: [
-                        @foreach ($salesByDay as $date => $salesCount)
-                            {{ $salesCount }},
-                        @endforeach
-                    ]
-                }],
-                xaxis: {
-                    type: 'datetime',
-                    categories: [
-                        @foreach ($salesByDayCount as $date => $salesCount)
-                            '{{ $date }}',
-                        @endforeach
-                    ],
-                    axisBorder: {
-                        color: colors.gridBorder,
-                    },
-                    axisTicks: {
-                        color: colors.gridBorder,
-                    },
-                },
-                legend: {
-                    show: true,
-                    position: "top",
-                    horizontalAlign: 'center',
-                    fontFamily: fontFamily,
-                    itemMargin: {
-                        horizontal: 8,
-                        vertical: 0
-                    },
-                },
-                stroke: {
-                    width: 0
-                },
-                plotOptions: {
-                    bar: {
-                        borderRadius: 4
-                    }
-                }
-            }
-
-            var apexBarChart = new ApexCharts(document.querySelector("#apexBar2"), options);
-            apexBarChart.render();
-
-            // Apex Bar chart end
-
-
 
             var lineChartOptions = {
                 chart: {
@@ -1351,7 +1296,7 @@
                 tooltip: {
                     theme: 'dark'
                 },
-                colors: [colors.primary, colors.danger, colors.warning],
+                colors: [colors.success, colors.info, colors.primary],
                 grid: {
                     padding: {
                         bottom: -4
@@ -1366,24 +1311,24 @@
                 series: [{
                         name: "Monthly Sale",
                         data: [
-                            @foreach ($salesByDay as $date => $dailySales)
-                                {{ $dailySales }},
+                            @foreach ($salesByMonth as $month => $monthlySales)
+                                {{ $monthlySales }},
                             @endforeach
                         ]
                     },
                     {
                         name: "Monthly Profit",
                         data: [
-                            @foreach ($salesProfitByDay as $date => $dailyProfit)
-                                {{ $dailyProfit }},
+                            @foreach ($profitsByMonth as $month => $monthlyProfit)
+                                {{ $monthlyProfit }},
                             @endforeach
                         ]
                     },
                     {
                         name: "Monthly Purchase",
                         data: [
-                            @foreach ($purchaseByDay as $date => $dailyPurchase)
-                                {{ $dailyPurchase }},
+                            @foreach ($purchasesByMonth as $month => $monthlyPurchase)
+                                {{ $monthlyPurchase }},
                             @endforeach
                         ]
                     }
@@ -1391,8 +1336,8 @@
                 xaxis: {
                     type: "datetime",
                     categories: [
-                        @foreach ($salesByDay as $date => $salesCount)
-                            '{{ $date }}',
+                        @foreach ($salesByMonth as $month => $salesCount)
+                            '{{ $month }}-01',
                         @endforeach
                     ],
                     lines: {

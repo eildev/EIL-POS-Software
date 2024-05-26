@@ -1,21 +1,21 @@
 @extends('master')
+@section('title','| Employee Salary List')
 @section('admin')
-
-
 <div class="row">
-
+    @if(Auth::user()->can('employee-salary.add'))
 <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
     <div class="">
         <h4 class="text-right"><a href="{{route('employee.salary.add')}}" class="btn btn-info">Add New Salary </a></h4>
     </div>
 </div>
+@endif
 <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                 <h6 class="card-title text-info">View Salary History</h6>
 
                     <div id="" class="table-responsive">
-                        <table id="dataTableExample" class="table">
+                        <table id="example" class="table">
                             <thead>
                                 <tr>
                                     <th>SN</th>
@@ -45,12 +45,16 @@
                                     echo implode("<br>", $noteChunks);
                                     @endphp</td>
                                 <td>
+                                    @if(Auth::user()->can('employee-salary.edit'))
                                     <a href="{{route('employee.salary.edit',$employeSalarys->id)}}" class="btn btn-sm btn-primary btn-icon" title="Edit Data">
                                         <i data-feather="edit"></i>
                                     </a>
+                                    @endif
+                                    @if(Auth::user()->can('employee-salary.delete'))
                                     <a href="{{route('employee.salary.delete',$employeSalarys->id)}}" id="delete" class="btn btn-sm btn-danger btn-icon">
                                         <i data-feather="trash-2"></i>
                                     </a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

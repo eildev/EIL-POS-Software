@@ -1,4 +1,5 @@
 @extends('master')
+@section('title', '| Damage Add')
 @section('admin')
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
@@ -18,16 +19,15 @@
                             <div class="mb-3 col-md-6">
                                 @php
                                     $products = App\Models\Product::get();
-
                                 @endphp
                                 <label for="ageSelect" class="form-label">Product <span class="text-danger">*</span></label>
-                                <select class="js-example-basic-single form-select" name="product_id"
-                                    data-width="100%"  onchange="show_quantity(this)">
+                                <select class="js-example-basic-single form-select" name="product_id" data-width="100%"
+                                    onchange="show_quantity(this)">
                                     @if ($products->count() > 0)
                                         <option selected disabled>Select Damaged Product</option>
                                         @foreach ($products as $product)
-                                            <option value="{{ $product->id }}">{{ $product->name.$product->unit->name}}</option>
-
+                                            <option value="{{ $product->id }}">{{ $product->name }} ({{ $product->stock }}
+                                                {{ $product->unit->name }})</option>
                                         @endforeach
                                     @else
                                         <option selected disabled>Please Add Product</option>
@@ -43,7 +43,8 @@
                                         <span class="text-primary" id="show_unit"></span>
                                     </label>
 
-                                    <input type="text" id="damageQty" name="pc" onkeyup="damage_qty(this);" class="form-control" placeholder="0" disabled autocomplete="off">
+                                    <input type="text" id="damageQty" name="pc" onkeyup="damage_qty(this);"
+                                        class="form-control" placeholder="0" disabled autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -76,9 +77,6 @@
 
     </div>
     <script type="text/javascript">
-
-
-
         //show available Quantity information
         function show_quantity(event) {
 
@@ -101,7 +99,7 @@
             let newValue = event.value;
             let available_stock = parseInt($('#show_stock').text());
 
-            if(available_stock< newValue){
+            if (available_stock < newValue) {
                 event.value = '';
                 $('#submit_btn').attr("disabled", "disabled");
                 Swal.fire({
@@ -111,7 +109,7 @@
                     showConfirmButton: false,
                     timer: 1500
                 });
-            }else{
+            } else {
                 $('#submit_btn').removeAttr('disabled')
             }
 
@@ -157,8 +155,5 @@
                 },
             });
         });
-
-
-
     </script>
 @endsection

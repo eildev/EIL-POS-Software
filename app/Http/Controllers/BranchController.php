@@ -51,11 +51,11 @@ class BranchController extends Controller
     return view('pos.branches.all_branches',compact('branches'));
    }//End Method
    public function BranchEdit($id){
-    $branch = $this->branchrepo->editBranch();
+    // $branch = $this->branchrepo->editBranch();
+    $branch = Branch::findOrFail($id);
     return view('pos.branches.edit-branch',compact('branch'));
    }//End Method
    public function BranchUpdate(Request $request,$id){
-
 
     if ($request->hasFile('logo')) {
         $request->validate([
@@ -80,10 +80,10 @@ class BranchController extends Controller
         $branch->logo = $imageName;
         $branch->save();
         $notification = array(
-            'message' =>'branch Updated Successfully',
+            'message' =>'Branch Updated Successfully',
             'alert-type'=> 'info'
          );
-        return redirect()->back()->with($notification);
+        return redirect()->route('branch.view')->with($notification);
 
         }else{
             $request->validate([
@@ -92,21 +92,22 @@ class BranchController extends Controller
                 'address' => 'required',
                 'email' => 'required',
             ]);
-            $branch = Branch::find($id);
+            $branch = Branch::findOrFail($id);
             $branch->name =$request->name;
             $branch->phone = $request->phone;
             $branch->address =$request->address;
             $branch->email = $request->email;
             $branch->save();
             $notification = array(
-                'message' =>'branch Updated  Successfully without logo ',
+                'message' =>'Branch Updated  Successfully without logo ',
                 'alert-type'=> 'info'
              );
             return redirect()->route('branch.view')->with($notification);
         }
    }//End Method
+
    public function BranchDelete($id){
-    $branch = Branch::find($id);
+    $branch = Branch::findOrFail($id);
     $path = public_path('uploads/branch/'.$branch->logo);
     if(file_exists($path)){
         @unlink($path);

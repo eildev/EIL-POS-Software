@@ -101,31 +101,7 @@
                 "targets": "_all"
             }],
             dom: 'Bfrtip',
-            buttons: [
-                // {
-                //     extend: 'copyHtml5',
-                //     text: 'Copy',
-                //     exportOptions: {
-                //         header: true,
-                //         columns: ':visible'
-                //     },
-                //     customize: function(data) {
-                //         return 'Here is report list\n\n' + data + '\n\n';
-                //     }
-                // },
-                // {
-                //     extend: 'csvHtml5',
-                //     text: 'CSV',
-                //     exportOptions: {
-                //         header: true,
-                //         columns: ':visible'
-                //     },
-                //     customize: function(data) {
-                //         return '{{ $header }}\n {{ $phone ?? '+880.....' }}\n {{ $email }}\n{{ $address }}\n\n' +
-                //             data + '\n\n';
-                //     }
-                // },
-                {
+            buttons: [{
                     extend: 'excelHtml5',
                     text: 'Excel',
                     exportOptions: {
@@ -171,7 +147,7 @@
                         $(win.document.body).prepend(
                             '<h4>{{ $header }}</br>{{ $phone ?? '+880....' }}</br>Email:{{ $email }}</br>Address:{{ $address }}</h4>'
                         );
-
+                        $(win.document.body).find('h1').hide(); // Hide the title element
                     }
                 }
             ]

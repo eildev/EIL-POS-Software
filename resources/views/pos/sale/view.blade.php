@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Sale History')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -120,7 +121,7 @@
                                     <th>Receivable</th>
                                     <th>Paid</th>
                                     <th>Product <br> Returned</th>
-                                    <th>Due</th>
+                                    <th>Due/Return</th>
                                     <th>Purchase <br> Cost</th>
                                     <th>Profit</th>
                                     <th>Status</th>
@@ -234,7 +235,7 @@
     </style>
 
     <script>
-        // error remove 
+        // error remove
         function errorRemove(element) {
             if (element.value != '') {
                 $(element).siblings('span').hide();
@@ -243,14 +244,14 @@
         }
 
         $(document).ready(function() {
-            // show error 
+            // show error
             function showError(name, message) {
                 $(name).css('border-color', 'red');
                 $(name).focus();
                 $(`${name}_error`).show().text(message);
             }
 
-            // filter 
+            // filter
             document.querySelector('#filter').addEventListener('click', function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -276,16 +277,16 @@
                 });
             });
 
-            // reset 
+            // reset
             document.querySelector('#reset').addEventListener('click', function(e) {
                 e.preventDefault();
                 $('.start-date').val("");
                 $('.end-date').val("");
-                $('.product_select').val(null).trigger('change');
-                $('.customer_id').val(null).trigger('change');
+                $('.product_select').val('Select Product').trigger('change');
+                $('.customer_id').val('Select Customer').trigger('change');
             });
 
-            // print 
+            // print
             document.querySelector('.print-btn').addEventListener('click', function(e) {
                 e.preventDefault();
                 $('#dataTableExample').removeAttr('id');
@@ -296,7 +297,7 @@
 
 
 
-            //    add payment 
+            //    add payment
             $(document).on('click', '.add_payment', function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -320,7 +321,7 @@
                 })
             });
 
-            // save payment 
+            // save payment
             $(document).on('click', '.save_payment', function(e) {
                 e.preventDefault();
                 let id = $(this).val();

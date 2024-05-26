@@ -1,9 +1,10 @@
 @extends('master')
+@section('title', '| Damage Report')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Purchase Report</li>
+            <li class="breadcrumb-item active" aria-current="page">Damage Report</li>
         </ol>
     </nav>
 
@@ -11,9 +12,9 @@
         <div class="col-md-12   grid-margin stretch-card filter_box">
             <div class="card">
 
-                    <div class="card-body">
-                        <form action="{{ route('damage.report.print') }}" method="POST">
-                            @csrf
+                <div class="card-body">
+                    <form action="{{ route('damage.report.print') }}" method="POST">
+                        @csrf
                         <div class="row mb-3">
                             <div class="col-md-3">
                                 <div class="input-group flatpickr" id="flatpickr-date">
@@ -52,7 +53,8 @@
                             @endphp
                             <div class="col-md-3">
                                 <div class=" input-group flatpickr" id="flatpickr-date">
-                                    <select name="filterProduct" class="filter_product_name js-example-basic-single form-select product_select"
+                                    <select name="filterProduct"
+                                        class="filter_product_name js-example-basic-single form-select product_select"
                                         data-width="100%">
                                         @if ($products->count() > 0)
                                             <option selected disabled>Select Product</option>
@@ -102,14 +104,11 @@
                                         <i class="btn-icon-prepend" data-feather="printer"></i>
                                         Print
                                     </button>
-                                    {{-- <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
-                                    <i class="btn-icon-prepend" data-feather="download-cloud"></i>
-                                    Download Report
-                                </button> --}}
                                 </div>
                             </div>
-                        </div> </form>
-                    </div>
+                        </div>
+                    </form>
+                </div>
 
             </div>
         </div>
@@ -117,30 +116,11 @@
     <div id="purchase-filter-table">
         @include('pos.report.damages.damage-filter-table')
     </div>
-<<<<<<< HEAD
 
-<script>
-            function printIframe() {
-                var iframe = document.getElementById('iframeToPrint');
-                iframe.style.display = "block"; // Make the iframe visible
-
-                iframe.onload = function() {
-                    iframe.contentWindow.focus(); // Focus on the iframe
-                    iframe.contentWindow.print(); // Print its content
-                    iframe.style.display = "none"; // Optionally hide iframe after printing
-                };
-            }
-    $(document).ready(function (){
-
-        document.querySelector('#purchesfilter').addEventListener('click', function(e) {
-            e.preventDefault();
-=======
     <script>
         $(document).ready(function() {
-
             document.querySelector('#purchesfilter').addEventListener('click', function(e) {
                 e.preventDefault();
->>>>>>> c26f722ee0f6419bc6d927004b9bf6db08995a9c
                 let startDatePurches = document.querySelector('.start-date-purches').value;
                 let endDatePurches = document.querySelector('.end-date-purches').value;
                 //  alert(endDatePurches);
@@ -161,59 +141,6 @@
                     }
                 });
             });
-<<<<<<< HEAD
-    });
-
-    $('.print-btn').click(function() {
-            // Remove the id attribute from the table
-            $('#dataTableExample').removeAttr('id');
-            $('.table-responsive').removeAttr('class');
-            // Trigger the print function
-            window.print();
-
-    });
-</script>
-<style>
-    @media print {
-
-        nav,.nav,
-        .footer {
-            display: none !important;
-        }
-
-        .page-content {
-            margin-top: 0 !important;
-            padding-top: 0 !important;
-        }
-
-        .btn_group ,.filter_table,.dataTables_length,.pagination,.dataTables_info{
-            display: none !important;
-        }
-        #dataTableExample_filter{
-            display: none !important;
-        }
-        .border{
-            border: none !important;
-        }
-        table,th,td{
-            border: 1px solid black;
-            background: #fff
-        }
-        .actions ,.filter-class{
-            display: none !important;
-        }
-        .card{
-            background: #fff!important;
-            box-shadow: none!important;
-            border: none !important;
-        }
-        .note_short{
-
-        }
-    }
-</style>
-=======
         });
     </script>
->>>>>>> c26f722ee0f6419bc6d927004b9bf6db08995a9c
 @endsection

@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Low Stock Report')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">

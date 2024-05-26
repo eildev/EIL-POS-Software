@@ -1,4 +1,6 @@
 @extends('master')
+@section('title','| Transactions')
+
 @section('admin')
 <style>
     .nav.nav-tabs .nav-item .nav-link.active {
@@ -15,15 +17,19 @@
 <link rel="stylesheet" type="text/css" href="print.css" media="print">
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
+
     <li class="nav-item">
-      <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Transaction List</a>
-    </li>
+        <a class="nav-link active" id="profile-tab" data-bs-toggle="tab" href="#profile" style="background: " role="tab" aria-controls="profile" aria-selected="false">Add Transaction</a>
+      </li>
+
+      @if(Auth::user()->can('transaction.history'))
     <li class="nav-item">
-      <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" style="background: " role="tab" aria-controls="profile" aria-selected="false">Add Transaction</a>
+      <a class="nav-link " id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Transaction History</a>
     </li>
+@endif
   </ul>
   <div class="tab-content border border-print border-top-0 p-3" id="myTabContent">
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div class="row">
             <div class="col-md-12  grid-margin stretch-card filter_table">
                 <div class="card">
@@ -100,7 +106,7 @@
            </div>
           </div>
     </div>
-    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
         <div class="row">
             <div class="col-md-12 stretch-card mt-1">
                 <div class="card">

@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Edit Branch')
 @section('admin')
 
 <div class="row">
@@ -52,7 +53,7 @@
             @enderror
         </div>
         </div>
-        
+
         <div class="row mb-3">
             <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Branch Logo</label>
             <div class="col-sm-9">
@@ -61,7 +62,7 @@
                                 <div class="card-body">
 
                                     <input type="file"  class="categoryImage  @error('logo') is-invalid  @enderror" name="logo" id ="image" />
-                                   
+
                                 </div>
                             </div>
                  </div>
@@ -85,8 +86,8 @@
             <button type="submit" class="btn btn-primary me-2">Update Branch</button>
             </div>
         </div>
-        
-    
+
+
     </form>
 
 </div>

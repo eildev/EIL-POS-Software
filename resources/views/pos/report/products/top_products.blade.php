@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Top Products Report')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">

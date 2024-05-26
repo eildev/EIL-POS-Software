@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| SMS Marketing')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -171,7 +172,7 @@
         }
     </style>
     <script>
-        // remove error 
+        // remove error
         function errorRemove(element) {
             if (element.value != '') {
                 $(element).siblings('span').hide();
@@ -234,7 +235,7 @@
                 })
             }
             categoryView();
-            // save category 
+            // save category
             $(".catSave").click(function(e) {
                 e.preventDefault();
                 // alert("ok");
@@ -287,7 +288,7 @@
                     'catUpdateInput').focus();
             })
 
-            // update category 
+            // update category
             $(document).on('click', '.category_update', function(e) {
                 e.preventDefault();
                 let id = this.getAttribute('data-id');
@@ -321,7 +322,7 @@
             })
 
 
-            // delete category 
+            // delete category
             $(document).on('click', '.category_delete', function(e) {
                 e.preventDefault();
                 let id = this.getAttribute('data-id');

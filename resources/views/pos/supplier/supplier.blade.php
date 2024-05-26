@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Supplier Page')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -150,7 +151,7 @@
     </div>
 
     <script>
-        // error remove 
+        // error remove
         function errorRemove(element) {
             if (element.value != '') {
                 $(element).siblings('span').hide();
@@ -158,7 +159,7 @@
             }
         }
         $(document).ready(function() {
-            // show error 
+            // show error
             function showError(name, message) {
                 $(name).css('border-color', 'red'); // Highlight input with red border
                 $(name).focus(); // Set focus to the input field
@@ -270,7 +271,7 @@
             }
             supplierView();
 
-            // edit Unit 
+            // edit Unit
             $(document).on('click', '.supplier_edit', function(e) {
                 e.preventDefault();
                 // console.log('0k');
@@ -300,7 +301,7 @@
                 });
             })
 
-            // update supplier 
+            // update supplier
             $('.update_supplier').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -336,7 +337,7 @@
                 });
             })
 
-            // supplier Delete 
+            // supplier Delete
             $(document).on('click', '.supplier_delete', function(e) {
                 // $('.supplier_delete').click(function(e) {
                 e.preventDefault();

@@ -1,4 +1,5 @@
 @extends('master')
+@section('title','| Brand')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -153,7 +154,7 @@
                 });
             });
 
-            // show error 
+            // show error
             function showError(name, message) {
                 $(name).css('border-color', 'red');
                 $(name).focus();
@@ -247,7 +248,7 @@
             }
             brandView();
 
-            // edit brand 
+            // edit brand
             $(document).on('click', '.brand_edit', function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -283,7 +284,7 @@
                 });
             })
 
-            // update brand 
+            // update brand
             $('.update_brand').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
@@ -315,7 +316,7 @@
             })
 
 
-            // brand Delete 
+            // brand Delete
             $(document).on('click', '.brand_delete', function(e) {
                 e.preventDefault();
                 // alert("ok")

@@ -25,6 +25,7 @@ use App\Http\Controllers\EmployeeSalaryController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DamageController;
 use App\Http\Controllers\CustomeMailControler;
+use App\Http\Controllers\RolePermissionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -306,6 +307,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/sale/customer/{id}', 'saleCustomer')->name('sale.customer');
         Route::get('/sale/promotions/{id}', 'salePromotions')->name('sale.promotions');
         Route::get('/product/barcode/find/{id}', 'findProductWithBarcode')->name('product.barcode.find');
+        Route::get('/sale/product/find/{id}', 'saleProductFind')->name('sale.product.find');
     });
     // Transaction related route(n)
     Route::controller(EmployeeSalaryController::class)->group(function () {
@@ -377,11 +379,12 @@ Route::middleware('auth')->group(function () {
             /////////////Product Info Report //////////////
             Route::get('/product/info/report', 'ProductInfoReport')->name('product.info.report');
             // Route::get('/product/category/ajax/{categoryId}', 'ProductSubCategoryShow');
-            Route::get('/product/info/filter/view','ProductInfoFilter')->name('product.info.filter.view');
+            Route::get('/product/info/filter/view', 'ProductInfoFilter')->name('product.info.filter.view');
             /////SMS Report ///////
-            Route::get('/sms/report/view','SmsView')->name('sms.report');
-            Route::get('/sms/report/filter','SmsReportFilter')->name('sms.report.filter');
-
+            Route::get('/sms/report/view', 'SmsView')->name('sms.report');
+            Route::get('/sms/report/filter', 'SmsReportFilter')->name('sms.report.filter');
+            // MONNTHLY Report
+            Route::get('/monthly/report', 'monthlyReport')->name('monthly.report');
         });
     });
     // Report related routes
@@ -408,6 +411,44 @@ Route::middleware('auth')->group(function () {
     ///Email Marketing
     Route::controller(CustomeMailControler::class)->group(function () {
         Route::post('/customer-send-email', 'CustomerSendEmail')->name('customer.send.email');
+    });
+    ////////////////////Role And Permission Route /////////////////
+    Route::controller(RolePermissionController::class)->group(function () {
+                                 ///Permission///
+        Route::get('/all/permission/view', 'AllPermissionView')->name('all.permission');
+        Route::get('/add/permission', 'AddPermission')->name('add.permission');
+        Route::post('/store/permission', 'StorePermission')->name('store.permission');
+        Route::get('/edit/permission/{id}', 'EditPermission')->name('permission.edit');
+        Route::post('/update/permission', 'updatePermission')->name('permission.update');
+        Route::get('/delete/permission/{id}', 'DeletePermission')->name('permission.delete');
+                                 ///Role///
+        Route::get('/all/role/view', 'AllRoleView')->name('all.role');
+        Route::get('/add/role', 'AddRole')->name('add.role');
+        Route::post('/store/role', 'StoreRole')->name('store.role');
+        Route::get('/edit/role/{id}', 'EditRole')->name('role.edit');
+        Route::post('/update/role', 'updateRole')->name('role.update');
+        Route::get('/delete/role/{id}', 'DeleteRole')->name('role.delete');
+                                ///Role In Permission///
+        Route::get('/add/role/permission', 'AddRolePermission')->name('add.role.permission');
+        Route::post('/store/role/permission', 'StoreRolePermission')->name('store.role.permission');
+        Route::get('/edit/role/permission/{id}', 'EditRolePermission')->name('role.permission.edit');
+        Route::post('/update/role/permission', 'updateRolePermission')->name('role.permission.update');
+        Route::get('/delete/role/permission/{id}', 'DeleteRolePermission')->name('role.permission.delete');
+        Route::post('/store/role/permission', 'StoreRolePermission')->name('role.permission.store');
+        Route::get('/all/role/permission', 'AllRolePermission')->name('all.role.permission');
+        Route::get('/admin/role/edit/{id}', 'AdminRoleEdit')->name('admin.role.edit');
+        Route::post('/admin/role/update/{id}', 'AdminRoleUpdate')->name('admin.role.update');
+        Route::get('/admin/role/delete/{id}', 'AdminRoleDelete')->name('admin.role.delete');
+        Route::get('/admin/role/view', 'AdminRoleView')->name('admin.role.view');       
+                            ///Admin Manage Route ///
+        Route::get('/all/admin/view', 'AllAdminView')->name('all.admin');
+        Route::get('/add/admin', 'AddAdmin')->name('add.admin');
+        Route::post('/admin/store', 'AdminStore')->name('admin.store');
+        Route::get('/admin/manage/edit/{id}', 'AdminManageEdit')->name('admin.manage.edit');
+        Route::get('/admin/manage/delete/{id}', 'AdminManageDelete')->name('admin.manage.delete');
+        Route::post('/admin/manage/update/{id}', 'AdminManageUpdate')->name('update.admin.manage');
+
+
     });
 });
 

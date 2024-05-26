@@ -3,7 +3,7 @@
         <div class="card-body">
             <h6 class="card-title text-info">Expense </h6>
             <div id="tableContainer" class="table-responsive">
-                <table id="dataTableExample" class="table">
+                <table id="example" class="table">
                     <thead class="action">
                         <tr>
                             <th>SN</th>
@@ -36,14 +36,19 @@
                                     <td>{{ $expenses->note ?? '-' }}</td>
 
                                     <td>
+
+                                        @if(Auth::user()->can('expense.edit'))
                                         <a href="{{ route('expense.edit', $expenses->id) }}"
                                             class="btn btn-sm btn-primary " title="Edit">
                                             Edit
                                         </a>
+                                        @endif
+                                        @if(Auth::user()->can('expense.delete'))
                                         <a href="{{ route('expense.delete', $expenses->id) }}" id="delete"
                                             class="btn btn-sm btn-danger " title="Delete">
                                             Delete
                                         </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

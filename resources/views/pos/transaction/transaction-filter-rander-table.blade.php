@@ -58,10 +58,12 @@
                                             class="btn btn-sm btn-primary " title="Print">
                                             <i class="fa fa-print"></i><span style="padding-left: 5px">Receipt</span>
                                         </a>
+                                        @if(Auth::user()->can('transaction.delete'))
                                         <a href="{{ route('transaction.delete', $trans->id) }}" id="delete"
                                             class="btn btn-sm btn-danger " title="Delete">
                                             Delete
                                         </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

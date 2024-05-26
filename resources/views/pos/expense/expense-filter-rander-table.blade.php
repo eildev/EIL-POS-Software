@@ -36,14 +36,19 @@
                                     <td>{{ $expenses->note ?? '-' }}</td>
 
                                     <td>
+
+                                        @if(Auth::user()->can('expense.edit'))
                                         <a href="{{ route('expense.edit', $expenses->id) }}"
                                             class="btn btn-sm btn-primary " title="Edit">
                                             Edit
                                         </a>
+                                        @endif
+                                        @if(Auth::user()->can('expense.delete'))
                                         <a href="{{ route('expense.delete', $expenses->id) }}" id="delete"
                                             class="btn btn-sm btn-danger " title="Delete">
                                             Delete
                                         </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

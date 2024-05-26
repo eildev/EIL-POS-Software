@@ -12,7 +12,7 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title text-info">View Role List</h6>
+                    <h6 class="card-title text-info">View Role Permission List</h6>
 
                     <div id="" class="table-responsive">
                         <table id="example" class="table">
@@ -31,16 +31,20 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $data->name ?? '' }}</td>
                                             <td>@foreach($data->permissions as $permission)
-                                                      <span class="badge rounded-pill bg-danger"> {{ $permission->name ??  '' }}</span> 
+                                                      <span class="badge rounded-pill bg-danger"> {{ $permission->name ??  '' }}</span>
                                                 @endforeach
                                             </td>
                                             <td>
+                            @if(Auth::user()->can('role-and-permission-check-role-permission.edit'))
                                     <a href="{{route('admin.role.edit',$data->id)}}" class="btn btn-sm btn-primary btn-icon" title="Edit">
                                         <i data-feather="edit"></i>
                                     </a>
+                                    @endif
+                            @if(Auth::user()->can('role-and-permission-check-role-permission.delete'))
                                     <a href="{{route('admin.role.delete',$data->id)}}" id="delete" class="btn btn-sm btn-danger btn-icon" title="Delete">
                                         <i data-feather="trash-2"></i>
                                     </a>
+                                    @endif
                                 </td>
                                         </tr>
                                     @endforeach

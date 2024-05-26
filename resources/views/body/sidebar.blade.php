@@ -220,6 +220,7 @@
             </li>
             @endif
             <li class="nav-item nav-category">PEOPLES</li>
+            @if(Auth::user()->can('customer.menu'))
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('customer.view') }}" role="button"
                     aria-controls="general-pages">
@@ -227,6 +228,8 @@
                     <span class="link-title">Customer</span>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->can('employee.menu'))
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('employee.view') }}" role="button"
                     aria-controls="general-pages">
@@ -234,6 +237,8 @@
                     <span class="link-title">Employee</span>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->can('employee-salary.menu'))
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('employee.salary.add') }}" role="button"
                     aria-controls="general-pages">
@@ -241,6 +246,8 @@
                     <span class="link-title">Employee Salary</span>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->can('advanced-employee-salary.menu'))
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('advanced.employee.salary.add') }}" role="button"
                     aria-controls="general-pages">
@@ -248,7 +255,9 @@
                     <span class="link-title">Advanced Employee Salary</span>
                 </a>
             </li>
+            @endif
             <li class="nav-item nav-category">Customer Info. Management</li>
+            @if(Auth::user()->can('advanced-employee-salary.menu'))
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#crm" role="button" aria-expanded="false"
                     aria-controls="emails">
@@ -258,19 +267,27 @@
                 </a>
                 <div class="collapse" id="crm">
                     <ul class="nav sub-menu">
+                        @if(Auth::user()->can('crm.customize-customer'))
                         <li class="nav-item">
                             <a href="{{ route('customer.list.view') }}" class="nav-link">Customize Customer</a>
                         </li>
+                        @endif
+                        @if(Auth::user()->can('crm.email-marketing'))
                         <li class="nav-item">
                             <a href="{{ route('email.To.Customer.Page') }}" class="nav-link">Email Marketing</a>
                         </li>
+                        @endif
+                        @if(Auth::user()->can('crm.sms-marketing'))
                         <li class="nav-item">
                             <a href="{{ route('sms.To.Customer.Page') }}" class="nav-link">SMS Marketing</a>
                         </li>
+                        @endif
                     </ul>
                 </div>
             </li>
+            @endif
             <li class="nav-item nav-category">All Reports</li>
+            @if(Auth::user()->can('report.menu'))
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#report" role="button" aria-expanded="false"
                     aria-controls="emails">
@@ -399,6 +416,7 @@
                     </ul>
                 </div>
             </li>
+            @endif
             <!---Role & Permission--->
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#role" role="button" aria-expanded="false"
@@ -409,22 +427,31 @@
                 </a>
                 <div class="collapse" id="role">
                     <ul class="nav sub-menu">
+                        @if(Auth::user()->can('role-and-permission.all-permission'))
                         <li class="nav-item">
                             <a href="{{ route('all.permission') }}" class="nav-link">All Permisiion</a>
                         </li>
+                        @endif
+                        @if(Auth::user()->can('role-and-permission.all-role'))
                         <li class="nav-item">
                             <a href="{{ route('all.role') }}" class="nav-link">All Role</a>
                         </li>
+                        @endif
+                        @if(Auth::user()->can('role-and-permission.role-in-permission'))
                         <li class="nav-item">
                             <a href="{{ route('add.role.permission') }}" class="nav-link">Role In Permission</a>
                         </li>
+                        @endif
+                        @if(Auth::user()->can('role-and-permission-check-role-permission'))
                         <li class="nav-item">
-                            <a href="{{ route('all.role.permission') }}" class="nav-link">All Role Permission</a>
+                            <a href="{{ route('all.role.permission') }}" class="nav-link">Check All Role Permission</a>
                         </li>
+                        @endif
                     </ul>
                 </div>
             </li>
                 <!---Admin Manage--->
+                @if(Auth::user()->can('admin-manage.menu'))
                 <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#admin-manage" role="button" aria-expanded="false"
                     aria-controls="emails">
@@ -434,29 +461,37 @@
                 </a>
                 <div class="collapse" id="admin-manage">
                     <ul class="nav sub-menu">
+                        @if(Auth::user()->can('admin-manage.list'))
                         <li class="nav-item">
                             <a href="{{ route('all.admin') }}" class="nav-link">All Admin</a>
                         </li>
+                        @endif
+                        @if(Auth::user()->can('admin-manage.add'))
                         <li class="nav-item">
                             <a href="{{ route('add.admin') }}" class="nav-link">Add Admin</a>
                         </li>
-
+                        @endif
                     </ul>
                 </div>
             </li>
+            @endif
             <li class="nav-item nav-category">SETTING & CUSTOMIZE</li>
+            @if(Auth::user()->can('settings.menu'))
             <li class="nav-item">
                 <a href="{{ route('pos.settings.add') }}" class="nav-link">
                     <i class="link-icon" data-feather="settings"></i>
                     <span class="link-title">Settings</span>
                 </a>
             </li>
+            @endif
+            @if(Auth::user()->can('branch.menu'))
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
                     <i class="link-icon" data-feather="sliders"></i>
                     <span class="link-title">Branches</span>
                 </a>
             </li>
+            @endif
         </ul>
     </div>
 </nav>

@@ -524,9 +524,9 @@ class SaleController extends Controller
     public function findProductWithBarcode($id)
     {
         $status = 'active';
-        $products = Product::where('branch_id', Auth::user()->branch_id)->where('stock', '>', 0)->where('barcode', $id)->latest()->first();
+        $products = Product::where('branch_id', Auth::user()->branch_id)->where('barcode', $id)->latest()->first();
         // dd($products);
-        if ($products) {
+        if ($products->stock > 0) {
             $promotionDetails = PromotionDetails::whereHas('promotion', function ($query) use ($status) {
                 return $query->where('status', '=', $status);
             })->where('promotion_type', 'products')->where('logic', 'like', '%' . $products->id . "%")->latest()->first();
@@ -543,10 +543,15 @@ class SaleController extends Controller
                     'data' => $products
                 ]);
             }
+        } else if ($products) {
+            return response()->json([
+                'status' => '500',
+                'error' => 'Not Enough Stock Available'
+            ]);
         } else {
             return response()->json([
                 'status' => '500',
-                'error' => 'Not Enough Stock'
+                'error' => 'Product Not Available'
             ]);
         }
     }

@@ -24333,6 +24333,7 @@ div.tox .buy-now-wrapper .tox-button svg,
   height: 32px;
   white-space: nowrap;
   color: #000;
+  justify-content: space-between;
 }
 
 .sidebar .sidebar-body .nav .nav-item .nav-link .link-icon {
@@ -24437,7 +24438,9 @@ div.tox .buy-now-wrapper .tox-button svg,
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
+.card-body svg{
+  background: rgb(255,255,255) !important;
+}
 .sidebar .sidebar-body .nav.sub-menu .nav-item .nav-link::before {
   content: "";
   width: 6px;

@@ -376,16 +376,16 @@
             <li class="nav-item nav-category">All Reports</li>
             @if (Auth::user()->can('report.menu'))
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#forms" role="button"
+                    <a class="nav-link" data-bs-toggle="collapse" href="#majid" role="button"
                         aria-expanded="false" aria-controls="forms">
                         <i class="link-icon" data-feather="inbox"></i>
                         <span class="link-title">Reports</span>
                         <i class="link-arrow" data-feather="chevron-down"></i>
                     </a>
-                    <div class="collapse" id="forms">
+                    <div class="collapse" id="majid">
                         <ul class="nav sub-menu">
                             <li class="nav-item">
-                                <a href="{{ route('today.report') }}" class="nav-link">Today Report</a>
+                                <a id="report" href="{{ route('today.report') }}" class="nav-link">Today Report</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('product.info.report') }}" class="nav-link">Product Info

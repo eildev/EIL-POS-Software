@@ -995,6 +995,10 @@
                                     printFrame.onload = function() {
                                         printFrame.contentWindow.focus();
                                         printFrame.contentWindow.print();
+                                        // Redirect after printing
+                                        printFrame.contentWindow.onafterprint = function() {
+                                            window.location.href = "/sale";
+                                        };
                                     };
 
                                 } else {
@@ -1109,6 +1113,10 @@
                             printFrame.onload = function() {
                                 printFrame.contentWindow.focus();
                                 printFrame.contentWindow.print();
+                                // Redirect after printing
+                                printFrame.contentWindow.onafterprint = function() {
+                                    window.location.href = "/sale";
+                                };
                             };
 
                         } else {

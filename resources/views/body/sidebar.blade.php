@@ -13,6 +13,20 @@
             <span></span>
         </div>
     </div>
+
+    <style>
+        .nav_active {
+            background: #00a9f1;
+            border-radius: 5px;
+            color: #fff !important;
+        }
+
+        .nav-link.nav_active .link-icon,
+        .nav-link.nav_active .link-title,
+        .nav-link.nav_active {
+            color: #ffffff !important;
+        }
+    </style>
     <div class="sidebar-body">
         <ul class="nav">
             <li class="nav-item nav-category">theme</li>
@@ -35,15 +49,16 @@
             <li class="nav-item nav-category">Main</li>
 
             <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link ">
+                <a href="{{ route('dashboard') }}"
+                    class="nav-link {{ request()->routeIs('dashboard') ? 'nav_active' : '' }}">
                     <i class="ms-2 ms-2 link-icon" data-feather="home"></i>
-                    <span class=" link-title">Dashboard</span>
+                    <span class="link-title">Dashboard</span>
                 </a>
             </li>
 
             @if (Auth::user()->can('pos.menu'))
                 <li class="nav-item">
-                    <a href="{{ route('sale') }}" class="nav-link ">
+                    <a href="{{ route('sale') }}" class="nav-link {{ request()->routeIs('sale') ? 'nav_active' : '' }}">
                         <i class="ms-2 ms-2 link-icon" data-feather="shopping-cart"></i>
                         <span class="link-title">POS</span>
                     </a>
@@ -51,7 +66,8 @@
             @endif
             @if (Auth::user()->can('pos-manage.menu'))
                 <li class="nav-item">
-                    <a href="{{ route('sale.view') }}" class="nav-link">
+                    <a href="{{ route('sale.view') }}"
+                        class="nav-link {{ request()->routeIs('sale.view') ? 'nav_active' : '' }}">
                         <i class="ms-2 ms-2 link-icon" data-feather="shopping-bag"></i>
                         <span class="link-title">POS Manage</span>
                     </a>
@@ -60,109 +76,78 @@
             @if (Auth::user()->can('products.menu'))
                 <li class="nav-item nav-category">Products</li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
+                    <a class="nav-link {{ request()->routeIs('product*') ? '' : 'collapsed' }}"
+                        data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
                         aria-controls="emails">
                         <i class="link-icon" data-feather="mail"></i>
                         <span class="link-title">Products</span>
                         <i class="link-arrow" data-feather="chevron-down"></i>
                     </a>
-
-                    <div class="collapse" id="emails">
+                    <div class="collapse {{ request()->routeIs('product*') ? 'show' : '' }}" id="emails">
                         <ul class="nav sub-menu">
                             @if (Auth::user()->can('products.add'))
-                                <li class="nav-item">
-                                    <a href="{{ route('product') }}" class="nav-link">Add Product</a>
+                                <li class="nav-item ">
+                                    <a href="{{ route('product') }}"
+                                        class="nav-link {{ request()->routeIs('product') ? 'nav_active' : '' }}">Add
+                                        Product</a>
                                 </li>
                             @endif
                             @if (Auth::user()->can('products.list'))
                                 <li class="nav-item">
-                                    <a href="{{ route('product.view') }}" class="nav-link">Manage Products</a>
+                                    <a href="{{ route('product.view') }}"
+                                        class="nav-link {{ request()->routeIs('product.view') ? 'nav_active' : '' }}">Manage
+                                        Products</a>
+                                </li>
+                            @endif
+                            @if (Auth::user()->can('category.menu'))
+                                <li class="nav-item">
+                                    <a href="{{ route('product.category') }}"
+                                        class="nav-link {{ request()->routeIs('product.category') ? 'nav_active' : '' }}">Category</a>
+                                </li>
+                            @endif
+                            @if (Auth::user()->can('subcategory.menu'))
+                                <li class="nav-item">
+                                    <a href="{{ route('product.subcategory') }}"
+                                        class="nav-link {{ request()->routeIs('product.subcategory') ? 'nav_active' : '' }}">Sub
+                                        Category</a>
+                                </li>
+                            @endif
+                            @if (Auth::user()->can('brand.menu'))
+                                <li class="nav-item">
+                                    <a href="{{ route('product.brand') }}"
+                                        class="nav-link {{ request()->routeIs('product.brand') ? 'nav_active' : '' }}">Brand</a>
+                                </li>
+                            @endif
+                            @if (Auth::user()->can('unit.menu'))
+                                <li class="nav-item">
+                                    <a href="{{ route('product.unit') }}"
+                                        class="nav-link {{ request()->routeIs('product.unit') ? 'nav_active' : '' }}">Unit</a>
+                                </li>
+                            @endif
+                            @if (Auth::user()->can('products-size.menu'))
+                                <li class="nav-item">
+                                    <a href="{{ route('product.size.view') }}"
+                                        class="nav-link {{ request()->routeIs('product.size.view') ? 'nav_active' : '' }}">Product
+                                        Size</a>
+                                </li>
+                            @endif
+                            @if (Auth::user()->can('tax.menu'))
+                                <li class="nav-item">
+                                    <a href="{{ route('product.tax.add') }}"
+                                        class="nav-link {{ request()->routeIs('product.tax.add') ? 'nav_active' : '' }}">Tax</a>
                                 </li>
                             @endif
                         </ul>
                     </div>
                 </li>
             @endif
-            {{-- @if (Auth::user()->can('products.menu'))
-                <li class="nav-item nav-category">Products</li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
-                        aria-controls="emails">
-                        <i class="ms-2 ms-2 link-icon" data-feather="package"></i>
-                        <span class="link-title">Products</span>
-                        <i class="ms-2 link-arrow" data-feather="chevron-down"></i>
-                    </a>
-                    <div class="collapse" id="emails">
-                        <ul class="nav sub-menu">
 
-                            @if (Auth::user()->can('products.add'))
-                                <li class="nav-item">
-                                    <a href="{{ route('product') }}" class="nav-link">Add Product</a>
-                                </li>
-                            @endif
-                            @if (Auth::user()->can('products.list'))
-                                <li class="nav-item">
-                                    <a href="{{ route('product.view') }}" class="nav-link">Manage Products</a>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
-                </li>
-            @endif --}}
-            @if (Auth::user()->can('category.menu'))
-                <li class="nav-item">
-                    <a href="{{ route('category') }}" class="nav-link">
-                        <i class="ms-2 ms-2 link-icon" data-feather="grid"></i>
-                        <span class="link-title">Category</span>
-                    </a>
-                </li>
-            @endif
-            @if (Auth::user()->can('subcategory.menu'))
-                <li class="nav-item">
-                    <a href="{{ route('subcategory') }}" class="nav-link">
-                        <i class="ms-2 ms-2 link-icon" data-feather="layers"></i>
-                        <span class="link-title">Sub Category</span>
-                    </a>
-                </li>
-            @endif
-            @if (Auth::user()->can('brand.menu'))
-                <li class="nav-item">
-                    <a href="{{ route('brand') }}" class="nav-link">
-                        <i class="ms-2 ms-2 link-icon" data-feather="hash"></i>
-                        <span class="link-title">Brand</span>
-                    </a>
-                </li>
-            @endif
-            @if (Auth::user()->can('unit.menu'))
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('unit') }}" role="button" aria-controls="general-pages">
-                        <i class="ms-2 ms-2 link-icon" data-feather="trello"></i>
-                        <span class="link-title">Unit</span>
-                    </a>
-                </li>
-            @endif
-            @if (Auth::user()->can('products-size.menu'))
-                <li class="nav-item">
-                    <a href="{{ route('product.size.view') }}" class="nav-link">
-                        <i class="ms-2 ms-2 link-icon" data-feather="maximize"></i>
-                        <span class="link-title">Product Size</span>
-                    </a>
-                </li>
-            @endif
-            @if (Auth::user()->can('tax.menu'))
-                <li class="nav-item">
-                    <a href="{{ route('tax.add') }}" class="nav-link">
-                        <i class="ms-2 fa-regular fa-money-bill-1 link-icon"></i>
-                        <span class="link-title">Taxes</span>
-                    </a>
-                </li>
-            @endif
             <li class="nav-item nav-category">Inventory</li>
 
             @if (Auth::user()->can('supplier.menu'))
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('supplier') }}" role="button"
-                        aria-controls="general-pages">
+                    <a class="nav-link {{ request()->routeIs('supplier') ? 'nav_active' : '' }}"
+                        href="{{ route('supplier') }}" role="button" aria-controls="general-pages">
                         <i class="ms-2 fa-solid fa-handshake link-icon"></i>
                         <span class="link-title">Supplier</span>
                     </a>
@@ -192,33 +177,10 @@
                     </div>
                 </li>
             @endif
-            {{-- @if (Auth::user()->can('purchase.menu'))
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button"
-                        aria-expanded="false" aria-controls="emails">
-                        <i class="ms-2 fa-solid fa-cart-plus link-icon"></i>
-                        <span class="link-title">Purchase</span>
-                        <i class="ms-2 link-arrow" data-feather="chevron-down"></i>
-                    </a>
-                    <div class="collapse" id="emails">
-                        <ul class="nav sub-menu">
-                            @if (Auth::user()->can('purchase.add'))
-                                <li class="nav-item">
-                                    <a href="{{ route('purchase') }}" class="nav-link">Add Purchase</a>
-                                </li>
-                            @endif
-                            @if (Auth::user()->can('purchase.list'))
-                                <li class="nav-item">
-                                    <a href="{{ route('purchase.view') }}" class="nav-link">Manage Purchase</a>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
-                </li>
-            @endif --}}
             @if (Auth::user()->can('promotion.menu'))
                 <li class="nav-item">
-                    <a href="{{ route('promotion.view') }}" class="nav-link">
+                    <a href="{{ route('promotion.view') }}"
+                        class="nav-link {{ request()->routeIs('promotion.view') ? 'nav_active' : '' }}">
                         <i class="ms-2 fa-solid fa-tag link-icon"></i>
                         <span class="link-title">Promotion</span>
                     </a>
@@ -226,7 +188,8 @@
             @endif
             @if (Auth::user()->can('promotion-details.menu'))
                 <li class="nav-item">
-                    <a href="{{ route('promotion.details.view') }}" class="nav-link">
+                    <a href="{{ route('promotion.details.view') }}"
+                        class="nav-link {{ request()->routeIs('promotion.details.view') ? 'nav_active' : '' }}">
                         <i class="ms-2 fa-solid fa-tags link-icon"></i>
                         <span class="link-title">Promotion Details</span>
                     </a>
@@ -234,7 +197,8 @@
             @endif
             @if (Auth::user()->can('damage.menu'))
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('damage') }}" role="button" aria-controls="general-pages">
+                    <a class="nav-link {{ request()->routeIs('damage') ? 'nav_active' : '' }}"
+                        href="{{ route('damage') }}" role="button" aria-controls="general-pages">
                         <i class="ms-2 ms-2 link-icon" data-feather="book"></i>
                         <span class="link-title">Damage</span>
                     </a>
@@ -242,7 +206,8 @@
             @endif
             @if (Auth::user()->can('bank.menu'))
                 <li class="nav-item">
-                    <a href="{{ route('bank') }}" class="nav-link">
+                    <a href="{{ route('bank') }}"
+                        class="nav-link {{ request()->routeIs('bank') ? 'nav_active' : '' }}">
                         <i class="ms-2 fa-solid fa-building-columns link-icon"></i>
                         <span class="link-title">Bank</span>
                     </a>
@@ -250,21 +215,17 @@
             @endif
             @if (Auth::user()->can('expense.menu'))
                 <li class="nav-item">
-                    <a href="{{ route('expense.view') }}" class="nav-link">
+                    <a href="{{ route('expense.view') }}"
+                        class="nav-link {{ request()->routeIs('expense.view') ? 'nav_active' : '' }}">
                         <i class="ms-2 fa-solid fa-money-bill-transfer link-icon"></i>
                         <span class="link-title">Expense</span>
                     </a>
                 </li>
             @endif
-            {{-- <li class="nav-item">
-                <a href="{{ route('payment.method.add') }}" class="nav-link">
-                    <i class="ms-2 fa-solid fa-cash-register link-icon"></i>
-                    <span class="link-title">Payment Method</span>
-                </a>
-            </li> --}}
             @if (Auth::user()->can('transaction.menu'))
                 <li class="nav-item">
-                    <a href="{{ route('transaction.add') }}" class="nav-link">
+                    <a href="{{ route('transaction.add') }}"
+                        class="nav-link {{ request()->routeIs('transaction.add') ? 'nav_active' : '' }}">
                         <i class="ms-2 fa-solid fa-receipt link-icon"></i>
                         <span class="link-title">Transaction</span>
                     </a>
@@ -273,340 +234,226 @@
             <li class="nav-item nav-category">PEOPLES</li>
             @if (Auth::user()->can('customer.menu'))
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('customer.view') }}" role="button"
-                        aria-controls="general-pages">
+                    <a class="nav-link {{ request()->routeIs('customer.view') ? 'nav_active' : '' }}"
+                        href="{{ route('customer.view') }}" role="button" aria-controls="general-pages">
                         <i class="ms-2 ms-2 link-icon" data-feather="users"></i>
                         <span class="link-title">Customer</span>
                     </a>
                 </li>
             @endif
-            @if (Auth::user()->can('employee.menu'))
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('employee.view') }}" role="button"
-                        aria-controls="general-pages">
-                        <i class="ms-2 ms-2 link-icon" data-feather="user-check"></i>
-                        <span class="link-title">Employee</span>
-                    </a>
-                </li>
-            @endif
-            @if (Auth::user()->can('employee-salary.menu'))
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('employee.salary.add') }}" role="button"
-                        aria-controls="general-pages">
-                        <i class="ms-2 ms-2 link-icon" data-feather="user-check"></i>
-                        <span class="link-title">Employee Salary</span>
-                    </a>
-                </li>
-            @endif
-            @if (Auth::user()->can('advanced-employee-salary.menu'))
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('advanced.employee.salary.add') }}" role="button"
-                        aria-controls="general-pages">
-                        <i class="ms-2 ms-2 link-icon" data-feather="user-check"></i>
-                        <span class="link-title">Advanced Employee Salary</span>
-                    </a>
-                </li>
-            @endif
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('employee*') ? '' : 'collapsed' }}"
+                    data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
+                    aria-controls="emails">
+                    <i class="link-icon" data-feather="mail"></i>
+                    <span class="link-title">Employee</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse {{ request()->routeIs('employee*') ? 'show' : '' }}" id="emails">
+                    <ul class="nav sub-menu">
+                        @if (Auth::user()->can('employee.menu'))
+                            <li class="nav-item ">
+                                <a href="{{ route('employee.view') }}"
+                                    class="nav-link {{ request()->routeIs('employee.view') ? 'nav_active' : '' }}">Add
+                                    Employee</a>
+                            </li>
+                        @endif
+                        @if (Auth::user()->can('employee-salary.menu'))
+                            <li class="nav-item">
+                                <a href="{{ route('employee.salary.add') }}"
+                                    class="nav-link {{ request()->routeIs('employee.salary.add') ? 'nav_active' : '' }}">Manage
+                                    Employee Salary</a>
+                            </li>
+                        @endif
+                        @if (Auth::user()->can('advanced-employee-salary.menu'))
+                            <li class="nav-item">
+                                <a href="{{ route('advanced.employee.salary.add') }}"
+                                    class="nav-link {{ request()->routeIs('advanced.employee.salary.add') ? 'nav_active' : '' }}">Advanced
+                                    Employee Salary</a>
+                            </li>
+                        @endif
+                    </ul>
+                </div>
+            </li>
+
             @if (Auth::user()->can('crm.menu'))
                 <li class="nav-item nav-category">Customer Info. Management</li>
-                @if (Auth::user()->can('advanced-employee-salary.menu'))
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#advancedUI" role="button"
-                            aria-expanded="false" aria-controls="advancedUI">
-                            <i class="link-icon" data-feather="anchor"></i>
-                            <span class="link-title">CRM</span>
-                            <i class="link-arrow" data-feather="chevron-down"></i>
-                        </a>
-                        <div class="collapse" id="advancedUI">
-                            <ul class="nav sub-menu">
-                                @if (Auth::user()->can('crm.customize-customer'))
-                                    <li class="nav-item">
-                                        <a href="{{ route('customer.list.view') }}" class="nav-link">Customize
-                                            Customer</a>
-                                    </li>
-                                @endif
-                                @if (Auth::user()->can('crm.email-marketing'))
-                                    <li class="nav-item">
-                                        <a href="{{ route('email.To.Customer.Page') }}" class="nav-link">Email
-                                            Marketing</a>
-                                    </li>
-                                @endif
-                                @if (Auth::user()->can('crm.sms-marketing'))
-                                    <li class="nav-item">
-                                        <a href="{{ route('sms.To.Customer.Page') }}" class="nav-link">SMS
-                                            Marketing</a>
-                                    </li>
-                                @endif
-                            </ul>
-                        </div>
-                    </li>
-                @endif
-            @endif
-            {{-- @if (Auth::user()->can('advanced-employee-salary.menu'))
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#crm" role="button"
-                        aria-expanded="false" aria-controls="emails">
-                        <i class="ms-2 fa-solid fa-users-gear link-icon"></i>
+                    <a class="nav-link {{ request()->routeIs('crm*') ? '' : 'collapsed' }}" data-bs-toggle="collapse"
+                        href="#advancedUI" role="button" aria-expanded="false" aria-controls="advancedUI">
+                        <i class="link-icon" data-feather="anchor"></i>
                         <span class="link-title">CRM</span>
-                        <i class="ms-2 link-arrow" data-feather="chevron-down"></i>
+                        <i class="link-arrow" data-feather="chevron-down"></i>
                     </a>
-                    <div class="collapse" id="crm">
+                    <div class="collapse {{ request()->routeIs('crm*') ? 'show' : '' }}" id="advancedUI">
                         <ul class="nav sub-menu">
                             @if (Auth::user()->can('crm.customize-customer'))
                                 <li class="nav-item">
-                                    <a href="{{ route('customer.list.view') }}" class="nav-link">Customize
+                                    <a href="{{ route('crm.customer.list.view') }}"
+                                        class="nav-link {{ request()->routeIs('crm.customer.list.view') ? 'nav_active' : '' }}">Customize
                                         Customer</a>
                                 </li>
                             @endif
                             @if (Auth::user()->can('crm.email-marketing'))
                                 <li class="nav-item">
-                                    <a href="{{ route('email.To.Customer.Page') }}" class="nav-link">Email
+                                    <a href="{{ route('crm.email.To.Customer.Page') }}"
+                                        class="nav-link {{ request()->routeIs('crm.email.To.Customer.Page') ? 'nav_active' : '' }}">Email
                                         Marketing</a>
                                 </li>
                             @endif
                             @if (Auth::user()->can('crm.sms-marketing'))
                                 <li class="nav-item">
-                                    <a href="{{ route('sms.To.Customer.Page') }}" class="nav-link">SMS Marketing</a>
+                                    <a href="{{ route('crm.sms.To.Customer.Page') }}"
+                                        class="nav-link {{ request()->routeIs('crm.sms.To.Customer.Page') ? 'nav_active' : '' }}">SMS
+                                        Marketing</a>
                                 </li>
                             @endif
                         </ul>
                     </div>
                 </li>
-            @endif --}}
+            @endif
             <li class="nav-item nav-category">All Reports</li>
             @if (Auth::user()->can('report.menu'))
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#majid" role="button"
-                        aria-expanded="false" aria-controls="forms">
+                    <a class="nav-link {{ request()->routeIs('report*') ? '' : 'collapsed' }}"
+                        data-bs-toggle="collapse" href="#majid" role="button" aria-expanded="false"
+                        aria-controls="forms">
                         <i class="link-icon" data-feather="inbox"></i>
                         <span class="link-title">Reports</span>
                         <i class="link-arrow" data-feather="chevron-down"></i>
                     </a>
-                    <div class="collapse" id="majid">
+                    <div class="collapse {{ request()->routeIs('report*') ? 'show' : '' }}" id="majid">
                         <ul class="nav sub-menu">
                             <li class="nav-item">
-                                <a id="report" href="{{ route('today.report') }}" class="nav-link">Today Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('product.info.report') }}" class="nav-link">Product Info
+                                <a id="report" href="{{ route('report.today') }}"
+                                    class="nav-link {{ request()->routeIs('report.today') ? 'nav_active' : '' }}">Today
                                     Report</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('summary.report') }}" class="nav-link">Summary Report</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('customer.due.report') }}" class="nav-link">Customer Due
+                                <a href="{{ route('report.product.info') }}"
+                                    class="nav-link {{ request()->routeIs('report.product.info') ? 'nav_active' : '' }}">Product
+                                    Info
                                     Report</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('supplier.due.report') }}" class="nav-link">Supplier Due
+                                <a href="{{ route('report.summary') }}"
+                                    class="nav-link {{ request()->routeIs('report.summary') ? 'nav_active' : '' }}">Summary
                                     Report</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('low.stock.report') }}" class="nav-link">Low Stock Report</a>
+                                <a href="{{ route('report.customer.due') }}"
+                                    class="nav-link {{ request()->routeIs('report.customer.due') ? 'nav_active' : '' }}">Customer
+                                    Due
+                                    Report</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('top.products.report') }}" class="nav-link">Top Products</a>
+                                <a href="{{ route('report.supplier.due') }}"
+                                    class="nav-link {{ request()->routeIs('report.supplier.due') ? 'nav_active' : '' }}">Supplier
+                                    Due
+                                    Report</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('purchase.report') }}" class="nav-link">Purchase Report</a>
+                                <a href="{{ route('report.low.stock') }}"
+                                    class="nav-link {{ request()->routeIs('report.low.stock') ? 'nav_active' : '' }}">Low
+                                    Stock Report</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('customer.ledger.report') }}" class="nav-link">Customer
+                                <a href="{{ route('report.top.products') }}"
+                                    class="nav-link {{ request()->routeIs('report.top.products') ? 'nav_active' : '' }}">Top
+                                    Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('report.purchase') }}"
+                                    class="nav-link {{ request()->routeIs('report.purchase') ? 'nav_active' : '' }}">Purchase
+                                    Report</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('report.customer.ledger') }}"
+                                    class="nav-link {{ request()->routeIs('report.customer.ledger') ? 'nav_active' : '' }}">Customer
                                     Ledger</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('suppliers.ledger.report') }}" class="nav-link">Supplier
+                                <a href="{{ route('report.suppliers.ledger') }}"
+                                    class="nav-link {{ request()->routeIs('report.suppliers.ledger') ? 'nav_active' : '' }}">Supplier
                                     Ledger</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('account.transaction.view') }}" class="nav-link">Account
+                                <a href="{{ route('report.account.transaction') }}"
+                                    class="nav-link {{ request()->routeIs('report.account.transaction') ? 'nav_active' : '' }}">Account
                                     Transaction</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('account.transaction.view') }}" class="nav-link">Expense
+                                <a href="{{ route('report.expense') }}"
+                                    class="nav-link {{ request()->routeIs('report.expense') ? 'nav_active' : '' }}">Expense
                                     Report</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('employee.salary.report.view') }}" class="nav-link">Employee
+                                <a href="{{ route('report.employee.salary.view') }}"
+                                    class="nav-link {{ request()->routeIs('report.employee.salary.view') ? 'nav_active' : '' }}">Employee
                                     Salary
                                     Report</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('stock.report') }}" class="nav-link">Stock Report</a>
+                                <a href="{{ route('report.stock') }}"
+                                    class="nav-link {{ request()->routeIs('report.stock') ? 'nav_active' : '' }}">Stock
+                                    Report</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('damage.report') }}" class="nav-link">Damage Report</a>
+                                <a href="{{ route('report.damage') }}"
+                                    class="nav-link {{ request()->routeIs('report.damage') ? 'nav_active' : '' }}">Damage
+                                    Report</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('sms.report') }}" class="nav-link">Sms Report</a>
+                                <a href="{{ route('report.sms') }}"
+                                    class="nav-link {{ request()->routeIs('report.sms') ? 'nav_active' : '' }}">Sms
+                                    Report</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('monthly.report') }}" class="nav-link">Monthly Report</a>
+                                <a href="{{ route('report.monthly') }}"
+                                    class="nav-link {{ request()->routeIs('report.monthly') ? 'nav_active' : '' }}">Monthly
+                                    Report</a>
                             </li>
                         </ul>
                     </div>
                 </li>
             @endif
-            {{-- @if (Auth::user()->can('report.menu'))
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#report" role="button"
-                        aria-expanded="false" aria-controls="emails">
-                        <i class="ms-2 fa-solid fa-file-waveform link-icon"></i>
-                        <span class="link-title">Reports</span>
-                        <i class="ms-2 link-arrow" data-feather="chevron-down"></i>
-                    </a>
-                    <div class="collapse" id="report">
-                        <ul class="nav sub-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('today.report') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Today Report
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('product.info.report') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Product Info Report
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('summary.report') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Summary Report
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                            <a class="nav-link" href="{{ route('branch.view') }}" role="button"
-                                aria-controls="general-pages">
-                                Daily Report
-                            </a>
-                        </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('customer.due.report') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Customer Due Report
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('supplier.due.report') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Supplier Due Report
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('low.stock.report') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Low Stock Report
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('top.products.report') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Top Products
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('purchase.report') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Purchase Report
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('customer.ledger.report') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Customer Ledger
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('suppliers.ledger.report') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Supplier Ledger
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                            <a class="nav-link" href="{{ route('bank.report') }}" role="button"
-                                aria-controls="general-pages">
-                                Bank Report
-                            </a>
-                        </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('account.transaction.view') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Account Transaction
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('expense.report.view') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Expense Report
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('employee.salary.report.view') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Employee Salary Report
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('stock.report') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Stock Report
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('damage.report') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Damage Report
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('sms.report') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Sms Report
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('monthly.report') }}" role="button"
-                                    aria-controls="general-pages">
-                                    Monthly Report
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </li>
-            @endif --}}
             <!---Role & Permission--->
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#role" role="button" aria-expanded="false"
-                    aria-controls="emails">
+                <a class="nav-link {{ request()->routeIs('role*') ? 'collapsed' : '' }}" data-bs-toggle="collapse"
+                    href="#role" role="button" aria-expanded="false" aria-controls="emails">
                     <i class="fa-solid fa-users-gear link-icon"></i>
                     <span class="link-title">Role & Permission</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
-                <div class="collapse" id="role">
+                <div class="collapse {{ request()->routeIs('report*') ? '' : 'show' }}" id="role">
                     <ul class="nav sub-menu">
                         @if (Auth::user()->can('role-and-permission.all-permission'))
                             <li class="nav-item">
-                                <a href="{{ route('all.permission') }}" class="nav-link">All Permisiion</a>
+                                <a href="{{ route('all.permission') }}"
+                                    class="nav-link {{ request()->routeIs('all.permission') ? 'nav_active' : '' }}">All
+                                    Permisiion</a>
                             </li>
                         @endif
                         @if (Auth::user()->can('role-and-permission.all-role'))
                             <li class="nav-item">
-                                <a href="{{ route('all.role') }}" class="nav-link">All Role</a>
+                                <a href="{{ route('all.role') }}"
+                                    class="nav-link {{ request()->routeIs('all.role') ? 'nav_active' : '' }}">All
+                                    Role</a>
                             </li>
                         @endif
                         @if (Auth::user()->can('role-and-permission.role-in-permission'))
                             <li class="nav-item">
-                                <a href="{{ route('add.role.permission') }}" class="nav-link">Role In
+                                <a href="{{ route('add.role.permission') }}"
+                                    class="nav-link {{ request()->routeIs('add.role.permission') ? 'nav_active' : '' }}">Role
+                                    In
                                     Permission</a>
                             </li>
                         @endif
                         @if (Auth::user()->can('role-and-permission-check-role-permission'))
                             <li class="nav-item">
-                                <a href="{{ route('all.role.permission') }}" class="nav-link">Check All Role
+                                <a href="{{ route('all.role.permission') }}"
+                                    class="nav-link {{ request()->routeIs('all.role.permission') ? 'nav_active' : '' }}">Check
+                                    All Role
                                     Permission</a>
                             </li>
                         @endif
@@ -616,22 +463,27 @@
             <!---Admin Manage--->
             @if (Auth::user()->can('admin-manage.menu'))
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#admin-manage" role="button"
-                        aria-expanded="false" aria-controls="emails">
+                    <a class="nav-link {{ request()->routeIs('admin*') ? '' : 'collapsed' }}"
+                        data-bs-toggle="collapse" href="#admin-manage" role="button" aria-expanded="false"
+                        aria-controls="emails">
                         <i class="fa-solid fa-users-gear link-icon"></i>
                         <span class="link-title">Admin Manage</span>
                         <i class="link-arrow" data-feather="chevron-down"></i>
                     </a>
-                    <div class="collapse" id="admin-manage">
+                    <div class="collapse {{ request()->routeIs('admin*') ? 'show' : '' }}" id="admin-manage">
                         <ul class="nav sub-menu">
                             @if (Auth::user()->can('admin-manage.list'))
                                 <li class="nav-item">
-                                    <a href="{{ route('all.admin') }}" class="nav-link">All Admin</a>
+                                    <a href="{{ route('admin.all') }}"
+                                        class="nav-link {{ request()->routeIs('admin.all') ? 'nav_active' : '' }}">All
+                                        Admin</a>
                                 </li>
                             @endif
                             @if (Auth::user()->can('admin-manage.add'))
                                 <li class="nav-item">
-                                    <a href="{{ route('add.admin') }}" class="nav-link">Add Admin</a>
+                                    <a href="{{ route('admin.add') }}"
+                                        class="nav-link {{ request()->routeIs('admin.add') ? 'nav_active' : '' }}">Add
+                                        Admin</a>
                                 </li>
                             @endif
                         </ul>
@@ -641,7 +493,8 @@
             <li class="nav-item nav-category">SETTING & CUSTOMIZE</li>
             @if (Auth::user()->can('settings.menu'))
                 <li class="nav-item">
-                    <a href="{{ route('pos.settings.add') }}" class="nav-link">
+                    <a href="{{ route('pos.settings.add') }}"
+                        class="nav-link {{ request()->routeIs('pos.settings.add') ? 'nav_active' : '' }}">
                         <i class="ms-2 ms-2 link-icon" data-feather="settings"></i>
                         <span class="link-title">Settings</span>
                     </a>
@@ -649,8 +502,8 @@
             @endif
             @if (Auth::user()->can('branch.menu'))
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('branch.view') }}" role="button"
-                        aria-controls="general-pages">
+                    <a class="nav-link {{ request()->routeIs('branch.view') ? 'nav_active' : '' }}"
+                        href="{{ route('branch.view') }}" role="button" aria-controls="general-pages">
                         <i class="ms-2 ms-2 link-icon" data-feather="sliders"></i>
                         <span class="link-title">Branches</span>
                     </a>
@@ -659,5 +512,3 @@
         </ul>
     </div>
 </nav>
-
-

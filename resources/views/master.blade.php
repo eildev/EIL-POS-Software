@@ -31,7 +31,7 @@
     @include('body.js')
 </body>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const flexSwitchCheckDefault = document.querySelector('.flexSwitchCheckDefault');
         const form = document.getElementById('darkModeForm');
         if (flexSwitchCheckDefault && form) {
@@ -39,6 +39,33 @@
                 form.submit();
             });
         }
+
+        // nav links active 
+        const links = document.querySelectorAll('.nav-link');
+        links.forEach(link => {
+            link.addEventListener('click', function() {
+                links.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+
+                // Handle collapse behavior
+                const parentMenu = this.closest('.collapse');
+                if (parentMenu) {
+                    parentMenu.classList.add('show');
+                    parentMenu.previousElementSibling.setAttribute('aria-expanded', 'true');
+                    parentMenu.previousElementSibling.classList.remove('collapsed');
+                }
+            });
+
+            // Ensure parent menus stay open if a child link is active
+            if (link.classList.contains('active')) {
+                const parentMenu = link.closest('.collapse');
+                if (parentMenu) {
+                    parentMenu.classList.add('show');
+                    parentMenu.previousElementSibling.setAttribute('aria-expanded', 'true');
+                    parentMenu.previousElementSibling.classList.remove('collapsed');
+                }
+            }
+        });
     });
     $(function() {
         'use strict'
@@ -50,10 +77,11 @@
         /*easymde editor*/
         if ($("#easyMdeEditor").length) {
             var easymde = new EasyMDE({
-            element: $("#easyMdeEditor")[0]
+                element: $("#easyMdeEditor")[0]
             });
         }
 
-        });
+    });
 </script>
+
 </html>

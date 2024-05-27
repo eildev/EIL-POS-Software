@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
 
     // category related route
     Route::controller(CategoryController::class)->group(function () {
-        Route::get('/category', 'index')->name('category');
+        Route::get('/category', 'index')->name('product.category');
         Route::post('/category/store', 'store')->name('category.store');
         Route::get('/category/view', 'view')->name('category.view');
         Route::get('/category/edit/{id}', 'edit')->name('category.edit');
@@ -72,7 +72,7 @@ Route::middleware('auth')->group(function () {
 
     // subcategory related route(n)
     Route::controller(SubCategoryController::class)->group(function () {
-        Route::get('/subcategory', 'index')->name('subcategory');
+        Route::get('/subcategory', 'index')->name('product.subcategory');
         Route::post('/subcategory/store', 'store')->name('subcategory.store');
         Route::get('/subcategory/view', 'view')->name('subcategory.view');
         Route::get('/subcategory/edit/{id}', 'edit')->name('subcategory.edit');
@@ -84,7 +84,7 @@ Route::middleware('auth')->group(function () {
 
     // Brand related route
     Route::controller(BrandController::class)->group(function () {
-        Route::get('/brand', 'index')->name('brand');
+        Route::get('/brand', 'index')->name('product.brand');
         Route::post('/brand/store', 'store')->name('brand.store');
         Route::get('/brand/view', 'view')->name('brand.view');
         Route::get('/brand/edit/{id}', 'edit')->name('brand.edit');
@@ -115,7 +115,7 @@ Route::middleware('auth')->group(function () {
 
     // Unit related route
     Route::controller(UnitController::class)->group(function () {
-        Route::get('/unit', 'index')->name('unit');
+        Route::get('/unit', 'index')->name('product.unit');
         Route::post('/unit/store', 'store')->name('unit.store');
         Route::get('/unit/view', 'view')->name('unit.view');
         Route::get('/unit/edit/{id}', 'edit')->name('unit.edit');
@@ -245,7 +245,7 @@ Route::middleware('auth')->group(function () {
     });
     // Tax related route(n)
     Route::controller(TaxController::class)->group(function () {
-        Route::get('/tax/add', 'TaxAdd')->name('tax.add');
+        Route::get('/tax/add', 'TaxAdd')->name('product.tax.add');
         Route::post('/tax/store', 'TaxStore')->name('tax.store');
         Route::get('/tax/view', 'TaxView')->name('tax.view');
         Route::get('/tax/edit/{id}', 'TaxEdit')->name('tax.edit');
@@ -330,10 +330,10 @@ Route::middleware('auth')->group(function () {
     // Report related routes
     Route::controller(ReportController::class)->group(function () {
         Route::group(['prefix' => 'report'], function () {
-            Route::get('today', 'todayReport')->name('today.report');
-            Route::get('summary', 'summaryReport')->name('summary.report');
-            Route::get('low-stock', 'lowStockReport')->name('low.stock.report');
-            Route::get('top-products', 'topProducts')->name('top.products.report');
+            Route::get('today', 'todayReport')->name('report.today');
+            Route::get('summary', 'summaryReport')->name('report.summary');
+            Route::get('low-stock', 'lowStockReport')->name('report.low.stock');
+            Route::get('top-products', 'topProducts')->name('report.top.products');
             // Route::get('purchase', 'purchaseReport')->name('purchase.report');
             // Route::group(['prefix' => 'today'], function () {
             //     Route::get('ledger', 'customerLedger')->name('customer.ledger.report');
@@ -342,24 +342,24 @@ Route::middleware('auth')->group(function () {
             //     Route::get('due/filter', 'customerDueFilter')->name('customer.due.filter');
             // });
             Route::group(['prefix' => 'customer'], function () {
-                Route::get('ledger', 'customerLedger')->name('customer.ledger.report');
+                Route::get('ledger', 'customerLedger')->name('report.customer.ledger');
                 Route::get('filter', 'customerLedgerFilter')->name('customer.ledger.filter');
-                Route::get('due', 'customerDue')->name('customer.due.report');
+                Route::get('due', 'customerDue')->name('report.customer.due');
                 Route::get('due/filter', 'customerDueFilter')->name('customer.due.filter');
             });
             Route::group(['prefix' => 'supplier'], function () {
-                Route::get('ledger', 'supplierLedger')->name('suppliers.ledger.report');
+                Route::get('ledger', 'supplierLedger')->name('report.suppliers.ledger');
                 Route::get('filter', 'supplierLedgerFilter')->name('supplier.ledger.filter');
-                Route::get('due', 'supplierDueReport')->name('supplier.due.report');
+                Route::get('due', 'supplierDueReport')->name('report.supplier.due');
                 Route::get('due/filter', 'supplierDueFilter')->name('supplier.due.filter');
             });
             Route::get('bank', 'bankReport')->name('bank.report');
-            Route::get('stock', 'stockReport')->name('stock.report');
+            Route::get('stock', 'stockReport')->name('report.stock');
             //
-            Route::get('/report/purchase', 'purchaseReport')->name('purchase.report');
+            Route::get('/report/purchase', 'purchaseReport')->name('report.purchase');
 
 
-            Route::get('/report/damage', 'damageReport')->name('damage.report');
+            Route::get('/report/damage', 'damageReport')->name('report.damage');
             Route::post('/damage/print', 'damageReportPrint')->name('damage.report.print');
             Route::get('/damage/product/filter', 'DamageProductFilter')->name('damage.product.filter.view');
 
@@ -368,31 +368,31 @@ Route::middleware('auth')->group(function () {
             Route::get('/purchese/product/filter', 'PurchaseProductFilter')->name('purches.product.filter.view');
             Route::get('/purchese/details/invoice/{id}', 'PurchaseDetailsInvoice')->name('purchse.details.invoice');
             //////////////Account Transaction Route /////////////
-            Route::get('/account/transaction/view', 'AccountTransactionView')->name('account.transaction.view');
+            Route::get('/account/transaction/view', 'AccountTransactionView')->name('report.account.transaction');
             Route::get('/account/transaction/filter', 'AccountTransactionFilter')->name('account.transaction.ledger.filter');
             //////////////Expense Report Route /////////////
-            Route::get('/expense/report/view', 'ExpenseReport')->name('expense.report.view');
+            Route::get('/expense/report/view', 'ExpenseReport')->name('report.expense');
             Route::get('/expense/expense/filter', 'ExpenseReportFilter')->name('expense.report.filter');
             //////////////Employee Salary Report /////////////
-            Route::get('/employee/salary/report/view', 'EmployeeSalaryReport')->name('employee.salary.report.view');
+            Route::get('/employee/salary/report/view', 'EmployeeSalaryReport')->name('report.employee.salary.view');
             Route::get('/employee/salary/filter', 'EmployeeSalaryReportFilter')->name('employee.salary.report.filter');
             /////////////Product Info Report //////////////
-            Route::get('/product/info/report', 'ProductInfoReport')->name('product.info.report');
+            Route::get('/product/info/report', 'ProductInfoReport')->name('report.product.info');
             // Route::get('/product/category/ajax/{categoryId}', 'ProductSubCategoryShow');
             Route::get('/product/info/filter/view', 'ProductInfoFilter')->name('product.info.filter.view');
             /////SMS Report ///////
-            Route::get('/sms/report/view', 'SmsView')->name('sms.report');
+            Route::get('/sms/report/view', 'SmsView')->name('report.sms');
             Route::get('/sms/report/filter', 'SmsReportFilter')->name('sms.report.filter');
             // MONNTHLY Report
-            Route::get('/monthly/report', 'monthlyReport')->name('monthly.report');
+            Route::get('/monthly/report', 'monthlyReport')->name('report.monthly');
         });
     });
     // Report related routes
     Route::controller(CRMController::class)->group(function () {
         Route::group(['prefix' => 'crm'], function () {
-            Route::get('sms-page', 'smsToCustomerPage')->name('sms.To.Customer.Page');
+            Route::get('sms-page', 'smsToCustomerPage')->name('crm.sms.To.Customer.Page');
             Route::post('sms', 'smsToCustomer')->name('sms.To.Customer');
-            Route::get('email-page', 'emailToCustomerPage')->name('email.To.Customer.Page');
+            Route::get('email-page', 'emailToCustomerPage')->name('crm.email.To.Customer.Page');
             Route::post('email', 'emailToCustomerSend')->name('email.To.Customer.Send');
         });
         Route::group(['prefix' => 'sms'], function () {
@@ -403,7 +403,7 @@ Route::middleware('auth')->group(function () {
         });
         //Customize Customer CRM
         Route::group(['prefix' => 'custimize-customer'], function () {
-            Route::get('list', 'CustomerlistView')->name('customer.list.view');
+            Route::get('list', 'CustomerlistView')->name('crm.customer.list.view');
             Route::get('filter.view', 'CustomerlistFilterView')->name('cutomer.Customize.filter.view');
         });
     });
@@ -414,21 +414,21 @@ Route::middleware('auth')->group(function () {
     });
     ////////////////////Role And Permission Route /////////////////
     Route::controller(RolePermissionController::class)->group(function () {
-                                 ///Permission///
+        ///Permission///
         Route::get('/all/permission/view', 'AllPermissionView')->name('all.permission');
         Route::get('/add/permission', 'AddPermission')->name('add.permission');
         Route::post('/store/permission', 'StorePermission')->name('store.permission');
         Route::get('/edit/permission/{id}', 'EditPermission')->name('permission.edit');
         Route::post('/update/permission', 'updatePermission')->name('permission.update');
         Route::get('/delete/permission/{id}', 'DeletePermission')->name('permission.delete');
-                                 ///Role///
+        ///Role///
         Route::get('/all/role/view', 'AllRoleView')->name('all.role');
         Route::get('/add/role', 'AddRole')->name('add.role');
         Route::post('/store/role', 'StoreRole')->name('store.role');
         Route::get('/edit/role/{id}', 'EditRole')->name('role.edit');
         Route::post('/update/role', 'updateRole')->name('role.update');
         Route::get('/delete/role/{id}', 'DeleteRole')->name('role.delete');
-                                ///Role In Permission///
+        ///Role In Permission///
         Route::get('/add/role/permission', 'AddRolePermission')->name('add.role.permission');
         Route::post('/store/role/permission', 'StoreRolePermission')->name('store.role.permission');
         Route::get('/edit/role/permission/{id}', 'EditRolePermission')->name('role.permission.edit');
@@ -439,16 +439,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/role/edit/{id}', 'AdminRoleEdit')->name('admin.role.edit');
         Route::post('/admin/role/update/{id}', 'AdminRoleUpdate')->name('admin.role.update');
         Route::get('/admin/role/delete/{id}', 'AdminRoleDelete')->name('admin.role.delete');
-        Route::get('/admin/role/view', 'AdminRoleView')->name('admin.role.view');       
-                            ///Admin Manage Route ///
-        Route::get('/all/admin/view', 'AllAdminView')->name('all.admin');
-        Route::get('/add/admin', 'AddAdmin')->name('add.admin');
+        Route::get('/admin/role/view', 'AdminRoleView')->name('admin.role.view');
+        ///Admin Manage Route ///
+        Route::get('/all/admin/view', 'AllAdminView')->name('admin.all');
+        Route::get('/add/admin', 'AddAdmin')->name('admin.add');
         Route::post('/admin/store', 'AdminStore')->name('admin.store');
         Route::get('/admin/manage/edit/{id}', 'AdminManageEdit')->name('admin.manage.edit');
         Route::get('/admin/manage/delete/{id}', 'AdminManageDelete')->name('admin.manage.delete');
         Route::post('/admin/manage/update/{id}', 'AdminManageUpdate')->name('update.admin.manage');
-
-
     });
 });
 

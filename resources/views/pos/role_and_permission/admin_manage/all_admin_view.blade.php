@@ -1,12 +1,12 @@
 @extends('master')
-@section('title','| All Admin List')
+@section('title', '| All Admin List')
 @section('admin')
 
     <div class="row">
 
         <div class="col-md-12 grid-margin stretch-card d-flex justify-content-end">
             <div class="">
-                <h4 class="text-right"><a href="{{ route('add.admin') }}" class="btn btn-info">Add Admin</a></h4>
+                <h4 class="text-right"><a href="{{ route('admin.add') }}" class="btn btn-info">Add Admin</a></h4>
             </div>
         </div>
         <div class="col-md-12 grid-margin stretch-card">
@@ -33,10 +33,10 @@
                                     @foreach ($user as $key => $data)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $data->name?? '-' }}</td>
+                                            <td>{{ $data->name ?? '-' }}</td>
                                             <td>
-                                                @foreach($data->roles as $role)
-                                                <span class="badge rounded-pill bg-danger">{{$role->name}}</span>
+                                                @foreach ($data->roles as $role)
+                                                    <span class="badge rounded-pill bg-danger">{{ $role->name }}</span>
                                                 @endforeach
                                             </td>
                                             <td>{{ $data->phone ?? '-' }}</td>
@@ -44,17 +44,19 @@
                                             <td>{{ $data->address ?? '-' }}</td>
                                             <td>{{ $data->branch_id ?? '-' }}</td>
                                             <td>
-                                                @if(Auth::user()->can('admin-manage.edit'))
-                                    <a href="{{route('admin.manage.edit',$data->id)}}" class="btn btn-sm btn-primary btn-icon" title="Edit">
-                                        <i data-feather="edit"></i>
-                                    </a>
-                                    @endif
-                                    @if(Auth::user()->can('admin-manage.delete'))
-                                    <a href="{{route('admin.manage.delete',$data->id)}}" id="delete" class="btn btn-sm btn-danger btn-icon" title="Delete">
-                                        <i data-feather="trash-2"></i>
-                                    </a>
-                                    @endif
-                                </td>
+                                                @if (Auth::user()->can('admin-manage.edit'))
+                                                    <a href="{{ route('admin.manage.edit', $data->id) }}"
+                                                        class="btn btn-sm btn-primary btn-icon" title="Edit">
+                                                        <i data-feather="edit"></i>
+                                                    </a>
+                                                @endif
+                                                @if (Auth::user()->can('admin-manage.delete'))
+                                                    <a href="{{ route('admin.manage.delete', $data->id) }}" id="delete"
+                                                        class="btn btn-sm btn-danger btn-icon" title="Delete">
+                                                        <i data-feather="trash-2"></i>
+                                                    </a>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @else
@@ -62,7 +64,7 @@
                                         <td colspan="12">
                                             <div class="text-center text-warning mb-2">Data Not Found</div>
                                             <div class="text-center">
-                                                <a href="{{route('add.role')}}" class="btn btn-primary">Add role<i
+                                                <a href="{{ route('add.role') }}" class="btn btn-primary">Add role<i
                                                         data-feather="plus"></i></a>
                                             </div>
                                         </td>

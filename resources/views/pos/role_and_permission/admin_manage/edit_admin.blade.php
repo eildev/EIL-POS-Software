@@ -39,7 +39,7 @@
 											<input type="text" class="form-control" value="{{$user->address}}" name="address" id="exampleInputMobile11" placeholder="Enter Address">
 										</div>
 									</div>
-									
+
                                     <div class="row mb-3">
 										<label for="exampleInputPassword2ss" class="col-sm-3 col-form-label">Asign Branch <span class="text-danger">*</span></label>
 										<div class="col-sm-9 form-valid-groupss">
@@ -83,7 +83,7 @@
                     email: {
                         required: true,
                     },
-                 
+
                     branch_id: {
                         required: true,
                     },

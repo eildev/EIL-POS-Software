@@ -52,7 +52,10 @@
 
         //Today Purchase
         $todayPurchaseItems = App\Models\PurchaseItem::whereDate('created_at', $todayDate);
+        $todayPurchase = App\Models\Purchase::whereDate('created_at', $todayDate);
         $todayPurchaseItemsToday = $todayPurchaseItems->sum('quantity');
+        // dd($todayPurchaseItems->sum('grand_total'));
+        $todayPurchaseAmont = $todayPurchase->sum('grand_total');
         $todayPurchaseToday = App\Models\Purchase::whereDate('purchse_date', $todayDate)->count();
         //Today invoice product
         $todayInvoiceProductItems = App\Models\Sale::whereDate('sale_date', $todayDate);
@@ -202,12 +205,13 @@
                                     <img src="uploads/dashboard/Artboard4@300x-100.jpg" height="50px" width="50px" alt="Image" style="border-radius:5px">
                                 </div>
                                 <div class="col-md-8">
-                                    <h3 class="mb-2"> {{ $totalInvoiceToday }}
+                                    {{-- <h3 class="mb-2"> {{ $totalInvoiceToday }}
 
                                         <span style="font-size: 15px;">
                                         (৳ {{ $saleProfitAmount }})</span>
-                                </h3>
-                                <h6 class="mb-0">Invoice</h6>
+                                </h3> --}}
+                                <h3>{{ $saleProfitAmount }}</h3>
+                                <h6 class="mb-0">Profit</h6>
                                 </div>
                             </div>
                         </div>
@@ -225,9 +229,11 @@
                                     <img src="uploads/dashboard/Artboard3@300x-100.jpg" height="50px" width="50px" alt="Image" style="border-radius:5px">
                                 </div>
                                 <div class="col-md-8 ">
-                                    <h3 class="mb-2">{{ $todayPurchaseToday }}<span style="font-size: 15px;">
-                                            (৳ {{ $todayExpenseAmount }})</span></h3>
-                                 <h6 class=" mb-0">Total Purchase</h6>
+                                    {{-- <h3 class="mb-2">{{ $todayPurchaseToday }}<span style="font-size: 15px;">
+                                            (৳ {{ $todayExpenseAmount }})</span></h3> --}}
+                                            <h3>{{ $todayExpenseAmount }}</h3>
+                                 <h6 class=" mb-0">Expense</h6>
+                                 {{-- <h6 class=" mb-0">Total Purchase</h6> --}}
                                 </div>
                             </div>
                         </div>
@@ -244,10 +250,11 @@
                                     <img src="uploads/dashboard/Artboard1@300x-100.jpg" height="50px" width="50px" alt="Image" style="border-radius:5px">
                                 </div>
                                 <div class="col-md-8">
-                                    <h3 class="mb-2">{{ $todayInvoiceProductTotal }} <span
+                                    {{-- <h3 class="mb-2">{{ $todayInvoiceProductTotal }} <span
                                             style="font-size: 15px;">( ৳
-                                            {{ $todayInvoiceProductAmount }})</span></h3>
-                                            <h6 class=" mb-0">Invoice Products</h6>
+                                            {{ $todayInvoiceProductAmount }})</span></h3> --}}
+                                            <h3>{{ $todayInvoiceProductAmount }}</h3>
+                                            <h6 class=" mb-0">Invoice</h6>
                                 </div>
                             </div>
                         </div>
@@ -264,9 +271,10 @@
                                     <img src="uploads/dashboard/Artboard5@300x-100.jpg" height="50px" width="50px" alt="Image" style="border-radius:5px">
                                 </div>
                                 <div class="col-md-8">
-                                    <h3 class="mb-2"> ৳ {{ $todayInvoiceAmount }}<span
-                                            style="font-size: 15px;"> (৳ {{ $todayProfit }})</span></h3>
-                                    <h6 class=" mb-0">Invoice Amount</h6>
+                                    {{-- <h3 class="mb-2"> ৳ {{ $todayInvoiceAmount }}<span
+                                            style="font-size: 15px;"> (৳ {{ $todayProfit }})</span></h3> --}}
+                                            <h3>{{$todayPurchaseAmont }}</h3>
+                                    <h6 class=" mb-0">Purchase</h6>
                                 </div>
                             </div>
                         </div>

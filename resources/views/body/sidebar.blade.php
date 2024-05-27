@@ -376,16 +376,16 @@
             <li class="nav-item nav-category">All Reports</li>
             @if (Auth::user()->can('report.menu'))
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#forms" role="button"
+                    <a class="nav-link" data-bs-toggle="collapse" href="#majid" role="button"
                         aria-expanded="false" aria-controls="forms">
                         <i class="link-icon" data-feather="inbox"></i>
                         <span class="link-title">Reports</span>
                         <i class="link-arrow" data-feather="chevron-down"></i>
                     </a>
-                    <div class="collapse" id="forms">
+                    <div class="collapse" id="majid">
                         <ul class="nav sub-menu">
                             <li class="nav-item">
-                                <a href="{{ route('today.report') }}" class="nav-link">Today Report</a>
+                                <a id="report" href="{{ route('today.report') }}" class="nav-link">Today Report</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('product.info.report') }}" class="nav-link">Product Info
@@ -661,47 +661,3 @@
 </nav>
 
 
-
-{{-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const navLinks = document.querySelectorAll('.nav-item .nav-link');
-
-        // Function to remove the active class from all nav links
-        function clearActiveStates() {
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-        }
-
-        // Function to set the active class on the current nav link
-        function setActiveState(link) {
-            clearActiveStates();
-            link.classList.add('active');
-        }
-
-        // Event listener for each nav link
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(event) {
-                // Prevent default action if the link has a href attribute
-                if (link.href) {
-                    event.preventDefault();
-                    setActiveState(link);
-                    // Navigate to the new URL after setting the active state
-                    window.location.href = link.href;
-                }
-            });
-        });
-
-        // Set active state based on the current URL
-        function setActiveLinkByURL() {
-            const currentURL = window.location.href;
-            navLinks.forEach(link => {
-                if (link.href === currentURL) {
-                    setActiveState(link);
-                }
-            });
-        }
-
-        setActiveLinkByURL();
-    });
-</script> --}}

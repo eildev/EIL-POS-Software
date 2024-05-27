@@ -340,7 +340,7 @@
                         </div>
                     </li>
                 @endif
-            @endif
+
             {{-- @if (Auth::user()->can('advanced-employee-salary.menu'))
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#crm" role="button"
@@ -578,6 +578,8 @@
                 </li>
             @endif --}}
             <!---Role & Permission--->
+            @if (Auth::user()->can('role-and-permission.menu'))
+
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#role" role="button" aria-expanded="false"
                     aria-controls="emails">
@@ -612,6 +614,8 @@
                     </ul>
                 </div>
             </li>
+            @endif
+
             <!---Admin Manage--->
             @if (Auth::user()->can('admin-manage.menu'))
                 <li class="nav-item">

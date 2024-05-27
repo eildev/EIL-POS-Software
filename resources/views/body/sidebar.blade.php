@@ -419,7 +419,6 @@
             @endif
             <!---Role & Permission--->
             @if (Auth::user()->can('role-and-permission.menu'))
-
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('role*') ? 'collapsed' : '' }}"
                         data-bs-toggle="collapse" href="#role" role="button" aria-expanded="false"

@@ -418,48 +418,53 @@
                 </li>
             @endif
             <!---Role & Permission--->
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('role*') ? 'collapsed' : '' }}" data-bs-toggle="collapse"
-                    href="#role" role="button" aria-expanded="false" aria-controls="emails">
-                    <i class="fa-solid fa-users-gear link-icon"></i>
-                    <span class="link-title">Role & Permission</span>
-                    <i class="link-arrow" data-feather="chevron-down"></i>
-                </a>
-                <div class="collapse {{ request()->routeIs('report*') ? '' : 'show' }}" id="role">
-                    <ul class="nav sub-menu">
-                        @if (Auth::user()->can('role-and-permission.all-permission'))
-                            <li class="nav-item">
-                                <a href="{{ route('all.permission') }}"
-                                    class="nav-link {{ request()->routeIs('all.permission') ? 'nav_active' : '' }}">All
-                                    Permisiion</a>
-                            </li>
-                        @endif
-                        @if (Auth::user()->can('role-and-permission.all-role'))
-                            <li class="nav-item">
-                                <a href="{{ route('all.role') }}"
-                                    class="nav-link {{ request()->routeIs('all.role') ? 'nav_active' : '' }}">All
-                                    Role</a>
-                            </li>
-                        @endif
-                        @if (Auth::user()->can('role-and-permission.role-in-permission'))
-                            <li class="nav-item">
-                                <a href="{{ route('add.role.permission') }}"
-                                    class="nav-link {{ request()->routeIs('add.role.permission') ? 'nav_active' : '' }}">Role
-                                    In
-                                    Permission</a>
-                            </li>
-                        @endif
-                        @if (Auth::user()->can('role-and-permission-check-role-permission'))
-                            <li class="nav-item">
-                                <a href="{{ route('all.role.permission') }}"
-                                    class="nav-link {{ request()->routeIs('all.role.permission') ? 'nav_active' : '' }}">Check
-                                    All Role
-                                    Permission</a>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-            </li>
+            @if (Auth::user()->can('role-and-permission.menu'))
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('role*') ? 'collapsed' : '' }}"
+                        data-bs-toggle="collapse" href="#role" role="button" aria-expanded="false"
+                        aria-controls="emails">
+                        <i class="fa-solid fa-users-gear link-icon"></i>
+                        <span class="link-title">Role & Permission</span>
+                        <i class="link-arrow" data-feather="chevron-down"></i>
+                    </a>
+                    <div class="collapse {{ request()->routeIs('report*') ? '' : 'show' }}" id="role">
+                        <ul class="nav sub-menu">
+                            @if (Auth::user()->can('role-and-permission.all-permission'))
+                                <li class="nav-item">
+                                    <a href="{{ route('all.permission') }}"
+                                        class="nav-link {{ request()->routeIs('all.permission') ? 'nav_active' : '' }}">All
+                                        Permisiion</a>
+                                </li>
+                            @endif
+                            @if (Auth::user()->can('role-and-permission.all-role'))
+                                <li class="nav-item">
+                                    <a href="{{ route('all.role') }}"
+                                        class="nav-link {{ request()->routeIs('all.role') ? 'nav_active' : '' }}">All
+                                        Role</a>
+                                </li>
+                            @endif
+                            @if (Auth::user()->can('role-and-permission.role-in-permission'))
+                                <li class="nav-item">
+                                    <a href="{{ route('add.role.permission') }}"
+                                        class="nav-link {{ request()->routeIs('add.role.permission') ? 'nav_active' : '' }}">Role
+                                        In
+                                        Permission</a>
+                                </li>
+                            @endif
+                            @if (Auth::user()->can('role-and-permission-check-role-permission'))
+                                <li class="nav-item">
+                                    <a href="{{ route('all.role.permission') }}"
+                                        class="nav-link {{ request()->routeIs('all.role.permission') ? 'nav_active' : '' }}">Check
+                                        All Role
+                                        Permission</a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+                </li>
+            @endif
+
             <!---Admin Manage--->
             @if (Auth::user()->can('admin-manage.menu'))
                 <li class="nav-item">

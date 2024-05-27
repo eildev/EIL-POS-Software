@@ -69,9 +69,9 @@ class SaleController extends Controller
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'customer_id' => 'required',
-            'products' => 'required',
             'sale_date' => 'required',
             'payment_method' => 'required',
+            'paid' => 'required',
         ]);
 
         if ($validator->passes()) {

@@ -35,8 +35,12 @@
             <li class="nav-item nav-category">Main</li>
 
             <li class="nav-item">
+<<<<<<< HEAD
                 <a href="{{ route('dashboard') }}"
                     class="nav-link">
+=======
+                <a href="{{ route('dashboard') }}" class="nav-link ">
+>>>>>>> bfe1276d58e4668f8873e727c607f17be87fccec
                     <i class="ms-2 ms-2 link-icon" data-feather="home"></i>
                     <span class=" link-title">Dashboard</span>
                 </a>
@@ -44,7 +48,11 @@
 
             @if (Auth::user()->can('pos.menu'))
                 <li class="nav-item">
+<<<<<<< HEAD
                     <a href="{{ route('sale') }}" class="nav-link">
+=======
+                    <a href="{{ route('sale') }}" class="nav-link ">
+>>>>>>> bfe1276d58e4668f8873e727c607f17be87fccec
                         <i class="ms-2 ms-2 link-icon" data-feather="shopping-cart"></i>
                         <span class="link-title">POS</span>
                     </a>
@@ -52,8 +60,7 @@
             @endif
             @if (Auth::user()->can('pos-manage.menu'))
                 <li class="nav-item">
-                    <a href="{{ route('sale.view') }}"
-                        class="nav-link {{ request()->routeIs('sale.view') ? 'active' : '' }}">
+                    <a href="{{ route('sale.view') }}" class="nav-link">
                         <i class="ms-2 ms-2 link-icon" data-feather="shopping-bag"></i>
                         <span class="link-title">POS Manage</span>
                     </a>

@@ -521,40 +521,45 @@ class SaleController extends Controller
             'promotions' => $promotions
         ]);
     }
+
+
     public function findProductWithBarcode($id)
     {
         $status = 'active';
         $products = Product::where('branch_id', Auth::user()->branch_id)->where('barcode', $id)->latest()->first();
-        // dd($products);
-        if ($products->stock > 0) {
-            $promotionDetails = PromotionDetails::whereHas('promotion', function ($query) use ($status) {
-                return $query->where('status', '=', $status);
-            })->where('promotion_type', 'products')->where('logic', 'like', '%' . $products->id . "%")->latest()->first();
 
-            if ($promotionDetails) {
+        if ($products) { // Check if $products is not null
+            if ($products->stock > 0) {
+                $promotionDetails = PromotionDetails::whereHas('promotion', function ($query) use ($status) {
+                    return $query->where('status', '=', $status);
+                })->where('promotion_type', 'products')->where('logic', 'like', '%' . $products->id . "%")->latest()->first();
+
+                if ($promotionDetails) {
+                    return response()->json([
+                        'status' => '200',
+                        'data' => $products,
+                        'promotion' => $promotionDetails->promotion,
+                    ]);
+                } else {
+                    return response()->json([
+                        'status' => '200',
+                        'data' => $products
+                    ]);
+                }
+            } else if ($products->stock <= 0) {
                 return response()->json([
-                    'status' => '200',
-                    'data' => $products,
-                    'promotion' => $promotionDetails->promotion,
-                ]);
-            } else {
-                return response()->json([
-                    'status' => '200',
-                    'data' => $products
+                    'status' => '300',
+                    'error' => 'Not Enough Stock Available'
                 ]);
             }
-        } else if ($products) {
-            return response()->json([
-                'status' => '500',
-                'error' => 'Not Enough Stock Available'
-            ]);
-        } else {
+        } else { // Handle the case where no product is found
             return response()->json([
                 'status' => '500',
                 'error' => 'Product Not Available'
             ]);
         }
     }
+
 
     // public function saleProductFind($id)
     // {

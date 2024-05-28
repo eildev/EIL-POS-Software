@@ -7,7 +7,8 @@
                     #{{ $data->invoice_number ?? 0 }}
                 </a>
             </td>
-            <td>{{ $data->customer->name ?? '' }}</td>
+            <td>{{ $data->customer->name ?? '-' }}</td>
+            <td>{{ $data->customer->phone ?? '-' }}</td>
             <td>
                 <ul>
                     @foreach ($data->saleItem as $item)

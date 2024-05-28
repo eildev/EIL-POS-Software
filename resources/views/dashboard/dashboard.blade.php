@@ -587,7 +587,7 @@
 
 
     {{-- /////Current Month Summary/// --}}
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-12 col-xl-12 stretch-card">
 
             <div class="row flex-grow-1">
@@ -805,7 +805,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- row -->
+    </div> <!-- row --> --}}
     {{-- /////EndCurrent Month Summary/// --}}
 
 
@@ -974,7 +974,7 @@
     </script>
     {{-- /// pie chart end /// --}}
     {{-- //////Start Total Summary /////// --}}
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-12 col-xl-12 stretch-card">
 
             <div class="row flex-grow-1">
@@ -1203,9 +1203,9 @@
                 </div>
             </div>
         </div>
-    </div> <!-- row -->
+    </div> <!-- row --> --}}
     {{-- //////End Total Summary /////// --}}
-
+<br>
     {{-- total chart  --}}
     <div class="row">
         <div class="col-xl-12 grid-margin stretch-card">

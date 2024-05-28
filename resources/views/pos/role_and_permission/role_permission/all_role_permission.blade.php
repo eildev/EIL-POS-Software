@@ -30,9 +30,16 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $data->name ?? '' }}</td>
-                                            <td>@foreach($data->permissions as $permission)
+                                            <td>
+                                                {{-- @foreach($data->permissions as $permission)
                                                       <span class="badge rounded-pill bg-danger"> {{ $permission->name ??  '' }}</span>
+                                                @endforeach --}}
+                                                @foreach(array_chunk($data->permissions->toArray(), 12) as $chunk)
+                                                @foreach($chunk as $permission)
+                                                    <span class="badge rounded-pill bg-danger"> {{ $permission['name'] ??  '' }}</span>
                                                 @endforeach
+                                                <br>
+                                            @endforeach
                                             </td>
                                             <td>
                             @if(Auth::user()->can('role-and-permission-check-role-permission.edit'))

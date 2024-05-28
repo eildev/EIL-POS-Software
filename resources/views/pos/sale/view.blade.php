@@ -115,6 +115,7 @@
                                     <th class="id">#</th>
                                     <th>Invoice <br>Number</th>
                                     <th>Customer</th>
+                                    <th>Customer Phone</th>
                                     <th>Items</th>
                                     <th>Date</th>
                                     <th>Discount</th>

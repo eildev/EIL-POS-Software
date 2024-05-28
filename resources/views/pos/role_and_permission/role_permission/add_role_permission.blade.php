@@ -34,7 +34,6 @@
                                 </div>
                             </div><br>
                             <div class="form-check form-check-inline" style="margin-bottom: 20px;margin-left:10px">
-
                                 <label class="form-check-label" for="checkInlineCheckedAll">
                                    Select All Permission</label>
                                 <input type="checkbox" class="form-check-input" id="checkInlineCheckedAll" >

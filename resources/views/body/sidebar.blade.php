@@ -50,11 +50,7 @@
 
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}"
-<<<<<<< HEAD
-                    class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-=======
                     class="nav-link {{ request()->routeIs('dashboard') ? 'nav_active' : '' }}">
->>>>>>> abb54abf036989177a058dee54131b1685e2b005
                     <i class="ms-2 ms-2 link-icon" data-feather="home"></i>
                     <span class="link-title">Dashboard</span>
                 </a>
@@ -62,11 +58,7 @@
 
             @if (Auth::user()->can('pos.menu'))
                 <li class="nav-item">
-<<<<<<< HEAD
-                    <a href="{{ route('sale') }}" class="nav-link {{ request()->routeIs('sale') ? 'active' : '' }}">
-=======
                     <a href="{{ route('sale') }}" class="nav-link {{ request()->routeIs('sale') ? 'nav_active' : '' }}">
->>>>>>> abb54abf036989177a058dee54131b1685e2b005
                         <i class="ms-2 ms-2 link-icon" data-feather="shopping-cart"></i>
                         <span class="link-title">POS</span>
                     </a>
@@ -75,11 +67,7 @@
             @if (Auth::user()->can('pos-manage.menu'))
                 <li class="nav-item">
                     <a href="{{ route('sale.view') }}"
-<<<<<<< HEAD
-                        class="nav-link {{ request()->routeIs('sale.view') ? 'active' : '' }}">
-=======
                         class="nav-link {{ request()->routeIs('sale.view') ? 'nav_active' : '' }}">
->>>>>>> abb54abf036989177a058dee54131b1685e2b005
                         <i class="ms-2 ms-2 link-icon" data-feather="shopping-bag"></i>
                         <span class="link-title">POS Manage</span>
                     </a>
@@ -528,52 +516,3 @@
         </ul>
     </div>
 </nav>
-<<<<<<< HEAD
-
-
-
-{{-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const navLinks = document.querySelectorAll('.nav-item .nav-link');
-
-        // Function to remove the active class from all nav links
-        function clearActiveStates() {
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-        }
-
-        // Function to set the active class on the current nav link
-        function setActiveState(link) {
-            clearActiveStates();
-            link.classList.add('active');
-        }
-
-        // Event listener for each nav link
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(event) {
-                // Prevent default action if the link has a href attribute
-                if (link.href) {
-                    event.preventDefault();
-                    setActiveState(link);
-                    // Navigate to the new URL after setting the active state
-                    window.location.href = link.href;
-                }
-            });
-        });
-
-        // Set active state based on the current URL
-        function setActiveLinkByURL() {
-            const currentURL = window.location.href;
-            navLinks.forEach(link => {
-                if (link.href === currentURL) {
-                    setActiveState(link);
-                }
-            });
-        }
-
-        setActiveLinkByURL();
-    });
-</script> --}}
-=======
->>>>>>> abb54abf036989177a058dee54131b1685e2b005

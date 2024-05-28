@@ -55,14 +55,14 @@
                                             <div class="mb-3">
                                                 <label for="userEmail" class="form-label">Email address</label>
                                                 <input type="email" class="form-control" name="email" id="userEmail"
-                                                    placeholder="Email">
+                                                    placeholder="Email" value="demo@gmail.com">
                                                 <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                                             </div>
                                             <div class="mb-3">
                                                 <label for="userPassword" class="form-label">Password</label>
                                                 <input type="password" class="form-control" id="userPassword"
                                                     autocomplete="current-password" placeholder="Password"
-                                                    name="password">
+                                                    name="password" value="123">
                                                 <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
                                             </div>
                                             <div class="form-check mb-3">
@@ -75,9 +75,9 @@
                                                 <button
                                                     class="btn btn-primary me-2 mb-2 mb-md-0 text-white">Login</button>
                                             </div>
-                                            <a href="{{ route('register') }}" class="d-block mt-3 text-muted">Not a
+                                            {{-- <a href="{{ route('register') }}" class="d-block mt-3 text-muted">Not a
                                                 user? Sign
-                                                up</a>
+                                                up</a> --}}
                                         </form>
                                     </div>
                                 </div>

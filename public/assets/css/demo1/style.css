@@ -1,11 +1,12 @@
 @charset "UTF-8";
+
 /*
 * NobleUI - HTML Bootstrap 5 Admin Dashboard Template v2.0.3 (https://nobleui.com/)
 * Copyright © 2022 NobleUI
 * Licensed under ThemeForest License
 */
 :root {
-    --nav-hover-background-color: #00a9f1;
+  --nav-hover-background-color: #00a9f1;
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
   --bs-purple: #6f42c1;
@@ -4705,6 +4706,7 @@ div.tox .btn-group-vertical>.btn-group:not(:first-child)>.tox-button,
   color: var(--bs-nav-tabs-link-active-color);
   background-color: var(--bs-nav-tabs-link-active-bg);
   border-color: var(--bs-nav-tabs-link-active-border-color);
+  border-radius: 5px;
 }
 
 .nav-tabs .dropdown-menu,
@@ -24329,10 +24331,12 @@ div.tox .buy-now-wrapper .tox-button svg,
 .sidebar .sidebar-body .nav .nav-item .nav-link {
   display: flex;
   align-items: center;
-  padding: 0;
+  padding: 0 5px;
   height: 32px;
   white-space: nowrap;
   color: #000;
+  justify-content: space-between;
+  border-radius: 5px;
 }
 
 .sidebar .sidebar-body .nav .nav-item .nav-link .link-icon {
@@ -24437,9 +24441,11 @@ div.tox .buy-now-wrapper .tox-button svg,
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-svg{
-  background: rgb(255,255,255) !important;
+
+.card-body svg {
+  background: rgb(255, 255, 255) !important;
 }
+
 .sidebar .sidebar-body .nav.sub-menu .nav-item .nav-link::before {
   content: "";
   width: 6px;

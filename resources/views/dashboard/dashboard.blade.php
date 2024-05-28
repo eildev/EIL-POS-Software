@@ -52,7 +52,10 @@
 
         //Today Purchase
         $todayPurchaseItems = App\Models\PurchaseItem::whereDate('created_at', $todayDate);
+        $todayPurchase = App\Models\Purchase::whereDate('created_at', $todayDate);
         $todayPurchaseItemsToday = $todayPurchaseItems->sum('quantity');
+        // dd($todayPurchaseItems->sum('grand_total'));
+        $todayPurchaseAmont = $todayPurchase->sum('grand_total');
         $todayPurchaseToday = App\Models\Purchase::whereDate('purchse_date', $todayDate)->count();
         //Today invoice product
         $todayInvoiceProductItems = App\Models\Sale::whereDate('sale_date', $todayDate);
@@ -194,130 +197,90 @@
                     <div class="card" style="">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <h6 class="card-title mb-0">Invoice</h6>
-                                <div class="dropdown mb-2">
-                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                        <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="eye" class="icon-sm me-2"></i> <span
-                                                class="">View</span></a>
-                                    </div>
-                                </div>
+                                {{-- <h6 class="card-title mb-0">Invoice</h6> --}}
                             </div>
                             <div class="row">
-                                <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2"> {{ $totalInvoiceToday }}<span style="font-size: 15px; color:white">
-                                            ({{ $todaySaleItemsToday }})</span>
-                                    </h3>
-                                    <div class="d-flex align-items-baseline">
-                                        {{-- <p class="text-white">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p> --}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 grid-margin stretch-card">
-                    <div class="card" style="">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-baseline">
-                                <h6 class="card-title mb-0">Purchase</h6>
-                                <div class="dropdown mb-2">
-                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                        <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="eye" class="icon-sm me-2"></i> <span
-                                                class="">View</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2">{{ $todayPurchaseToday }}<span style="font-size: 15px;color:white">
-                                            ({{ $todayPurchaseItemsToday }})</span></h3>
-                                    <div class="d-flex align-items-baseline">
-                                        {{-- <p class="text-white">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p> --}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 grid-margin stretch-card">
-                    <div class="card" style="">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-baseline">
-                                <h6 class="card-title mb-0">invoice product</h6>
-                                <div class="dropdown mb-2">
-                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                        <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="eye" class="icon-sm me-2"></i> <span
-                                                class="">View</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2">{{ $todayInvoiceProductTotal }} <span
-                                            style="font-size: 15px; color:white">( ৳
-                                            {{ $todayInvoiceProductAmount }})</span></h3>
-                                    <div class="d-flex align-items-baseline">
-                                        {{-- <p class="text-white">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p> --}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 grid-margin stretch-card">
-                    <div class="card" style="">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-baseline">
-                                <h6 class="card-title mb-0">invoice amount</h6>
-                                <div class="dropdown mb-2">
-                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                                data-feather="eye" class="icon-sm me-2"></i> <span
-                                                class="">View</span></a>
 
-                                    </div>
+                                <div class=" col-md-4">
+                                    <img src="uploads/dashboard/Artboard4@300x-100.jpg" height="50px" width="50px" alt="Image" style="border-radius:5px">
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2"> ৳ {{ $todayInvoiceAmount }}<span
-                                            style="font-size: 15px; color:white"> (৳{{ $todayProfit }})</span></h3>
-                                    <div class="d-flex align-items-baseline">
-                                    </div>
+                                <div class="col-md-8">
+                                    {{-- <h3 class="mb-2"> {{ $totalInvoiceToday }}
+
+                                        <span style="font-size: 15px;">
+                                        (৳ {{ $saleProfitAmount }})</span>
+                                </h3> --}}
+                                <h3>{{ $saleProfitAmount }}</h3>
+                                <h6 class="mb-0">Profit</h6>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 grid-margin stretch-card">
+                    <div class="card" style="">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-baseline">
+                                {{-- <h6 class="card-title mb-0">Purchase</h6> --}}
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <img src="uploads/dashboard/Artboard3@300x-100.jpg" height="50px" width="50px" alt="Image" style="border-radius:5px">
+                                </div>
+                                <div class="col-md-8 ">
+                                    {{-- <h3 class="mb-2">{{ $todayPurchaseToday }}<span style="font-size: 15px;">
+                                            (৳ {{ $todayExpenseAmount }})</span></h3> --}}
+                                            <h3>{{ $todayExpenseAmount }}</h3>
+                                 <h6 class=" mb-0">Expense</h6>
+                                 {{-- <h6 class=" mb-0">Total Purchase</h6> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 grid-margin stretch-card">
+                    <div class="card" style="">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-baseline">
+                                {{-- <h6 class="card-title mb-0">invoice product</h6> --}}
+                            </div>
+                            <div class="row">
+                                <div class=" col-md-4">
+                                    <img src="uploads/dashboard/Artboard1@300x-100.jpg" height="50px" width="50px" alt="Image" style="border-radius:5px">
+                                </div>
+                                <div class="col-md-8">
+                                    {{-- <h3 class="mb-2">{{ $todayInvoiceProductTotal }} <span
+                                            style="font-size: 15px;">( ৳
+                                            {{ $todayInvoiceProductAmount }})</span></h3> --}}
+                                            <h3>{{ $todayInvoiceProductAmount }}</h3>
+                                            <h6 class=" mb-0">Invoice</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 grid-margin stretch-card">
+                    <div class="card" style="">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-baseline">
+                                {{-- <h6 class="card-title mb-0">invoice amount</h6> --}}
+                            </div>
+                            <div class="row">
+                                <div class=" col-md-4">
+                                    <img src="uploads/dashboard/Artboard5@300x-100.jpg" height="50px" width="50px" alt="Image" style="border-radius:5px">
+                                </div>
+                                <div class="col-md-8">
+                                    {{-- <h3 class="mb-2"> ৳ {{ $todayInvoiceAmount }}<span
+                                            style="font-size: 15px;"> (৳ {{ $todayProfit }})</span></h3> --}}
+                                            <h3>{{$todayPurchaseAmont }}</h3>
+                                    <h6 class=" mb-0">Purchase</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="col-md-3 grid-margin stretch-card">
                     <div class="card" style="">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
@@ -339,17 +302,14 @@
                                     <h3 class="mb-2"> ৳ {{ $todayExpenseAmount }}<span
                                             style="font-size: 15px; color:white"></span></h3>
                                     <div class="d-flex align-items-baseline">
-                                        {{-- <p class="text-white">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p> --}}
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3 grid-margin stretch-card">
+                </div> --}}
+                {{-- <div class="col-md-3 grid-margin stretch-card">
                     <div class="card" style="">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
@@ -371,17 +331,14 @@
                                 <div class="col-12 col-md-12 col-xl-12">
                                     <h3 class="mb-2">{{ $todayCustomer->count() }}</h3>
                                     <div class="d-flex align-items-baseline">
-                                        {{-- <p class="text-white">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                                    </p> --}}
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3 grid-margin stretch-card">
+                </div> --}}
+                {{-- <div class="col-md-3 grid-margin stretch-card">
                     <div class="card" style="">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
@@ -405,7 +362,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -630,7 +587,7 @@
 
 
     {{-- /////Current Month Summary/// --}}
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-12 col-xl-12 stretch-card">
 
             <div class="row flex-grow-1">
@@ -848,7 +805,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- row -->
+    </div> <!-- row --> --}}
     {{-- /////EndCurrent Month Summary/// --}}
 
 
@@ -1017,7 +974,7 @@
     </script>
     {{-- /// pie chart end /// --}}
     {{-- //////Start Total Summary /////// --}}
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-12 col-xl-12 stretch-card">
 
             <div class="row flex-grow-1">
@@ -1246,9 +1203,9 @@
                 </div>
             </div>
         </div>
-    </div> <!-- row -->
+    </div> <!-- row --> --}}
     {{-- //////End Total Summary /////// --}}
-
+<br>
     {{-- total chart  --}}
     <div class="row">
         <div class="col-xl-12 grid-margin stretch-card">

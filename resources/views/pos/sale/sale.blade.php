@@ -1,15 +1,15 @@
 @extends('master')
 @section('title', '| Sale')
 @section('admin')
-    <div class="row">
-        <div class="col-lg-12 grid-margin stretch-card">
+    <div class="row mt-0">
+        <div class="col-lg-12 grid-margin stretch-card mb-3">
             <div class="card">
                 <div class="card-body px-4 py-2">
                     {{-- <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="card-title">POS Sale</h6>
                     </div> --}}
                     <div class="row">
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-2 col-md-6">
                             <label for="ageSelect" class="form-label">Barcode</label>
 
                             <div class="input-group">
@@ -19,7 +19,7 @@
                             </div>
                         </div>
 
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-2 col-md-6">
                             <label for="date" class="form-label">Date</label>
                             {{-- <div class="input-group flatpickr" id="flatpickr-date">
                                 <input type="date" class="form-control purchase_date" placeholder="" data-input>
@@ -35,7 +35,7 @@
                             </div>
                             <span class="text-danger purchase_date_error"></span>
                         </div>
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-1 col-md-6">
                             @php
                                 $products = App\Models\Product::where('stock', '>', 0)->get();
                             @endphp
@@ -55,7 +55,7 @@
                             </select>
                             <span class="text-danger product_select_error"></span>
                         </div>
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-1 col-md-6">
                             <label for="password" class="form-label">Customer</label>
                             <div class="d-flex g-3">
                                 <select class="js-example-basic-single form-select select-customer" data-width="100%"
@@ -74,7 +74,7 @@
 
     {{-- table  --}}
     <div class="row">
-        <div class="col-md-7 grid-margin stretch-card">
+        <div class="col-md-7 mb-1 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body px-4 py-2">
                     <div class="mb-3">
@@ -102,10 +102,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5 grid-margin stretch-card">
+        <div class="col-md-5 mb-1 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body px-4 py-2">
-                    <div class="row align-items-center">
+                    <div class="row align-items-center mb-2">
                         <div class="col-sm-4">
                             Grand Total :
                         </div>
@@ -163,14 +163,14 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row align-items-center ">
+                    <div class="row align-items-center mb-2">
                         <div class="col-sm-4">
                             <label for="name" class="form-label">Pay Amount <span
                                     class="text-danger">*</span>:</label>
                         </div>
                         <div class="col-sm-8">
-                            <input class="form-control total_payable" name="total_payable" type="number"
-                                value="">
+                            <input class="form-control total_payable" name="total_payable" type="number" value=""
+                                onkeyup="errorRemove(this);">
                             <span class="text-danger total_payable_error"></span>
                         </div>
                     </div>
@@ -211,8 +211,9 @@
                     <div class="my-3">
                         <button class="btn btn-primary payment_btn"><i class="fa-solid fa-money-check-dollar"></i>
                             Payment</button>
-                            <button id="printButton" class="btn btn-primary print_btn"><i class="fa-solid fa-money-check-dollar"></i>
-                                print</button>
+                        <button id="printButton" class="btn btn-primary print_btn"><i
+                                class="fa-solid fa-money-check-dollar"></i>
+                            print</button>
                     </div>
                 </div>
             </div>
@@ -220,7 +221,8 @@
     </div>
     <style>
         #printFrame {
-            display: none; /* Hide the iframe */
+            display: none;
+            /* Hide the iframe */
         }
     </style>
     <iframe id="printFrame" src="" width="0" height="0"></iframe>
@@ -280,21 +282,22 @@
         </div>
     </div>
 
-<script>
-    $(document).ready(function() {
-    $('#printButton').on('click', function() {
-        var printFrame = $('#printFrame')[0];
-        var printContentUrl = '{{route("sale.invoice",102049)}}'; // Specify the URL of the content to be printed
-        console.log('{{route("sale.invoice",102049)}}');
-        $('#printFrame').attr('src', printContentUrl);
+    <script>
+        $(document).ready(function() {
+            $('#printButton').on('click', function() {
+                var printFrame = $('#printFrame')[0];
+                var printContentUrl =
+                    '{{ route('sale.invoice', 102049) }}'; // Specify the URL of the content to be printed
+                console.log('{{ route('sale.invoice', 102049) }}');
+                $('#printFrame').attr('src', printContentUrl);
 
-        printFrame.onload = function() {
-            printFrame.contentWindow.focus();
-            printFrame.contentWindow.print();
-        };
-    });
-});
-</script>
+                printFrame.onload = function() {
+                    printFrame.contentWindow.focus();
+                    printFrame.contentWindow.print();
+                };
+            });
+        });
+    </script>
 
 
 
@@ -383,6 +386,17 @@
             let totalQuantity = 0;
 
             // Function to update total quantity
+            // function updateTotalQuantity() {
+            //     totalQuantity = 0;
+            //     $('.quantity').each(function() {
+            //         let quantity = parseFloat($(this).val());
+            //         if (!isNaN(quantity)) {
+            //             totalQuantity += quantity;
+            //         }
+            //     });
+            //     // console.log(totalQuantity);
+            // }
+            // Function to update total quantity
             function updateTotalQuantity() {
                 totalQuantity = 0;
                 $('.quantity').each(function() {
@@ -391,14 +405,7 @@
                         totalQuantity += quantity;
                     }
                 });
-                // console.log(totalQuantity);
             }
-            // Function to update SL numbers
-            // function updateSLNumbers() {
-            //     $('.showData > tr').each(function(index) {
-            //         $(this).find('td:first').text(index + 1);
-            //     });
-            // }
 
 
 
@@ -459,11 +466,130 @@
             }
 
 
+            // Function to calculate the subtotal for each product
+            function calculateTotal() {
+                $('.quantity').each(function() {
+                    let $quantityInput = $(this);
+                    let productId = $quantityInput.attr('product-id');
+                    let quantity = parseInt($quantityInput.val());
+                    let price = parseFloat($('.product_price' + productId).val());
+                    let productSubtotal = $('.product_subtotal' + productId);
+                    let subtotal = quantity * price;
 
-            //  product add  with barcode
+                    // Apply discount if available
+                    $.ajax({
+                        url: '/product/find/' + productId,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        success: function(res) {
+                            const promotion = res.promotion;
+                            if (promotion) {
+                                if (promotion.discount_type == 'percentage') {
+                                    let discountPercentage = promotion.discount_value;
+                                    subtotal = subtotal - (subtotal * discountPercentage / 100);
+                                } else {
+                                    let discountAmount = promotion.discount_value;
+                                    subtotal = subtotal - discountAmount;
+                                }
+                            }
+                            productSubtotal.val(subtotal.toFixed(2));
+                            calculateProductTotal();
+                        }
+                    });
+                });
+            }
+
+
+            // Function to calculate the grand total from all products
+            function calculateProductTotal() {
+                let allProductTotal = document.querySelectorAll('#productTotal');
+                let allTotal = 0;
+                allProductTotal.forEach(product => {
+                    let productValue = parseFloat(product.value);
+                    if (!isNaN(productValue)) {
+                        allTotal += productValue;
+                    }
+                });
+                $('.grandTotal').val(allTotal.toFixed(2));
+                $('.total').val(allTotal.toFixed(2));
+                $('.grand_total').val(allTotal.toFixed(2));
+            }
+            calculateProductTotal();
+
+            // Function to update grand total when a product is added or deleted
+            function updateGrandTotal() {
+                calculateTotal();
+                calculateGrandTotal();
+                updateTotalQuantity();
+                calculateProductTotal();
+            }
+
+
+            // //  product add  with barcode
+            // $('.barcode_input').change(function() {
+            //     let barcode = $(this).val();
+            //     // alert(barcode);
+            //     $.ajax({
+            //         url: '/product/barcode/find/' + barcode,
+            //         type: 'GET',
+            //         dataType: 'JSON',
+            //         success: function(res) {
+            //             if (res.status == 200) {
+            //                 const product = res.data;
+            //                 const promotion = res.promotion;
+            //                 // console.log(res);
+            //                 // console.log(promotion);
+            //                 showAddProduct(product, promotion);
+            //                 // Update SL numbers
+            //                 calculateTotal();
+            //                 calculateProductTotal();
+            //                 updateGrandTotal();
+            //                 // allProductTotal();
+            //                 $('.barcode_input').val('');
+            //                 // calculateGrandTotal();
+            //             } else if (res.status == 300) {
+            //                 // console.log(300)
+            //                 toastr.warning(res.error);
+            //                 $('.barcode_input').val('');
+            //             } else {
+            //                 // console.log(500)
+            //                 toastr.warning(res.error);
+            //                 $('.barcode_input').val('');
+            //             }
+            //         }
+            //     })
+            // })
+
+            // // select product
+            // $('.product_select').change(function() {
+            //     let id = $(this).val();
+
+            //     // alert(id);
+            //     if ($(`.data_row${id}`).length === 0 && id) {
+            //         $.ajax({
+            //             url: '/product/find/' + id,
+            //             type: 'GET',
+            //             dataType: 'JSON',
+            //             success: function(res) {
+            //                 const product = res.data;
+            //                 const promotion = res.promotion;
+            //                 // console.log(promotion);
+            //                 showAddProduct(product, promotion);
+            //                 // Update SL numbers
+
+            //                 updateGrandTotal();
+            //                 calculateProductTotal();
+            //                 // allProductTotal();
+            //                 // calculateGrandTotal();
+            //             }
+            //         })
+            //     }
+            // })
+
+
+            // Product add with barcode
             $('.barcode_input').change(function() {
                 let barcode = $(this).val();
-                // alert(barcode);
                 $.ajax({
                     url: '/product/barcode/find/' + barcode,
                     type: 'GET',
@@ -472,29 +598,20 @@
                         if (res.status == 200) {
                             const product = res.data;
                             const promotion = res.promotion;
-                            // console.log(res);
-                            // console.log(promotion);
                             showAddProduct(product, promotion);
-                            // Update SL numbers
-
                             updateGrandTotal();
-                            calculateProductTotal();
-                            // allProductTotal();
                             $('.barcode_input').val('');
-                            // calculateGrandTotal();
                         } else {
                             toastr.warning(res.error);
                             $('.barcode_input').val('');
                         }
                     }
-                })
-            })
+                });
+            });
 
-            // select product
+            // Select product
             $('.product_select').change(function() {
                 let id = $(this).val();
-
-                // alert(id);
                 if ($(`.data_row${id}`).length === 0 && id) {
                     $.ajax({
                         url: '/product/find/' + id,
@@ -503,88 +620,74 @@
                         success: function(res) {
                             const product = res.data;
                             const promotion = res.promotion;
-                            // console.log(promotion);
                             showAddProduct(product, promotion);
-                            // Update SL numbers
-
                             updateGrandTotal();
-                            calculateProductTotal();
-                            // allProductTotal();
-                            // calculateGrandTotal();
-                        }
-                    })
-                }
-            })
-
-
-            // Function to recalculate total
-
-
-            function calculateTotal() {
-                // let total = 0;
-                $('.quantity').each(function() {
-                    let $quantityInput = $(this); // Store the reference to $(this)
-                    let productId = $quantityInput.attr('product-id');
-
-                    $.ajax({
-                        url: '/product/find/' + productId,
-                        type: 'GET',
-                        dataType: 'JSON',
-                        success: function(res) {
-                            const promotion = res.promotion;
-                            let qty = parseInt($quantityInput
-                                .val()); // Use the stored reference
-                            let price = parseFloat($('.product_price' + productId).val());
-                            let product_subtotal = $('.product_subtotal' + productId);
-
-                            if (promotion) {
-                                if (promotion.discount_type == 'percentage') {
-                                    let discount_percentage = parseFloat($(
-                                        '.discount_percentage' +
-                                        productId).text());
-                                    // console.log(discount_percentage);
-                                    let disPrice = price - (price * discount_percentage) / 100;
-                                    product_subtotal.val(disPrice * qty);
-                                    // total += parseFloat($('.product_subtotal' + productId)
-                                    //     .val());
-                                    // // console.log(total);
-                                    // $('.total').val(total.toFixed(2));
-                                } else {
-                                    let discount_amount = parseFloat($('.discount_amount' +
-                                        productId).text());
-                                    // console.log(discount_percentage);
-                                    let disPrice = price - discount_amount;
-                                    // console.log(disPrice);
-                                    product_subtotal.val(disPrice * qty);
-                                    // total += qty * disPrice;
-                                    // total += parseFloat($('.product_subtotal' + productId)
-                                    //     .val());
-                                    // $('.total').val(total.toFixed(2));
-                                    // console.log(total);
-                                }
-                            } else {
-                                product_subtotal.val(qty * price);
-                                // total += parseFloat($('.product_subtotal' + productId)
-                                //     .val());
-                                // $('.total').val(total.toFixed(2));
-                                // console.log(total);
-                            }
                         }
                     });
-                });
-            }
+                }
+            });
+
+            // Purchase delete
+            $(document).on('click', '.purchase_delete', function(e) {
+                let id = $(this).attr('data-id');
+                let dataRow = $('.data_row' + id);
+                dataRow.remove();
+                updateGrandTotal();
+                updateTotalQuantity();
+            });
+            // Function to recalculate total
+            // function calculateTotal() {
+            //     $('.quantity').each(function() {
+            //         let $quantityInput = $(this);
+            //         let productId = $quantityInput.attr('product-id');
+
+            //         $.ajax({
+            //             url: '/product/find/' + productId,
+            //             type: 'GET',
+            //             dataType: 'JSON',
+            //             success: function(res) {
+            //                 const promotion = res.promotion;
+            //                 let qty = parseInt($quantityInput
+            //                     .val());
+            //                 let price = parseFloat($('.product_price' + productId).val());
+            //                 let product_subtotal = $('.product_subtotal' + productId);
+
+            //                 if (promotion) {
+            //                     if (promotion.discount_type == 'percentage') {
+            //                         let discount_percentage = parseFloat($(
+            //                             '.discount_percentage' +
+            //                             productId).text());
+            //                         let disPrice = price - (price * discount_percentage) / 100;
+            //                         product_subtotal.val(disPrice * qty);
+            //                     } else {
+            //                         let discount_amount = parseFloat($('.discount_amount' +
+            //                             productId).text());
+            //                         let disPrice = price - discount_amount;
+            //                         product_subtotal.val(disPrice * qty);
+            //                     }
+            //                 } else {
+            //                     product_subtotal.val(qty * price);
+            //                 }
+            //             }
+            //         });
+            //     });
+            // }
 
 
-            function calculateProductTotal() {
-                let allProductTotal = document.querySelectorAll('#productTotal');
-                let allTotal = 0;
-                allProductTotal.forEach(product => {
-                    let productValue = parseFloat(product.value);
-                    allTotal += productValue;
-                });
-                $('.total').val(allTotal.toFixed(2));
-            }
-            calculateProductTotal();
+            // function calculateProductTotal() {
+            //     let allProductTotal = document.querySelectorAll('#productTotal');
+            //     let allTotal = 0;
+            //     allProductTotal.forEach(product => {
+            //         let productValue = parseFloat(product.value);
+            //         allTotal += productValue;
+            //         console.log(allTotal);
+            //     });
+            //     console.log(allTotal);
+            //     $('.grandTotal').val(allTotal.toFixed(2));
+            //     $('.total').val(allTotal.toFixed(2));
+            //     $('.grand_total').val(allTotal.toFixed(2));
+            // }
+
 
 
 
@@ -611,9 +714,10 @@
                                     );
                                 })
                             } else {
-                                let total = $('.total').val();
+                                const total = $('.total').val();
                                 $('.grand_total').val(total);
                                 $('.grandTotal').val(total);
+                                // console.log($('.total').val());
                                 // $('.total_payable').val(total);
                                 $('.discount_field').html(
                                     `<option>No Discount</option>`
@@ -673,12 +777,12 @@
             })
 
             // Function to update grand total when a product is added or deleted
-            function updateGrandTotal() {
-                calculateTotal();
-                calculateGrandTotal();
-                updateTotalQuantity();
-                calculateProductTotal();
-            }
+            // function updateGrandTotal() {
+            //     calculateTotal();
+            //     calculateGrandTotal();
+            //     updateTotalQuantity();
+            //     calculateProductTotal();
+            // }
 
 
             $(document).on('click', '.quantity', function(e) {
@@ -753,15 +857,15 @@
 
 
             // purchase Delete
-            $(document).on('click', '.purchase_delete', function(e) {
-                // alert('ok');
-                let id = $(this).attr('data-id');
-                let dataRow = $('.data_row' + id);
-                dataRow.remove();
-                // Recalculate grand total
-                updateGrandTotal();
-                updateTotalQuantity();
-            })
+            // $(document).on('click', '.purchase_delete', function(e) {
+            //     // alert('ok');
+            //     let id = $(this).attr('data-id');
+            //     let dataRow = $('.data_row' + id);
+            //     dataRow.remove();
+            //     // Recalculate grand total
+            //     updateGrandTotal();
+            //     updateTotalQuantity();
+            // })
 
 
             // total_payable
@@ -793,7 +897,125 @@
                 // $('.total_payable').val(taxTotal);
             })
 
+            const total_payable = document.querySelector('.total_payable');
+            total_payable.addEventListener('keydown',
+                function(e) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
+                        let customer_id = $('.select-customer').val();
+                        let sale_date = $('.purchase_date').val();
+                        let formattedSaleDate = moment(sale_date, 'DD-MMM-YYYY').format('YYYY-MM-DD HH:mm:ss');
+                        let quantity = totalQuantity;
+                        let total_amount = parseFloat($('.total').val());
+                        let discount = $('.discount_field').val();
+                        let total = parseFloat($('.grand_total').val());
+                        let tax = $('.tax').val();
+                        let change_amount = parseFloat($('.grandTotal').val());
+                        let actual_discount = change_amount - total;
+                        let paid = $('.total_payable').val();
+                        let due = $('.total_due').val();
+                        let note = $('.note').val();
+                        let payment_method = $('.payment_method').val();
+                        // let product_id = $('.product_id').val();
+                        // console.log(total_quantity);
 
+                        let products = [];
+
+                        $('tr[class^="data_row"]').each(function() {
+                            let row = $(this);
+                            // Get values from the current row's elements
+                            let product_id = row.find('.product_id').val();
+                            let quantity = row.find('input[name="quantity[]"]').val();
+                            let unit_price = row.find('input[name="unit_price[]"]').val();
+                            let discount_amount = row.find(`span[class='discount_amount${product_id}']`)
+                                .text() || 0;
+                            let discount_percentage = (row.find(
+                                `span[class='discount_percentage${product_id}']`).text()) || 0;
+                            let total_price = row.find('input[name="total_price[]"]').val();
+
+                            // Create an object with the gathered data
+                            let product = {
+                                product_id,
+                                quantity,
+                                unit_price,
+                                discount: discount_amount == 0 ? discount_percentage : 0,
+                                total_price
+                            };
+
+                            // Push the object into the products array
+                            products.push(product);
+                        });
+
+                        let allData = {
+                            // for purchase table
+                            customer_id,
+                            sale_date: formattedSaleDate,
+                            quantity,
+                            total_amount,
+                            discount,
+                            actual_discount,
+                            total,
+                            change_amount,
+                            tax,
+                            paid,
+                            due,
+                            note,
+                            payment_method,
+                            products
+                        }
+
+                        // console.log(allData);
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                        $.ajax({
+                            url: '/sale/store',
+                            type: 'POST',
+                            data: allData,
+                            success: function(res) {
+                                if (res.status == 200) {
+                                    // console.log(res.data);
+                                    // $('#paymentModal').modal('hide');
+                                    // $('.supplierForm')[0].reset();
+                                    // supplierView();
+                                    toastr.success(res.message);
+                                    let id = res.saleId;
+                                    // console.log(id)
+
+                                    // window.location.href = '/sale/invoice/' + id;
+                                    var printFrame = $('#printFrame')[0];
+                                    var printContentUrl = '/sale/print/' +
+                                        id; // Specify the URL of the content to be printed
+                                    // console.log('{{ route('sale.invoice', 102049) }}');
+                                    $('#printFrame').attr('src', printContentUrl);
+
+                                    printFrame.onload = function() {
+                                        printFrame.contentWindow.focus();
+                                        printFrame.contentWindow.print();
+                                        // Redirect after printing
+                                        printFrame.contentWindow.onafterprint = function() {
+                                            window.location.href = "/sale";
+                                        };
+                                    };
+
+                                } else {
+                                    if (res.error.customer_id) {
+                                        showError('.select-customer', res.error.customer_id);
+                                    }
+                                    if (res.error.sale_date) {
+                                        showError('.purchase_date', res.error.sale_date);
+                                    }
+                                    if (res.error.payment_method) {
+                                        showError('.payment_method', res.error.payment_method);
+                                    }
+                                }
+                            }
+                        });
+                    }
+                })
             // order btn
             $('.payment_btn').click(function(e) {
                 e.preventDefault();
@@ -883,16 +1105,25 @@
 
                             // window.location.href = '/sale/invoice/' + id;
                             var printFrame = $('#printFrame')[0];
-                            var printContentUrl = '/sale/print/'+id; // Specify the URL of the content to be printed
-                            // console.log('{{route("sale.invoice",102049)}}');
+                            var printContentUrl = '/sale/print/' +
+                                id; // Specify the URL of the content to be printed
+                            // console.log('{{ route('sale.invoice', 102049) }}');
                             $('#printFrame').attr('src', printContentUrl);
 
                             printFrame.onload = function() {
                                 printFrame.contentWindow.focus();
                                 printFrame.contentWindow.print();
+                                // Redirect after printing
+                                printFrame.contentWindow.onafterprint = function() {
+                                    window.location.href = "/sale";
+                                };
                             };
 
                         } else {
+                            console.log(res.error)
+                            if (res.error.paid) {
+                                showError('.total_payable', res.error.paid);
+                            }
                             if (res.error.customer_id) {
                                 showError('.select-customer', res.error.customer_id);
                             }

@@ -80,7 +80,7 @@
                         @endif
                         <a class="dropdown-item " href="{{ route('sale.view.details', $data->id) }}"><i
                                 class="fa-solid fa-eye me-2"></i> Show</a>
-                        <a class="dropdown-item" href="#"><i style="transform: rotate(90deg);"
+                        <a class="dropdown-item" href="{{route('return',$data->id)}}"><i style="transform: rotate(90deg);"
                                 class="fa-solid fa-arrow-turn-down me-2"></i></i>
                             Return</a>
                         @if ($data->due > 0)

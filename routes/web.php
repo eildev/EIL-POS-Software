@@ -414,7 +414,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/customer-send-email', 'CustomerSendEmail')->name('customer.send.email');
     });
     Route::controller(ReturnController::class)->group(function () {
-        Route::get('/return/add', 'ReturnAdd')->name('return.add');
+        Route::get('/return/{id}', 'Return')->name('return');
     });
     ////////////////////Role And Permission Route /////////////////
     Route::controller(RolePermissionController::class)->group(function () {

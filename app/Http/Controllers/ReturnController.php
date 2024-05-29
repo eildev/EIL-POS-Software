@@ -7,9 +7,8 @@ use App\Models\Sale;
 use App\Models\SaleItem;
 class ReturnController extends Controller
 {
-    public function ReturnAdd(){
-        $saleItem = SaleItem::with('product')->get();
-        $sale = Sale::with('customer')->get();
-        return view('pos.return.return_add',compact('saleItem', 'sale'));
+    public function Return($id){
+        $sale = Sale::findOrFail($id);
+        return view('pos.return.return',compact('sale'));
     }
 }

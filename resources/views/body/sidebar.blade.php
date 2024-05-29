@@ -417,11 +417,11 @@
                     </div>
                 </li>
             @endif
-            <li class="nav-item nav-category">Return</li>
+            {{-- <li class="nav-item nav-category">Return</li>
             <li class="nav-item">
                 <a href="{{ route('return.add') }}"
                     class="nav-link {{ request()->routeIs('return.add') ? 'nav_active' : '' }}">Return</a>
-            </li>
+            </li> --}}
             <li class="nav-item nav-category">SETTING & CUSTOMIZE</li>
                 <!---Role & Permission--->
                 @if (Auth::user()->can('role-and-permission.menu'))

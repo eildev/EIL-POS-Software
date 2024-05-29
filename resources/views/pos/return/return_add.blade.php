@@ -38,8 +38,9 @@
 							<select class="form-select js-example-basic-single" name="customer_id" aria-invalid="false">
                                 <option selected="" disabled="">Select Customer  </option>
                                 @foreach ($sale as $salesData)
-                                @endforeach
+
                                  <option value="{{$salesData->customer_id }}">{{$salesData->customer->name}}</option>
+                                 @endforeach
                             </select>
 						</div>
 					</div><!-- Col -->
@@ -77,38 +78,39 @@
       $(document).ready(function (){
         $('#myValidForm').validate({
             rules: {
-                promotion_name: {
+                sale_id: {
                     required : true,
                 },
-                start_date: {
+                total: {
                     required : true,
                 },
-                end_date: {
+                discount_amount: {
                     required : true,
                 },
-                discount_type:{
+                grand_total: {
                     required : true,
                 },
-                discount_value:{
+                customer_id:{
                     required : true,
                 },
 
+
             },
             messages :{
-                promotion_name: {
-                    required : 'Please Enter Promotion Name',
+                tosale_idtal: {
+                    required : 'Enter Sale Item',
                 },
-                start_date: {
-                    required : 'Select Start Date',
+                total: {
+                    required : 'Enter Total',
                 },
-                end_date: {
-                    required : 'Select End Date',
+                discount_amount: {
+                    required : 'Entyer Discount Amount',
                 },
-                discount_type: {
-                    required : 'Select Discount Type',
+                grand_total: {
+                    required : 'Enter Grand Total',
                 },
-                discount_value: {
-                    required : 'Please Enter Discount Value',
+                customer_id: {
+                    required : 'Please Select Customer',
                 },
             },
             errorElement : 'span',

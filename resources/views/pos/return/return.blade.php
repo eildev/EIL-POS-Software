@@ -1,85 +1,153 @@
 @extends('master')
 @section('title', '| Return')
 @section('admin')
+    @php
+        $selectedCustomer = App\Models\Customer::findOrFail($sale->customer_id);
+    @endphp
     <div class="row mt-0">
-        <div class="col-lg-12 grid-margin stretch-card mb-3">
+        <div class="col-lg-4 grid-margin stretch-card mb-3">
             <div class="card">
                 <div class="card-body px-4 py-2">
-
                     <div class="row">
-                        <div class="col-md-6 ">
+                        <div class="col-md-12">
                             <h6 class="card-title">Basic Details</h6>
-                            <div class="row mb-3">
-                                <label for="exampleInputUsername2" class="col-sm-5 col-form-label">Order Id </label>
-                                <div class="col-sm-7">
+                            <div class="row">
+                                <label for="exampleInputUsername2" class="col-sm-6 col-form-label">Order Id </label>
+                                <div class="col-sm-6">
                                     <label for="exampleInputUsername2" class="col-form-label"><b>:
                                         </b>{{ $sale->invoice_number ?? 00 }}</label>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label for="exampleInputEmail2" class="col-sm-5 col-form-label">Customer Name</label>
-                                <div class="col-sm-7">
+                            <div class="row">
+                                <label for="exampleInputEmail2" class="col-sm-6 col-form-label">Customer Name</label>
+                                <div class="col-sm-6">
                                     <label for="exampleInputUsername2" class="col-form-label"><b>:
                                         </b>{{ $sale->customer->name ?? '' }}</label>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label for="exampleInputMobile" class="col-sm-5 col-form-label">Product Price</label>
-                                <div class="col-sm-7">
+                            <div class="row">
+                                <label for="exampleInputMobile" class="col-sm-6 col-form-label">Product Price</label>
+                                <div class="col-sm-6">
                                     <label for="exampleInputUsername2" class="col-form-label"><b>:
                                         </b>{{ $sale->total ?? 0 }}</label>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label for="exampleInputUsername2" class="col-sm-5 col-form-label">Discount </label>
-                                <div class="col-sm-7">
+                            <div class="row">
+                                <label for="exampleInputUsername2" class="col-sm-6 col-form-label">Discount </label>
+                                <div class="col-sm-6">
                                     <label for="exampleInputUsername2" class="col-form-label"><b>:
                                             {{ $sale->actual_discount ?? 0 }}</b></label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h2></h2><br>
-
-                            <div class="row mb-3">
-                                <label for="exampleInputEmail2" class="col-sm-5 col-form-label">Total Receivable:</label>
-                                <div class="col-sm-7">
+                            <div class="row">
+                                <label for="exampleInputEmail2" class="col-sm-6 col-form-label">Total Receivable:</label>
+                                <div class="col-sm-6">
                                     <label for="exampleInputUsername2" class="col-form-label"><b>:
                                             {{ $sale->receivable ?? 0 }}</b></label>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label for="exampleInputMobile" class="col-sm-5 col-form-label">Total Paid:</label>
-                                <div class="col-sm-7">
+                            <div class="row">
+                                <label for="exampleInputMobile" class="col-sm-6 col-form-label">Total Paid:</label>
+                                <div class="col-sm-6">
                                     <label for="exampleInputUsername2" class="col-form-label"><b>:
                                             {{ $sale->paid ?? 0 }}</b></label>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label for="exampleInputMobile" class="col-sm-5 col-form-label">Due</label>
-                                <div class="col-sm-7">
+                            <div class="row">
+                                <label for="exampleInputMobile" class="col-sm-6 col-form-label">Due</label>
+                                <div class="col-sm-6">
                                     <label for="exampleInputUsername2" class="col-form-label"><b>:
                                             {{ $sale->due > 0 ? $sale->due : 0 }}</b></label>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="exampleInputMobile" class="col-sm-5 col-form-label">Returned Product
+                                <label for="exampleInputMobile" class="col-sm-6 col-form-label">Returned Product
                                     Value</label>
-                                <div class="col-sm-7">
+                                <div class="col-sm-6">
                                     <label for="exampleInputUsername2" class="col-form-label"><b>:
-                                            {{ $sale->receivable / 1.5 ?? 0 }}</b></label>
+                                            00</b></label>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 grid-margin stretch-card mb-3">
+            <div class="row">
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="card-title">POS Update</h6>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label for="ageSelect" class="form-label">Barcode</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-text" id="btnGroupAddon"><i class="fa-solid fa-barcode"></i>
+                                        </div>
+                                        <input type="text" class="form-control barcode_input" placeholder="Barcode"
+                                            aria-label="Input group example" aria-describedby="btnGroupAddon">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label for="date" class="form-label">Date</label>
+                                    {{-- <div class="input-group flatpickr" id="flatpickr-date">
+                                        <input type="date" class="form-control purchase_date" placeholder="" data-input>
+                                        <span class="input-group-text input-group-addon" data-toggle><i
+                                                data-feather="calendar"></i></span>
+                                    </div> --}}
+
+                                    <div class="input-group flatpickr" id="flatpickr-date">
+                                        <input type="text" name="date" class="form-control purchase_date"
+                                            placeholder="Select date" data-input value="{{ $sale->sale_date }}">
+                                        <span class="input-group-text input-group-addon" data-toggle><i
+                                                data-feather="calendar"></i></span>
+                                    </div>
+                                    <span class="text-danger purchase_date_error"></span>
 
 
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    @php
+                                        $products = App\Models\Product::where('stock', '>', 0)->get();
+                                    @endphp
+                                    <label for="ageSelect" class="form-label">Product</label>
+                                    <select class="js-example-basic-single  form-select product_select" data-width="100%"
+                                        onclick="errorRemove(this);" onblur="errorRemove(this);">
+                                        @if ($products->count() > 0)
+                                            <option selected disabled>Select Product</option>
+                                            @foreach ($products as $product)
+                                                <option value="{{ $product->id }}">{{ $product->name }}
+                                                    ({{ $product->stock }}
+                                                    {{ $product->unit->name }} Available)
+                                                </option>
+                                            @endforeach
+                                        @else
+                                            <option selected disabled>Please Add Product</option>
+                                        @endif
+                                    </select>
+                                    <span class="text-danger product_select_error"></span>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="password" class="form-label">Customer</label>
+                                    <div class="d-flex g-3">
+                                        <select class="js-example-basic-single form-select select-customer"
+                                            data-width="100%" onclick="errorRemove(this);" onblur="errorRemove(this);">
+                                            <option selected disabled>Select Customer</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    {{-- table  --}}
     <div class="row">
         <div class="col-md-7 grid-margin stretch-card">
             <div class="card">
@@ -121,7 +189,8 @@
                                 value="0.00" />
                         </div>
 
-                        <input type="hidden" class="form-control total border-0 " name="total" readonly value="0.00" />
+                        <input type="hidden" class="form-control total border-0 " name="total" readonly
+                            value="0.00" />
 
                     </div>
                     <div class="row align-items-center mb-2">
@@ -216,13 +285,16 @@
                     </div>
 
                     <div class="my-3">
-                        <button class="btn btn-primary payment_btn"><i class="fa-solid fa-money-check-dollar"></i>
-                            Payment</button>
+                        <button class="btn btn-primary payment_btn"><i class="fa-solid fa-rotate-left"></i>
+                            Return</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    {{-- table  --}}
+
     <style>
         #printFrame {
             display: none;
@@ -233,6 +305,31 @@
 
     <script>
         $(document).ready(function() {
+            let selectedCustomer = '{{ $selectedCustomer->id }}'
+            // customer view function
+            function viewCustomer() {
+                // let selectedCustomer = '{{ $selectedCustomer->id }}';
+                $.ajax({
+                    url: '/get/customer',
+                    method: 'GET',
+                    success: function(res) {
+                        const customers = res.allData;
+                        // console.log(customers);
+                        $('.select-customer').empty();
+                        if (customers.length > 0) {
+                            $.each(customers, function(index, customer) {
+                                $('.select-customer').append(
+                                    `<option value="${customer.id}" ${customer.id == selectedCustomer ? 'selected' : ''}>${customer.name}(${customer.phone})</option>`
+                                );
+                            })
+                        } else {
+                            $('.select-customer').html(`
+                            <option selected disable>Please add Customer</option>`)
+                        }
+                    }
+                })
+            }
+            viewCustomer();
             // calculate quantity
             let totalQuantity = 0;
 
@@ -330,6 +427,61 @@
 
             showSelectedProducts();
 
+            //  product add  with barcode
+            $('.barcode_input').change(function() {
+                let barcode = $(this).val();
+                // alert(barcode);
+                $.ajax({
+                    url: '/product/barcode/find/' + barcode,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.status == 200) {
+                            const product = res.data;
+                            const promotion = res.promotion;
+                            // console.log(res);
+                            // console.log(promotion);
+                            showAddProduct(product, promotion);
+                            // Update SL numbers
+
+                            updateGrandTotal();
+                            calculateProductTotal();
+                            allProductTotal();
+                            $('.barcode_input').val('');
+                            // calculateGrandTotal();
+                        } else {
+                            toastr.warning(res.error);
+                            $('.barcode_input').val('');
+                        }
+                    }
+                })
+            })
+
+            // select product
+            $('.product_select').change(function() {
+                let id = $(this).val();
+
+                // alert(id);
+                if ($(`.data_row${id}`).length === 0 && id) {
+                    $.ajax({
+                        url: '/product/find/' + id,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        success: function(res) {
+                            const product = res.data;
+                            const promotion = res.promotion;
+                            // console.log(promotion);
+                            showAddProduct(product, promotion);
+                            // Update SL numbers
+
+                            updateGrandTotal();
+                            calculateProductTotal();
+                            // allProductTotal();
+                            // calculateGrandTotal();
+                        }
+                    })
+                }
+            })
 
             // Function to recalculate total
             function calculateTotal() {

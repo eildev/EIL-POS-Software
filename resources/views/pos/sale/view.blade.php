@@ -1,5 +1,5 @@
 @extends('master')
-@section('title','| Sale History')
+@section('title', '| Sale History')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -115,7 +115,6 @@
                                     <th class="id">#</th>
                                     <th>Invoice <br>Number</th>
                                     <th>Customer</th>
-                                    <th>Customer Phone</th>
                                     <th>Items</th>
                                     <th>Date</th>
                                     <th>Discount</th>

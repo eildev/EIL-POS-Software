@@ -24331,7 +24331,7 @@ div.tox .buy-now-wrapper .tox-button svg,
 .sidebar .sidebar-body .nav .nav-item .nav-link {
   display: flex;
   align-items: center;
-  padding: 0 5px;
+  padding: 5px;
   height: 32px;
   white-space: nowrap;
   color: #000;

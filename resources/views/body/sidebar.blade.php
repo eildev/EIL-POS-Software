@@ -25,6 +25,11 @@
         .nav-link.nav_active .link-title,
         .nav-link.nav_active {
             color: #ffffff !important;
+
+        }
+
+        .sub-menu .nav-item .nav-link {
+            padding-left: 5px !important;
         }
     </style>
     <div class="sidebar-body">
@@ -423,8 +428,8 @@
                     class="nav-link {{ request()->routeIs('return.add') ? 'nav_active' : '' }}">Return</a>
             </li> --}}
             <li class="nav-item nav-category">SETTING & CUSTOMIZE</li>
-                <!---Role & Permission--->
-                @if (Auth::user()->can('role-and-permission.menu'))
+            <!---Role & Permission--->
+            @if (Auth::user()->can('role-and-permission.menu'))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('role*') ? 'collapsed' : '' }}"
                         data-bs-toggle="collapse" href="#role" role="button" aria-expanded="false"
@@ -521,3 +526,9 @@
         </ul>
     </div>
 </nav>
+
+{{-- <style>
+    .nav-link {
+        padding: 5px;
+    }
+</style> --}}

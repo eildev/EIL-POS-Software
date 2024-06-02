@@ -1,5 +1,5 @@
 @extends('master')
-@section('title','| Product Category')
+@section('title', '| Product Category')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -129,6 +129,10 @@
         }
 
         $(document).ready(function() {
+
+            let protocol = window.location.protocol + "//";
+            let host = window.location.host;
+            let url = protocol + host;
             // image onload when category edit
             const edit_upload_img = document.querySelector('.edit_upload_img');
             const edit_image = document.querySelector('.edit_image');
@@ -204,19 +208,19 @@
                                 ${category.name ?? ""}
                             </td>
                             <td>
-                                <img src="${category.image ? 'http://127.0.0.1:8000/uploads/category/' + category.image : 'http://127.0.0.1:8000/dummy/image.jpg'}" alt="cat Image">
+                                <img src="${category.image ? `${url}/uploads/category/` + category.image : `${url}/dummy/image.jpg`}" alt="cat Image">
                             </td>
                             <td>
                                 <button id="categoryButton_${category.id}" class="btn ${category.status != 0 ? 'btn-success' : 'btn-danger' } categoryButton"
                                 data-id="${category.id}">${category.status != 0 ? 'Active' : 'Inactive'}</button>
                             </td>
                             <td>
-                                @if(Auth::user()->can('category.edit'))
+                                @if (Auth::user()->can('category.edit'))
                                 <a href="#" class="btn btn-primary btn-icon category_edit" data-id=${category.id} data-bs-toggle="modal" data-bs-target="#edit">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                                 @endif
-                                @if(Auth::user()->can('category.delete'))
+                                @if (Auth::user()->can('category.delete'))
                                 <a href="#" class="btn btn-danger btn-icon category_delete" data-id=${category.id}>
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
@@ -262,11 +266,11 @@
                         $('.update_category').val(data.category.id);
                         if (data.category.image) {
                             $('.showEditImage').attr('src',
-                                'http://127.0.0.1:8000/uploads/category/' + data.category
+                                `${url}/uploads/category/` + data.category
                                 .image);
                         } else {
                             $('.showEditImage').attr('src',
-                                'http://127.0.0.1:8000/dummy/image.jpg');
+                                `${url}/dummy/image.jpg`);
                         }
                     }
                 });

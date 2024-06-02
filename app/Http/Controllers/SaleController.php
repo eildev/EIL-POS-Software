@@ -24,7 +24,7 @@ class SaleController extends Controller
     }
     public function getCustomer()
     {
-        $data = Customer::where('branch_id', Auth::user()->branch_id)->latest()->get();
+        $data = Customer::where('branch_id', Auth::user()->branch_id)->get();
         return response()->json([
             'status' => 200,
             'message' => 'successfully save',
@@ -89,7 +89,7 @@ class SaleController extends Controller
             $sale->branch_id = Auth::user()->branch_id;
             $sale->customer_id = $request->customer_id;
             $sale->sale_date = $request->sale_date;
-            $sale->sale_by = 0;
+            $sale->sale_by = Auth::user()->id;
             $sale->invoice_number = rand(123456, 99999);
             $sale->order_type = "general";
             $sale->quantity = $request->quantity;

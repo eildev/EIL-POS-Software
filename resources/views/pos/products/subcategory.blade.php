@@ -1,5 +1,5 @@
 @extends('master')
-@section('title','| Product Sub-Category')
+@section('title', '| Product Sub-Category')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
@@ -160,6 +160,10 @@
                 });
             });
 
+
+            let protocol = window.location.protocol + "//";
+            let host = window.location.host;
+            let url = protocol + host;
             // error remove
             // $('.category_name').keyup(function() {
             //     $('.category_name_error').hide();
@@ -241,7 +245,7 @@
                                 ${subcategory.name ?? ""}
                             </td>
                             <td>
-                                <img src="${subcategory.image ? 'http://127.0.0.1:8000/uploads/subcategory/' + subcategory.image : 'http://127.0.0.1:8000/dummy/image.jpg'}" alt="cat Image">
+                                <img src="${subcategory.image ? `${url}/uploads/subcategory/` + subcategory.image : `${url}/dummy/image.jpg`}" alt="cat Image">
                             </td>
                             <td>
                                 <button id="subcategoryButton_${subcategory.id}" class="btn btn-success subcategoryButton"
@@ -288,12 +292,12 @@
                         $('.update_subcategory').val(data.subcategory.id);
                         if (data.subcategory.image) {
                             $('.showEditImage').attr('src',
-                                'http://127.0.0.1:8000/uploads/subcategory/' + data
+                                `${url}/uploads/subcategory/` + data
                                 .subcategory
                                 .image);
                         } else {
                             $('.showEditImage').attr('src',
-                                'http://127.0.0.1:8000/dummy/image.jpg');
+                                `${url}/dummy/image.jpg`);
                         }
                     }
                 });

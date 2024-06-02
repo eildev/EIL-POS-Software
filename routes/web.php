@@ -413,6 +413,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(CustomeMailControler::class)->group(function () {
         Route::post('/customer-send-email', 'CustomerSendEmail')->name('customer.send.email');
     });
+    // return controller 
     Route::controller(ReturnController::class)->group(function () {
         Route::get('/return/{id}', 'Return')->name('return');
     });

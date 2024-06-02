@@ -26,6 +26,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\DamageController;
 use App\Http\Controllers\CustomeMailControler;
 use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\ReturnController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -411,6 +412,9 @@ Route::middleware('auth')->group(function () {
     ///Email Marketing
     Route::controller(CustomeMailControler::class)->group(function () {
         Route::post('/customer-send-email', 'CustomerSendEmail')->name('customer.send.email');
+    });
+    Route::controller(ReturnController::class)->group(function () {
+        Route::get('/return/{id}', 'Return')->name('return');
     });
     ////////////////////Role And Permission Route /////////////////
     Route::controller(RolePermissionController::class)->group(function () {

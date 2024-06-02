@@ -417,8 +417,14 @@
                     </div>
                 </li>
             @endif
-            <!---Role & Permission--->
-            @if (Auth::user()->can('role-and-permission.menu'))
+            {{-- <li class="nav-item nav-category">Return</li>
+            <li class="nav-item">
+                <a href="{{ route('return.add') }}"
+                    class="nav-link {{ request()->routeIs('return.add') ? 'nav_active' : '' }}">Return</a>
+            </li> --}}
+            <li class="nav-item nav-category">SETTING & CUSTOMIZE</li>
+                <!---Role & Permission--->
+                @if (Auth::user()->can('role-and-permission.menu'))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('role*') ? 'collapsed' : '' }}"
                         data-bs-toggle="collapse" href="#role" role="button" aria-expanded="false"
@@ -494,7 +500,6 @@
                     </div>
                 </li>
             @endif
-            <li class="nav-item nav-category">SETTING & CUSTOMIZE</li>
             @if (Auth::user()->can('settings.menu'))
                 <li class="nav-item">
                     <a href="{{ route('pos.settings.add') }}"

@@ -167,6 +167,9 @@
                          <div class="circle"></div>
                      </div>
                  </a>
+                 <style>
+                    
+                 </style>
                  <div class="dropdown-menu p-0" aria-labelledby="notificationDropdown">
                      <div class="px-3 py-2 d-flex align-items-center justify-content-between border-bottom">
                          <p>6 New Notifications</p>

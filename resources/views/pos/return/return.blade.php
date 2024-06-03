@@ -79,7 +79,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h6 class="card-title">POS Update</h6>
+                                <h6 class="card-title">Return</h6>
                             </div>
                             <div class="row">
                                 <div class="mb-3 col-md-6">
@@ -182,6 +182,15 @@
                 <div class="card-body px-4 py-2">
                     <div class="row align-items-center">
                         <div class="col-sm-4">
+                            Previous Paid:
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control availableAmount border-0 " name="" readonly
+                                value="{{ $sale->paid ?? 0 }}" />
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-sm-4">
                             Grand Total :
                         </div>
                         <div class="col-sm-8">
@@ -193,6 +202,7 @@
                             value="0.00" />
 
                     </div>
+
                     <div class="row align-items-center mb-2">
                         <div class="col-sm-4">
                             Discount :
@@ -237,6 +247,15 @@
                                     <option selected disabled>Please Add Transaction</option>
                                 @endif
                             </select>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-sm-4">
+                            New Pay:
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control newPay border-0 " name="" readonly
+                                value="00" />
                         </div>
                     </div>
                     <div class="row align-items-center ">
@@ -284,10 +303,10 @@
                         </div>
                     </div>
 
-                    <div class="my-3">
-                        <button class="btn btn-primary payment_btn"><i class="fa-solid fa-rotate-left"></i>
+                    {{-- <div class="my-3">
+                        <button class="btn btn-primary return_btn"><i class="fa-solid fa-rotate-left"></i>
                             Return</button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -388,8 +407,8 @@
                 }
             </td>
             <td style="padding-top: 20px;">
-                <a href="#" class="btn btn-sm btn-danger btn-icon purchase_delete" style="font-size: 8px; height: 25px; width: 25px;" data-id=${product.id}>
-                    <i class="fa-solid fa-trash-can" style="font-size: 0.8rem; margin-top: 2px;"></i>
+                <a href="" class="btn btn-sm btn-danger btn-icon purchase_delete return_product" style="font-size: 8px; height: 25px; width: 25px;" data-id=${product.id}>
+                    <i class="fa-solid fa-rotate-left" style="font-size: 0.8rem; margin-top: 2px;"></i>
                 </a>
             </td>
         </tr>`
@@ -417,7 +436,8 @@
                             });
                             updateGrandTotal();
                             calculateProductTotal();
-                            allProductTotal();
+                            // allProductTotal();
+                            // newPaidAmount();
                         } else {
                             toastr.warning(res.error);
                         }
@@ -446,7 +466,8 @@
 
                             updateGrandTotal();
                             calculateProductTotal();
-                            allProductTotal();
+                            // allProductTotal();
+                            newPaidAmount();
                             $('.barcode_input').val('');
                             // calculateGrandTotal();
                         } else {
@@ -476,6 +497,7 @@
 
                             updateGrandTotal();
                             calculateProductTotal();
+                            newPaidAmount();
                             // allProductTotal();
                             // calculateGrandTotal();
                         }
@@ -539,6 +561,25 @@
             }
 
 
+            function newPaidAmount() {
+
+                let prevPaidAmount = $('.availableAmount').val();
+                let grandTotal = $('.grandTotal').val();
+                // console.log(prevPaidAmount, grandTotal)
+                if (grandTotal > prevPaidAmount) {
+                    let newPay = parseFloat(grandTotal - prevPaidAmount);
+                    $('.newPay').val(newPay.toFixed(2));
+                    $('.total_due').val(newPay.toFixed(2));
+                } else {
+                    $('.newPay').val(00);
+                    let newPay = parseFloat(grandTotal - prevPaidAmount);
+                    $('.total_due').val(newPay.toFixed(2));
+                }
+
+            }
+            newPaidAmount();
+
+
             function calculateProductTotal() {
                 let allProductTotal = document.querySelectorAll('#productTotal');
                 let allTotal = 0;
@@ -548,6 +589,8 @@
                 });
                 $('.total').val(allTotal.toFixed(2));
                 $('.grandTotal').val(allTotal.toFixed(2));
+                newPaidAmount();
+                // totalDue();
             }
             calculateProductTotal();
 
@@ -578,6 +621,8 @@
                                 let total = $('.total').val();
                                 $('.grand_total').val(total);
                                 $('.grandTotal').val(total);
+                                newPaidAmount();
+                                // totalDue();
                                 // $('.total_payable').val(total);
                                 $('.discount_field').html(
                                     `<option>No Discount</option>`
@@ -592,6 +637,8 @@
                         `<option>No Discount</option>`
                     );
                     $('.grandTotal').val(total);
+                    newPaidAmount();
+                    // totalDue();
                     // $('.total_payable').val(total);
                 }
             }
@@ -615,6 +662,8 @@
                                     .discount_value) / 100)).toFixed(2);
                                 $('.grand_total').val(grandTotalAmount);
                                 $('.grandTotal').val(grandTotalAmount);
+                                newPaidAmount();
+                                // totalDue();
                                 // $('.total_payable').val(grandTotalAmount);
                             } else {
                                 let total = $('.total').val();
@@ -623,12 +672,16 @@
                                     .toFixed(2);
                                 $('.grand_total').val(grandTotalAmount);
                                 $('.grandTotal').val(grandTotalAmount);
+                                newPaidAmount();
+                                // totalDue();
                                 // $('.total_payable').val(grandTotalAmount);
                             }
                         } else {
                             let total = $('.total').val();
                             $('.grand_total').val(total);
                             $('.grandTotal').val(total);
+                            newPaidAmount();
+                            // totalDue();
                             // $('.total_payable').val(total);
 
                         }
@@ -643,6 +696,7 @@
                 calculateGrandTotal();
                 updateTotalQuantity();
                 calculateProductTotal();
+                // totalDue();
             }
 
             $(document).on('click', '.quantity', function(e) {
@@ -666,10 +720,14 @@
                                 $('.quantity').val(stock);
                                 // subTotal.val(parseFloat(stock * productPrice).toFixed(2));
                                 updateGrandTotal();
+                                newPaidAmount();
+                                // totalDue();
                                 toastr.warning('Not enough stock');
                             } else {
                                 // subTotal.val(parseFloat(quantity * productPrice).toFixed(2));
                                 updateGrandTotal();
+                                newPaidAmount();
+                                // totalDue();
                             }
 
                         }
@@ -698,10 +756,14 @@
                                 $('.quantity').val(stock);
                                 // subTotal.val(parseFloat(stock * productPrice).toFixed(2));
                                 updateGrandTotal();
+                                newPaidAmount();
+                                // totalDue();
                                 toastr.warning('Not enough stock');
                             } else {
                                 // subTotal.val(parseFloat(quantity * productPrice).toFixed(2));
                                 updateGrandTotal();
+                                newPaidAmount();
+                                // totalDue();
                             }
 
                         }
@@ -720,22 +782,121 @@
                 // Recalculate grand total
                 updateGrandTotal();
                 updateTotalQuantity();
+                newPaidAmount();
+                // totalDue();
             })
+
+            // $(document).on('click', '.return_product', function(e) {
+            //     e.preventDefault();
+            //     let id = $(this).attr('data-id');
+            //     let saleId = '{{ $sale->id }}';
+            // let customer_id = $('.select-customer').val();
+            // let sale_date = $('.purchase_date').val();
+            // let formattedSaleDate = moment(sale_date, 'DD-MMM-YYYY').format('YYYY-MM-DD HH:mm:ss');
+            // let quantity = totalQuantity;
+            // let total_amount = parseFloat($('.total').val());
+            // let discount = $('.discount_field').val();
+            // let total = parseFloat($('.grand_total').val());
+            // let tax = $('.tax').val();
+            // let change_amount = parseFloat($('.grandTotal').val());
+            // let actual_discount = change_amount - total;
+            // let paid = $('.total_payable').val();
+            // let due = $('.total_due').val();
+            // let note = $('.note').val();
+            // let payment_method = $('.payment_method').val();
+            // let product_id = $('.product_id').val();
+            // console.log(total_quantity);
+
+            // let products = [];
+
+            // $('tr[class^="data_row"]').each(function() {
+            //     let row = $(this);
+            //     // Get values from the current row's elements
+            //     let product_id = row.find('.product_id').val();
+            //     let quantity = row.find('input[name="quantity[]"]').val();
+            //     let unit_price = row.find('input[name="unit_price[]"]').val();
+            //     let discount_amount = row.find(`span[class='discount_amount${product_id}']`)
+            //         .text() || 0;
+            //     let discount_percentage = (row.find(
+            //         `span[class='discount_percentage${product_id}']`).text()) || 0;
+            //     let total_price = row.find('input[name="total_price[]"]').val();
+
+            //     // Create an object with the gathered data
+            //     let product = {
+            //         product_id,
+            //         quantity,
+            //         unit_price,
+            //         discount: discount_amount == 0 ? discount_percentage : 0,
+            //         total_price
+            //     };
+
+            //     // Push the object into the products array
+            //     products.push(product);
+            // });
+
+            // let allData = {
+            //     // for purchase table
+            //     sale_id,
+            //     customer_id,
+            //     sale_date: formattedSaleDate,
+            //     quantity,
+            //     total_amount,
+            //     discount,
+            //     actual_discount,
+            //     total,
+            //     change_amount,
+            //     tax,
+            //     paid,
+            //     due,
+            //     note,
+            //     payment_method,
+            //     products,
+            //     id,
+
+            // }
+            // alert(id);
+            //     $.ajaxSetup({
+            //         headers: {
+            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         }
+            //     });
+            //     $.ajax({
+            //         url: '/return/item/store',
+            //         type: 'POST',
+            //         data: {
+            //             id,
+            //             saleId
+            //         }
+            //         success: function(res) {
+            //             let dataRow = $('.data_row' + id);
+            //             dataRow.remove();
+            //             // Recalculate grand total
+            //             updateGrandTotal();
+            //             updateTotalQuantity();
+            //             newPaidAmount();
+            //             toastr.success(res.message);
+            //         }
+            //     })
+            // })
+
 
 
             // total_payable
             $('.total_payable').keyup(function(e) {
-                let grandTotal = parseFloat($('.grandTotal').val());
+                let newPay = parseFloat($('.newPay').val());
                 let value = parseFloat($(this).val());
+                // console.log('ok');
                 totalDue();
+                // newPaidAmount();
                 // $('.total_payable_amount').text(value);
             })
 
             // due
             function totalDue() {
+                console.log('ok');
                 let pay = $('.total_payable').val();
-                let grandTotal = parseFloat($('.grandTotal').val());
-                let due = (grandTotal - pay).toFixed(2);
+                let newPay = parseFloat($('.newPay').val());
+                let due = (newPay - pay).toFixed(2);
                 $('.total_due').val(due);
             }
 
@@ -749,9 +910,115 @@
                 taxTotal = (taxTotal + grandTotal).toFixed(2);
                 // $('.grandTotal').text(taxTotal);
                 $('.grandTotal').val(taxTotal);
+                newPaidAmount();
                 // $('.total_payable').val(taxTotal);
             })
 
+
+            $('.return_btn').click(function(e) {
+                e.preventDefault();
+                // alert('ok');
+                let customer_id = $('.select-customer').val();
+                let sale_date = $('.purchase_date').val();
+                let formattedSaleDate = moment(sale_date, 'DD-MMM-YYYY').format('YYYY-MM-DD HH:mm:ss');
+                let quantity = totalQuantity;
+                let total_amount = parseFloat($('.total').val());
+                let discount = $('.discount_field').val();
+                let total = parseFloat($('.grand_total').val());
+                let tax = $('.tax').val();
+                let change_amount = parseFloat($('.grandTotal').val());
+                let actual_discount = change_amount - total;
+                let paid = $('.total_payable').val();
+                let due = $('.total_due').val();
+                let note = $('.note').val();
+                let payment_method = $('.payment_method').val();
+                // let product_id = $('.product_id').val();
+                // console.log(total_quantity);
+
+                let products = [];
+
+                $('tr[class^="data_row"]').each(function() {
+                    let row = $(this);
+                    // Get values from the current row's elements
+                    let product_id = row.find('.product_id').val();
+                    let quantity = row.find('input[name="quantity[]"]').val();
+                    let unit_price = row.find('input[name="unit_price[]"]').val();
+                    let discount_amount = row.find(`span[class='discount_amount${product_id}']`)
+                        .text() || 0;
+                    let discount_percentage = (row.find(
+                        `span[class='discount_percentage${product_id}']`).text()) || 0;
+                    let total_price = row.find('input[name="total_price[]"]').val();
+
+                    // Create an object with the gathered data
+                    let product = {
+                        product_id,
+                        quantity,
+                        unit_price,
+                        discount: discount_amount == 0 ? discount_percentage : 0,
+                        total_price
+                    };
+
+                    // Push the object into the products array
+                    products.push(product);
+                });
+                let sale_id = '{{ $sale->id }}'
+
+                let allData = {
+                    // for purchase table
+                    sale_id,
+                    customer_id,
+                    sale_date: formattedSaleDate,
+                    quantity,
+                    total_amount,
+                    discount,
+                    actual_discount,
+                    total,
+                    change_amount,
+                    tax,
+                    paid,
+                    due,
+                    note,
+                    payment_method,
+                    products
+                }
+
+
+                // console.log(allData);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: '/return/store',
+                    type: 'POST',
+                    data: allData,
+                    success: function(res) {
+                        if (res.status == 200) {
+                            // console.log(res.data);
+                            // $('#paymentModal').modal('hide');
+                            // $('.supplierForm')[0].reset();
+                            // supplierView();
+                            toastr.success(res.message);
+                            // console.log(id)
+
+                            window.location.href = '/sale/view';
+
+                        } else {
+                            // console.log(res);
+                            if (res.error.customer_id) {
+                                showError('.select-customer', res.error.customer_id);
+                            }
+                            if (res.error.products) {
+                                toastr.warning('No Product to return');
+                                // alert('No Product to return');
+                            }
+                        }
+                    }
+                });
+
+            })
         })
     </script>
 

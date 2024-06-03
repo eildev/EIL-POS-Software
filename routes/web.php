@@ -416,6 +416,8 @@ Route::middleware('auth')->group(function () {
     // return controller 
     Route::controller(ReturnController::class)->group(function () {
         Route::get('/return/{id}', 'Return')->name('return');
+        Route::post('/return/store', 'store')->name('return.store');
+        Route::post('/return/item/store', 'storeReturnItem')->name('return.item.store');
     });
     ////////////////////Role And Permission Route /////////////////
     Route::controller(RolePermissionController::class)->group(function () {

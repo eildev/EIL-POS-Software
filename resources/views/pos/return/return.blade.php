@@ -303,10 +303,10 @@
                         </div>
                     </div>
 
-                    {{-- <div class="my-3">
-                        <button class="btn btn-primary return_btn"><i class="fa-solid fa-rotate-left"></i>
-                            Return</button>
-                    </div> --}}
+                    <div class="my-3">
+                        <button class="btn btn-primary replace_product"><i class="fa-solid fa-rotate-left"></i>
+                            Replace</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -876,13 +876,24 @@
                     type: 'POST',
                     data: allData,
                     success: function(res) {
-                        let dataRow = $('.data_row' + id);
-                        dataRow.remove();
-                        // Recalculate grand total
-                        updateGrandTotal();
-                        updateTotalQuantity();
-                        newPaidAmount();
-                        toastr.success(res.message);
+                        if (res.status == 200) {
+                            let dataRow = $('.data_row' + id);
+                            dataRow.remove();
+                            // Recalculate grand total
+                            updateGrandTotal();
+                            updateTotalQuantity();
+                            newPaidAmount();
+                            toastr.success(res.message);
+                        } else {
+                            let dataRow = $('.data_row' + id);
+                            dataRow.remove();
+
+                            updateGrandTotal();
+                            updateTotalQuantity();
+                            newPaidAmount();
+                            toastr.success(res.message);
+                        }
+
                     }
                 })
 
@@ -922,7 +933,7 @@
             })
 
 
-            $('.return_btn').click(function(e) {
+            $('.replace_product').click(function(e) {
                 e.preventDefault();
                 // alert('ok');
                 let customer_id = $('.select-customer').val();
@@ -939,8 +950,7 @@
                 let due = $('.total_due').val();
                 let note = $('.note').val();
                 let payment_method = $('.payment_method').val();
-                // let product_id = $('.product_id').val();
-                // console.log(total_quantity);
+                let newPay = $('.newPay').val();
 
                 let products = [];
 
@@ -986,7 +996,8 @@
                     due,
                     note,
                     payment_method,
-                    products
+                    products,
+                    newPay
                 }
 
 
@@ -1008,9 +1019,26 @@
                             // $('.supplierForm')[0].reset();
                             // supplierView();
                             toastr.success(res.message);
-                            // console.log(id)
+                            // let id = res.returnId;
+                            // alert(id);
 
+                            // window.location.href = '/return/products/invoice/' + id;
                             window.location.href = '/sale/view';
+
+                            // var printFrame = $('#printFrame')[0];
+                            // var printContentUrl = '/return/products/invoice/' +
+                            //     id; // Specify the URL of the content to be printed
+                            // // console.log('{{ route('sale.invoice', 102049) }}');
+                            // $('#printFrame').attr('src', printContentUrl);
+
+                            // printFrame.onload = function() {
+                            //     printFrame.contentWindow.focus();
+                            //     printFrame.contentWindow.print();
+                            //     // Redirect after printing
+                            //     printFrame.contentWindow.onafterprint = function() {
+                            //         window.location.href = "/sale/view";
+                            //     };
+                            // };
 
                         } else {
                             // console.log(res);

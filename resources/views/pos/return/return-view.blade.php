@@ -1,10 +1,10 @@
 @extends('master')
-@section('title', '| Sale History')
+@section('title', '| Return View')
 @section('admin')
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Sale</li>
+            <li class="breadcrumb-item active" aria-current="page">Return List</li>
         </ol>
     </nav>
 
@@ -113,23 +113,17 @@
                             <thead>
                                 <tr>
                                     <th class="id">#</th>
-                                    <th>Invoice <br>Number</th>
+                                    <th>Bill <br>Number</th>
                                     <th>Customer</th>
                                     <th>Items</th>
-                                    <th>Date</th>
+                                    <th>Return Date</th>
                                     <th>Discount</th>
-                                    <th>Receivable</th>
-                                    <th>Paid</th>
-                                    <th>Product <br> Returned</th>
-                                    <th>Due/Return</th>
-                                    <th>Purchase <br> Cost</th>
-                                    <th>Profit</th>
-                                    <th>Status</th>
+                                    <th>Total</th>
                                     <th class="id">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="showData">
-                                @include('pos.sale.table')
+                                @include('pos.return.return-table')
                             </tbody>
                         </table>
                     </div>
@@ -234,7 +228,7 @@
         }
     </style>
 
-    <script>
+    {{-- <script>
         // error remove
         function errorRemove(element) {
             if (element.value != '') {
@@ -362,5 +356,5 @@
                 });
             })
         });
-    </script>
+    </script> --}}
 @endsection

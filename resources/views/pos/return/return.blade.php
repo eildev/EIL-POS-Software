@@ -407,7 +407,7 @@
                 }
             </td>
             <td style="padding-top: 20px;">
-                <a href="" class="btn btn-sm btn-danger btn-icon purchase_delete return_product" style="font-size: 8px; height: 25px; width: 25px;" data-id=${product.id}>
+                <a href="" class="btn btn-sm btn-danger btn-icon purchase_delete return_product" title="Return Product" style="font-size: 8px; height: 25px; width: 25px;" data-id=${product.id}>
                     <i class="fa-solid fa-rotate-left" style="font-size: 0.8rem; margin-top: 2px;"></i>
                 </a>
             </td>
@@ -774,112 +774,119 @@
 
 
 
-            $(document).on('click', '.purchase_delete', function(e) {
-                // alert('ok');
-                let id = $(this).attr('data-id');
-                let dataRow = $('.data_row' + id);
-                dataRow.remove();
-                // Recalculate grand total
-                updateGrandTotal();
-                updateTotalQuantity();
-                newPaidAmount();
-                // totalDue();
-            })
-
-            // $(document).on('click', '.return_product', function(e) {
+            // $(document).on('click', '.purchase_delete', function(e) {
             //     e.preventDefault();
+            //     // alert('ok');
             //     let id = $(this).attr('data-id');
-            //     let saleId = '{{ $sale->id }}';
-            // let customer_id = $('.select-customer').val();
-            // let sale_date = $('.purchase_date').val();
-            // let formattedSaleDate = moment(sale_date, 'DD-MMM-YYYY').format('YYYY-MM-DD HH:mm:ss');
-            // let quantity = totalQuantity;
-            // let total_amount = parseFloat($('.total').val());
-            // let discount = $('.discount_field').val();
-            // let total = parseFloat($('.grand_total').val());
-            // let tax = $('.tax').val();
-            // let change_amount = parseFloat($('.grandTotal').val());
-            // let actual_discount = change_amount - total;
-            // let paid = $('.total_payable').val();
-            // let due = $('.total_due').val();
-            // let note = $('.note').val();
-            // let payment_method = $('.payment_method').val();
-            // let product_id = $('.product_id').val();
-            // console.log(total_quantity);
-
-            // let products = [];
-
-            // $('tr[class^="data_row"]').each(function() {
-            //     let row = $(this);
-            //     // Get values from the current row's elements
-            //     let product_id = row.find('.product_id').val();
-            //     let quantity = row.find('input[name="quantity[]"]').val();
-            //     let unit_price = row.find('input[name="unit_price[]"]').val();
-            //     let discount_amount = row.find(`span[class='discount_amount${product_id}']`)
-            //         .text() || 0;
-            //     let discount_percentage = (row.find(
-            //         `span[class='discount_percentage${product_id}']`).text()) || 0;
-            //     let total_price = row.find('input[name="total_price[]"]').val();
-
-            //     // Create an object with the gathered data
-            //     let product = {
-            //         product_id,
-            //         quantity,
-            //         unit_price,
-            //         discount: discount_amount == 0 ? discount_percentage : 0,
-            //         total_price
-            //     };
-
-            //     // Push the object into the products array
-            //     products.push(product);
-            // });
-
-            // let allData = {
-            //     // for purchase table
-            //     sale_id,
-            //     customer_id,
-            //     sale_date: formattedSaleDate,
-            //     quantity,
-            //     total_amount,
-            //     discount,
-            //     actual_discount,
-            //     total,
-            //     change_amount,
-            //     tax,
-            //     paid,
-            //     due,
-            //     note,
-            //     payment_method,
-            //     products,
-            //     id,
-
-            // }
-            // alert(id);
-            //     $.ajaxSetup({
-            //         headers: {
-            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //         }
-            //     });
-            //     $.ajax({
-            //         url: '/return/item/store',
-            //         type: 'POST',
-            //         data: {
-            //             id,
-            //             saleId
-            //         }
-            //         success: function(res) {
-            //             let dataRow = $('.data_row' + id);
-            //             dataRow.remove();
-            //             // Recalculate grand total
-            //             updateGrandTotal();
-            //             updateTotalQuantity();
-            //             newPaidAmount();
-            //             toastr.success(res.message);
-            //         }
-            //     })
+            //     let dataRow = $('.data_row' + id);
+            //     dataRow.remove();
+            //     // Recalculate grand total
+            //     updateGrandTotal();
+            //     updateTotalQuantity();
+            //     newPaidAmount();
+            //     // totalDue();
             // })
 
+            $(document).on('click', '.return_product', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('data-id');
+                // alert(id);
 
+                let saleId = '{{ $sale->id }}';
+                let customer_id = $('.select-customer').val();
+                let sale_date = $('.purchase_date').val();
+                let formattedSaleDate = moment(sale_date, 'DD-MMM-YYYY').format('YYYY-MM-DD HH:mm:ss');
+                let quantity = totalQuantity;
+                let total_amount = parseFloat($('.total').val());
+                let discount = $('.discount_field').val();
+                let total = parseFloat($('.grand_total').val());
+                let tax = $('.tax').val();
+                let change_amount = parseFloat($('.grandTotal').val());
+                let actual_discount = change_amount - total;
+                let paid = $('.total_payable').val();
+                let due = $('.total_due').val();
+                let note = $('.note').val();
+                let payment_method = $('.payment_method').val();
+                let product_id = $('.product_id').val();
+                let newPay = $('.newPay').val();
+                // console.log(saleId, quantity, total_amount, discount, total, change_amount, actual_discount,
+                //     paid, due, payment_method, product_id);
+
+
+                let products = [];
+
+                $('tr[class^="data_row"]').each(function() {
+                    let row = $(this);
+                    // Get values from the current row's elements
+                    let product_id = row.find('.product_id').val();
+                    let quantity = row.find('input[name="quantity[]"]').val();
+                    let unit_price = row.find('input[name="unit_price[]"]').val();
+                    let discount_amount = row.find(`span[class='discount_amount${product_id}']`)
+                        .text() || 0;
+                    let discount_percentage = (row.find(
+                        `span[class='discount_percentage${product_id}']`).text()) || 0;
+                    let total_price = row.find('input[name="total_price[]"]').val();
+
+                    // Create an object with the gathered data
+                    let product = {
+                        product_id,
+                        quantity,
+                        unit_price,
+                        discount: discount_amount == 0 ? discount_percentage : 0,
+                        total_price
+                    };
+
+                    // Push the object into the products array
+                    products.push(product);
+                });
+
+                // console.log(products);
+                let sale_id = '{{ $sale->id }}'
+
+                let allData = {
+                    // for purchase table
+                    sale_id,
+                    customer_id,
+                    sale_date: formattedSaleDate,
+                    quantity,
+                    total_amount,
+                    discount,
+                    actual_discount,
+                    total,
+                    change_amount,
+                    tax,
+                    paid,
+                    due,
+                    note,
+                    payment_method,
+                    products,
+                    id,
+                    newPay
+                }
+
+                // console.log(allData);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '/return/item/store',
+                    type: 'POST',
+                    data: allData,
+                    success: function(res) {
+                        let dataRow = $('.data_row' + id);
+                        dataRow.remove();
+                        // Recalculate grand total
+                        updateGrandTotal();
+                        updateTotalQuantity();
+                        newPaidAmount();
+                        toastr.success(res.message);
+                    }
+                })
+
+            })
 
             // total_payable
             $('.total_payable').keyup(function(e) {

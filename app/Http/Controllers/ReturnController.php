@@ -118,22 +118,36 @@ class ReturnController extends Controller
     }
     public function storeReturnItem(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $productCost = 0;
         $productAll = $request->products;
         foreach ($productAll as $product) {
             $items = Product::findOrFail($product['product_id']);
             $productCost += $items->cost;
         }
-        $saleItem = SaleItem::where('sale_id', $request->saleId)->where('product_id', $request->id)->latest()->first();
+        $saleItem = SaleItem::where('sale_id', $request->sale_id)->where('product_id', $request->id)->latest()->first();
 
-        $return = $return = new Returns;
-        $return->sale_id = $request->sale_id;
-        $return->customer_id = $request->customer_id;
-        $return->total = $request->total_amount;
-        $return->discount_amount = $request->actual_discount;
-        $return->grand_total = $request->change_amount;
+        $return = Returns::where('sale_id', $request->sale_id)->first();
+
+        if ($return) {
+            // Record exists, update it
+            $return->customer_id = $request->customer_id;
+            $return->total = $request->total_amount;
+            $return->discount_amount = $request->actual_discount;
+            $return->grand_total = $request->change_amount;
+        } else {
+            // Record does not exist, create a new one
+            $return = new Returns;
+            $return->sale_id = $request->sale_id;
+            $return->customer_id = $request->customer_id;
+            $return->total = $request->total_amount;
+            $return->discount_amount = $request->actual_discount;
+            $return->grand_total = $request->change_amount;
+        }
+
         $return->save();
+
+        dd($return->id);
 
 
         $sale = Sale::findOrFail($request->sale_id);

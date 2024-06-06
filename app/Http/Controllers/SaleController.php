@@ -126,7 +126,15 @@ class SaleController extends Controller
                 $items->product_id = $product['product_id']; // Access 'product_id' as an array key
                 $items->rate = $product['unit_price']; // Access 'unit_price' as an array key
                 $items->qty = $product['quantity'];
-                $items->discount = $product['discount'];
+                if ($product['discount_amount'] > 0 || $product['discount_percentage'] > 0) {
+                    if ($product['discount_amount'] > 0) {
+                        $items->discount = $product['discount_amount'];
+                    } else {
+                        $items->discount = $product['discount_percentage'];
+                    }
+                } else {
+                    $items->discount = 0;
+                }
                 $items->sub_total = $product['total_price'];
                 $items->total_purchase_cost = $items2->cost * $product['quantity'];
                 $items->save();
